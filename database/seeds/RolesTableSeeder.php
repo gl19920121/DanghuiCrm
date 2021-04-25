@@ -16,7 +16,7 @@ class RolesTableSeeder extends Seeder
             [
                 'role_name' => 'admin',
                 'level' => 1,
-                'permission' => ''
+                'permission' => json_encode([])
             ]
         ];
         Role::insert($roles);
