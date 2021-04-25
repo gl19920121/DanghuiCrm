@@ -10942,3 +10942,219 @@ a.text-dark:focus {
   }
 }
 
+html,
+body {
+  height: 100%;
+}
+
+html {
+  overflow: auto;
+}
+
+body {
+  background-color: #fff;
+  color: #3E3A39;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+a {
+  color: #fff;
+}
+
+a:hover {
+  color: #fff;
+}
+
+.login-bg {
+  background-image: url(/images/bg_1.jpg?ed5a17a6590adb5be73c10f26ee34638);
+  background-size: cover;
+}
+
+.container {
+  height: 100%;
+}
+
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+.login-card {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-left: -190px;
+  margin-top: -195px;
+  width: 380px;
+  height: 390px;
+}
+
+.login-card .card {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.login-card .card .card-header {
+  border: none;
+  background: transparent;
+}
+
+.login-card .card .card-body .login-form input.form-control {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.login-card .card .card-body .login-form input.form-control:focus {
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.login-card .card .card-body .login-form .form-group {
+  border-bottom: 1px solid #e6e5e7;
+}
+
+.login-card .card .card-body .login-form .input-group .input-group-addon {
+  padding-top: 5px;
+}
+
+.login-card .card .card-body .login-form .btn-login {
+  width: 320px;
+}
+
+.login-card .card .card-body .forget {
+  padding: 15px 0 20px 0;
+}
+
+.login-card .card .card-body .forget a {
+  font-size: 12px;
+  color: #595757;
+}
+
+.login-card .card .card-footer {
+  background: transparent;
+  border: none;
+}
+
+.login-card .card .card-footer p {
+  font-size: 12px;
+  color: #595757;
+}
+
+.login-card .card .card-footer a {
+  font-size: 12px;
+  color: #595757;
+}
+
+.navbar {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: #303540;
+  min-height: 60px;
+  /*padding-left: 260px;*/
+  padding-left: 0;
+  padding: 0;
+}
+
+.navbar .navbar-nav .nav-item {
+  width: 140px;
+  min-height: 60px;
+}
+
+.navbar .navbar-nav .nav-item a.nav-link {
+  line-height: 60px;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-left: 0;
+}
+
+.navbar .navbar-nav .nav-item:hover a.nav-link {
+  color: white;
+}
+
+.navbar .navbar-nav .active {
+  color: white;
+  background-color: #D83856;
+}
+
+#navbarNavDropdown {
+  margin-left: 210px;
+}
+
+.notice {
+  padding-top: 4px;
+}
+
+.notice img {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-left: -9.5px;
+  margin-top: -10.5px;
+  width: 19px;
+  height: 21px;
+}
+
+.my-menu {
+  margin-left: 15px;
+}
+
+.main-bg {
+  background-color: #EFEFEF;
+}
+
+.main-bg .home {
+  padding-top: 30px;
+}
+
+.main-bg .home .banner {
+  width: 100%;
+  min-height: 126px;
+  background-image: url(../images/home/ "nav_bg.png");
+  background-size: 100% 100%;
+  margin-bottom: 26px;
+}
+
+.main-bg .home .message {
+  width: 100%;
+  min-height: 214px;
+  background-color: white;
+}
+
+.main-bg .home .message h5 {
+  color: #3E3A39;
+  font-size: 18px;
+}
+
+.main-bg .home .message p {
+  color: #898989;
+  font-size: 12px;
+}
+
+.main-bg .home .list {
+  width: 100%;
+  min-height: 441px;
+  background-color: white;
+  margin-top: 25px;
+}
+
+.main-bg .home .general {
+  height: 100%;
+  background-color: white;
+}
+

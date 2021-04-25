@@ -1,2 +1,239 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+@mixin absolute_center_mixin($width, $height) {
+  position: relative;
+    top: 50%;
+    left: 50%;
+    margin-left: -($width / 2);
+    margin-top: -($height / 2);
+    width: $width;
+    height: $height;
+}
+
+$font-size-l: 18px;
+$font-size-n: 16px;
+$font-size-s: 12px;
+
+$color-n: #3E3A39;
+$color-n-2: #595757;
+$color-white: #fff;
+$color-dark: #303540;
+$color-red: #D83856;
+$color-gray: #898989;
+
+$img-url-public: "../images/";
+$img-url-login: "../images/login/";
+$img-url-home: "../images/home/";
+
+html, body {
+  height: 100%;
+}
+
+html {
+  overflow: auto;
+}
+
+body {
+  background-color: #fff;
+  color: $color-n;
+  font-size: $font-size-n;
+  font-weight: normal;
+}
+
+a {
+  color: $color-white;
+}
+
+a:hover {
+  color: $color-white;
+}
+
+.login-bg {
+  background-image: url("#{$img-url-login}bg_1.jpg");
+  background-size: cover;
+}
+
+.container {
+  height: 100%;
+}
+
+.container-fluid {
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 1400px;
+    }
+}
+
+.login-card {
+  @include absolute_center_mixin(380px, 390px);
+
+  .card {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.8);
+
+      .card-header {
+      border: none;
+        background: transparent;
+    }
+
+    .card-body {
+
+      .login-form {
+
+        input.form-control {
+          border: none;
+            background: transparent;
+            outline:none;
+        }
+
+        input.form-control:focus {
+            background: transparent;
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+        .form-group {
+            border-bottom: 1px solid #e6e5e7;
+        }
+
+        .input-group {
+
+          .input-group-addon {
+            padding-top: 5px;
+          }
+
+        }
+
+        .btn-login {
+          width: 320px;
+        }
+      }
+
+      .forget {
+        padding: 15px 0 20px 0;
+
+        a {
+          font-size: $font-size-s;
+            color: $color-n-2;
+        }
+      }
+    }
+
+      .card-footer {
+        background: transparent;
+        border: none;
+
+        p {
+          font-size: $font-size-s;
+          color: $color-n-2;
+        }
+
+        a {
+          font-size: $font-size-s;
+          color: $color-n-2;
+        }
+      }
+  }
+}
+
+.navbar {
+  font-size: $font-size-l;
+  color: rgba(255, 255, 255, 0.5);
+    background-color: $color-dark;
+    min-height: 60px;
+    /*padding-left: 260px;*/
+    padding-left: 0;
+    padding: 0;
+
+    .navbar-nav {
+      .nav-item {
+        width: 140px;
+        min-height: 60px;
+
+        a.nav-link {
+          line-height: 60px;
+          padding-top: 0;
+          padding-bottom: 0;
+          margin-left: 0;
+      }
+      }
+      .nav-item:hover {
+        a.nav-link {
+          color: white;
+        }
+      }
+      .active {
+        color: white;
+        background-color: $color-red;
+      }
+    }
+}
+
+#navbarNavDropdown {
+  margin-left: 210px;
+}
+
+.notice {
+  padding-top: 4px;
+    img {
+      @include absolute_center_mixin(19px, 21px);
+    }
+}
+
+.my-menu {
+  margin-left: 15px;
+}
+
+.main-bg {
+    background-color: #EFEFEF;
+
+    .home {
+      padding-top: 30px;
+
+      .banner {
+        width: 100%;
+        min-height: 126px;
+        background-image: url(#{$img-url-home}'nav_bg.png');
+        background-size: 100% 100%;
+        margin-bottom: 26px;
+    }
+
+    .message {
+        width: 100%;
+        min-height: 214px;
+        background-color: white;
+
+        .row {
+          //height: 100%;
+        }
+        h5 {
+          color: $color-n;
+          font-size: $font-size-l;
+        }
+        p {
+          color: $color-gray;
+          font-size: $font-size-s;
+        }
+    }
+
+    .list {
+        width: 100%;
+        min-height: 441px;
+        background-color: white;
+        margin-top: 25px;
+    }
+
+    .general {
+      height: 100%;
+        background-color: white;
+    }
+  }
+}
