@@ -11,8 +11,10 @@
     height: $height;
 }
 
+$font-size-xl: 24px;
 $font-size-l: 18px;
 $font-size-n: 16px;
+$font-size-m: 14px;
 $font-size-s: 12px;
 
 $color-n: #3E3A39;
@@ -21,6 +23,7 @@ $color-white: #fff;
 $color-dark: #303540;
 $color-red: #D83856;
 $color-gray: #898989;
+$color-border-gray: #C9CACA;
 
 $img-url-public: "../images/";
 $img-url-login: "../images/login/";
@@ -201,7 +204,7 @@ a:hover {
       .banner {
         width: 100%;
         min-height: 126px;
-        background-image: url(#{$img-url-home}'nav_bg.png');
+        background-image: url('#{$img-url-home}nav_bg.png');
         background-size: 100% 100%;
         margin-bottom: 26px;
     }
@@ -213,22 +216,94 @@ a:hover {
 
         .row {
           //height: 100%;
+          margin: 0;
+          .col {
+            padding: 0;
+          }
+        }
+        h4 {
+          font-size: $font-size-xl;
+          font-weight: bold;
+          line-height: $font-size-xl;
         }
         h5 {
           color: $color-n;
           font-size: $font-size-l;
         }
+        b {
+          font-size: $font-size-m;
+        }
         p {
           color: $color-gray;
           font-size: $font-size-s;
         }
+        .top {
+          border-bottom: 1px solid $color-border-gray;
+        }
+        .bottom {
+          .col {
+            border-left: 1px solid $color-border-gray;
+            &:first-child {
+              border-left: none;
+            }
+          }
+        }
     }
 
     .list {
-        width: 100%;
-        min-height: 441px;
-        background-color: white;
-        margin-top: 25px;
+      width: 100%;
+      min-height: 441px;
+      background-color: white;
+      margin-top: 25px;
+
+      .nav-tabs {
+        min-height: 54px;
+        margin-left: 40px;
+        border-bottom: 1px solid $color-border-gray;
+
+        .nav-item  {
+          padding-right: 40px;
+          padding-top: 20px;
+
+          a {
+            color: $color-n;
+            border: none;
+            &:hover {
+              border: none;
+              border-bottom: 2px solid $color-red;
+            }
+          }
+          a.active {
+            border-top: none;
+            border-right: none;
+            border-left: none;
+            border-bottom: 2px solid $color-red;
+          }
+        }
+      }
+
+      .tab-content {
+        min-height: 386px;
+
+        .tab-pane {
+          min-height: 386px;
+          .list-group {
+            min-height: 386px;
+            .list-group-item {
+              min-height: 386px;
+            }
+          }
+        }
+        .empty {
+          min-height: 386px;
+          img {
+            margin-bottom: 30px;
+          }
+          p {
+            color: #9FA0A0;
+          }
+        }
+      }
     }
 
     .general {

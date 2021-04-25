@@ -11125,7 +11125,7 @@ a:hover {
 .main-bg .home .banner {
   width: 100%;
   min-height: 126px;
-  background-image: url(../images/home/ "nav_bg.png");
+  background-image: url(/images/nav_bg.png?9366292c4facd1d9cf329f6a5e693fdf);
   background-size: 100% 100%;
   margin-bottom: 26px;
 }
@@ -11136,9 +11136,27 @@ a:hover {
   background-color: white;
 }
 
+.main-bg .home .message .row {
+  margin: 0;
+}
+
+.main-bg .home .message .row .col {
+  padding: 0;
+}
+
+.main-bg .home .message h4 {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 24px;
+}
+
 .main-bg .home .message h5 {
   color: #3E3A39;
   font-size: 18px;
+}
+
+.main-bg .home .message b {
+  font-size: 14px;
 }
 
 .main-bg .home .message p {
@@ -11146,11 +11164,79 @@ a:hover {
   font-size: 12px;
 }
 
+.main-bg .home .message .top {
+  border-bottom: 1px solid #C9CACA;
+}
+
+.main-bg .home .message .bottom .col {
+  border-left: 1px solid #C9CACA;
+}
+
+.main-bg .home .message .bottom .col:first-child {
+  border-left: none;
+}
+
 .main-bg .home .list {
   width: 100%;
   min-height: 441px;
   background-color: white;
   margin-top: 25px;
+}
+
+.main-bg .home .list .nav-tabs {
+  min-height: 54px;
+  margin-left: 40px;
+  border-bottom: 1px solid #C9CACA;
+}
+
+.main-bg .home .list .nav-tabs .nav-item {
+  padding-right: 40px;
+  padding-top: 20px;
+}
+
+.main-bg .home .list .nav-tabs .nav-item a {
+  color: #3E3A39;
+  border: none;
+}
+
+.main-bg .home .list .nav-tabs .nav-item a:hover {
+  border: none;
+  border-bottom: 2px solid #D83856;
+}
+
+.main-bg .home .list .nav-tabs .nav-item a.active {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid #D83856;
+}
+
+.main-bg .home .list .tab-content {
+  min-height: 386px;
+}
+
+.main-bg .home .list .tab-content .tab-pane {
+  min-height: 386px;
+}
+
+.main-bg .home .list .tab-content .tab-pane .list-group {
+  min-height: 386px;
+}
+
+.main-bg .home .list .tab-content .tab-pane .list-group .list-group-item {
+  min-height: 386px;
+}
+
+.main-bg .home .list .tab-content .empty {
+  min-height: 386px;
+}
+
+.main-bg .home .list .tab-content .empty img {
+  margin-bottom: 30px;
+}
+
+.main-bg .home .list .tab-content .empty p {
+  color: #9FA0A0;
 }
 
 .main-bg .home .general {
