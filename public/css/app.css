@@ -10966,6 +10966,14 @@ a:hover {
   color: #fff;
 }
 
+.color-red {
+  color: #D83856;
+}
+
+.divider {
+  color: #C9CACA;
+}
+
 .login-bg {
   background-image: url(/images/bg_1.jpg?ed5a17a6590adb5be73c10f26ee34638);
   background-size: cover;
@@ -11242,5 +11250,56 @@ a:hover {
 .main-bg .home .general {
   height: 100%;
   background-color: white;
+  padding: 38px 23px;
+}
+
+.main-bg .home .general .avatar {
+  margin-bottom: 21px;
+}
+
+.main-bg .home .general h3 {
+  font-size: 18px;
+}
+
+.main-bg .home .general h4 {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.main-bg .home .general h5 {
+  font-size: 14px;
+}
+
+.main-bg .home .general p {
+  font-size: 12px;
+}
+
+.main-bg .home .general .list-item {
+  padding-top: 26px;
+  padding-bottom: 26px;
+}
+
+.main-bg .home .general .list-item .title img {
+  margin-right: 10px;
+}
+
+.main-bg .home .general .content {
+  margin-top: 26px;
+}
+
+.main-bg .home .general .content h3 {
+  color: #2EA7E0;
+}
+
+.main-bg .home .general .content p {
+  margin-bottom: 0;
+}
+
+.main-bg .home .general .content .col {
+  border-left: 1px solid #C9CACA;
+}
+
+.main-bg .home .general .content .col:first-child {
+  border-left: none;
 }
 

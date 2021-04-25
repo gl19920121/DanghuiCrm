@@ -124,8 +124,155 @@
 			</div>
 		</div>
 		<div class="col">
-			<div class="general">
-
+			<div class="general text-center">
+        <div class="row avatar">
+          <div class="col">
+            <img src="{{ URL::asset('images/avatar_default.png') }}"">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h3>{{ Auth::user()->name }}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h5>{{ Auth::user()->job }}</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p>满意指数：<span class="color-red">198</span></p>
+          </div>
+          <div class="col">
+            <p>当前星级：</p>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="row">
+          <div class="col">
+            <div class="list-item">
+              <div class="row">
+                <div class="col">
+                  <div class="form-inline title">
+                    <img src="{{ URL::asset('images/icon_resume.png') }}">
+                    <h4>简历统计</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="row content mt-4 justify-content-start bottom text-center">
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>查看</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>查看</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>上传</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         <hr class="divider">
+         <div class="row">
+          <div class="col">
+            <div class="list-item">
+              <div class="row">
+                <div class="col">
+                  <div class="form-inline title">
+                    <img src="{{ URL::asset('images/icon_job.png') }}">
+                    <h4>职位统计</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="row content mt-4 justify-content-start bottom text-center">
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>运作职位</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>新增应聘</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>新增委托</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         <hr class="divider">
+         <div class="row">
+          <div class="col">
+            <div class="list-item">
+              <div class="row">
+                <div class="col">
+                  <div class="form-inline title">
+                    <img src="{{ URL::asset('images/icon_process.png') }}">
+                    <h4>进度统计</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="row content mt-4 justify-content-start bottom text-center">
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>电话沟通</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>推荐成功</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>进企面试</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row content mt-4 justify-content-start bottom text-center">
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>面试通过</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>成功入职</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item-content">
+                    <h3>105</h3>
+                    <p>入职过保</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 			</div>
 		</div>
 	</div>
