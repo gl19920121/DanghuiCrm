@@ -1,0 +1,52 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateJobsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('jobs', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('company')->comment('公司名称');
+            $table->integer('quota')->comment('招聘人数');
+            $table->string('name')->comment('职位名称');
+            $table->string('type')->comment('职位类别');
+            $table->enum('nature', ['full', 'part', 'all'])->comment('工作性质');
+            $table->string('city')->comment('工作城市');
+            $table->integer('salary_min')->comment('最低税前月薪');
+            $table->integer('salary_max')->comment('最高税前月薪');
+            $table->enum('welfare', ['social_insurance', 'five_social_insurance_and_one_housing_fund', 'four_social_insurance_and_one_housing_fund'])->comment('福利待遇');
+            $table->string('sparkle')->comment('职位亮点');
+            $table->integer('age_min')->comment('最低年龄');
+            $table->integer('age_max')->comment('最高年龄');
+            $table->enum('education', ['unlimited', 'high_schoo', 'junior', 'undergraduate', 'master', 'doctor'])->comment('学历要求');
+            $table->enum('experience', ['unlimited', 'school', 'fresh_graduates', 'primary', 'middle', 'high', 'expert'])->comment('经验要求');
+            $table->string('duty')->comment('工作职责');
+            $table->string('requirement')->comment('任职要求');
+            $table->integer('urgency_level')->comment('紧急程度');
+            $table->enum('channel', ['applets', 'website', 'other_platform'])->comment('渠道选择');
+            $table->string('channel_remark')->comment('渠道平台备注');
+            $table->string('deadline')->comment('截止日期');
+            $table->timestamps();
+            $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('jobs');
+    }
+}

@@ -25,8 +25,6 @@ class CreateUsersTable extends Migration
                 $table->string('phone')->nullable()->comment('联系方式');
                 $table->string('email')->nullable()->comment('邮箱地址');
                 $table->integer('role_id')->comment('账号角色ID')->unsigned();
-                $table->json('se_jobtasks_id')->nullable()->comment('分配职位任务ID');
-                $table->json('re_jobtasks_id')->nullable()->comment('接受任务ID');
                 $table->rememberToken()->comment('登录状态token'); // 'remember_token' VARCHAR(100) NULL
                 $table->timestamps(); // 'create_at' 'update_at'
                 $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
