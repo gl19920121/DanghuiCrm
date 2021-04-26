@@ -11355,3 +11355,63 @@ a:hover {
   border-bottom: 3px solid #D83856;
 }
 
+.job-create {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 149px;
+  padding-bottom: 113px;
+  background-color: white;
+}
+
+.job-create .default-form .form-header {
+  height: 54px;
+}
+
+.job-create .default-form .form-body {
+  padding-left: 55px;
+}
+
+.job-create .default-form .form-body .form-control {
+  min-width: 429px;
+}
+
+.job-create .default-form .form-body .form-group {
+  margin-left: 87px;
+  margin-bottom: 18px;
+}
+
+.job-create .default-form .form-body .form-group span {
+  color: #D83856;
+}
+
+.job-create .default-form .form-body .form-group span:first-child {
+  width: 11px;
+}
+
+.job-create .default-form .form-body .form-group input.form-control {
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #3E3A39;
+}
+
+.job-create .default-form .form-body .form-group input.form-control::-webkit-input-placeholder {
+  font-size: 14px;
+  color: #B5B5B6;
+  text-align: left;
+}
+
+.job-create .default-form .form-body .form-title {
+  border-left: 3px solid #D83856;
+  padding-left: 15px;
+  margin-bottom: 37px;
+  margin-top: 61px;
+}
+
+.job-create .default-form .form-body .form-title h5 {
+  font-size: 18px;
+}
+
+.job-create .default-form .form-body .form-title p {
+  font-size: 14px;
+}
+

@@ -422,3 +422,68 @@ a:hover {
     }
   }
 }
+
+.job-create {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 149px;
+  padding-bottom: 113px;
+  background-color: white;
+
+  .default-form {
+
+    .form-header {
+      height: 54px;
+    }
+
+    .form-body {
+      padding-left: 55px;
+      //padding-top: 49px;
+
+      .form-control {
+        min-width: 429px;
+      }
+
+      .form-group {
+        margin-left: 87px;
+        margin-bottom: 18px;
+
+        span {
+          color: $color-red;
+
+          &:first-child {
+            width: 11px;
+          }
+        }
+
+        input.form-control {
+          height: 30px;
+          line-height: 30px;
+          border: 1px solid $color-n;
+
+          &::-webkit-input-placeholder {
+            font-size: $font-size-m;
+            color: #B5B5B6;
+             text-align: left;
+
+          }
+        }
+      }
+
+      .form-title {
+        border-left: 3px solid $color-red;
+        padding-left: 15px;
+        margin-bottom: 37px;
+        margin-top: 61px;
+
+        h5 {
+          font-size: $font-size-l;
+        }
+
+        p {
+          font-size: $font-size-m;
+        }
+      }
+    }
+  }
+}
