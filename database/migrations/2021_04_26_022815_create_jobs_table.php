@@ -34,7 +34,7 @@ class CreateJobsTable extends Migration
             $table->integer('urgency_level')->comment('紧急程度');
             $table->enum('channel', ['applets', 'website', 'other_platform'])->comment('渠道选择');
             $table->string('channel_remark')->comment('渠道平台备注');
-            $table->string('deadline')->comment('截止日期');
+            $table->date('deadline')->comment('截止日期');
             $table->timestamps();
             $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
         });

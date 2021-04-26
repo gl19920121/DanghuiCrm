@@ -159,34 +159,34 @@ a:hover {
 .navbar {
   font-size: $font-size-l;
   color: rgba(255, 255, 255, 0.5);
-    background-color: $color-dark;
-    min-height: 60px;
-    /*padding-left: 260px;*/
-    padding-left: 0;
-    padding: 0;
+  background-color: $color-dark;
+  min-height: 60px;
+  /*padding-left: 260px;*/
+  padding-left: 0;
+  padding: 0;
 
-    .navbar-nav {
-      .nav-item {
-        width: 140px;
-        min-height: 60px;
+  .navbar-nav {
+    .nav-item {
+      width: 140px;
+      min-height: 60px;
 
-        a.nav-link {
-          line-height: 60px;
-          padding-top: 0;
-          padding-bottom: 0;
-          margin-left: 0;
-      }
-      }
-      .nav-item:hover {
-        a.nav-link {
-          color: white;
-        }
-      }
-      .active {
-        color: white;
-        background-color: $color-red;
+      a.nav-link {
+        line-height: 60px;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-left: 0;
       }
     }
+    .nav-item:hover {
+      a.nav-link {
+        color: white;
+      }
+    }
+    .active {
+      color: white;
+      background-color: $color-red;
+    }
+  }
 }
 
 #navbarNavDropdown {
@@ -200,8 +200,43 @@ a:hover {
     }
 }
 
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid #EFEFEF;
+}
+
 .my-menu {
   margin-left: 15px;
+}
+
+.my-nav-tabs {
+  .nav-tabs {
+    margin-left: 40px;
+    border-bottom: 1px solid $color-border-gray;
+
+    .nav-item  {
+      padding-right: 40px;
+      padding-top: 20px;
+
+      a {
+        color: $color-n;
+        border: none;
+        &:hover {
+          border: none;
+          border-bottom: 2px solid $color-red;
+        }
+      }
+      a.active {
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        border-bottom: 2px solid $color-red;
+      }
+    }
+  }
 }
 
 .main-bg {
@@ -265,29 +300,9 @@ a:hover {
       background-color: white;
       margin-top: 25px;
 
-      .nav-tabs {
-        min-height: 54px;
-        margin-left: 40px;
-        border-bottom: 1px solid $color-border-gray;
-
-        .nav-item  {
-          padding-right: 40px;
-          padding-top: 20px;
-
-          a {
-            color: $color-n;
-            border: none;
-            &:hover {
-              border: none;
-              border-bottom: 2px solid $color-red;
-            }
-          }
-          a.active {
-            border-top: none;
-            border-right: none;
-            border-left: none;
-            border-bottom: 2px solid $color-red;
-          }
+      .my-nav-tabs {
+        .nav-tabs {
+          min-height: 54px;
         }
       }
 
@@ -360,6 +375,48 @@ a:hover {
           &:first-child {
             border-left: none;
           }
+        }
+      }
+    }
+  }
+}
+
+.second-navbar {
+  background-color: white;
+
+  .jobs {
+    margin-left: 362px;
+  }
+
+  .container {
+    min-height: 60px;
+  }
+
+  .my-nav-tabs {
+    min-height: 60px;
+
+    .nav-tabs {
+      min-height: 60px;
+      border-bottom: none;
+
+      .nav-item {
+        width: 139px;
+        min-height: 60px;
+        padding-top: 0;
+
+        a {
+          padding: 0;
+          line-height: 60px;
+          &:hover {
+            border-bottom: 3px solid $color-red;
+          }
+        }
+        a.active {
+          color: $color-red;
+          border-bottom: 3px solid $color-red;
+        }
+        a.nav-link {
+
         }
       }
     }

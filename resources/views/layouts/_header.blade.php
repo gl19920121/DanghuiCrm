@@ -15,17 +15,18 @@
                         首页 <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobtasks.') !== false ? 'active': '' }}">
-                    <a class="nav-link" href="{{ route('home') }}">
+                <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobs.') !== false ? 'active': '' }}">
+                    <a class="nav-link" href="{{ route('jobs.create') }}">
                         运作职位
                     </a>
+                    <div class="triangle-up m-auto"></div>
                 </li>
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'resumes.') !== false ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('home') }}">
                         简历库
                     </a>
                 </li>
-                <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobtasks.') !== false ? 'active': '' }}">
+                <li class="nav-item {{ strpos(Route::currentRouteName(), 'tasks.') !== false ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('home') }}">
                         招聘进度
                     </a>
@@ -54,41 +55,6 @@
     </div>
 </nav>
 
-<nav hidden class="navbar navbar-expand-lg navbar-dark navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="route('home')">
-                <img alt="" src="{{ URL::asset('images/logo_with_text.png') }}" />
-            </a>
-        </div>
-        <ul class="navbar-nav justify-content-end">
-            <li class="nav-item">
-                <a href="{{ route('home') }}">首页</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('home') }}">运作职位</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('home') }}">简历库</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('home') }}">招聘进度</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('users.show', Auth::user()) }}">个人中心</a>
-                    <a class="dropdown-item" href="#">编辑资料</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" id="logout" href="#">
-                        <form action="{{ route('logout') }}" method="POST">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button class="btn btn-block btn-danger" type="submit" name="button">退出</button>
-                        </form>
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
+@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list']))
+@include('layouts._second_header')
+@endif

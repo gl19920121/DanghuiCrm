@@ -11118,8 +11118,43 @@ a:hover {
   height: 21px;
 }
 
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid #EFEFEF;
+}
+
 .my-menu {
   margin-left: 15px;
+}
+
+.my-nav-tabs .nav-tabs {
+  margin-left: 40px;
+  border-bottom: 1px solid #C9CACA;
+}
+
+.my-nav-tabs .nav-tabs .nav-item {
+  padding-right: 40px;
+  padding-top: 20px;
+}
+
+.my-nav-tabs .nav-tabs .nav-item a {
+  color: #3E3A39;
+  border: none;
+}
+
+.my-nav-tabs .nav-tabs .nav-item a:hover {
+  border: none;
+  border-bottom: 2px solid #D83856;
+}
+
+.my-nav-tabs .nav-tabs .nav-item a.active {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid #D83856;
 }
 
 .main-bg {
@@ -11191,32 +11226,8 @@ a:hover {
   margin-top: 25px;
 }
 
-.main-bg .home .list .nav-tabs {
+.main-bg .home .list .my-nav-tabs .nav-tabs {
   min-height: 54px;
-  margin-left: 40px;
-  border-bottom: 1px solid #C9CACA;
-}
-
-.main-bg .home .list .nav-tabs .nav-item {
-  padding-right: 40px;
-  padding-top: 20px;
-}
-
-.main-bg .home .list .nav-tabs .nav-item a {
-  color: #3E3A39;
-  border: none;
-}
-
-.main-bg .home .list .nav-tabs .nav-item a:hover {
-  border: none;
-  border-bottom: 2px solid #D83856;
-}
-
-.main-bg .home .list .nav-tabs .nav-item a.active {
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  border-bottom: 2px solid #D83856;
 }
 
 .main-bg .home .list .tab-content {
@@ -11301,5 +11312,46 @@ a:hover {
 
 .main-bg .home .general .content .col:first-child {
   border-left: none;
+}
+
+.second-navbar {
+  background-color: white;
+}
+
+.second-navbar .jobs {
+  margin-left: 362px;
+}
+
+.second-navbar .container {
+  min-height: 60px;
+}
+
+.second-navbar .my-nav-tabs {
+  min-height: 60px;
+}
+
+.second-navbar .my-nav-tabs .nav-tabs {
+  min-height: 60px;
+  border-bottom: none;
+}
+
+.second-navbar .my-nav-tabs .nav-tabs .nav-item {
+  width: 139px;
+  min-height: 60px;
+  padding-top: 0;
+}
+
+.second-navbar .my-nav-tabs .nav-tabs .nav-item a {
+  padding: 0;
+  line-height: 60px;
+}
+
+.second-navbar .my-nav-tabs .nav-tabs .nav-item a:hover {
+  border-bottom: 3px solid #D83856;
+}
+
+.second-navbar .my-nav-tabs .nav-tabs .nav-item a.active {
+  color: #D83856;
+  border-bottom: 3px solid #D83856;
 }
 
