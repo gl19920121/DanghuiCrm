@@ -7,7 +7,8 @@
         <title>{{ env('APP_NAME') }}-@yield('title')</title>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="{{ mix('css/my.css') }}">
     </head>
 
     <body class="{{ Route::currentRouteName() === 'login' ? 'login-bg' : 'main-bg' }}">
@@ -19,6 +20,7 @@
                 @includeWhen(Route::currentRouteName() !== 'login', 'layouts._footer')
             <!-- </div> -->
         </div>
-        <script src="{{ mix('js/app.js') }}"></script>
+        <script src="/js/app.js"></script>
+        <script src="{{ mix('js/my.js') }}"></script>
     </body>
 </html>

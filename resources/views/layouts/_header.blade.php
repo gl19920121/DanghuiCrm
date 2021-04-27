@@ -14,22 +14,33 @@
                     <a class="nav-link" href="{{ route('home') }}">
                         首页 <span class="sr-only">(current)</span>
                     </a>
+                    @if (in_array(Route::currentRouteName(), ['home']))
+                      <div class="triangle-up"></div>
+                    @endif
                 </li>
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobs.') !== false ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('jobs.create') }}">
                         运作职位
                     </a>
-                    <div class="triangle-up m-auto"></div>
+                    @if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list']))
+                      <div class="triangle-up"></div>
+                    @endif
                 </li>
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'resumes.') !== false ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('home') }}">
                         简历库
                     </a>
+                    @if (in_array(Route::currentRouteName(), []))
+                      <div class="triangle-up"></div>
+                    @endif
                 </li>
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'tasks.') !== false ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('home') }}">
                         招聘进度
                     </a>
+                    @if (in_array(Route::currentRouteName(), []))
+                      <div class="triangle-up"></div>
+                    @endif
                 </li>
             </ul>
             <div class="form-inline ml-auto">
@@ -56,5 +67,5 @@
 </nav>
 
 @if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list']))
-@include('layouts._second_header')
+  @include('layouts._second_header')
 @endif
