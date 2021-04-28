@@ -66,6 +66,6 @@
     </div>
 </nav>
 
-@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list']))
+@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list', 'jobs.search']))
   @include('layouts._second_header')
 @endif

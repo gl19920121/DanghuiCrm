@@ -22,6 +22,7 @@ $color-red: #D83856;
 $color-blue: #2EA7E0;
 $color-gray: #898989;
 $color-border-gray: #C9CACA;
+$color-table-red: 216, 56 ,86;
 
 $img-url-public: "../images/";
 $img-url-login: "../images/login/";
@@ -433,7 +434,6 @@ a:hover {
   padding-left: 39px;
   padding-right: 39px;
   padding-bottom: 113px;
-  background-color: white;
 
   .default-form {
 
@@ -495,4 +495,84 @@ a:hover {
       }
     }
   }
+}
+
+.job-list {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+
+  .default-list {
+    padding-top: 48px;
+
+    .default-table {
+      border: 1px solid rgba(216, 56 ,86, 0.1);
+      font-size: 14px;
+
+      thead {
+        background-color: rgba(216, 56 ,86, 0.1);
+      }
+
+      th {
+        color: #D83856;
+        font-weight: normal;
+        border-top: 1px solid rgba(216, 56 ,86, 0.1);
+        border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
+      }
+
+      td {
+        border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
+      }
+    }
+
+    .table-striped {
+      tbody {
+        tr {
+          &:nth-of-type(odd) {
+            background-color: white;
+          }
+          &:nth-of-type(even) {
+            background-color: rgba(216, 56 ,86, 0.03);
+          }
+        }
+      }
+    }
+  }
+}
+
+.pagination {
+  li {
+    margin-left: 10px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .page-item {
+    .page-link {
+      width: 30px;
+      height: 30px;
+      color: black;
+      border-color: #3E3A39;
+      border-radius: 5px;
+      padding: 0;
+      padding-top: 3px;
+      padding-bottom: auto;
+    }
+    .active {
+      .page-link {
+        background-color: white;
+        border-color: #D83856;
+        color: #D83856;
+      }
+    }
+  }
+}
+
+.btn-dropdown {
+  width: 97px;
+  height: 30px;
+  border: 1px solid #3E3A39;
+  padding: 0;
+  line-height: 30px;
 }

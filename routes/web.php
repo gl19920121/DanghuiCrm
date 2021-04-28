@@ -18,6 +18,7 @@ Route::resource('resumes', 'ResumesController'); //简历相关
 Route::resource('tasks', 'TasksController'); //任务相关
 Route::resource('jobs', 'JobsController'); //任务相关
 Route::get('jobs.list', 'JobsController@list')->name('jobs.list'); //任务相关
+Route::post('jobs.search', 'JobsController@search')->name('jobs.search'); //任务相关
 
 Route::get('login', 'SessionsController@create')->name('login'); //登录页面
 Route::post('login', 'SessionsController@store')->name('login'); //登录请求

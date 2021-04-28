@@ -24,7 +24,7 @@ class CreateJobsTable extends Migration
             $table->integer('salary_min')->comment('最低税前月薪');
             $table->integer('salary_max')->comment('最高税前月薪');
             $table->enum('welfare', ['social_insurance', 'five_social_insurance_and_one_housing_fund', 'four_social_insurance_and_one_housing_fund'])->comment('福利待遇');
-            $table->string('sparkle')->comment('职位亮点');
+            $table->string('sparkle')->nullable()->comment('职位亮点');
             $table->integer('age_min')->comment('最低年龄');
             $table->integer('age_max')->comment('最高年龄');
             $table->enum('education', ['unlimited', 'high_schoo', 'junior', 'undergraduate', 'master', 'doctor'])->comment('学历要求');
@@ -33,7 +33,7 @@ class CreateJobsTable extends Migration
             $table->string('requirement')->comment('任职要求');
             $table->integer('urgency_level')->comment('紧急程度');
             $table->enum('channel', ['applets', 'website', 'other_platform'])->comment('渠道选择');
-            $table->string('channel_remark')->comment('渠道平台备注');
+            $table->string('channel_remark')->nullable()->comment('渠道平台备注');
             $table->date('deadline')->comment('截止日期');
             $table->timestamps();
             $table->tinyInteger('status')->nullable()->default(1)->comment('状态');

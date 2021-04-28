@@ -2,13 +2,13 @@
 @section('title', '发布职位')
 @section('content')
 <!-- offset-md-2 col-md-8 -->
-<div class="job-create">
+<div class="job-create bg-white">
     <div class="default-form">
         <div class="form-header"></div>
         <hr class="divider">
         <div class="form-body">
             @include('shared._errors')
-            <form class="text-center" method="POST" action="{{ route('users.store') }}">
+            <form class="text-center" method="POST" action="{{ route('jobs.store') }}">
                 {{ csrf_field() }}
                 <div class="form-title text-left">
                     <h5>企业基本信息</h5>
@@ -122,27 +122,22 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="email">紧急程度：</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="urgency_level" id="urgencyLevel1" value="0" checked>
+                        <input class="form-check-input" type="radio" name="urgency_level" id="urgencyLevel1" value="0" checked="true">
                         <label class="form-check-label" for="urgencyLevel1">标准</label>
                     </div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="urgency_level" id="urgencyLevel2" value="1">
+                        <input class="form-check-input" type="radio" name="urgency_level" id="urgencyLevel2" value="1" checked="false">
                         <label class="form-check-label" for="urgencyLevel2">急聘</label>
                     </div>
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="email">渠道选择：</label>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="channel1" value="other_platform">
-                        <label class="form-check-label" for="channel1">其他招聘平台</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="channel2" value="applets" checked>
-                        <label class="form-check-label" for="channel2">当会直聘小程序</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="channel3" value="website" checked>
-                        <label class="form-check-label" for="channel3">当会直聘官网</label>
+                    @foreach($channelArr as $channel)
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="channel" value="{{ $key }}" @if($channel['show']) checked @endif>
+                          <label class="form-check-label" for="channel">{{ $channel['show'] }}</label>
+                      </div>
+                    @endforeach
                     </div>
                 </div>
                 <div class="form-group form-inline">
@@ -150,7 +145,7 @@
                     <input type="text" name="deadline" class="form-control small" value="{{ old('deadline') }}" />
                 </div>
 
-                <button style="margin-top: 100px;" type="submit" class="btn btn-danger">发布职位</button>
+                <button type="submit" class="btn btn-danger">发布职位</button>
             </form>
         </div>
     </div>

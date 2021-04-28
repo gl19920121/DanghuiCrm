@@ -420,7 +420,6 @@ a:hover {
   padding-left: 39px;
   padding-right: 39px;
   padding-bottom: 113px;
-  background-color: white;
 }
 
 .job-create .default-form .form-header {
@@ -476,5 +475,75 @@ a:hover {
 
 .job-create .default-form .form-body .form-title p {
   font-size: 14px;
+}
+
+.job-list {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+}
+
+.job-list .default-list {
+  padding-top: 48px;
+}
+
+.job-list .default-list .default-table {
+  border: 1px solid rgba(216, 56, 86, 0.1);
+  font-size: 14px;
+}
+
+.job-list .default-list .default-table thead {
+  background-color: rgba(216, 56, 86, 0.1);
+}
+
+.job-list .default-list .default-table th {
+  color: #D83856;
+  font-weight: normal;
+  border-top: 1px solid rgba(216, 56, 86, 0.1);
+  border-bottom: 1px solid rgba(216, 56, 86, 0.1);
+}
+
+.job-list .default-list .default-table td {
+  border-bottom: 1px solid rgba(216, 56, 86, 0.1);
+}
+
+.job-list .default-list .table-striped tbody tr:nth-of-type(odd) {
+  background-color: white;
+}
+
+.job-list .default-list .table-striped tbody tr:nth-of-type(even) {
+  background-color: rgba(216, 56, 86, 0.03);
+}
+
+.pagination li {
+  margin-left: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.pagination .page-item .page-link {
+  width: 30px;
+  height: 30px;
+  color: black;
+  border-color: #3E3A39;
+  border-radius: 5px;
+  padding: 0;
+  padding-top: 3px;
+  padding-bottom: auto;
+}
+
+.pagination .page-item .active .page-link {
+  background-color: white;
+  border-color: #D83856;
+  color: #D83856;
+}
+
+.btn-dropdown {
+  width: 97px;
+  height: 30px;
+  border: 1px solid #3E3A39;
+  padding: 0;
+  line-height: 30px;
 }
 
