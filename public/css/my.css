@@ -422,6 +422,10 @@ a:hover {
   padding-bottom: 113px;
 }
 
+.job-create .default-form .btn-form-submit {
+  margin-top: 100px;
+}
+
 .job-create .default-form .form-header {
   height: 54px;
 }
@@ -454,7 +458,7 @@ a:hover {
   text-align: left;
 }
 
-.job-create .default-form .form-body .form-group input.normal {
+.job-create .default-form .form-body .form-group .normal {
   min-width: 429px;
 }
 

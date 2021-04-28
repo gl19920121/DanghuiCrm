@@ -15,7 +15,7 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="company">公司名称：</label>
-                    <input type="text" name="company" class="form-control normal" value="{{ old('company') }}" placeholder="请填写" />
+                    <input type="text" name="company" class="form-control normal" value="{{ old('company') }}" placeholder="请填写"  />
                 </div>
                 <div class="form-group form-inline">
                     <span></span><label for="quota">招聘人数：</label>
@@ -26,11 +26,11 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="name">职位名称：</label>
-                    <input type="text" name="name" class="form-control normal" value="{{ old('name') }}" placeholder="请输入职位名称" />
+                    <input type="text" name="name" class="form-control normal" value="{{ old('name') }}" placeholder="请输入职位名称"  />
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="type">职位类别：</label>
-                    <input type="text" name="type" class="form-control normal" value="{{ old('type') }}" placeholder="请输入职位名称" />
+                    <input type="text" name="type" class="form-control normal" value="{{ old('type') }}" placeholder="请输入职位名称"  />
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="nature">工作性质：</label>
@@ -47,14 +47,14 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="salary">税前月薪：</label>
                     <div class="input-group">
-                        <input type="text" name="salary_min" class="form-control small" value="{{ old('salary_min') }}" />
+                        <input type="text" name="salary_min" class="form-control small" value="{{ old('salary_min') }}"  />
                         <div class="input-group-append">
                             <div class="input-group-text">K</div>
                         </div>
                     </div>
                     <label class="ml-1 mr-1">-</label>
                     <div class="input-group">
-                        <input type="text" name="salary_max" class="form-control small" value="{{ old('salary_max') }}" />
+                        <input type="text" name="salary_max" class="form-control small" value="{{ old('salary_max') }}"  />
                         <div class="input-group-append">
                             <div class="input-group-text">K</div>
                         </div>
@@ -78,14 +78,14 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="age">年龄范围：</label>
                     <div class="input-group">
-                        <input type="text" name="age_min" class="form-control small" value="{{ old('age_min') }}" />
+                        <input type="text" name="age_min" class="form-control small" value="{{ old('age_min') }}"  />
                         <div class="input-group-append">
                             <div class="input-group-text">岁</div>
                         </div>
                     </div>
                     <label class="ml-1 mr-1">-</label>
                     <div class="input-group">
-                        <input type="text" name="age_max" class="form-control small" value="{{ old('age_max') }}" />
+                        <input type="text" name="age_max" class="form-control small" value="{{ old('age_max') }}"  />
                         <div class="input-group-append">
                             <div class="input-group-text">岁</div>
                         </div>
@@ -110,42 +110,39 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="duty">工作职责：</label>
-                    <textarea name="duty" class="form-control" value="{{ old('duty') }}"></textarea>
+                    <textarea name="duty" class="form-control normal" value="{{ old('duty') }}" ></textarea>
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="requirement">任职要求：</label>
-                    <textarea name="requirement" class="form-control" value="{{ old('requirement') }}"></textarea>
+                    <textarea name="requirement" class="form-control normal" value="{{ old('requirement') }}" ></textarea>
                 </div>
                 <div class="form-title text-left">
                     <h5>发布设置</h5>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="email">紧急程度：</label>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="urgency_level" id="urgencyLevel1" value="0" checked="true">
-                        <label class="form-check-label" for="urgencyLevel1">标准</label>
-                    </div>
-                    <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="urgency_level" id="urgencyLevel2" value="1" checked="false">
-                        <label class="form-check-label" for="urgencyLevel2">急聘</label>
-                    </div>
+                    <span>*</span><label for="urgency_level">紧急程度：</label>
+                    @foreach ($urgencyLevelArr as $key => $urgencyLevel)
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}" @if($urgencyLevel['selected']) checked @endif>
+                            <label class="custom-control-label" for="urgency_level_{{ $key }}">{{ $urgencyLevel['show'] }}</label>
+                        </div>
+                    @endforeach
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="email">渠道选择：</label>
-                    @foreach($channelArr as $channel)
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="channel" value="{{ $key }}" @if($channel['show']) checked @endif>
-                          <label class="form-check-label" for="channel">{{ $channel['show'] }}</label>
-                      </div>
+                    <span>*</span><label for="channel">渠道选择：</label>
+                    @foreach ($channelArr as $key => $channel)
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]" @if($channel['selected']) checked @endif>
+                            <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['show'] }}</label>
+                        </div>
                     @endforeach
-                    </div>
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="deadline">截止日期：</label>
-                    <input type="text" name="deadline" class="form-control small" value="{{ old('deadline') }}" />
+                    <input type="text" name="deadline" class="form-control normal" value="{{ old('deadline') }}" placeholder="请填写" />
                 </div>
 
-                <button type="submit" class="btn btn-danger">发布职位</button>
+                <button type="submit" class="btn btn-danger btn-form-submit">发布职位</button>
             </form>
         </div>
     </div>

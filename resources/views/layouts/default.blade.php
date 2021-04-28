@@ -15,7 +15,7 @@
         @includeWhen(Route::currentRouteName() !== 'login', 'layouts._header')
         <div class="container">
             <!-- <div class="offset-md-1 col-md-10"> -->
-                @includeWhen(Route::currentRouteName() !== 'login', 'shared._messages')
+                <!-- @includeWhen(Route::currentRouteName() !== 'login', 'shared._messages') -->
                 @yield('content')
                 @includeWhen(Route::currentRouteName() !== 'login', 'layouts._footer')
             <!-- </div> -->

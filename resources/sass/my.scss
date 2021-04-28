@@ -437,6 +437,10 @@ a:hover {
 
   .default-form {
 
+    .btn-form-submit {
+      margin-top: 100px;
+    }
+
     .form-header {
       height: 54px;
     }
@@ -470,7 +474,7 @@ a:hover {
           }
         }
 
-        input.normal {
+        .normal {
           min-width: 429px;
         }
 

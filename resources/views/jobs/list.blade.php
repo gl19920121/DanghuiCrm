@@ -31,7 +31,7 @@
         </li>
       </ul>
     </div>
-    <form class="text-center" method="POST" action="{{ route('jobs.search') }}">
+    <form class="text-center" method="GET" action="{{ route('jobs.list') }}">
       {{ csrf_field() }}
       <div class="row align-items-center mb-4">
         <div class="col-auto">
@@ -82,8 +82,12 @@
           <tr>
             <td>{{ $job->name }}</td>
             <td>{{ $job->company }}</td>
-            <td>{{ $job->urgency_level }}</td>
-            <td>{{ $job->channel }}</td>
+            <td>{{ $urgencyLevelArr[$job->urgency_level]['show'] }}</td>
+            <td>
+              @foreach (json_decode($job->channel) as $index => $item)
+                {{ $channelArr[$item]['show'] }}{{ $index === 0 ? '/' : '' }}
+              @endforeach
+            </td>
             <td>{{ $job->company }}</td>
             <td>{{ $job->updated_at }}</td>
             <td>
