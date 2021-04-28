@@ -146,8 +146,8 @@
                     </div>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="email">截止日期：</label>
-                    <input type="text" class="datepicker">
+                    <span>*</span><label for="deadline">截止日期：</label>
+                    <input type="text" name="deadline" class="form-control small" value="{{ old('deadline') }}" />
                 </div>
 
                 <button style="margin-top: 100px;" type="submit" class="btn btn-danger">发布职位</button>
