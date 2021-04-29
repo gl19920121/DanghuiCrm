@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{{ mix('css/my.css') }}">
     </head>
 
-    <body class="{{ Route::currentRouteName() === 'login' ? 'login-bg' : 'main-bg' }}">
+    <body class="@if(Route::currentRouteName() === 'login') login-bg-{{ $bgNum }} @else main-bg @endif">
         @includeWhen(Route::currentRouteName() !== 'login', 'layouts._header')
         <div class="container">
             <!-- <div class="offset-md-1 col-md-10"> -->

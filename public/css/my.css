@@ -30,8 +30,28 @@ a:hover {
   color: #C9CACA;
 }
 
-.login-bg {
+.login-bg-1 {
   background-image: url(/images/bg_1.jpg?ed5a17a6590adb5be73c10f26ee34638);
+  background-size: cover;
+}
+
+.login-bg-2 {
+  background-image: url(/images/bg_2.jpg?04064c28b7981dac44f2f17cf575180b);
+  background-size: cover;
+}
+
+.login-bg-3 {
+  background-image: url(/images/bg_3.jpg?4aa1644c8064682390588f5c1bf15236);
+  background-size: cover;
+}
+
+.login-bg-4 {
+  background-image: url(/images/bg_4.jpg?2badca1b19faad51800a906057d5596c);
+  background-size: cover;
+}
+
+.login-bg-5 {
+  background-image: url(/images/bg_5.jpg?ea9f662094e21ac8fde9c0301d81256b);
   background-size: cover;
 }
 
@@ -568,7 +588,7 @@ a:hover {
 .btn-dropdown {
   width: 97px;
   height: 30px;
-  border: 1px solid #3E3A39;
+  border: 1px solid #C9CACA;
   padding: 0;
   line-height: 30px;
 }

@@ -59,8 +59,24 @@ a:hover {
   color: $color-border-gray;
 }
 
-.login-bg {
+.login-bg-1 {
   background-image: url("#{$img-url-login}bg_1.jpg");
+  background-size: cover;
+}
+.login-bg-2 {
+  background-image: url("#{$img-url-login}bg_2.jpg");
+  background-size: cover;
+}
+.login-bg-3 {
+  background-image: url("#{$img-url-login}bg_3.jpg");
+  background-size: cover;
+}
+.login-bg-4 {
+  background-image: url("#{$img-url-login}bg_4.jpg");
+  background-size: cover;
+}
+.login-bg-5 {
+  background-image: url("#{$img-url-login}bg_5.jpg");
   background-size: cover;
 }
 
@@ -606,7 +622,7 @@ a:hover {
 .btn-dropdown {
   width: 97px;
   height: 30px;
-  border: 1px solid #3E3A39;
+  border: 1px solid $color-border-gray;
   padding: 0;
   line-height: 30px;
 }
