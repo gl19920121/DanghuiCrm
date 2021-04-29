@@ -3,29 +3,29 @@
 @section('content')
 <div class="job-list bg-white">
   <div class="my-nav-tabs-top">
-    <ul class="nav nav-tabs mr-4" id="myTab" role="tablist">
+    <ul class="nav nav-tabs text-center" id="myTab" role="tablist">
       <li class="nav-item">
         <a class="nav-link @if(empty($tab) || $tab === 'ing') active @endif" id="job-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'ing']) }}" role="tab" aria-controls="job"
               aria-selected="true">
-          <h6>进行中职位</h6>
+          进行中职位
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link @if($tab === 'pause') active @endif" id="accept-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'pause']) }}" role="tab" aria-controls="accept"
             aria-selected="false">
-          <h6>已暂停职位</h6>
+          已暂停职位
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link @if($tab === 'end') active @endif" id="task-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'end']) }}" role="tab" aria-controls="task"
             aria-selected="false">
-          <h6>已结束职位</h6>
+          已结束职位
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link @if($tab === 'drafts') active @endif" id="message-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'drafts']) }}" role="tab" aria-controls="message"
             aria-selected="false">
-          <h6>职位草稿箱</h6>
+          职位草稿箱
         </a>
       </li>
     </ul>

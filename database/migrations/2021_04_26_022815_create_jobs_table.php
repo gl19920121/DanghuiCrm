@@ -35,8 +35,12 @@ class CreateJobsTable extends Migration
             $table->json('channel')->comment('渠道选择');
             $table->string('channel_remark')->nullable()->comment('渠道平台备注');
             $table->date('deadline')->comment('截止日期');
+            $table->integer('release_uid')->comment('职位发布人')->unsigned();
+            $table->integer('execute_uid')->nullable()->comment('职位执行人')->unsigned();
             $table->timestamps();
             $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
+            $table->foreign('release_uid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
+            $table->foreign('execute_uid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
         });
     }
 

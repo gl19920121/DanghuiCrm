@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Job;
-use Illuminate\Support\Facades\DB;
+use Auth;
 
 class JobsController extends Controller
 {
@@ -68,6 +68,10 @@ class JobsController extends Controller
         ]);
 
         $data = $request->toArray();
+        $data['release_uid'] = Auth::user()->id;
+        if (isset($request->execute_uid)) {
+            $data['execute_uid'] = $request->execute_uid;
+        }
         $data['channel'] = json_encode(array_keys($data['channel']));
         $job = Job::create($data);
 
@@ -78,17 +82,19 @@ class JobsController extends Controller
     public function list(Request $request)
     {
         // return $request->toArray();
-        $jobs = Job::where(function ($query) use($request) {
-            if (!empty($request->name)) {
-                $query->where('name', 'like', $request->name);
-            }
-            if (!empty($request->urgency_level)) {
-                $query->where('urgency_level', '=', $request->urgency_level);
-            }
-            if (!empty($request->channel)) {
-                $query->whereJsonContains('channel', $request->channel);
-            }
-        });
+        $jobs = Job::where('execute_uid', '=', Auth::user()->id)
+            ->orWhere('release_uid', '=', Auth::user()->id)
+            ->where(function ($query) use($request) {
+                if (!empty($request->name)) {
+                    $query->where('name', 'like', $request->name);
+                }
+                if (!empty($request->urgency_level)) {
+                    $query->where('urgency_level', '=', $request->urgency_level);
+                }
+                if (!empty($request->channel)) {
+                    $query->whereJsonContains('channel', $request->channel);
+                }
+            });
         $jobs = $jobs->paginate($this->pageSize);
 
         $urgencyLevelArr = $this->urgencyLevelArr;

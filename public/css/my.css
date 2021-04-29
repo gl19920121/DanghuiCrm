@@ -241,13 +241,24 @@ a:hover {
   border-bottom: 0;
 }
 
-.my-nav-tabs-top .nav-tabs .nav-item a.nav-link {
-  color: #3E3A39;
+.my-nav-tabs-top .nav-tabs .nav-item {
+  width: 129px;
+  height: 50px;
   border-top: 1px solid #C9CACA;
   border-right: 1px solid #C9CACA;
   border-bottom: 1px solid #C9CACA;
+}
+
+.my-nav-tabs-top .nav-tabs .nav-item a.nav-link {
+  color: #3E3A39;
+  padding: 0;
+  line-height: 50px;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
+}
+
+.my-nav-tabs-top .nav-tabs .nav-item a.nav-link:hover {
+  border-bottom: none;
 }
 
 .my-nav-tabs-top .nav-tabs .nav-item a.active {
@@ -542,6 +553,10 @@ a:hover {
 
 .job-list .default-list {
   padding-top: 48px;
+}
+
+.job-list .default-list .btn {
+  width: 93px;
 }
 
 .job-list .default-list .default-table {
