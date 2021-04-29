@@ -39,21 +39,29 @@
 									</div>
 								</div>
 								<div class="row mt-4 justify-content-start bottom text-center">
-									<div class="col">
-										<h4>10</h4><br>
-										<b>运作职位</b>
+									<div class="col-auto">
+                    <div class="tip-item">
+                      <h4>10</h4>
+                      <b>运作职位</b>
+                    </div>
 									</div>
-									<div class="col">
-										<h4>10</h4><br>
-										<b>新增应聘</b>
+									<div class="col-auto">
+                    <div class="tip-item">
+  										<h4 class="color-red">10</h4>
+  										<b>新增应聘</b>
+                    </div>
 									</div>
-									<div class="col">
-										<h4>10</h4><br>
-										<b>新增委托</b>
+									<div class="col-auto">
+                    <div class="tip-item">
+  										<h4 class="color-red">10</h4>
+  										<b>新增委托</b>
+                    </div>
 									</div>
-									<div class="col">
-										<h4>10</h4><br>
-										<b>新增留言</b>
+									<div class="col-auto">
+                    <div class="tip-item">
+  										<h4>10</h4>
+  										<b>新增留言</b>
+                    </div>
 									</div>
 								</div>
 							</div>

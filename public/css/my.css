@@ -310,12 +310,22 @@ a:hover {
   border-bottom: 1px solid #C9CACA;
 }
 
-.main-bg .home .message .bottom .col {
+.main-bg .home .message .bottom .col-auto {
   border-left: 1px solid #C9CACA;
 }
 
-.main-bg .home .message .bottom .col:first-child {
+.main-bg .home .message .bottom .col-auto .tip-item {
+  width: 168px;
+}
+
+.main-bg .home .message .bottom .col-auto:first-child {
   border-left: none;
+  padding-left: 0;
+}
+
+.main-bg .home .message .bottom .col-auto:first-child .tip-item {
+  width: auto;
+  padding-right: 50px;
 }
 
 .main-bg .home .list {

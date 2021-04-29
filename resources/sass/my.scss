@@ -334,10 +334,21 @@ a:hover {
           border-bottom: 1px solid $color-border-gray;
         }
         .bottom {
-          .col {
+          .col-auto {
             border-left: 1px solid $color-border-gray;
+
+            .tip-item {
+              width: 168px;
+            }
+
             &:first-child {
               border-left: none;
+              padding-left: 0;
+
+              .tip-item {
+                width: auto;
+                padding-right: 50px;
+              }
             }
           }
         }
