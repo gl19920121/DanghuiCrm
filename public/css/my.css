@@ -217,6 +217,25 @@ a:hover {
   border-bottom: 2px solid #D83856;
 }
 
+.my-nav-tabs-top .nav-tabs {
+  border-bottom: 0;
+}
+
+.my-nav-tabs-top .nav-tabs .nav-item a.nav-link {
+  color: #3E3A39;
+  border-top: 1px solid #C9CACA;
+  border-right: 1px solid #C9CACA;
+  border-bottom: 1px solid #C9CACA;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.my-nav-tabs-top .nav-tabs .nav-item a.active {
+  border-top: 2px solid #D83856;
+  border-left: none;
+  border-bottom: none;
+}
+
 .main-bg {
   background-color: #EFEFEF;
 }
@@ -483,6 +502,9 @@ a:hover {
 
 .job-list {
   margin-top: 25px;
+}
+
+.job-list .job-list-body {
   padding-left: 39px;
   padding-right: 39px;
   padding-bottom: 113px;

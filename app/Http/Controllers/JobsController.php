@@ -68,7 +68,6 @@ class JobsController extends Controller
         ]);
 
         $data = $request->toArray();
-        // $data['channel'] = implode(',', array_keys($data['channel']));
         $data['channel'] = json_encode(array_keys($data['channel']));
         $job = Job::create($data);
 
@@ -112,6 +111,7 @@ class JobsController extends Controller
 
         return view('jobs.list')
             ->with('jobs', $jobs)
+            ->with('tab', $request->tab)
             ->with('name', $request->name)
             ->with('urgencyLevelArr', $urgencyLevelArr)
             ->with('channelArr', $channelArr);

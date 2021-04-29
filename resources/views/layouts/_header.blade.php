@@ -27,7 +27,7 @@
                     @endif
                 </li>
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'resumes.') !== false ? 'active': '' }}">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="#">
                         简历库
                     </a>
                     @if (in_array(Route::currentRouteName(), []))
@@ -35,7 +35,7 @@
                     @endif
                 </li>
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'tasks.') !== false ? 'active': '' }}">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="#">
                         招聘进度
                     </a>
                     @if (in_array(Route::currentRouteName(), []))

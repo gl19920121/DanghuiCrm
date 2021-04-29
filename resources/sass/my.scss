@@ -245,6 +245,33 @@ a:hover {
   }
 }
 
+.my-nav-tabs-top {
+  .nav-tabs {
+    border-bottom: 0;
+
+    .nav-item  {
+
+      a.nav-link {
+        color: #3E3A39;
+        border-top: 1px solid $color-border-gray;
+        border-right: 1px solid $color-border-gray;
+        border-bottom: 1px solid $color-border-gray;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+
+        &:hover {
+
+        }
+      }
+      a.active {
+        border-top: 2px solid $color-red;
+        border-left: none;
+        border-bottom: none;
+      }
+    }
+  }
+}
+
 .main-bg {
     background-color: #EFEFEF;
 
@@ -503,9 +530,12 @@ a:hover {
 
 .job-list {
   margin-top: 25px;
-  padding-left: 39px;
-  padding-right: 39px;
-  padding-bottom: 113px;
+
+  .job-list-body {
+    padding-left: 39px;
+    padding-right: 39px;
+    padding-bottom: 113px;
+  }
 
   .default-list {
     padding-top: 48px;
@@ -519,7 +549,7 @@ a:hover {
       }
 
       th {
-        color: #D83856;
+        color: $color-red;
         font-weight: normal;
         border-top: 1px solid rgba(216, 56 ,86, 0.1);
         border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
@@ -566,8 +596,8 @@ a:hover {
     .active {
       .page-link {
         background-color: white;
-        border-color: #D83856;
-        color: #D83856;
+        border-color: $color-red;
+        color: $color-red;
       }
     }
   }
