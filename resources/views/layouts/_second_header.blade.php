@@ -8,7 +8,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ in_array(Route::currentRouteName(), ['jobs.list', 'jobs.search']) ? 'active': '' }}"" href="{{ route('jobs.list') }}">
+            <a class="nav-link {{ in_array(Route::currentRouteName(), ['jobs.list', 'jobs.show']) ? 'active': '' }}"" href="{{ route('jobs.list') }}">
               职位管理
             </a>
           </li>

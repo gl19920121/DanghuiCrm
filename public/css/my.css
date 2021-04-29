@@ -55,6 +55,17 @@ a:hover {
   background-size: cover;
 }
 
+.tag-red {
+  background-color: #D83856;
+  border-radius: 5px;
+  color: white;
+  font-size: 12px;
+  width: 67px;
+  height: 21px;
+  line-height: 21px;
+  /*cursor: default;*/
+}
+
 .container {
   height: 100%;
 }
@@ -559,31 +570,31 @@ a:hover {
   width: 93px;
 }
 
-.job-list .default-list .default-table {
+.default-table {
   border: 1px solid rgba(216, 56, 86, 0.1);
   font-size: 14px;
 }
 
-.job-list .default-list .default-table thead {
+.default-table thead {
   background-color: rgba(216, 56, 86, 0.1);
 }
 
-.job-list .default-list .default-table th {
+.default-table thead th {
   color: #D83856;
   font-weight: normal;
   border-top: 1px solid rgba(216, 56, 86, 0.1);
   border-bottom: 1px solid rgba(216, 56, 86, 0.1);
 }
 
-.job-list .default-list .default-table td {
+.default-table td {
   border-bottom: 1px solid rgba(216, 56, 86, 0.1);
 }
 
-.job-list .default-list .table-striped tbody tr:nth-of-type(odd) {
+.table-striped tbody tr:nth-of-type(odd) {
   background-color: white;
 }
 
-.job-list .default-list .table-striped tbody tr:nth-of-type(even) {
+.table-striped tbody tr:nth-of-type(even) {
   background-color: rgba(216, 56, 86, 0.03);
 }
 
@@ -616,5 +627,68 @@ a:hover {
   border: 1px solid #C9CACA;
   padding: 0;
   line-height: 30px;
+}
+
+.job-detail .job-detail-header {
+  min-height: 260px;
+  margin-top: 24px;
+  padding: 32px 36px 26px 36px;
+}
+
+.job-detail .job-detail-header .btn-danger {
+  width: 79px;
+  height: 30px;
+  font-size: 12px;
+}
+
+.job-detail .job-detail-header .row:nth-child(2) {
+  margin-top: 53px;
+}
+
+.job-detail .job-detail-header .row:nth-child(3) {
+  margin-top: 23px;
+}
+
+.job-detail .job-detail-header .row:nth-child(4) {
+  margin-top: 58px;
+}
+
+.job-detail .job-detail-header small {
+  color: #727171;
+  font-size: 12px;
+}
+
+.job-detail .job-detail-header p {
+  color: #727171;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.job-detail .job-detail-header h1 {
+  color: #3E3A39;
+  font-size: 24px;
+  margin-bottom: 0;
+}
+
+.job-detail .job-detail-header h5 {
+  color: #3E3A39;
+  font-size: 16px;
+}
+
+.job-detail .job-detail-header h6 {
+  color: #B5B5B6;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.job-detail .job-detail-header h6 label {
+  color: #3E3A39;
+  font-size: 16px;
+  margin-right: 8px;
+  margin-bottom: 0;
+}
+
+.job-detail .job-detail-list {
+  margin-top: 22px;
 }
 

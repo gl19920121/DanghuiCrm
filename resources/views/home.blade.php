@@ -41,25 +41,25 @@
 								<div class="row mt-4 justify-content-start bottom text-center">
 									<div class="col-auto">
                     <div class="tip-item">
-                      <h4>10</h4>
+                      <h4>{{ $statistics->job_doing }}</h4>
                       <b>运作职位</b>
                     </div>
 									</div>
 									<div class="col-auto">
                     <div class="tip-item">
-  										<h4 class="color-red">10</h4>
+  										<h4 class="color-red">{{ $statistics->job_apply }}</h4>
   										<b>新增应聘</b>
                     </div>
 									</div>
 									<div class="col-auto">
                     <div class="tip-item">
-  										<h4 class="color-red">10</h4>
+  										<h4 class="color-red">{{ $statistics->job_commission }}</h4>
   										<b>新增委托</b>
                     </div>
 									</div>
 									<div class="col-auto">
                     <div class="tip-item">
-  										<h4>10</h4>
+  										<h4>{{ $statistics->message }}</h4>
   										<b>新增留言</b>
                     </div>
 									</div>
@@ -114,17 +114,38 @@
               </div>
               <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="accept-tab">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item"></li>
+                    <li class="list-group-item">
+                      <div class="empty row">
+                        <div class="col text-center m-auto">
+                          <img src="{{ URL::asset('images/empty.png') }}">
+                          <p>您还没有新增的应聘</p>
+                        </div>
+                      </div>
+                    </li>
                   </ul>
               </div>
               <div class="tab-pane fade" id="audit" role="tabpanel" aria-labelledby="task-tab">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item"></li>
+                    <li class="list-group-item">
+                      <div class="empty row">
+                        <div class="col text-center m-auto">
+                          <img src="{{ URL::asset('images/empty.png') }}">
+                          <p>您还没有新增的委托</p>
+                        </div>
+                      </div>
+                    </li>
                   </ul>
               </div>
               <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="message-tab">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item"></li>
+                    <li class="list-group-item">
+                      <div class="empty row">
+                        <div class="col text-center m-auto">
+                          <img src="{{ URL::asset('images/empty.png') }}">
+                          <p>您还没有新增的留言</p>
+                        </div>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -152,7 +173,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <p>满意指数：<span class="color-red">198</span></p>
+            <p>满意指数：<span class="color-red">0</span></p>
           </div>
           <div class="col">
             <p>当前星级：</p>
@@ -173,19 +194,19 @@
               <div class="row content mt-4 justify-content-start bottom text-center">
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->resume_check }}</h3>
                     <p>查看</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
-                    <p>查看</p>
+                    <h3>{{ $statistics->resume_download }}</h3>
+                    <p>下载</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->resume_upload }}</h3>
                     <p>上传</p>
                   </div>
                 </div>
@@ -208,19 +229,19 @@
               <div class="row content mt-4 justify-content-start bottom text-center">
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->job_doing }}</h3>
                     <p>运作职位</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->job_apply }}</h3>
                     <p>新增应聘</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->job_commission }}</h3>
                     <p>新增委托</p>
                   </div>
                 </div>
@@ -243,19 +264,19 @@
               <div class="row content mt-4 justify-content-start bottom text-center">
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->schedule_talking }}</h3>
                     <p>电话沟通</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->schedule_push_resume }}</h3>
                     <p>推荐成功</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->schedule_interview }}</h3>
                     <p>进企面试</p>
                   </div>
                 </div>
@@ -263,19 +284,19 @@
               <div class="row content mt-4 justify-content-start bottom text-center">
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->schedule_offer }}</h3>
                     <p>面试通过</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->schedule_onboarding }}</h3>
                     <p>成功入职</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>105</h3>
+                    <h3>{{ $statistics->schedule_over_probation }}</h3>
                     <p>入职过保</p>
                   </div>
                 </div>

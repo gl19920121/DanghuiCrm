@@ -21,8 +21,9 @@ $color-dark: #303540;
 $color-red: #D83856;
 $color-blue: #2EA7E0;
 $color-gray: #898989;
+$color-light-gray: #727171;
+$color-silvery-gray: #B5B5B6;
 $color-border-gray: #C9CACA;
-$color-table-red: 216, 56 ,86;
 
 $img-url-public: "../images/";
 $img-url-login: "../images/login/";
@@ -78,6 +79,17 @@ a:hover {
 .login-bg-5 {
   background-image: url("#{$img-url-login}bg_5.jpg");
   background-size: cover;
+}
+
+.tag-red {
+  background-color: $color-red;
+  border-radius: 5px;
+  color: white;
+  font-size: 12px;
+  width: 67px;
+  height: 21px;
+  line-height: 21px;
+  /*cursor: default;*/
 }
 
 .container {
@@ -527,7 +539,7 @@ a:hover {
 
           &::-webkit-input-placeholder {
             font-size: $font-size-m;
-            color: #B5B5B6;
+            color: $color-silvery-gray;
              text-align: left;
           }
         }
@@ -575,37 +587,37 @@ a:hover {
       width: 93px;
       //height: 29px;
     }
+  }
+}
 
-    .default-table {
-      border: 1px solid rgba(216, 56 ,86, 0.1);
-      font-size: 14px;
+.default-table {
+  border: 1px solid rgba(216, 56 ,86, 0.1);
+  font-size: 14px;
 
-      thead {
-        background-color: rgba(216, 56 ,86, 0.1);
-      }
+  thead {
+    background-color: rgba(216, 56 ,86, 0.1);
 
-      th {
-        color: $color-red;
-        font-weight: normal;
-        border-top: 1px solid rgba(216, 56 ,86, 0.1);
-        border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
-      }
-
-      td {
-        border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
-      }
+    th {
+      color: $color-red;
+      font-weight: normal;
+      border-top: 1px solid rgba(216, 56 ,86, 0.1);
+      border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
     }
+  }
 
-    .table-striped {
-      tbody {
-        tr {
-          &:nth-of-type(odd) {
-            background-color: white;
-          }
-          &:nth-of-type(even) {
-            background-color: rgba(216, 56 ,86, 0.03);
-          }
-        }
+  td {
+    border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
+  }
+}
+
+.table-striped {
+  tbody {
+    tr {
+      &:nth-of-type(odd) {
+        background-color: white;
+      }
+      &:nth-of-type(even) {
+        background-color: rgba(216, 56 ,86, 0.03);
       }
     }
   }
@@ -645,4 +657,85 @@ a:hover {
   border: 1px solid $color-border-gray;
   padding: 0;
   line-height: 30px;
+}
+
+.job-detail {
+
+  .job-detail-header {
+    min-height: 260px;
+    margin-top: 24px;
+    padding: 32px 36px 26px 36px;
+
+    .btn-danger {
+      width: 79px;
+      height: 30px;
+      font-size: 12px;
+    }
+
+    .row {
+
+      &:nth-child(2) {
+      margin-top: 53px;
+      }
+      &:nth-child(3) {
+        margin-top: 23px;
+
+        .col-auto {
+          //padding-right: 26px;
+
+          &:not(:first-child) {
+            //padding-left: 26px;
+            //border-left: 1px solid $color-border-gray;
+          }
+        }
+      }
+      &:nth-child(4) {
+        margin-top: 58px;
+
+        .col-auto {
+          //padding-right: 15px;
+
+          &:not(:first-child) {
+            //padding-left: 26px;
+            //border-left: 1px solid $color-border-gray;
+          }
+        }
+      }
+    }
+
+    small {
+      color: $color-light-gray;
+      font-size: $font-size-s;
+    }
+    p {
+      color: $color-light-gray;
+      font-size: $font-size-m;
+      margin-bottom: 0;
+    }
+    h1 {
+      color: $color-n;
+      font-size: $font-size-xl;
+      margin-bottom: 0;
+    }
+    h5 {
+      color: $color-n;
+      font-size: $font-size-n;
+    }
+    h6 {
+      color: $color-silvery-gray;
+      font-size: $font-size-m;
+      margin-bottom: 0;
+
+      label {
+        color: $color-n;
+        font-size: $font-size-n;
+        margin-right: 8px;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .job-detail-list {
+    margin-top: 22px;
+  }
 }

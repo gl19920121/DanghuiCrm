@@ -81,7 +81,9 @@
         <tbody>
           @foreach($jobs as $job)
             <tr>
-              <td class="color-red">{{ $job->name }}</td>
+              <td>
+                <a class="color-red" href="{{ route('jobs.show', $job) }}">{{ $job->name }}</a>
+              </td>
               <td>{{ $job->company }}</td>
               <td>{{ $urgencyLevelArr[$job->urgency_level]['show'] }}</td>
               <td>

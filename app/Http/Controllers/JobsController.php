@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\Resume;
 use Auth;
 
 class JobsController extends Controller
@@ -71,6 +72,8 @@ class JobsController extends Controller
         $data['release_uid'] = Auth::user()->id;
         if (isset($request->execute_uid)) {
             $data['execute_uid'] = $request->execute_uid;
+        } else {
+            $data['execute_uid'] = Auth::user()->id;
         }
         $data['channel'] = json_encode(array_keys($data['channel']));
         $job = Job::create($data);
@@ -83,7 +86,7 @@ class JobsController extends Controller
     {
         // return $request->toArray();
         $jobs = Job::where('execute_uid', '=', Auth::user()->id)
-            ->orWhere('release_uid', '=', Auth::user()->id)
+            //->orWhere('release_uid', '=', Auth::user()->id)
             ->where(function ($query) use($request) {
                 if (!empty($request->name)) {
                     $query->where('name', 'like', $request->name);
@@ -121,5 +124,11 @@ class JobsController extends Controller
             ->with('name', $request->name)
             ->with('urgencyLevelArr', $urgencyLevelArr)
             ->with('channelArr', $channelArr);
+    }
+
+    public function show(Job $job)
+    {
+        $resumes = Resume::where('job_id', '=', $job->id)->paginate($this->pageSize);
+        return view('jobs.show', compact('job', 'resumes'));
     }
 }

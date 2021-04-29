@@ -22,7 +22,7 @@
                     <a class="nav-link" href="{{ route('jobs.create') }}">
                         运作职位
                     </a>
-                    @if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list']))
+                    @if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list', 'jobs.show']))
                       <div class="triangle-up"></div>
                     @endif
                 </li>
@@ -66,6 +66,6 @@
     </div>
 </nav>
 
-@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list', 'jobs.search']))
+@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list', 'jobs.show']))
   @include('layouts._second_header')
 @endif

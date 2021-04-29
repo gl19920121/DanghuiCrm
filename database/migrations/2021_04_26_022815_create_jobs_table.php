@@ -16,7 +16,7 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('company')->comment('公司名称');
-            $table->integer('quota')->comment('招聘人数');
+            $table->integer('quota')->nullable()->comment('招聘人数');
             $table->string('name')->comment('职位名称');
             $table->string('type')->comment('职位类别');
             $table->enum('nature', ['full', 'part', 'all'])->comment('工作性质');

@@ -41,6 +41,7 @@ class CreateResumesTable extends Migration
                 $table->string('source_remarks')->nullable()->comment('来源渠道备注');
                 $table->integer('upload_uid')->comment('上传人ID');
                 $table->string('attachment_path')->comment('简历文件路径');
+                $table->integer('job_id')->nullable()->comment('职位id')->unsigned();
                 $table->timestamps();
                 $table->integer('status')->nullable()->default(1)->comment('状态');
             });
