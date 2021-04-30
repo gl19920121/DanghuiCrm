@@ -41,7 +41,10 @@
         </div>
       </div>
       <div class="col-auto">
-        <button class="btn btn-danger">导出</button>
+        <form method="POST" action="{{ route('jobs.exported', ['job_id' => $job->id, 'job_name' => $job->name, 'job_company' => $job->company, 'created_at' => $job->created_at]) }}">
+          {{ csrf_field() }}
+          <button class="btn btn-danger">导出</button>
+        </form>
         <div class="btn-group" role="group">
           <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             更多操作
@@ -51,7 +54,11 @@
             <a class="dropdown-item" href="#">修改</a>
             <a class="dropdown-item" href="#">暂停</a>
             <a class="dropdown-item" href="#">结束</a>
-            <a class="dropdown-item" href="#">删除</a>
+            <form method="POST" action="{{ route('jobs.destroy', $job) }}">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+              <button class="dropdown-item" type="submit">删除</button>
+            </form>
           </div>
         </div>
       </div>
@@ -82,7 +89,7 @@
                   <li class="nav-item">
                     <a class="nav-link @if(empty($tab) || $tab === 'all') active @endif" id="all-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'all']) }}" role="tab" aria-controls="all"
                           aria-selected="true">
-                      求职者应聘
+                      求职者应聘（{{ count($resumes) }}）
                     </a>
                   </li>
                   <li class="nav-item">
@@ -152,6 +159,7 @@
                       <td>{{ $resume->status }}</td>
                       <td>{{ $resume->sex }}</td>
                       <td>{{ $resume->age }}</td>
+                      <td>{{ $resume->work_years }}</td>
                       <td>{{ $resume->education }}</td>
                       <td>{{ $resume->cur_company }}</td>
                       <td>{{ $resume->cur_position }}</td>
@@ -173,6 +181,11 @@
                   @endforeach
                 </tbody>
               </table>
+              <div class="row justify-content-end">
+                <div class="col-auto">
+                  {{ $resumes->links() }}
+                </div>
+              </div>
             </li>
           </ul>
         </div>

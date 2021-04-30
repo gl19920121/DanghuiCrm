@@ -619,7 +619,7 @@ a:hover {
   padding-bottom: auto;
 }
 
-.pagination .page-item .active .page-link {
+.pagination .active .page-link {
   background-color: white;
   border-color: #D83856;
   color: #D83856;
@@ -637,6 +637,10 @@ a:hover {
   min-height: 260px;
   margin-top: 24px;
   padding: 32px 36px 26px 36px;
+}
+
+.job-detail .job-detail-header form {
+  display: inline;
 }
 
 .job-detail .job-detail-header .btn-danger {

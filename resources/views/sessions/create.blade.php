@@ -15,7 +15,7 @@
                             <span class="input-group-addon">
                                 <img src="{{ URL::asset('images/icon_user.png') }}" />
                             </span>
-                            <input type="text" name="account" class="form-control" value="{{ old('account') }}" placeholder="用户名" />
+                            <input type="text" name="account" class="form-control" value="{{ old('account') }}" placeholder="用户名" autocomplete="off" />
                         </div>
                     </div>
                     <div class="form-group">

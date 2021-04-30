@@ -11,6 +11,14 @@
     <form method="POST" action="{{ route('resumes.store') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="form-group">
+            <label for="job_id">应招职位：</label>
+            <select id="job_id" name="job_id" class="form-control" value="{{ old('job_id') }}">
+                @foreach($jobs as $job)
+                    <option value="{{ $job->id }}">{{ $job->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <label for="name">姓名：</label>
             <input type="text" name="name" class="form-control" value="{{ old('name') }}" />
         </div>
@@ -137,6 +145,18 @@
             <label for="file">简历附件:</label>
             <input type="file" name="file" class="form-control" />
         </div>
+        <div class="form-group">
+            <label for="edu">教育经历:</label>
+            <textarea name="edu" class="form-control normal" value="{{ old('edu') }}" ></textarea>
+        </div>
+        <div class="form-group">
+            <label for="work">工作经历:</label>
+            <textarea name="work" class="form-control normal" value="{{ old('work') }}" ></textarea>
+        </div>
+        <div class="form-group">
+            <label for="prj">项目经历:</label>
+            <textarea name="prj" class="form-control normal" value="{{ old('prj') }}" ></textarea>
+        </div>
 
         <button type="submit" class="btn btn-primary">上传简历</button>
     </form>
@@ -146,4 +166,5 @@
     // $("#source").select(function() {
     //     $("#source").after(" Text marked!");
     // });
-</script>>
+</script>
+@stop

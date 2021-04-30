@@ -649,12 +649,13 @@ a:hover {
       padding-top: 3px;
       padding-bottom: auto;
     }
-    .active {
-      .page-link {
-        background-color: white;
-        border-color: $color-red;
-        color: $color-red;
-      }
+  }
+
+  .active {
+    .page-link {
+      background-color: white;
+      border-color: $color-red;
+      color: $color-red;
     }
   }
 }
@@ -673,6 +674,10 @@ a:hover {
     min-height: 260px;
     margin-top: 24px;
     padding: 32px 36px 26px 36px;
+
+    form {
+      display: inline;
+    }
 
     .btn-danger {
       width: 79px;

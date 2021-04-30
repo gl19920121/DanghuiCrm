@@ -103,7 +103,11 @@
                     <a class="dropdown-item" href="#">修改</a>
                     <a class="dropdown-item" href="#">暂停</a>
                     <a class="dropdown-item" href="#">结束</a>
-                    <a class="dropdown-item" href="#">删除</a>
+                    <form method="POST" action="{{ route('jobs.destroy', $job) }}">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button class="dropdown-item" type="submit">删除</button>
+                    </form>
                   </div>
                 </div>
               </td>

@@ -27,7 +27,7 @@
                     @endif
                 </li>
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'resumes.') !== false ? 'active': '' }}">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('resumes.create') }}">
                         简历库
                     </a>
                     @if (in_array(Route::currentRouteName(), []))

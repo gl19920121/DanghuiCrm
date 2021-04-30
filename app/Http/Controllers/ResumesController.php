@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Resume;
+use App\Models\Job;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,7 +30,10 @@ class ResumesController extends Controller
         $workNatures = ['全职', '兼职', '全职兼职'];
         $jobhunterStatus = ['在职-暂不考虑', '在职-考虑机会', '在职-月内到岗', '离职-随时到岗'];
         $sources = ['招聘平台', '小程序', '当会官网', '其他'];
-        return view('resumes.create', compact('educations', 'workYears', 'workNatures', 'jobhunterStatus', 'sources'));
+
+        $jobs = Job::where('execute_uid', '=', Auth::user()->id)->get();
+
+        return view('resumes.create', compact('educations', 'workYears', 'workNatures', 'jobhunterStatus', 'sources', 'jobs'));
     }
 
     public function show(Resume $resume)
@@ -99,6 +103,9 @@ class ResumesController extends Controller
             $data['exp_salary_flag'] = 0;
         }
         unset($data['file']);
+        unset($data['edu']);
+        unset($data['work']);
+        unset($data['prj']);
         $data['upload_uid'] = Auth::user()->id;
         $data['attachment_path'] = $filePath;
 
@@ -107,7 +114,8 @@ class ResumesController extends Controller
 
         // 返回
         session()->flash('success', '简历上传成功');
-        return redirect()->route('resumes.show', [$resume]);
+        return redirect()->route('home');
+        //return redirect()->route('resumes.show', [$resume]);
     }
 
     /**
