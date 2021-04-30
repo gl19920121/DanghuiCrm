@@ -77,6 +77,58 @@
         <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="job-tab">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
+              <div class="my-nav-tabs-top">
+                <ul class="nav nav-tabs text-center" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link @if(empty($tab) || $tab === 'all') active @endif" id="all-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'all']) }}" role="tab" aria-controls="all"
+                          aria-selected="true">
+                      求职者应聘
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link @if($tab === 'talking') active @endif" id="talking-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'talking']) }}" role="tab" aria-controls="talking"
+                        aria-selected="false">
+                      电话沟通
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link @if($tab === 'push_resume') active @endif" id="push_resume-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'push_resume']) }}" role="tab" aria-controls="push_resume"
+                        aria-selected="false">
+                      推荐简历
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link @if($tab === 'interview') active @endif" id="interview-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'interview']) }}" role="tab" aria-controls="interview"
+                        aria-selected="false">
+                      面试
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link @if($tab === 'offer') active @endif" id="offer-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'offer']) }}" role="tab" aria-controls="offer"
+                        aria-selected="false">
+                      offer
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link @if($tab === 'onboarding') active @endif" id="onboarding-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'onboarding']) }}" role="tab" aria-controls="onboarding"
+                        aria-selected="false">
+                      入职
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link @if($tab === 'over_probation') active @endif" id="over_probation-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'over_probation']) }}" role="tab" aria-controls="over_probation"
+                        aria-selected="false">
+                      过保
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link @if($tab === 'out') active @endif" id="out-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'out']) }}" role="tab" aria-controls="out"
+                        aria-selected="false">
+                      淘汰
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <table class="table table-striped default-table">
                 <thead>
                   <tr>

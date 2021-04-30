@@ -221,27 +221,27 @@ a:hover {
   margin-left: 15px;
 }
 
-.my-nav-tabs .nav-tabs {
+.my-nav-tabs > .nav-tabs {
   margin-left: 40px;
   border-bottom: 1px solid #C9CACA;
 }
 
-.my-nav-tabs .nav-tabs .nav-item {
+.my-nav-tabs > .nav-tabs .nav-item {
   padding-right: 40px;
   padding-top: 20px;
 }
 
-.my-nav-tabs .nav-tabs .nav-item a {
+.my-nav-tabs > .nav-tabs .nav-item a {
   color: #3E3A39;
   border: none;
 }
 
-.my-nav-tabs .nav-tabs .nav-item a:hover {
+.my-nav-tabs > .nav-tabs .nav-item a:hover {
   border: none;
   border-bottom: 2px solid #D83856;
 }
 
-.my-nav-tabs .nav-tabs .nav-item a.active {
+.my-nav-tabs > .nav-tabs .nav-item a.active {
   border-top: none;
   border-right: none;
   border-left: none;
@@ -263,7 +263,7 @@ a:hover {
 .my-nav-tabs-top .nav-tabs .nav-item a.nav-link {
   color: #3E3A39;
   padding: 0;
-  line-height: 50px;
+  line-height: 48px;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 }
@@ -590,6 +590,10 @@ a:hover {
   border-bottom: 1px solid rgba(216, 56, 86, 0.1);
 }
 
+.default-table td a:hover {
+  color: #D83856;
+}
+
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: white;
 }
@@ -690,5 +694,26 @@ a:hover {
 
 .job-detail .job-detail-list {
   margin-top: 22px;
+}
+
+.job-detail .job-detail-list .my-nav-tabs-top {
+  margin-top: 18px;
+  margin-bottom: 30px;
+}
+
+.job-detail .job-detail-list .my-nav-tabs-top .nav-tabs .nav-item {
+  width: 129px;
+  height: 30px;
+}
+
+.job-detail .job-detail-list .my-nav-tabs-top .nav-tabs .nav-item a {
+  font-size: 14px;
+  line-height: 28px;
+}
+
+.job-detail .job-detail-list .my-nav-tabs-top .nav-tabs .nav-item a.active {
+  border: none;
+  background-color: #D83856;
+  color: white;
 }
 

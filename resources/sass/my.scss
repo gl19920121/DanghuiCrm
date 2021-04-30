@@ -247,7 +247,8 @@ a:hover {
 }
 
 .my-nav-tabs {
-  .nav-tabs {
+
+  & > .nav-tabs {
     margin-left: 40px;
     border-bottom: 1px solid $color-border-gray;
 
@@ -263,6 +264,7 @@ a:hover {
           border-bottom: 2px solid $color-red;
         }
       }
+
       a.active {
         border-top: none;
         border-right: none;
@@ -287,7 +289,7 @@ a:hover {
       a.nav-link {
         color: $color-n;
         padding: 0;
-        line-height: 50px;
+        line-height: 48px;
         border-top-right-radius: 0;
         border-top-left-radius: 0;
 
@@ -607,6 +609,12 @@ a:hover {
 
   td {
     border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
+
+    a {
+      &:hover {
+        color: $color-red;
+      }
+    }
   }
 }
 
@@ -737,5 +745,29 @@ a:hover {
 
   .job-detail-list {
     margin-top: 22px;
+
+    .my-nav-tabs-top {
+      margin-top: 18px;
+      margin-bottom: 30px;
+
+      .nav-tabs {
+
+        .nav-item  {
+          width: 129px;
+          height: 30px;
+
+          a {
+            font-size: $font-size-m;
+            line-height: 28px;
+          }
+
+          a.active {
+            border: none;
+            background-color: $color-red;
+            color: white;
+          }
+        }
+      }
+    }
   }
 }
