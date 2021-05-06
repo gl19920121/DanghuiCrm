@@ -282,22 +282,22 @@ a:hover {
     .nav-item  {
       width: 129px;
       height: 50px;
-      border-top: 1px solid $color-border-gray;
-      border-right: 1px solid $color-border-gray;
-      border-bottom: 1px solid $color-border-gray;
 
       a.nav-link {
         color: $color-n;
-        padding: 0;
         line-height: 48px;
+        padding: 1px 0 0 0;
+        border-top: 1px solid $color-border-gray;
+        border-right: 1px solid $color-border-gray;
+        border-bottom: 1px solid $color-border-gray;
         border-top-right-radius: 0;
         border-top-left-radius: 0;
 
         &:hover {
-          border-bottom: none;
         }
       }
       a.active {
+        padding-top: 0;
         border-top: 2px solid $color-red;
         border-left: none;
         border-bottom: none;
@@ -582,6 +582,13 @@ a:hover {
     padding-bottom: 113px;
   }
 
+  .tab-content {
+    margin-top: 1px;
+    .list-group-item {
+      padding: 0;
+    }
+  }
+
   .default-list {
     padding-top: 48px;
 
@@ -761,13 +768,15 @@ a:hover {
           width: 129px;
           height: 30px;
 
-          a {
+          a.nav-link {
             font-size: $font-size-m;
             line-height: 28px;
+            padding-top: 0;
           }
 
           a.active {
             border: none;
+            padding: 1px;
             background-color: $color-red;
             color: white;
           }

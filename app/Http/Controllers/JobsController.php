@@ -85,7 +85,29 @@ class JobsController extends Controller
     public function list(Request $request)
     {
         // return $request->toArray();
-        $jobs = Job::where('status', '=', 1)
+        $jobs = Job::
+            where(function ($query) use($request) {
+                if ($request->has('tab')) {
+                    $tab = $request->tab;
+                } else {
+                    $tab = 'ing';
+                }
+                switch ($request->tab) {
+                    case 'ing':
+                        $query->where('status', '=', 1);
+                        break;
+                    case 'pause':
+                        $query->where('status', '=', 2);
+                        break;
+                    case 'end':
+                        $query->where('status', '=', 3);
+                        break;
+
+                    default:
+                        $query->where('status', '=', 1);
+                        break;
+                }
+            })
             ->where('execute_uid', '=', Auth::user()->id)
             ->withCount('resumes')
             ->where(function ($query) use($request) {
@@ -115,8 +137,6 @@ class JobsController extends Controller
         }
         if(isset($channelArr[$request->channel])) {
             $channelArr[$request->channel]['selected'] = true;
-        } else {
-
         }
 
         return view('jobs.list')
@@ -132,6 +152,21 @@ class JobsController extends Controller
         $resumes = Resume::where('job_id', '=', $job->id)->paginate($this->pageSize);
         $tab = isset($request->tab) ? $request->tab : '';
         return view('jobs.show', compact('job', 'resumes', 'tab'));
+    }
+
+    public function update(Job $job, Request $request)
+    {
+        // $job->save();
+        return redirect()->route('jobs.list');
+    }
+
+    public function status(Job $job, Request $request)
+    {
+        if ($request->has('status')) {
+            $job->status = $request->status;
+            $job->save();
+        }
+        return redirect()->route('jobs.list');
     }
 
     public function exportedResume(Request $request)
@@ -167,7 +202,6 @@ class JobsController extends Controller
     {
         $job->delete();
         session()->flash('success', '删除成功');
-        //return back();
         return redirect()->route('jobs.list');
     }
 

@@ -19,7 +19,7 @@
                     @endif
                 </li>
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobs.') !== false ? 'active': '' }}">
-                    <a class="nav-link" href="{{ route('jobs.create') }}">
+                    <a class="nav-link" href="{{ route('jobs.list') }}">
                         运作职位
                     </a>
                     @if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list', 'jobs.show']))
