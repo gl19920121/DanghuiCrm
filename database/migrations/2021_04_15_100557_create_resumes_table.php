@@ -44,6 +44,7 @@ class CreateResumesTable extends Migration
                 $table->integer('job_id')->nullable()->comment('职位id')->unsigned();
                 $table->timestamps();
                 $table->integer('status')->nullable()->default(1)->comment('状态');
+                $table->foreign('job_id')->references('id')->on('job')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
             });
         }
     }

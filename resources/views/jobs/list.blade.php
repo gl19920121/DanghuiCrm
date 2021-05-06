@@ -91,7 +91,7 @@
                   {{ $channelArr[$item]['show'] }}{{ $index === 0 ? '/' : '' }}
                 @endforeach
               </td>
-              <td class="color-red">{{ $job->company }}</td>
+              <td class="color-red">{{ $job->resumes_count }}</td>
               <td>{{ $job->updated_at }}</td>
               <td>
                 <div class="btn-group" role="group">

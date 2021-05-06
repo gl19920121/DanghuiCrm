@@ -85,8 +85,9 @@ class JobsController extends Controller
     public function list(Request $request)
     {
         // return $request->toArray();
-        $jobs = Job::where('execute_uid', '=', Auth::user()->id)
-            //->orWhere('release_uid', '=', Auth::user()->id)
+        $jobs = Job::where('status', '=', 1)
+            ->where('execute_uid', '=', Auth::user()->id)
+            ->withCount('resumes')
             ->where(function ($query) use($request) {
                 if (!empty($request->name)) {
                     $query->where('name', 'like', $request->name);
