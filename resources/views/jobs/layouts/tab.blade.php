@@ -20,7 +20,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link @if($appends['tab'] === 'drafts') active @endif" id="drafts-tab" data-toggle="link" href="{{ route('jobs.list', ['tab' => 'drafts']) }}" role="tab" aria-controls="drafts" aria-selected="false">
+        <a class="nav-link @if($appends['tab'] === 'drafts') active @endif" id="drafts-tab" data-toggle="link" href="{{ route('drafts.list', ['tab' => 'drafts', 'type' => 'drafts']) }}" role="tab" aria-controls="drafts" aria-selected="false">
           职位草稿箱
         </a>
       </li>

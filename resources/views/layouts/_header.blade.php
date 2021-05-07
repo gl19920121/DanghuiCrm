@@ -18,7 +18,7 @@
                       <div class="triangle-up"></div>
                     @endif
                 </li>
-                <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobs.') !== false ? 'active': '' }}">
+                <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobs.') !== false || Route::currentRouteName() === 'drafts.list' ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('jobs.list') }}">
                         运作职位
                     </a>
@@ -66,6 +66,6 @@
     </div>
 </nav>
 
-@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.edit', 'jobs.list', 'jobs.show']))
+@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.edit', 'jobs.list', 'jobs.show', 'drafts.list']))
   @include('layouts._second_header')
 @endif

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Resume;
+use App\Models\Draft;
 use Auth;
 
 class JobsController extends Controller
@@ -31,9 +32,13 @@ class JobsController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        // $oldData = $request->has('job') ? $request->job : null;
+
         return view('jobs.create')
+            ->with('draftId', $request->draft_id)
+            ->with('oldData', $request->job_data)
             ->with('natureArr', $this->natureArr)
             ->with('welfareArr', $this->welfareArr)
             ->with('educationArr', $this->educationArr)
@@ -69,6 +74,7 @@ class JobsController extends Controller
         ]);
 
         $data = $request->toArray();
+        unset($data['draft_id']);
         $data['release_uid'] = Auth::user()->id;
         if (isset($request->execute_uid)) {
             $data['execute_uid'] = $request->execute_uid;
@@ -77,6 +83,10 @@ class JobsController extends Controller
         }
         $data['channel'] = json_encode(array_keys($data['channel']));
         $job = Job::create($data);
+
+        if (isset($request->draft_id)) {
+            Draft::destroy($request->draft_id);
+        }
 
         session()->flash('success', '发布成功');
         return redirect()->route('jobs.list');

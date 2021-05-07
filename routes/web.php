@@ -28,3 +28,6 @@ Route::get('/jobs/list', 'JobsController@list')->name('jobs.list'); //职位列�
 Route::post('/jobs/exported', 'JobsController@exportedResume')->name('jobs.exported');
 Route::post('/jobs/{job}/status', 'JobsController@status')->name('jobs.status');
 Route::resource('jobs', 'JobsController'); //职位相关
+
+Route::get('/drafts/list', 'DraftsController@list')->name('drafts.list');
+Route::resource('drafts', 'DraftsController');
