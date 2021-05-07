@@ -580,21 +580,25 @@ a:hover {
     padding-left: 39px;
     padding-right: 39px;
     padding-bottom: 113px;
+
+    .default-list {
+      padding-top: 48px;
+
+      .btn {
+        width: 93px;
+        //height: 29px;
+      }
+    }
+
+    .empty {
+      padding-top: 48px;
+    }
   }
 
   .tab-content {
     margin-top: 1px;
     .list-group-item {
       padding: 0;
-    }
-  }
-
-  .default-list {
-    padding-top: 48px;
-
-    .btn {
-      width: 93px;
-      //height: 29px;
     }
   }
 }
@@ -663,6 +667,18 @@ a:hover {
       background-color: white;
       border-color: $color-red;
       color: $color-red;
+    }
+  }
+
+  .page-goto {
+    margin-left: 31px;
+
+    input {
+      width: 56px;
+      height: 29px;
+      line-height: 29px;
+      margin-left: 8px;
+      margin-right: 8px;
     }
   }
 }

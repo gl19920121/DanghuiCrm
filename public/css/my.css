@@ -559,20 +559,24 @@ a:hover {
   padding-bottom: 113px;
 }
 
+.job-list .job-list-body .default-list {
+  padding-top: 48px;
+}
+
+.job-list .job-list-body .default-list .btn {
+  width: 93px;
+}
+
+.job-list .job-list-body .empty {
+  padding-top: 48px;
+}
+
 .job-list .tab-content {
   margin-top: 1px;
 }
 
 .job-list .tab-content .list-group-item {
   padding: 0;
-}
-
-.job-list .default-list {
-  padding-top: 48px;
-}
-
-.job-list .default-list .btn {
-  width: 93px;
 }
 
 .default-table {
@@ -628,6 +632,18 @@ a:hover {
   background-color: white;
   border-color: #D83856;
   color: #D83856;
+}
+
+.pagination .page-goto {
+  margin-left: 31px;
+}
+
+.pagination .page-goto input {
+  width: 56px;
+  height: 29px;
+  line-height: 29px;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .btn-dropdown {

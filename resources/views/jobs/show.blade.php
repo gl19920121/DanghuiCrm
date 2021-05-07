@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', '发布职位')
+@section('title', '职位管理')
 @section('content')
 <div class="job-detail">
   <div class="job-detail-header bg-white">

@@ -22,7 +22,7 @@ class JobsController extends Controller
         'website' => ['name' => 'channel2', 'show' => '官网', 'selected' => true, 'default' => false],
         'other_platform' => ['name' => 'channel3', 'show' => '其他', 'selected' => false, 'default' => false]
     ];
-    private $pageSize = 10;
+    private $pageSize = 1;
 
     public function __construct()
     {
@@ -85,14 +85,14 @@ class JobsController extends Controller
     public function list(Request $request)
     {
         // return $request->toArray();
+        if ($request->has('tab')) {
+            $tab = $request->tab;
+        } else {
+            $tab = 'ing';
+        }
         $jobs = Job::
-            where(function ($query) use($request) {
-                if ($request->has('tab')) {
-                    $tab = $request->tab;
-                } else {
-                    $tab = 'ing';
-                }
-                switch ($request->tab) {
+            where(function ($query) use($tab) {
+                switch ($tab) {
                     case 'ing':
                         $query->where('status', '=', 1);
                         break;
@@ -112,7 +112,7 @@ class JobsController extends Controller
             ->withCount('resumes')
             ->where(function ($query) use($request) {
                 if (!empty($request->name)) {
-                    $query->where('name', 'like', $request->name);
+                    $query->where('name', 'like', '%'.$request->name.'%');
                 }
                 if (!empty($request->urgency_level)) {
                     $query->where('urgency_level', '=', $request->urgency_level);
@@ -139,12 +139,16 @@ class JobsController extends Controller
             $channelArr[$request->channel]['selected'] = true;
         }
 
+        $appends = [
+            'tab' => $tab,
+            'name' => $request->name,
+            'urgencyLevelArr' => $urgencyLevelArr,
+            'channelArr' => $channelArr
+        ];
+
         return view('jobs.list')
             ->with('jobs', $jobs)
-            ->with('tab', $request->tab)
-            ->with('name', $request->name)
-            ->with('urgencyLevelArr', $urgencyLevelArr)
-            ->with('channelArr', $channelArr);
+            ->with('appends', $appends);
     }
 
     public function show(Job $job, Request $request)
@@ -154,9 +158,47 @@ class JobsController extends Controller
         return view('jobs.show', compact('job', 'resumes', 'tab'));
     }
 
+    public function edit(Job $job)
+    {
+        return view('jobs.edit', compact('job'))
+            ->with('natureArr', $this->natureArr)
+            ->with('welfareArr', $this->welfareArr)
+            ->with('educationArr', $this->educationArr)
+            ->with('experienceArr', $this->experienceArr)
+            ->with('urgencyLevelArr', $this->urgencyLevelArr)
+            ->with('channelArr', $this->channelArr);
+    }
+
     public function update(Job $job, Request $request)
     {
-        // $job->save();
+        // return var_dump($request);
+        $this->validate($request, [
+            'company' => ['required', 'string'],
+            'quota' => 'nullable|numeric',
+            'name' => 'required|string',
+            'type' => 'required|string',
+            'nature' => 'required|in:' . implode(",", array_keys($this->natureArr)),
+            'city' => 'required|string',
+            'salary_min' => 'required|numeric',
+            'salary_max' => 'required|numeric',
+            'welfare' => 'required|in:' . implode(",", array_keys($this->welfareArr)),
+            'sparkle' => 'nullable|string',
+            'age_min' => 'required|numeric',
+            'age_max' => 'required|numeric',
+            'education' => 'required|in:' . implode(",", array_keys($this->educationArr)),
+            'experience' => 'required|in:' . implode(",", array_keys($this->experienceArr)),
+            'duty' => 'required|string',
+            'requirement' => 'required|string',
+            'urgency_level' => 'required|in:' . implode(",", array_keys($this->urgencyLevelArr)),
+            'channel' => 'required',
+            'channel_remark' => 'nullable|string',
+            'deadline' => 'required|date'
+        ]);
+
+        $data = $request->toArray();
+        $data['channel'] = json_encode(array_keys($data['channel']));
+        $job->update($data);
+
         return redirect()->route('jobs.list');
     }
 

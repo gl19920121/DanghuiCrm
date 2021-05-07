@@ -3,7 +3,7 @@
     <div class="my-nav-tabs jobs">
       <ul class="nav nav-tabs text-center justify-content-center">
           <li class="nav-item">
-            <a class=" nav-link {{ Route::currentRouteName() === 'jobs.create' ? 'active': '' }}"" href="{{ route('jobs.create') }}">
+            <a class=" nav-link {{ in_array(Route::currentRouteName(), ['jobs.create', 'jobs.edit']) ? 'active': '' }}"" href="{{ route('jobs.create') }}">
               发职位
             </a>
           </li>
