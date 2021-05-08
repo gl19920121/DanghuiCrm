@@ -526,7 +526,7 @@ a:hover {
         margin-left: 87px;
         margin-bottom: 18px;
 
-        span {
+        > span {
           color: $color-red;
 
           &:first-child {

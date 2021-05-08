@@ -6,8 +6,10 @@
  */
 
 require('./bootstrap');
+// require('./my')
 
 require('distpicker');
+require('pc-bootstrap4-datetimepicker');
 
 // window.Vue = require('vue');
 

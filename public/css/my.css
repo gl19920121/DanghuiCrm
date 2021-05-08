@@ -508,11 +508,11 @@ a:hover {
   margin-bottom: 18px;
 }
 
-.job-create .default-form .form-body .form-group span {
+.job-create .default-form .form-body .form-group > span {
   color: #D83856;
 }
 
-.job-create .default-form .form-body .form-group span:first-child {
+.job-create .default-form .form-body .form-group > span:first-child {
   width: 11px;
 }
 
