@@ -7,7 +7,7 @@
 $(function () {
   $('#datetimepicker1').datetimepicker({
     locale: 'zh-CN',
-    debug: true,
+    debug: false,
     format: 'L',
     tooltips: {
         today: 'Go to today',
