@@ -46,7 +46,12 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="city">工作城市：</label>
-                    <input type="text" name="city" class="form-control normal" value="{{ isset($oldData['city']) ? $oldData['city'] : old('city') }}" />
+                    <!-- <input type="text" name="city" class="form-control normal" value="{{ isset($oldData['city']) ? $oldData['city'] : old('city') }}" /> -->
+                    <div data-toggle="distpicker">
+                      <select class="form-control" data-province="---- 选择省 ----"></select>
+                      <select class="form-control" data-city="---- 选择市 ----"></select>
+                      <select class="form-control" data-district="---- 选择区 ----"></select>
+                    </div>
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="salary">税前月薪：</label>

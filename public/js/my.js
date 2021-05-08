@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -101,26 +101,14 @@
 
 /***/ }),
 
-/***/ "./resources/sass/my.scss":
-/*!********************************!*\
-  !*** ./resources/sass/my.scss ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!***********************************************************!*\
-  !*** multi ./resources/js/my.js ./resources/sass/my.scss ***!
-  \***********************************************************/
+/***/ 1:
+/*!**********************************!*\
+  !*** multi ./resources/js/my.js ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/js/my.js */"./resources/js/my.js");
-module.exports = __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/my.scss */"./resources/sass/my.scss");
+module.exports = __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/js/my.js */"./resources/js/my.js");
 
 
 /***/ })

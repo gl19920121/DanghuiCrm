@@ -7,6 +7,8 @@
 
 require('./bootstrap');
 
+require('distpicker');
+
 // window.Vue = require('vue');
 
 // /**
