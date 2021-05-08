@@ -20,7 +20,7 @@ class CreateJobsTable extends Migration
             $table->string('name')->comment('职位名称');
             $table->string('type')->comment('职位类别');
             $table->enum('nature', ['full', 'part', 'all'])->comment('工作性质');
-            $table->string('city')->comment('工作城市');
+            $table->json('location')->comment('工作地点');
             $table->integer('salary_min')->comment('最低税前月薪');
             $table->integer('salary_max')->comment('最高税前月薪');
             $table->enum('welfare', ['social_insurance', 'five_social_insurance_and_one_housing_fund', 'four_social_insurance_and_one_housing_fund'])->comment('福利待遇');

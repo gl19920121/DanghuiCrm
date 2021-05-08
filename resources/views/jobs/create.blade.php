@@ -48,9 +48,9 @@
                     <span>*</span><label for="city">工作城市：</label>
                     <!-- <input type="text" name="city" class="form-control normal" value="{{ isset($oldData['city']) ? $oldData['city'] : old('city') }}" /> -->
                     <div data-toggle="distpicker">
-                      <select class="form-control" data-province="---- 选择省 ----"></select>
-                      <select class="form-control" data-city="---- 选择市 ----"></select>
-                      <select class="form-control" data-district="---- 选择区 ----"></select>
+                      <select class="form-control" name="location[province]" data-province="---- 选择省 ----"></select>
+                      <select class="form-control" name="location[city]"  data-city="---- 选择市 ----"></select>
+                      <select class="form-control" name="location[district]"  data-district="---- 选择区 ----"></select>
                     </div>
                 </div>
                 <div class="form-group form-inline">
@@ -132,7 +132,15 @@
                     <span>*</span><label for="urgency_level">紧急程度：</label>
                     @foreach ($urgencyLevelArr as $key => $urgencyLevel)
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}" @if(isset($oldData['urgency_level']) && $key == $oldData['urgency_level']) checked @endif>
+                            <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}"
+                              @if (isset($oldData['urgency_level']))
+                                @if ($key == $oldData['urgency_level'])
+                                  checked
+                                @endif
+                              @elseif ($urgencyLevel['selected'])
+                                checked
+                              @endif
+                            >
                             <label class="custom-control-label" for="urgency_level_{{ $key }}">{{ $urgencyLevel['show'] }}</label>
                         </div>
                     @endforeach
@@ -141,7 +149,15 @@
                     <span>*</span><label for="channel">渠道选择：</label>
                     @foreach ($channelArr as $key => $channel)
                         <div class="custom-control custom-checkbox custom-control-inline">
-                            <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]" @if(isset($oldData['channel']) && in_array($key, json_decode($oldData['channel'], true))) checked @endif>
+                            <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]"
+                              @if (isset($oldData['channel']))
+                                @if (in_array($key, json_decode($oldData['channel'], true)))
+                                  checked
+                                @endif
+                              @elseif ($channel['selected'])
+                                checked
+                              @endif
+                            >
                             <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['show'] }}</label>
                         </div>
                     @endforeach
@@ -152,8 +168,8 @@
                 </div> -->
                 <div class="form-group form-inline">
                   <span>*</span><label for="deadline">截止日期：</label>
-                  <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control normal" />
+                  <div class="input-group date" id="datetimepicker1">
+                    <input type="text" name="deadline" class="form-control normal" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请选择" />
                     <span class="input-group-text">
                     <!-- <span class="glyphicon glyphicon-calendar"></span> -->
                       <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

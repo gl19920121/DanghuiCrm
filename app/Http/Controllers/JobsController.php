@@ -49,14 +49,15 @@ class JobsController extends Controller
 
     public function store(Request $request)
     {
-        // return $request->toArray();
+        // $data = $request->toArray();
+        // return var_dump($data['location']);
         $this->validate($request, [
             'company' => ['required', 'string'],
             'quota' => 'nullable|numeric',
             'name' => 'required|string',
             'type' => 'required|string',
             'nature' => 'required|in:' . implode(",", array_keys($this->natureArr)),
-            'city' => 'required|string',
+            'location' => 'required',
             'salary_min' => 'required|numeric',
             'salary_max' => 'required|numeric',
             'welfare' => 'required|in:' . implode(",", array_keys($this->welfareArr)),
@@ -81,6 +82,7 @@ class JobsController extends Controller
         } else {
             $data['execute_uid'] = Auth::user()->id;
         }
+        $data['location'] = json_encode($data['location']);
         $data['channel'] = json_encode(array_keys($data['channel']));
         $job = Job::create($data);
 

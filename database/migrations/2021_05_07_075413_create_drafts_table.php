@@ -16,6 +16,7 @@ class CreateDraftsTable extends Migration
         Schema::create('drafts', function (Blueprint $table) {
             $table->increments('id');
             $table->json('data')->nullable()->comment('临时数据');
+            $table->enum('type', ['job']);
             $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
             $table->timestamps();
         });
