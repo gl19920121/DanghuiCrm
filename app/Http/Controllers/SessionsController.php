@@ -33,7 +33,7 @@ class SessionsController extends Controller
      */
     public function create()
     {
-        $bgNum = date("w");
+        $bgNum = (int)date("w");
         $bgNum = ($bgNum === 6 || $bgNum === 0) ? 5 : $bgNum;
         return view('sessions.create')->with('bgNum', $bgNum);
     }
