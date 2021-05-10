@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Resume;
 use App\Models\Draft;
+use App\Models\JobType;
 use Auth;
 
 class JobsController extends Controller
@@ -36,6 +37,10 @@ class JobsController extends Controller
     {
         // $oldData = $request->has('job') ? $request->job : null;
 
+        $jobTypes = JobType::where('status', '=', 1)
+            ->where('level', '=', '0')
+            ->get();
+
         return view('jobs.create')
             ->with('draftId', $request->draft_id)
             ->with('oldData', $request->job_data)
@@ -44,7 +49,9 @@ class JobsController extends Controller
             ->with('educationArr', $this->educationArr)
             ->with('experienceArr', $this->experienceArr)
             ->with('urgencyLevelArr', $this->urgencyLevelArr)
-            ->with('channelArr', $this->channelArr);
+            ->with('channelArr', $this->channelArr)
+            ->with('jobTypes', $jobTypes)
+            ;
     }
 
     public function store(Request $request)

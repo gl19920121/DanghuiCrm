@@ -34,7 +34,20 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="type">职位类别：</label>
-                    <input type="text" name="type" class="form-control normal" value="{{ isset($oldData['type']) ? $oldData['type'] : old('type') }}" placeholder="请输入职位类别"  />
+                    <!-- <input type="text" name="type" class="form-control normal" value="{{ isset($oldData['type']) ? $oldData['type'] : old('type') }}" placeholder="请输入职位类别"  /> -->
+                    <!-- <div>
+                      <select class="form-control" name="type[1]">
+                        <option>---- 选择类别 ----</option>
+                        @foreach ($jobTypes as $jobType)
+                          <option>{{ $jobType->name }}</option>
+                        @endforeach
+                      </select>
+                    </div> -->
+                    <div data-toggle="distpicker" data-source="jobTypes">
+                      <select class="form-control" name="location[province]" data-province="---- 选择省 ----"></select>
+                      <select class="form-control" name="location[city]"  data-city="---- 选择市 ----"></select>
+                      <select class="form-control" name="location[district]"  data-district="---- 选择区 ----"></select>
+                    </div>
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="nature">工作性质：</label>
