@@ -5,6 +5,7 @@
 // });
 
 $(function () {
+
   $('#datetimepicker1').datetimepicker({
     locale: 'zh-CN',
     debug: false,
@@ -38,4 +39,11 @@ $(function () {
         selectDate: '选择日期'
     },
   });
+
+  // @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+  //   @if(session()->has($msg))
+  //     console.log(123);
+  //     $('#msgModal').modal()
+  //   @endif
+  // @endforeach
 });

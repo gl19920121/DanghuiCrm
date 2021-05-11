@@ -9,9 +9,6 @@ class SessionsController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('guest', [
-        //     'only' => ['create', 'store']
-        // ]);
         $this->middleware('auth', [
             'except' => ['index', 'create', 'store']
         ]);
@@ -46,18 +43,22 @@ class SessionsController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'account.required' => '请填写用户名',
+            'password.required' => '请填写密码'
+        ];
         $credentials = $this->validate($request, [
-            'account' => 'required',
+            'account' => 'bail|required',
             'password' => 'required'
-        ]);
+        ], $messages);
 
         if(Auth::attempt($credentials, $request->has('remember'))) {
-            session()->flash('success', '欢迎');
-            $fallback = route('home'); //Auth::user()
+            // session()->flash('result', '成功登录');
+            $fallback = route('home');
             return redirect()->intended($fallback);
         } else {
-            session()->flash('danger', '账户名密码不匹配');
-            return redirect()->back()->withInput();
+            // session()->flash('result', false);
+            return redirect()->back()->withInput()->withErrors(['password' => '账户名密码不匹配']);
         }
 
         return;
@@ -66,7 +67,6 @@ class SessionsController extends Controller
     public function destroy()
     {
         Auth::logout();
-        session()->flash('success', '成功退出');
         return redirect('login');
     }
 }

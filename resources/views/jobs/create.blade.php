@@ -1,13 +1,11 @@
 @extends('layouts.default')
 @section('title', '发布职位')
 @section('content')
-<!-- offset-md-2 col-md-8 -->
 <div class="job-create bg-white">
     <div class="default-form">
         <div class="form-header"></div>
         <hr class="divider">
         <div class="form-body">
-            @include('shared._errors')
             <form class="text-center" method="POST">
                 <!-- action="{{ route('jobs.store') }}" -->
                 {{ csrf_field() }}
@@ -198,4 +196,5 @@
         </div>
     </div>
 </div>
+@include('shared._errors')
 @stop

@@ -9,18 +9,27 @@
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="{{ mix('css/my.css') }}">
+
+        <script src="{{ asset('/js/app.js') }}"></script>
     </head>
 
     <body class="@if(Route::currentRouteName() === 'login') login-bg-{{ $bgNum }} @else main-bg @endif">
         @includeWhen(Route::currentRouteName() !== 'login', 'layouts._header')
         <div class="container">
-            <!-- <div class="offset-md-1 col-md-10"> -->
-                <!-- @includeWhen(Route::currentRouteName() !== 'login', 'shared._messages') -->
-                @yield('content')
-                @includeWhen(Route::currentRouteName() !== 'login', 'layouts._footer')
-            <!-- </div> -->
+            @includeWhen(Route::currentRouteName() !== 'login', 'shared._messages')
+            @yield('content')
+            @includeWhen(Route::currentRouteName() !== 'login', 'layouts._footer')
         </div>
-        <script src="/js/app.js"></script>
+
         <script src="{{ mix('js/my.js') }}"></script>
+        <script type="text/javascript">
+          $(function () {
+            @if (count($errors) > 0)
+                $('#errModal').modal();
+            @else
+                $('#msgModal').modal();
+            @endif
+          });
+        </script>
     </body>
 </html>

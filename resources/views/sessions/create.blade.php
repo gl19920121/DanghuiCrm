@@ -7,7 +7,6 @@
                 <img src="{{ URL::asset('images/logo.png') }}" alt="" />
             </div>
             <div class="card-body">
-                @include('shared._errors')
                 <form class="login-form" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -37,4 +36,6 @@
             </div>
         </div>
     </div>
+
+    @include('shared._errors')
 @stop

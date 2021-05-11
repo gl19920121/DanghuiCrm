@@ -131,7 +131,12 @@ $(function () {
       selectTime: '选择时间',
       selectDate: '选择日期'
     }
-  });
+  }); // @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+  //   @if(session()->has($msg))
+  //     console.log(123);
+  //     $('#msgModal').modal()
+  //   @endif
+  // @endforeach
 });
 
 /***/ }),
