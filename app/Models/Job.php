@@ -35,6 +35,11 @@ class Job extends Model
         $this->attributes['status'] = $status;
     }
 
+    public function getTypeAttribute()
+    {
+        return json_decode($this->attributes['type']);
+    }
+
     public function getLocationAttribute()
     {
         return json_decode($this->attributes['location']);

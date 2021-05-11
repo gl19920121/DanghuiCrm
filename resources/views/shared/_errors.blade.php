@@ -13,9 +13,10 @@
             <div class="row">
               <div class="col-auto m-auto">
                 <ul>
-                  @foreach($errors->all() as $error)
+                  <li>{{ $errors->all()[0] }}</li>
+                  <!-- @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
-                  @endforeach
+                  @endforeach -->
                 </ul>
               </div>
             </div>

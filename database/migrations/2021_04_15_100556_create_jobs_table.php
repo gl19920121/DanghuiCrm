@@ -18,7 +18,7 @@ class CreateJobsTable extends Migration
             $table->string('company')->comment('公司名称');
             $table->integer('quota')->nullable()->comment('招聘人数');
             $table->string('name')->comment('职位名称');
-            $table->string('type')->comment('职位类别');
+            $table->json('type')->comment('职位类别');
             $table->enum('nature', ['full', 'part', 'all'])->comment('工作性质');
             $table->json('location')->comment('工作地点');
             $table->integer('salary_min')->comment('最低税前月薪');

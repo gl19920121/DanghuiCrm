@@ -15,11 +15,11 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="company">公司名称：</label>
-                    <input type="text" name="company" class="form-control normal" value="{{ $job->company }}" placeholder="请填写"  />
+                    <input type="text" name="company" class="form-control normal" value="{{ $job->company }}" placeholder="请填写" autocomplete="off">
                 </div>
                 <div class="form-group form-inline">
                     <span></span><label for="quota">招聘人数：</label>
-                    <input type="text" name="quota" class="form-control normal" value="{{  $job->quota }}" placeholder="请填写" />
+                    <input type="text" name="quota" class="form-control normal" value="{{  $job->quota }}" placeholder="请填写" autocomplete="off" data-type="int">
                 </div>
                 <div class="form-title text-left">
                     <h5>职业基本信息</h5>
@@ -30,7 +30,11 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="type">职位类别：</label>
-                    <input type="text" name="type" class="form-control normal" value="{{  $job->type }}" placeholder="请输入职位名称"  />
+                    <div data-toggle="distpicker" data-source="jobTypes">
+                      <select class="form-control" name="type[st]" data-province="{{ $job->type->st }}"></select>
+                      <select class="form-control" name="type[nd]"  data-city="{{ $job->type->nd }}"></select>
+                      <select class="form-control" name="type[rd]"  data-district="{{ $job->type->rd }}"></select>
+                    </div>
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="nature">工作性质：</label>
@@ -42,7 +46,11 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="city">工作城市：</label>
-                    <input type="text" name="city" class="form-control normal" value="{{  $job->city }}" />
+                    <div data-toggle="distpicker">
+                      <select class="form-control" name="location[province]" data-province="{{ $job->location->province }}"></select>
+                      <select class="form-control" name="location[city]"  data-city="{{ $job->location->city }}"></select>
+                      <select class="form-control" name="location[district]"  data-district="{{ $job->location->district }}"></select>
+                    </div>
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="salary">税前月薪：</label>
@@ -147,4 +155,14 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+  $("[data-type='int']").on('input', function() {
+    this.value=this.value.replace(/\D/g,'');
+  })
+  $.fn.distpicker.setDefaults({
+    province: '---- 请选择 ----',
+    city: '---- 请选择 ----',
+    district: '---- 请选择 ----'
+  });
+</script>
 @stop

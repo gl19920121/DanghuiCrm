@@ -26,6 +26,8 @@ class DraftsController extends Controller
         } else {
             $data['execute_uid'] = Auth::user()->id;
         }
+        $data['type'] = json_encode($data['type']);
+        $data['location'] = json_encode($data['location']);
         $data['channel'] = json_encode(array_keys($data['channel']));
         $value = [
             'data' => json_encode($data),

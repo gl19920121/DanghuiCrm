@@ -7,7 +7,6 @@
         <hr class="divider">
         <div class="form-body">
             <form class="text-center" method="POST">
-                <!-- action="{{ route('jobs.store') }}" -->
                 {{ csrf_field() }}
                 @if(!empty($draftId))
                   <input type="hidden" name="draft_id" value="{{ $draftId }}">
@@ -17,34 +16,25 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="company">公司名称：</label>
-                    <input type="text" name="company" class="form-control normal" value="{{ isset($oldData['company']) ? $oldData['company'] : old('company') }}" placeholder="请填写"  />
+                    <input type="text" name="company" class="form-control normal" value="{{ isset($oldData['company']) ? $oldData['company'] : old('company') }}" placeholder="请填写">
                 </div>
                 <div class="form-group form-inline">
                     <span></span><label for="quota">招聘人数：</label>
-                    <input type="text" name="quota" class="form-control normal" value="{{ isset($oldData['quota']) ? $oldData['quota'] : old('quota') }}" placeholder="请填写" />
+                    <input type="text" name="quota" class="form-control normal" value="{{ isset($oldData['quota']) ? $oldData['quota'] : old('quota') }}" placeholder="请填写" autocomplete="off" data-type="int">
                 </div>
                 <div class="form-title text-left">
                     <h5>职业基本信息</h5>
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="name">职位名称：</label>
-                    <input type="text" name="name" class="form-control normal" value="{{ isset($oldData['name']) ? $oldData['name'] : old('name') }}" placeholder="请输入职位名称"  />
+                    <input type="text" name="name" class="form-control normal" value="{{ isset($oldData['name']) ? $oldData['name'] : old('name') }}" placeholder="请输入职位名称">
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="type">职位类别：</label>
-                    <!-- <input type="text" name="type" class="form-control normal" value="{{ isset($oldData['type']) ? $oldData['type'] : old('type') }}" placeholder="请输入职位类别"  /> -->
-                    <!-- <div>
-                      <select class="form-control" name="type[1]">
-                        <option>---- 选择类别 ----</option>
-                        @foreach ($jobTypes as $jobType)
-                          <option>{{ $jobType->name }}</option>
-                        @endforeach
-                      </select>
-                    </div> -->
                     <div data-toggle="distpicker" data-source="jobTypes">
-                      <select class="form-control" name="location[province]" data-province="---- 选择省 ----"></select>
-                      <select class="form-control" name="location[city]"  data-city="---- 选择市 ----"></select>
-                      <select class="form-control" name="location[district]"  data-district="---- 选择区 ----"></select>
+                      <select class="form-control" name="type[st]" data-province="{{ isset($oldData['type']['st']) ? $oldData['type']['st'] : '---- 请选择 ----'}}"></select>
+                      <select class="form-control" name="type[nd]" data-city="{{ isset($oldData['type']['nd']) ? $oldData['type']['nd'] : '---- 请选择 ----'}}"></select>
+                      <select class="form-control" name="type[rd]" data-district="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : '---- 请选择 ----'}}"></select>
                     </div>
                 </div>
                 <div class="form-group form-inline">
@@ -56,25 +46,24 @@
                     </select>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="city">工作城市：</label>
-                    <!-- <input type="text" name="city" class="form-control normal" value="{{ isset($oldData['city']) ? $oldData['city'] : old('city') }}" /> -->
+                    <span>*</span><label for="location">工作城市：</label>
                     <div data-toggle="distpicker">
-                      <select class="form-control" name="location[province]" data-province="---- 选择省 ----"></select>
-                      <select class="form-control" name="location[city]"  data-city="---- 选择市 ----"></select>
-                      <select class="form-control" name="location[district]"  data-district="---- 选择区 ----"></select>
+                      <select class="form-control" name="location[province]" data-province="{{ isset($oldData['location']['province']) ? $oldData['location']['province'] : '---- 选择省 ----'}}"></select>
+                      <select class="form-control" name="location[city]"  data-city="{{ isset($oldData['location']['city']) ? $oldData['location']['city'] : '---- 选择市 ----'}}"></select>
+                      <select class="form-control" name="location[district]"  data-district="{{ isset($oldData['location']['district']) ? $oldData['location']['district'] : '---- 选择区 ----'}}"></select>
                     </div>
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="salary">税前月薪：</label>
                     <div class="input-group">
-                        <input type="text" name="salary_min" class="form-control small" value="{{ isset($oldData['salary_min']) ? $oldData['salary_min'] : old('salary_min') }}"  />
+                        <input type="text" name="salary_min" class="form-control small" value="{{ isset($oldData['salary_min']) ? $oldData['salary_min'] : old('salary_min') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">K</div>
                         </div>
                     </div>
                     <label class="ml-1 mr-1">-</label>
                     <div class="input-group">
-                        <input type="text" name="salary_max" class="form-control small" value="{{ isset($oldData['salary_max']) ? $oldData['salary_max'] : old('salary_max') }}"  />
+                        <input type="text" name="salary_max" class="form-control small" value="{{ isset($oldData['salary_max']) ? $oldData['salary_max'] : old('salary_max') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">K</div>
                         </div>
@@ -90,7 +79,7 @@
                 </div>
                 <div class="form-group form-inline">
                     <span></span><label for="sparkle">职位亮点：</label>
-                    <input type="text" name="sparkle" class="form-control normal" value="{{ isset($oldData['sparkle']) ? $oldData['sparkle'] : old('sparkle') }}" placeholder="请填写" />
+                    <input type="text" name="sparkle" class="form-control normal" value="{{ isset($oldData['sparkle']) ? $oldData['sparkle'] : old('sparkle') }}" placeholder="请填写" autocomplete="off">
                 </div>
                 <div class="form-title text-left">
                     <h5>职位要求</h5>
@@ -98,14 +87,14 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="age">年龄范围：</label>
                     <div class="input-group">
-                        <input type="text" name="age_min" class="form-control small" value="{{ isset($oldData['age_min']) ? $oldData['age_min'] : old('age_min') }}"  />
+                        <input type="text" name="age_min" class="form-control small" value="{{ isset($oldData['age_min']) ? $oldData['age_min'] : old('age_min') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">岁</div>
                         </div>
                     </div>
                     <label class="ml-1 mr-1">-</label>
                     <div class="input-group">
-                        <input type="text" name="age_max" class="form-control small" value="{{ isset($oldData['age_max']) ? $oldData['age_max'] : old('age_max') }}"  />
+                        <input type="text" name="age_max" class="form-control small" value="{{ isset($oldData['age_max']) ? $oldData['age_max'] : old('age_max') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">岁</div>
                         </div>
@@ -173,14 +162,10 @@
                         </div>
                     @endforeach
                 </div>
-                <!-- <div class="form-group form-inline">
-                    <span>*</span><label for="deadline">截止日期：</label>
-                    <input type="text" name="deadline" class="form-control normal" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请填写" />
-                </div> -->
                 <div class="form-group form-inline">
                   <span>*</span><label for="deadline">截止日期：</label>
                   <div class="input-group date" id="datetimepicker1">
-                    <input type="text" name="deadline" class="form-control normal" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请选择" />
+                    <input type="text" name="deadline" class="form-control normal" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请选择" autocomplete="off">
                     <span class="input-group-text">
                     <!-- <span class="glyphicon glyphicon-calendar"></span> -->
                       <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -197,4 +182,9 @@
     </div>
 </div>
 @include('shared._errors')
+<script type="text/javascript">
+  $("[data-type='int']").on('input', function() {
+    this.value=this.value.replace(/\D/g,'');
+  })
+</script>
 @stop
