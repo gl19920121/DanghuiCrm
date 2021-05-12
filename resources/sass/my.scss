@@ -806,7 +806,74 @@ a:hover {
   }
 }
 
-.modal {
+.jobtype-modal {
+  .modal-dialog  {
+    max-width: 840px;
+
+    .modal-content {
+      width: 840px;
+      height: 550px;
+
+      .modal-header {
+        height: 56px;
+        padding-left: 25px;
+      }
+
+      .modal-body {
+        padding: 0;
+
+        ul.jobtype-list {
+          width: 197px;
+          height: 490px;
+          padding: 12px 0;
+          font-size: $font-size-m;
+          color: $color-n;
+          background: #fafafa;
+          overflow-y:scroll;
+
+          li {
+            height: 44px;
+            line-height: 44px;
+            padding-left: 22px;
+            cursor: pointer;
+
+            a {
+              color: $color-n;
+              text-decoration: none;
+            }
+          }
+
+          li.selected {
+            padding-left: 18px;
+            border-left: 4px solid;
+            border-color: $color-red;
+            background-color: #fff;
+          }
+        }
+
+        .jobtype-item {
+          height: 44px;
+          line-height: 44px;
+          font-size: $font-size-m;
+          cursor: pointer;
+          user-select: none;
+
+          svg {
+            color: $color-red;
+            border: 1px solid $color-red;
+          }
+
+          a {
+            margin-left: 8px;
+            line-height: 44px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.msg-modal {
   .modal-content {
     width: 276px;
     min-height: 256px;

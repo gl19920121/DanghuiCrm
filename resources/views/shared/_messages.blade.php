@@ -1,6 +1,6 @@
 @if (session()->has('result') && session()->get('result') !== false)
   <!-- Modal -->
-  <div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade msg-modal" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content m-auto">
         <div class="modal-body">

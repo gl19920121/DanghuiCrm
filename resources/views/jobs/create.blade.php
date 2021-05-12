@@ -31,7 +31,18 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="type">职位类别：</label>
-                    <div data-toggle="distpicker" data-source="jobTypes">
+                    <div class="input-group" data-toggle="jobtypepicker">
+                      <input type="text" class="form-control normal" data-show="" placeholder="请选择">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">
+                          <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
+                            <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div hidden data-toggle="distpicker" data-source="jobTypes">
                       <select class="form-control" name="type[st]" data-province="{{ isset($oldData['type']['st']) ? $oldData['type']['st'] : '---- 请选择 ----'}}"></select>
                       <select class="form-control" name="type[nd]" data-city="{{ isset($oldData['type']['nd']) ? $oldData['type']['nd'] : '---- 请选择 ----'}}"></select>
                       <select class="form-control" name="type[rd]" data-district="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : '---- 请选择 ----'}}"></select>
@@ -181,10 +192,15 @@
         </div>
     </div>
 </div>
+@include('shared._job_type')
 @include('shared._errors')
 <script type="text/javascript">
   $("[data-type='int']").on('input', function() {
     this.value=this.value.replace(/\D/g,'');
   })
+
+  $("[data-toggle='jobtypepicker']").click(function(e) {
+    $('#jobtypeModal').modal();
+  });
 </script>
 @stop
