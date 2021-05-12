@@ -785,3 +785,11 @@ a:hover {
   margin: 0;
 }
 
+.draft-table tr {
+  cursor: pointer;
+}
+
+.draft-table tr:hover td {
+  background-color: rgba(181, 181, 182, 0.1);
+}
+

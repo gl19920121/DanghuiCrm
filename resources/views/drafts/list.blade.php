@@ -20,7 +20,7 @@
           </div>
         </form>
 
-        <table class="table table-striped default-table">
+        <table class="table table-striped default-table draft-table">
           <thead>
             <tr>
               <th scope="col">职位</th>
@@ -32,9 +32,9 @@
           </thead>
           <tbody>
             @foreach($jobs as $job)
-              <tr>
+              <tr onclick="window.location = '{{ route('jobs.create', ['draft_id' => $job->id, 'job_data' => $job->data]) }}';">
                 <td>
-                  <a class="color-red" href="{{ route('jobs.create', ['draft_id' => $job->id, 'job_data' => $job->data]) }}">{{ $job->name }}</a>
+                  <span class="color-red">{{ $job->name }}</span>
                 </td>
                 <td>{{ $job->company }}</td>
                 <td>

@@ -853,3 +853,15 @@ a:hover {
     }
   }
 }
+
+.draft-table {
+  tr {
+    cursor: pointer;
+
+    &:hover {
+      td {
+        background-color: rgba(181,181,182, 0.1);
+      }
+    }
+  }
+}

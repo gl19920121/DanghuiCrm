@@ -20,9 +20,9 @@ class JobsController extends Controller
         '1' => ['show' => '急聘', 'selected' => false, 'default' => false]
     ];
     private $channelArr = [
-        'applets' => ['name' => 'channel1', 'show' => '小程序', 'selected' => true, 'default' => false],
-        'website' => ['name' => 'channel2', 'show' => '官网', 'selected' => true, 'default' => false],
-        'other_platform' => ['name' => 'channel3', 'show' => '其他', 'selected' => false, 'default' => false]
+        'applets' => ['show' => '小程序', 'selected' => true, 'default' => false],
+        'website' => ['show' => '官网', 'selected' => true, 'default' => false],
+        'other_platform' => ['show' => '其他', 'selected' => false, 'default' => false]
     ];
     private $pageSize = 1;
 

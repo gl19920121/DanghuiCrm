@@ -14,7 +14,7 @@ class DraftsController extends Controller
         'other_platform' => ['name' => 'channel3', 'show' => '其他', 'selected' => false, 'default' => false]
     ];
 
-    private $pageSize = 1;
+    private $pageSize = 10;
 
     public function store(Request $request)
     {
