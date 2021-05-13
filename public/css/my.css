@@ -799,6 +799,7 @@ a:hover {
   height: 44px;
   line-height: 44px;
   font-size: 14px;
+  margin-bottom: 0;
   cursor: pointer;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -814,6 +815,66 @@ a:hover {
 .jobtype-modal .modal-dialog .modal-content .modal-body .jobtype-item a {
   margin-left: 8px;
   line-height: 44px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail {
+  background: #fafafa;
+  border: 1px solid #efefef;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail span {
+  cursor: pointer;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail span a {
+  margin-left: 13px;
+  padding: 5px 10px;
+  line-height: 44px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail:before {
+  content: "";
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #efefef;
+  position: absolute;
+  top: -9px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail:after {
+  content: "";
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #fafafa;
+  position: absolute;
+  top: -8px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail.st:before {
+  left: 58px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail.st:after {
+  left: 60px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail.nd:before {
+  left: 258px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail.nd:after {
+  left: 260px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail.rd:before {
+  left: 458px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-detail.rd:after {
+  left: 460px;
 }
 
 .msg-modal .modal-content {

@@ -39,11 +39,54 @@
     e.addClass('selected');
   }
 
-  function navItemSelect(e)
+  function navItemSelect(e, rootNo)
   {
-    if (e.attr('data-icon') == '0') {
+    $('div').remove('.item-detail');
+
+    var no = e.attr('id');
+    var item = e.parent('div.col');
+    var index = item.index();
+    var colIndex = index % 3;
+    var colClass = '';
+    var targetIndex = index + (2 - colIndex);
+    var children = item.parent().children();
+    var count = children.length;
+    var maxIndex = count - 1;
+    if (targetIndex > maxIndex) {
+      targetIndex = maxIndex;
+    }
+    if (colIndex == 0) {
+      colClass = 'st';
+    } else if (colIndex == 1) {
+      colClass = 'nd';
+    } else if (colIndex == 2) {
+      colClass = 'rd';
+    }
+
+    var selected = e.attr('data-icon') == '1';
+    item.siblings('div').find('p').addClass('selected').attr('data-icon', '0');
+    item.siblings('div').find('svg').replaceWith(iconPlus);
+
+
+    if (!selected) {
       e.find('svg').replaceWith(iconMinus);
       e.attr('data-icon', '1');
+
+      children.eq(targetIndex).after($('<div>').addClass('col-12')
+        .append($('<div>').addClass('item-detail').addClass(colClass)
+          .append($('<div>').addClass('row').addClass('row-cols-3').addClass('align-items-start'))
+        )
+      );
+
+      relations[no].forEach(function(item) {
+        $($('.item-detail').children('div').first()).append($('<div>').addClass('col').addClass('text-truncate').attr('data-dismiss', 'modal').attr('aria-label', 'Close').click(function() {
+            jobTypeChange({ st: list[rootNo][0], nd: list[no][0], rd: list[item][0] });
+        })
+          .append($('<span>').attr('title', list[item][0])
+            .append($('<a>').text(list[item][0]))
+          )
+        )
+      });
     } else {
       e.find('svg').replaceWith(iconPlus);
       e.attr('data-icon', '0');
@@ -52,11 +95,12 @@
 
   function addNavItem(no)
   {
+    $('#jobtypeBody').empty();
     relations[no].forEach(function(item) {
       $('#jobtypeBody').append($('<div>').addClass('col')
-        .append($('<p>').addClass('jobtype-item').attr('data-icon', '0')
+        .append($('<p>').addClass('jobtype-item').attr('id', item).attr('data-icon', '0')
           .click(function() {
-            navItemSelect($(this));
+            navItemSelect($(this), no);
           })
           .append(iconPlus)
           .append($('<a>')
@@ -69,20 +113,19 @@
 
   function init()
   {
+    root.forEach(function(item) {
+      $('ul#jobtypeLeftNav').append($('<li>').attr('id', item)
+        .click(function() {
+          navSelect($(this));
+          addNavItem(item);
+        })
+        .append($('<a>').text(list[item][0]))
+      )
+    });
+
     navSelect($('ul#jobtypeLeftNav').children('li:first-child'));
     addNavItem(defaultOption.no);
   }
-
-  root.forEach(function(item) {
-    $('ul#jobtypeLeftNav').append('<li id="' + item + '"><a href="#">' + list[item][0] + '</a></li>');
-  });
-
-  $('ul#jobtypeLeftNav li').click(function() {
-    navSelect($(this));
-    var no = $(this).attr('id');
-    $('#jobtypeBody').empty();
-    addNavItem(no);
-  });
 
   init();
 

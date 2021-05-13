@@ -32,7 +32,10 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="type">职位类别：</label>
                     <div class="input-group" data-toggle="jobtypepicker">
-                      <input type="text" class="form-control normal" data-show="" placeholder="请选择">
+                      <input type="hidden" name="type[st]">
+                      <input type="hidden" name="type[nd]">
+                      <input type="hidden" name="type[rd]">
+                      <input type="text" class="form-control normal" id="jobType" placeholder="请选择" autocomplete="off">
                       <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon2">
                           <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -42,11 +45,11 @@
                         </span>
                       </div>
                     </div>
-                    <div hidden data-toggle="distpicker" data-source="jobTypes">
+                    <!-- <div hidden data-toggle="distpicker" data-source="jobTypes">
                       <select class="form-control" name="type[st]" data-province="{{ isset($oldData['type']['st']) ? $oldData['type']['st'] : '---- 请选择 ----'}}"></select>
                       <select class="form-control" name="type[nd]" data-city="{{ isset($oldData['type']['nd']) ? $oldData['type']['nd'] : '---- 请选择 ----'}}"></select>
                       <select class="form-control" name="type[rd]" data-district="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : '---- 请选择 ----'}}"></select>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="nature">工作性质：</label>
@@ -195,12 +198,37 @@
 @include('shared._job_type')
 @include('shared._errors')
 <script type="text/javascript">
+  function jobTypeChange(values = {})
+  {
+    if (Object.keys(values).length > 0) {
+      $('#jobType').val(values.rd);
+      console.log($('#jobType').val());
+      $('input[name="type[st]"]').val(values.st);
+      $('input[name="type[nd]"]').val(values.nd);
+      $('input[name="type[rd]"]').val(values.rd);
+    } else {
+      $('#jobType').val('');
+      $('input[name="type[st]"]').val('');
+      $('input[name="type[nd]"]').val('');
+      $('input[name="type[rd]"]').val('');
+    }
+  }
+
   $("[data-type='int']").on('input', function() {
     this.value=this.value.replace(/\D/g,'');
   })
 
-  $("[data-toggle='jobtypepicker']").click(function(e) {
+  $("[data-toggle='jobtypepicker']").find('.input-group-append').click(function(e) {
     $('#jobtypeModal').modal();
+  });
+
+  $('#jobtypeModal').on("hide.bs.modal", function() {
+  });
+
+  $('#jobType').keyup(function(e) {
+    if(e.keyCode == 8 || e.keyCode == 46) {
+      $('#jobType').val('');
+    }
   });
 </script>
 @stop
