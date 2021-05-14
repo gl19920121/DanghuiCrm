@@ -163,7 +163,16 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="deadline">截止日期：</label>
-                    <input type="text" name="deadline" class="form-control normal" value="{{  $job->deadline }}" placeholder="请填写" />
+                    <!-- <input type="text" name="deadline" class="form-control normal" value="{{  $job->deadline }}" placeholder="请填写" /> -->
+                    <div class="input-group date" id="datetimepicker1">
+                      <input type="text" name="deadline" class="form-control normal" value="{{  $job->deadline }}" placeholder="请选择" autocomplete="off">
+                      <span class="input-group-text">
+                        <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2H0z"/>
+                          <path fill-rule="evenodd" d="M0 3h16v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm6.5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                      </span>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-danger btn-form-submit">确认修改</button>

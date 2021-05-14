@@ -10,6 +10,8 @@ use Auth;
 
 class GeneralsController extends Controller
 {
+    private $pageSize = 1;
+
     public function __construct()
     {
         $this->middleware('auth', [
@@ -17,18 +19,42 @@ class GeneralsController extends Controller
         ]);
     }
 
-    public function show()
+    public function show(Request $request)
     {
         // $this->authorize('view', [User::Class, Route::current()]);
-        $jobDoing = Job::where('execute_uid', '=', Auth::user()->id)->count();
-        $jobApply = Resume::count();
+        $jobs = Job::where('status', '=', 1)
+            ->where('execute_uid', '=', Auth::user()->id)
+            ->withCount('resumes')
+            ->paginate($this->pageSize, ['*'], 'jpage');
+        $newJobs = Job::where('status', '=', 1)
+            ->where('execute_uid', '=', Auth::user()->id)
+            ->whereHas('resumes', function ($query) {
+                $query->where('status', '=', 1);
+            })
+            ->withCount('resumes')
+            ->paginate($this->pageSize, ['*'], 'njpage');
+        $newResumes = Resume::where('status', '=', 1)
+            ->whereHas('job', function ($query) {
+                $query->where('status', '=', 1);
+                $query->where('execute_uid', '=', Auth::user()->id);
+            })
+            ->paginate($this->pageSize, ['*'], 'nrpage');
+
+        // return var_dump($newJobs->toArray());
+
+        $list = [
+            'jobs' => $jobs,
+            'newJobs' => $newJobs,
+            'newResumes' => $newResumes
+        ];
+
         $statistics = [
             'message' => 0,
             'resume_check' => 0,
             'resume_download' => 0,
             'resume_upload' => 0,
-            'job_doing' => $jobDoing,
-            'job_apply' => $jobApply,
+            'job_doing' => $jobs->total(),
+            'job_apply' => $newJobs->total(),
             'job_commission' => 0,
             'schedule_talking' => 0,
             'schedule_push_resume' => 0,
@@ -37,6 +63,9 @@ class GeneralsController extends Controller
             'schedule_onboarding' => 0,
             'schedule_over_probation' => 0
         ];
-        return view('home')->with('statistics', json_decode(json_encode($statistics)));
+
+        return view('home')->with('statistics', $statistics)
+            ->with('tab', $request->tab)
+            ->with('list', $list);
     }
 }

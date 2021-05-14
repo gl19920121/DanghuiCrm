@@ -296,15 +296,18 @@ a:hover {
         border-bottom: 1px solid $color-border-gray;
         border-top-right-radius: 0;
         border-top-left-radius: 0;
-
-        &:hover {
-        }
       }
       a.active {
         padding-top: 0;
         border-top: 2px solid $color-red;
         border-left: none;
         border-bottom: none;
+      }
+
+      &:first-child {
+        a.nav-link {
+          border-left: 1px solid $color-border-gray;
+        }
       }
     }
   }

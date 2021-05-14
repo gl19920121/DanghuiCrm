@@ -209,6 +209,7 @@ class JobsController extends Controller
     public function show(Job $job, Request $request)
     {
         $resumes = Resume::where('job_id', '=', $job->id)->paginate($this->pageSize);
+        $job->increment('pv');
         $tab = isset($request->tab) ? $request->tab : '';
         return view('jobs.show', compact('job', 'resumes', 'tab'));
     }

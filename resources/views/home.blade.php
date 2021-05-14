@@ -41,25 +41,25 @@
 								<div class="row mt-4 justify-content-start bottom text-center">
 									<div class="col-auto">
                     <div class="tip-item">
-                      <h4>{{ $statistics->job_doing }}</h4>
+                      <h4>{{ $statistics['job_doing'] }}</h4>
                       <b>运作职位</b>
                     </div>
 									</div>
 									<div class="col-auto">
                     <div class="tip-item">
-  										<h4 class="color-red">{{ $statistics->job_apply }}</h4>
+  										<h4 class="color-red">{{ $statistics['job_apply'] }}</h4>
   										<b>新增应聘</b>
                     </div>
 									</div>
 									<div class="col-auto">
                     <div class="tip-item">
-  										<h4 class="color-red">{{ $statistics->job_commission }}</h4>
+  										<h4 class="color-red">{{ $statistics['job_commission'] }}</h4>
   										<b>新增委托</b>
                     </div>
 									</div>
 									<div class="col-auto">
                     <div class="tip-item">
-  										<h4>{{ $statistics->message }}</h4>
+  										<h4>{{ $statistics['message'] }}</h4>
   										<b>新增留言</b>
                     </div>
 									</div>
@@ -75,21 +75,27 @@
             <div class="my-nav-tabs">
               <ul class="nav nav-tabs mr-4" id="myTab" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" id="job-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="job"
+                  <a class="nav-link @if(empty($tab) || $tab === 'jobs') active @endif" id="job-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="job"
                         aria-selected="true">
-                    <h6>运作职位</h6>
+                    <h6>发布职位</h6>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="accept-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="accept"
+                  <a class="nav-link @if($tab === 'newJobs') active @endif" id="accept-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="accept"
                       aria-selected="false">
                     <h6>新增应聘</h6>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="task-tab" data-toggle="tab" href="#audit" role="tab" aria-controls="task"
+                  <a class="nav-link @if($tab === 'newResumes') active @endif" id="task-tab" data-toggle="tab" href="#audit" role="tab" aria-controls="task"
                       aria-selected="false">
                     <h6>新增委托</h6>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="message-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="message"
+                      aria-selected="false">
+                    <h6>谁看过我</h6>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -103,36 +109,116 @@
                 <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="job-tab">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
+                      @if(count($list['jobs']) > 0)
+                      <table class="table table-striped default-table">
+                        <thead>
+                          <tr>
+                            <th scope="col">职位</th>
+                            <th scope="col">公司名称</th>
+                            <th scope="col">发布渠道</th>
+                            <th scope="col">浏览量</th>
+                            <th scope="col">应聘量</th>
+                            <th scope="col">更新时间</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($list['jobs'] as $job)
+                            <tr>
+                              <td>
+                                <a class="color-red" href="{{ route('jobs.show', $job) }}">{{ $job->name }}</a>
+                              </td>
+                              <td>{{ $job->company }}</td>
+                              <td>
+                                @foreach (json_decode($job->channel) as $index => $item)
+                                  {{ $job->channelArr[$item]['show'] }}{{ $index === 0 ? '/' : '' }}
+                                @endforeach
+                              </td>
+                              <td>{{ $job->pv }}</td>
+                              <td>{{ $job->resumes_count }}</td>
+                              <td>{{ $job->updated_at }}</td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+
+                      <div class="row justify-content-end">
+                        <div class="col-auto">
+                          {{ $list['jobs']->appends(['tab' => 'jobs', 'njpage' => $list['newJobs']->currentPage(), 'nrpage' => $list['newResumes']->currentPage()])->links('vendor.pagination.bootstrap-4') }}
+                        </div>
+                      </div>
+                      @else
                       <div class="empty row">
                         <div class="col text-center m-auto">
                           <img src="{{ URL::asset('images/empty.png') }}">
                           <p>您还没有运作的职位</p>
                         </div>
                       </div>
+                      @endif
                     </li>
                   </ul>
               </div>
               <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="accept-tab">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
+                      @if(count($list['newJobs']) > 0)
+                      <table class="table table-striped default-table">
+                        <thead>
+                          <tr>
+                            <th scope="col">职位</th>
+                            <th scope="col">公司名称</th>
+                            <th scope="col">来源渠道</th>
+                            <th scope="col">待处理简历</th>
+                            <th scope="col">更新时间</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($list['newJobs'] as $job)
+                            <tr>
+                              <td>{{ $job->name }}</td>
+                              <td>{{ $job->company }}</td>
+                              <td>
+                                @foreach (json_decode($job->channel) as $index => $item)
+                                  {{ $job->channelArr[$item]['show'] }}{{ $index === 0 ? '/' : '' }}
+                                @endforeach
+                              </td>
+                              <td>{{ $job->resumes_count }}</td>
+                              <td>{{ $job->updated_at }}</td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+
+                      <div class="row justify-content-end">
+                        <div class="col-auto">
+                          {{ $list['newJobs']->appends(['tab' => 'newJobs', 'jobs' => $list['jobs']->currentPage(), 'nrpage' => $list['newResumes']->currentPage()])->links('vendor.pagination.bootstrap-4') }}
+                        </div>
+                      </div>
+                      @else
                       <div class="empty row">
                         <div class="col text-center m-auto">
                           <img src="{{ URL::asset('images/empty.png') }}">
                           <p>您还没有新增的应聘</p>
                         </div>
                       </div>
+                      @endif
                     </li>
                   </ul>
               </div>
               <div class="tab-pane fade" id="audit" role="tabpanel" aria-labelledby="task-tab">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
+                      @if(count($list['newResumes']) > 0)
+                        @foreach($list['newResumes'] as $resume)
+                          {{ $resume->name }}
+                        @endforeach
+                      @else
                       <div class="empty row">
                         <div class="col text-center m-auto">
                           <img src="{{ URL::asset('images/empty.png') }}">
                           <p>您还没有新增的委托</p>
                         </div>
                       </div>
+                      @endif
                     </li>
                   </ul>
               </div>
@@ -194,19 +280,19 @@
               <div class="row content mt-4 justify-content-start bottom text-center">
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->resume_check }}</h3>
+                    <h3>{{ $statistics['resume_check'] }}</h3>
                     <p>查看</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->resume_download }}</h3>
+                    <h3>{{ $statistics['resume_download'] }}</h3>
                     <p>下载</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->resume_upload }}</h3>
+                    <h3>{{ $statistics['resume_upload'] }}</h3>
                     <p>上传</p>
                   </div>
                 </div>
@@ -229,19 +315,19 @@
               <div class="row content mt-4 justify-content-start bottom text-center">
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->job_doing }}</h3>
+                    <h3>{{ $statistics['job_doing'] }}</h3>
                     <p>运作职位</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->job_apply }}</h3>
+                    <h3>{{ $statistics['job_apply'] }}</h3>
                     <p>新增应聘</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->job_commission }}</h3>
+                    <h3>{{ $statistics['job_commission'] }}</h3>
                     <p>新增委托</p>
                   </div>
                 </div>
@@ -264,19 +350,19 @@
               <div class="row content mt-4 justify-content-start bottom text-center">
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->schedule_talking }}</h3>
+                    <h3>{{ $statistics['schedule_talking'] }}</h3>
                     <p>电话沟通</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->schedule_push_resume }}</h3>
+                    <h3>{{ $statistics['schedule_push_resume'] }}</h3>
                     <p>推荐成功</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->schedule_interview }}</h3>
+                    <h3>{{ $statistics['schedule_interview'] }}</h3>
                     <p>进企面试</p>
                   </div>
                 </div>
@@ -284,19 +370,19 @@
               <div class="row content mt-4 justify-content-start bottom text-center">
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->schedule_offer }}</h3>
+                    <h3>{{ $statistics['schedule_offer'] }}</h3>
                     <p>面试通过</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->schedule_onboarding }}</h3>
+                    <h3>{{ $statistics['schedule_onboarding'] }}</h3>
                     <p>成功入职</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
-                    <h3>{{ $statistics->schedule_over_probation }}</h3>
+                    <h3>{{ $statistics['schedule_over_probation'] }}</h3>
                     <p>入职过保</p>
                   </div>
                 </div>

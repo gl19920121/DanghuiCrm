@@ -94,14 +94,12 @@ class ResumesController extends Controller
             $data['work_years_flag'] = abs($data['work_years']);
             unset($data['work_years']);
         } else {
-            $data['work_years'] = $data['work_years_flag'];
             $data['work_years_flag'] = 0;
         }
         if($data['exp_salary'] < 0) {
             $data['exp_salary_flag'] = abs($data['exp_salary']);
             unset($data['exp_salary']);
         } else {
-            $data['exp_salary'] = $data['exp_salary_flag'];
             $data['exp_salary_flag'] = 0;
         }
         unset($data['file']);
