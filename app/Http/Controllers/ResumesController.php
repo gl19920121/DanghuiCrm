@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ResumesController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        return;
+        $this->middleware('auth', [
+            'except' => []
+        ]);
     }
 
     /**

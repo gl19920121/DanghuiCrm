@@ -30,7 +30,23 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="type">职位类别：</label>
-                    <div data-toggle="distpicker" data-source="jobTypes">
+                    <div class="input-group" data-toggle="jobtypepicker">
+
+                      <input type="hidden" name="type[st]" value="{{ $job->type->st }}">
+                      <input type="hidden" name="type[nd]" value="{{ $job->type->nd }}">
+                      <input type="hidden" name="type[rd]" value="{{ $job->type->rd }}">
+
+                      <input type="text" class="form-control normal" id="jobType" value="{{ $job->type->rd }}" placeholder="请选择" autocomplete="off">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">
+                          <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
+                            <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div hidden data-toggle="distpicker" data-source="jobTypes">
                       <select class="form-control" name="type[st]" data-province="{{ $job->type->st }}"></select>
                       <select class="form-control" name="type[nd]"  data-city="{{ $job->type->nd }}"></select>
                       <select class="form-control" name="type[rd]"  data-district="{{ $job->type->rd }}"></select>
@@ -155,10 +171,9 @@
         </div>
     </div>
 </div>
+@include('shared._job_type')
+@include('shared._errors')
 <script type="text/javascript">
-  $("[data-type='int']").on('input', function() {
-    this.value=this.value.replace(/\D/g,'');
-  })
   $.fn.distpicker.setDefaults({
     province: '---- 请选择 ----',
     city: '---- 请选择 ----',

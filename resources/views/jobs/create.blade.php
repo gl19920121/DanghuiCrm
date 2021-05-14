@@ -32,10 +32,12 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="type">职位类别：</label>
                     <div class="input-group" data-toggle="jobtypepicker">
-                      <input type="hidden" name="type[st]">
-                      <input type="hidden" name="type[nd]">
-                      <input type="hidden" name="type[rd]">
-                      <input type="text" class="form-control normal" id="jobType" placeholder="请选择" autocomplete="off">
+
+                      <input type="hidden" name="type[st]" value="{{ isset($oldData['type']['st']) ? $oldData['type']['st'] : old('type') }}">
+                      <input type="hidden" name="type[nd]" value="{{ isset($oldData['type']['nd']) ? $oldData['type']['nd'] : old('type') }}">
+                      <input type="hidden" name="type[rd]" value="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : old('type') }}">
+
+                      <input type="text" class="form-control normal" id="jobType" value="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : old('type') }}" placeholder="请选择" autocomplete="off">
                       <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon2">
                           <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +55,7 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="nature">工作性质：</label>
-                    <select name="nature" class="form-control normal" value="{{ isset($oldData['nature']) ? $oldData['nature'] : old('nature') }}">
+                    <select name="nature" class="form-control normal" value="{{  old('nature')}}">
                         @foreach($natureArr as $key => $nature)
                             <option value="{{ $key }}" @if(isset($oldData['nature']) && $key === $oldData['nature']) selected="selected" @endif>{{ $nature }}</option>
                         @endforeach
@@ -62,9 +64,9 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="location">工作城市：</label>
                     <div data-toggle="distpicker">
-                      <select class="form-control" name="location[province]" data-province="{{ isset($oldData['location']['province']) ? $oldData['location']['province'] : '---- 选择省 ----'}}"></select>
-                      <select class="form-control" name="location[city]"  data-city="{{ isset($oldData['location']['city']) ? $oldData['location']['city'] : '---- 选择市 ----'}}"></select>
-                      <select class="form-control" name="location[district]"  data-district="{{ isset($oldData['location']['district']) ? $oldData['location']['district'] : '---- 选择区 ----'}}"></select>
+                      <select class="form-control" name="location[province]" data-province="{{ isset($oldData['location']['province']) ? $oldData['location']['province'] : '---- 选择省 ----' }}" value="{{ old('location') }}"></select>
+                      <select class="form-control" name="location[city]"  data-city="{{ isset($oldData['location']['city']) ? $oldData['location']['city'] : '---- 选择市 ----' }}"></select>
+                      <select class="form-control" name="location[district]"  data-district="{{ isset($oldData['location']['district']) ? $oldData['location']['district'] : '---- 选择区 ----' }}"></select>
                     </div>
                 </div>
                 <div class="form-group form-inline">
@@ -197,38 +199,4 @@
 </div>
 @include('shared._job_type')
 @include('shared._errors')
-<script type="text/javascript">
-  function jobTypeChange(values = {})
-  {
-    if (Object.keys(values).length > 0) {
-      $('#jobType').val(values.rd);
-      console.log($('#jobType').val());
-      $('input[name="type[st]"]').val(values.st);
-      $('input[name="type[nd]"]').val(values.nd);
-      $('input[name="type[rd]"]').val(values.rd);
-    } else {
-      $('#jobType').val('');
-      $('input[name="type[st]"]').val('');
-      $('input[name="type[nd]"]').val('');
-      $('input[name="type[rd]"]').val('');
-    }
-  }
-
-  $("[data-type='int']").on('input', function() {
-    this.value=this.value.replace(/\D/g,'');
-  })
-
-  $("[data-toggle='jobtypepicker']").find('.input-group-append').click(function(e) {
-    $('#jobtypeModal').modal();
-  });
-
-  $('#jobtypeModal').on("hide.bs.modal", function() {
-  });
-
-  $('#jobType').keyup(function(e) {
-    if(e.keyCode == 8 || e.keyCode == 46) {
-      $('#jobType').val('');
-    }
-  });
-</script>
 @stop

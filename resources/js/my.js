@@ -1,9 +1,3 @@
-// $(function() {
-//   $('#goto').bind('keypress',function(event) {
-//     window.location.href = "http://www.baidu.com";
-//   })
-// });
-
 $(function () {
 
   $('#datetimepicker1').datetimepicker({
@@ -40,10 +34,7 @@ $(function () {
     },
   });
 
-  // @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-  //   @if(session()->has($msg))
-  //     console.log(123);
-  //     $('#msgModal').modal()
-  //   @endif
-  // @endforeach
+  $("[data-type='int']").on('input', function() {
+    this.value=this.value.replace(/\D/g,'');
+  })
 });

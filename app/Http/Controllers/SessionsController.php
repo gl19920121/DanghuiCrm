@@ -12,6 +12,9 @@ class SessionsController extends Controller
         $this->middleware('auth', [
             'except' => ['index', 'create', 'store']
         ]);
+        $this->middleware('guest', [
+            'only' => ['create']
+         ]);
     }
 
     public function index()

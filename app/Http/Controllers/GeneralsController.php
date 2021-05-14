@@ -10,6 +10,13 @@ use Auth;
 
 class GeneralsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => []
+        ]);
+    }
+
     public function show()
     {
         // $this->authorize('view', [User::Class, Route::current()]);

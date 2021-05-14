@@ -24,6 +24,31 @@
 <script type="module">
   import JOBTYPES from '/js/jobtypes.js';
 
+  $('#jobType').keyup(function(e) {
+    if(e.keyCode == 8 || e.keyCode == 46) {
+      $('#jobType').val('');
+    }
+  });
+
+  $("[data-toggle='jobtypepicker']").find('.input-group-append').css('cursor', 'pointer').click(function(e) {
+    $('#jobtypeModal').modal();
+  });
+
+  function jobTypeChange(values = {})
+  {
+    if (Object.keys(values).length > 0) {
+      $('#jobType').val(values.rd);
+      $('input[name="type[st]"]').val(values.st);
+      $('input[name="type[nd]"]').val(values.nd);
+      $('input[name="type[rd]"]').val(values.rd);
+    } else {
+      $('#jobType').val('');
+      $('input[name="type[st]"]').val('');
+      $('input[name="type[nd]"]').val('');
+      $('input[name="type[rd]"]').val('');
+    }
+  }
+
   var list = JOBTYPES.list;
   var relations = JOBTYPES.relations;
   var root = JOBTYPES.category.root;
