@@ -60,8 +60,16 @@ a:hover {
   color: $color-red;
 }
 
+.color-gray {
+  color: $color-gray;
+}
+
 .color-light-gray {
   color: $color-light-gray;
+}
+
+.font-size-m {
+  font-size: $font-size-m;
 }
 
 .font-size-s {
@@ -1064,6 +1072,29 @@ a:hover {
             }
           }
         }
+      }
+    }
+  }
+}
+
+.job-detail {
+  .row {
+    padding-bottom: 36px;
+    &:first-child {
+      padding-top: 31px;
+    }
+    .col-12 {
+      &:first-child {
+        h5 {
+          border-left: 3px solid $color-red;
+          padding-left: 15px;
+        }
+      }
+    }
+
+    .col {
+      p {
+        margin-top: 25px;
       }
     }
   }

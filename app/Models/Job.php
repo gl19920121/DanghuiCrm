@@ -56,6 +56,50 @@ class Job extends Model
         return sprintf('PN%s', str_pad($this->attributes['id'], 8, "0", STR_PAD_LEFT));
     }
 
+    public function getNatureAttribute()
+    {
+        $nature = $this->attributes['nature'];
+
+        switch ($nature) {
+            case 'full':
+                $nature = '全职';
+                break;
+            case 'part':
+                $nature = '兼职';
+                break;
+            case 'all':
+                $nature = '全职/兼职';
+                break;
+
+            default:
+                break;
+        }
+
+        return $nature;
+    }
+
+    public function getWelfareAttribute()
+    {
+        $welfare = $this->attributes['welfare'];
+
+        switch ($welfare) {
+            case 'social_insurance':
+                $welfare = '社会保险';
+                break;
+            case 'five_social_insurance_and_one_housing_fund':
+                $welfare = '五险一金';
+                break;
+            case 'four_social_insurance_and_one_housing_fund':
+                $welfare = '四险一金';
+                break;
+
+            default:
+                break;
+        }
+
+        return $welfare;
+    }
+
     public function getChannelArrAttribute()
     {
         $channelArr = [

@@ -81,7 +81,7 @@
         </li>
       </ul>
       <div class="tab-content" id="myTabContent" >
-        <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="job-tab">
+        <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="job-tab">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <div class="my-nav-tabs-top">
@@ -140,9 +140,11 @@
             </li>
           </ul>
         </div>
-        <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="accept-tab">
+        <div class="tab-pane fade show active" id="edit" role="tabpanel" aria-labelledby="accept-tab">
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"></li>
+              <li class="list-group-item">
+                @include('jobs.shared._job_show_detail')
+              </li>
             </ul>
         </div>
       </div>

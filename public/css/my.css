@@ -30,8 +30,16 @@ a:hover {
   color: #D83856;
 }
 
+.color-gray {
+  color: #898989;
+}
+
 .color-light-gray {
   color: #727171;
+}
+
+.font-size-m {
+  font-size: 14px;
 }
 
 .font-size-s {
@@ -982,5 +990,18 @@ a:hover {
 
 .commission .row:nth-child(2) .col:nth-child(2) p:nth-child(5) {
   margin-top: 20px;
+}
+
+.job-detail .row:first-child {
+  padding-bottom: 36px;
+}
+
+.job-detail .row .col-12:first-child h5 {
+  border-left: 3px solid #D83856;
+  padding-left: 15px;
+}
+
+.job-detail .row .col p {
+  margin-top: 25px;
 }
 
