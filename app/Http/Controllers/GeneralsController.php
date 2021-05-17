@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Job;
 use App\Models\Resume;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class GeneralsController extends Controller
 {
@@ -38,9 +39,12 @@ class GeneralsController extends Controller
                 $query->where('status', '=', 1);
                 $query->where('execute_uid', '=', Auth::user()->id);
             })
+            ->with(['job' => function($query) {
+                $query->select('id', 'name');
+            }])
             ->paginate($this->pageSize, ['*'], 'nrpage');
 
-        // return var_dump($newJobs->toArray());
+        // return dd($newResumes->toArray()['data']);
 
         $list = [
             'jobs' => $jobs,
@@ -65,7 +69,7 @@ class GeneralsController extends Controller
         ];
 
         return view('home')->with('statistics', $statistics)
-            ->with('tab', $request->tab)
+            ->with('tab', empty($request->tab) ? 'jobs' : $request->tab)
             ->with('list', $list);
     }
 }

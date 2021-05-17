@@ -73,40 +73,40 @@
 				<div class="col">
 					<div class="list">
             <div class="my-nav-tabs">
-              <ul class="nav nav-tabs mr-4" id="myTab" role="tablist">
+              <ul class="nav nav-tabs mr-4" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link @if(empty($tab) || $tab === 'jobs') active @endif" id="job-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="job"
+                  <a class="nav-link @if(empty($tab) || $tab === 'jobs') active @endif" data-toggle="tab" href="#tabJobs" role="tab" aria-controls="tabJobs"
                         aria-selected="true">
                     <h6>发布职位</h6>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link @if($tab === 'newJobs') active @endif" id="accept-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="accept"
+                  <a class="nav-link @if($tab === 'newJobs') active @endif" data-toggle="tab" href="#tabNewJobs" role="tab" aria-controls="tabNewJobs"
                       aria-selected="false">
                     <h6>新增应聘</h6>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link @if($tab === 'newResumes') active @endif" id="task-tab" data-toggle="tab" href="#audit" role="tab" aria-controls="task"
+                  <a class="nav-link @if($tab === 'newResumes') active @endif" data-toggle="tab" href="#tabCommission" role="tab" aria-controls="tabCommission"
                       aria-selected="false">
                     <h6>新增委托</h6>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" id="message-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="message"
+                <li hidden class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#tabSeen" role="tab" aria-controls="tabSeen"
                       aria-selected="false">
                     <h6>谁看过我</h6>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" id="message-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="message"
+                <li hidden class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#tabContact" role="tab" aria-controls="tabContact"
                       aria-selected="false">
                     <h6>新增留言</h6>
                   </a>
                 </li>
               </ul>
-              <div class="tab-content" id="myTabContent" >
-                <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="job-tab">
+              <div class="tab-content" >
+                <div class="tab-pane fade @if($tab === 'jobs') show active @endif" id="tabJobs" role="tabpanel">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                       @if(count($list['jobs']) > 0)
@@ -156,73 +156,119 @@
                       @endif
                     </li>
                   </ul>
-              </div>
-              <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="accept-tab">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      @if(count($list['newJobs']) > 0)
-                      <table class="table table-striped default-table">
-                        <thead>
-                          <tr>
-                            <th scope="col">职位</th>
-                            <th scope="col">公司名称</th>
-                            <th scope="col">来源渠道</th>
-                            <th scope="col">待处理简历</th>
-                            <th scope="col">更新时间</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach($list['newJobs'] as $job)
+                </div>
+                <div class="tab-pane fade @if($tab === 'newJobs') show active @endif" id="tabNewJobs" role="tabpanel">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        @if(count($list['newJobs']) > 0)
+                        <table class="table table-striped default-table">
+                          <thead>
                             <tr>
-                              <td>{{ $job->name }}</td>
-                              <td>{{ $job->company }}</td>
-                              <td>
-                                @foreach (json_decode($job->channel) as $index => $item)
-                                  {{ $job->channelArr[$item]['show'] }}{{ $index === 0 ? '/' : '' }}
-                                @endforeach
-                              </td>
-                              <td>{{ $job->resumes_count }}</td>
-                              <td>{{ $job->updated_at }}</td>
+                              <th scope="col">职位</th>
+                              <th scope="col">公司名称</th>
+                              <th scope="col">来源渠道</th>
+                              <th scope="col">待处理简历</th>
+                              <th scope="col">更新时间</th>
                             </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            @foreach($list['newJobs'] as $job)
+                              <tr>
+                                <td>{{ $job->name }}</td>
+                                <td>{{ $job->company }}</td>
+                                <td>
+                                  @foreach (json_decode($job->channel) as $index => $item)
+                                    {{ $job->channelArr[$item]['show'] }}{{ $index === 0 ? '/' : '' }}
+                                  @endforeach
+                                </td>
+                                <td>{{ $job->resumes_count }}</td>
+                                <td>{{ $job->updated_at }}</td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
 
-                      <div class="row justify-content-end">
-                        <div class="col-auto">
-                          {{ $list['newJobs']->appends(['tab' => 'newJobs', 'jobs' => $list['jobs']->currentPage(), 'nrpage' => $list['newResumes']->currentPage()])->links('vendor.pagination.bootstrap-4') }}
+                        <div class="row justify-content-end">
+                          <div class="col-auto">
+                            {{ $list['newJobs']->appends(['tab' => 'newJobs', 'jobs' => $list['jobs']->currentPage(), 'nrpage' => $list['newResumes']->currentPage()])->links('vendor.pagination.bootstrap-4') }}
+                          </div>
                         </div>
-                      </div>
-                      @else
-                      <div class="empty row">
-                        <div class="col text-center m-auto">
-                          <img src="{{ URL::asset('images/empty.png') }}">
-                          <p>您还没有新增的应聘</p>
+                        @else
+                        <div class="empty row">
+                          <div class="col text-center m-auto">
+                            <img src="{{ URL::asset('images/empty.png') }}">
+                            <p>您还没有新增的应聘</p>
+                          </div>
                         </div>
-                      </div>
-                      @endif
-                    </li>
-                  </ul>
-              </div>
-              <div class="tab-pane fade" id="audit" role="tabpanel" aria-labelledby="task-tab">
+                        @endif
+                      </li>
+                    </ul>
+                </div>
+                <div class="tab-pane fade @if($tab === 'newResumes') show active @endif" id="tabCommission" role="tabpanel">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        @if(count($list['newResumes']) > 0)
+                          @foreach($list['newResumes'] as $resume)
+                            <div class="commission">
+                              <div class="row justify-content-between">
+                                <div class="col col-auto">
+                                  <p class="color-light-gray font-size-s">ID:{{ $resume->no }}</p>
+                                </div>
+                                <div class="col col-auto">
+                                  <p class="color-light-gray font-size-s">投递时间：{{ $job->created_at }}</p>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col col-auto">
+                                  <img src="{{ URL::asset('images/avatar_default.png') }}">
+                                </div>
+                                <div class="col">
+                                  <p class="color-red">
+                                    {{ $resume->name }}<span>|</span>{{ $resume->sex }}<span>|</span>{{ sprintf('%s岁', $resume->age) }}<span>|</span>{{ $resume->city }}<span>|</span>{{ $resume->education }}<span>|</span>{{ sprintf('工作%s年', $resume->work_years) }}
+                                  </p>
+                                  <p>最高学历：</p>
+                                  <p>近期工作：</p>
+                                  <p>
+                                    <span>求职者状态：</span>
+                                    <span class="ml-2">来源渠道：</span>
+                                  </p>
+                                  <p>委托职位：<span class="color-red">{{ $resume->job->name }}</span></p>
+                                </div>
+                                <div class="col col-auto align-self-end">
+                                  <button class="btn btn-danger">沟通邀请</button>
+                                </div>
+                              </div>
+                            </div>
+                          @endforeach
+                        <div class="row justify-content-end">
+                          <div class="col-auto">
+                            {{ $list['newResumes']->appends(['tab' => 'newResumes', 'jobs' => $list['jobs']->currentPage(), 'njpage' => $list['newJobs']->currentPage()])->links('vendor.pagination.bootstrap-4') }}
+                          </div>
+                        </div>
+                        @else
+                        <div class="empty row">
+                          <div class="col text-center m-auto">
+                            <img src="{{ URL::asset('images/empty.png') }}">
+                            <p>您还没有新增的委托</p>
+                          </div>
+                        </div>
+                        @endif
+                      </li>
+                    </ul>
+                </div>
+                <div hidden class="tab-pane fade" id="tabSeen" role="tabpanel">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                      @if(count($list['newResumes']) > 0)
-                        @foreach($list['newResumes'] as $resume)
-                          {{ $resume->name }}
-                        @endforeach
-                      @else
                       <div class="empty row">
                         <div class="col text-center m-auto">
                           <img src="{{ URL::asset('images/empty.png') }}">
-                          <p>您还没有新增的委托</p>
+                          <p>还没有人看过您</p>
                         </div>
                       </div>
-                      @endif
                     </li>
                   </ul>
-              </div>
-              <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="message-tab">
+                </div>
+                <div hidden class="tab-pane fade" id="tabContact" role="tabpanel">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                       <div class="empty row">
