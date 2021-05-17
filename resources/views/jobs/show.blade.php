@@ -87,105 +87,56 @@
               <div class="my-nav-tabs-top">
                 <ul class="nav nav-tabs text-center" id="myTab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link @if(empty($tab) || $tab === 'all') active @endif" id="all-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'all']) }}" role="tab" aria-controls="all"
+                    <a class="nav-link @if(empty($tab) || $tab === 'untreated') active @endif" id="all-tab" data-toggle="link" href="{{ route('jobs.show', ['id' => $job->id, 'tab' => 'untreated']) }}" role="tab" aria-controls="all"
                           aria-selected="true">
-                      求职者应聘（{{ count($resumes) }}）
+                      求职者应聘（{{ $count['untreated'] }}）
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link @if($tab === 'talking') active @endif" id="talking-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'talking']) }}" role="tab" aria-controls="talking"
+                    <a class="nav-link @if($tab === 'talking') active @endif" id="talking-tab" data-toggle="link" href="{{ route('jobs.show', ['id' => $job->id, 'tab' => 'talking']) }}" role="tab" aria-controls="talking"
                         aria-selected="false">
-                      电话沟通
+                      电话沟通（{{ $count['talking'] }}）
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link @if($tab === 'push_resume') active @endif" id="push_resume-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'push_resume']) }}" role="tab" aria-controls="push_resume"
+                    <a class="nav-link @if($tab === 'push_resume') active @endif" id="push_resume-tab" data-toggle="link" href="{{ route('jobs.show', ['id' => $job->id, 'tab' => 'push_resume']) }}" role="tab" aria-controls="push_resume"
                         aria-selected="false">
-                      推荐简历
+                      推荐简历（{{ $count['push_resume'] }}）
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link @if($tab === 'interview') active @endif" id="interview-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'interview']) }}" role="tab" aria-controls="interview"
+                    <a class="nav-link @if($tab === 'interview') active @endif" id="interview-tab" data-toggle="link" href="{{ route('jobs.show', ['id' => $job->id, 'tab' => 'interview']) }}" role="tab" aria-controls="interview"
                         aria-selected="false">
-                      面试
+                      面试（{{ $count['interview'] }}）
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link @if($tab === 'offer') active @endif" id="offer-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'offer']) }}" role="tab" aria-controls="offer"
+                    <a class="nav-link @if($tab === 'offer') active @endif" id="offer-tab" data-toggle="link" href="{{ route('jobs.show', ['id' => $job->id, 'tab' => 'offer']) }}" role="tab" aria-controls="offer"
                         aria-selected="false">
-                      offer
+                      offer（{{ $count['offer'] }}）
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link @if($tab === 'onboarding') active @endif" id="onboarding-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'onboarding']) }}" role="tab" aria-controls="onboarding"
+                    <a class="nav-link @if($tab === 'onboarding') active @endif" id="onboarding-tab" data-toggle="link" href="{{ route('jobs.show', ['id' => $job->id, 'tab' => 'onboarding']) }}" role="tab" aria-controls="onboarding"
                         aria-selected="false">
-                      入职
+                      入职（{{ $count['onboarding'] }}）
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link @if($tab === 'over_probation') active @endif" id="over_probation-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'over_probation']) }}" role="tab" aria-controls="over_probation"
+                    <a class="nav-link @if($tab === 'over_probation') active @endif" id="over_probation-tab" data-toggle="link" href="{{ route('jobs.show', ['id' => $job->id, 'tab' => 'over_probation']) }}" role="tab" aria-controls="over_probation"
                         aria-selected="false">
-                      过保
+                      过保（{{ $count['over_probation'] }}）
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link @if($tab === 'out') active @endif" id="out-tab" data-toggle="tab" href="{{ route('jobs.list', ['tab' => 'out']) }}" role="tab" aria-controls="out"
+                    <a class="nav-link @if($tab === 'out') active @endif" id="out-tab" data-toggle="link" href="{{ route('jobs.show', ['id' => $job->id, 'tab' => 'out']) }}" role="tab" aria-controls="out"
                         aria-selected="false">
-                      淘汰
+                      淘汰（{{ $count['out'] }}）
                     </a>
                   </li>
                 </ul>
               </div>
-              <table class="table table-striped default-table">
-                <thead>
-                  <tr>
-                    <th scope="col">姓名</th>
-                    <th scope="col">运作状态</th>
-                    <th scope="col">性别</th>
-                    <th scope="col">年龄</th>
-                    <th scope="col">工作年限</th>
-                    <th scope="col">教育程度</th>
-                    <th scope="col">目前公司</th>
-                    <th scope="col">目前职位</th>
-                    <th scope="col">目前月薪</th>
-                    <th scope="col">投递时间</th>
-                    <th scope="col">操作</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach($resumes as $resume)
-                    <tr>
-                      <td class="color-red">{{ $resume->name }}</td>
-                      <td>{{ $resume->status }}</td>
-                      <td>{{ $resume->sex }}</td>
-                      <td>{{ $resume->age }}</td>
-                      <td>{{ $resume->work_years }}</td>
-                      <td>{{ $resume->education }}</td>
-                      <td>{{ $resume->cur_company }}</td>
-                      <td>{{ $resume->cur_position }}</td>
-                      <td>{{ $resume->cur_salary }}</td>
-                      <td>{{ $resume->created_at }}</td>
-                      <td>
-                        <div class="btn-group" role="group">
-                          <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            操作
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">加入电话沟通</a>
-                            <a class="dropdown-item" href="#">待定</a>
-                            <a class="dropdown-item" href="#">淘汰</a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  @endforeach
-                </tbody>
-              </table>
-              <div class="row justify-content-end">
-                <div class="col-auto">
-                  {{ $resumes->links() }}
-                </div>
-              </div>
+              @include('jobs.shared._job_show_resumes')
             </li>
           </ul>
         </div>

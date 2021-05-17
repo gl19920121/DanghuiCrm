@@ -279,8 +279,9 @@ a:hover {
   line-height: 48px;
   padding: 1px 0 0 0;
   border-top: 1px solid #C9CACA;
-  border-right: 1px solid #C9CACA;
+  border-left: 1px solid #C9CACA;
   border-bottom: 1px solid #C9CACA;
+  border-right: none;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 }
@@ -288,12 +289,16 @@ a:hover {
 .my-nav-tabs-top .nav-tabs .nav-item a.active {
   padding-top: 0;
   border-top: 2px solid #D83856;
-  border-left: none;
+  border-right: none;
   border-bottom: none;
 }
 
-.my-nav-tabs-top .nav-tabs .nav-item:first-child a.nav-link {
-  border-left: 1px solid #C9CACA;
+.my-nav-tabs-top .nav-tabs .nav-item:first-child a.active {
+  border-left: none;
+}
+
+.my-nav-tabs-top .nav-tabs .nav-item:last-child a.nav-link {
+  border-right: 1px solid #C9CACA;
 }
 
 .main-bg {

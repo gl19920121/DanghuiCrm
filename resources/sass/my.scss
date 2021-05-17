@@ -305,21 +305,33 @@ a:hover {
         line-height: 48px;
         padding: 1px 0 0 0;
         border-top: 1px solid $color-border-gray;
-        border-right: 1px solid $color-border-gray;
+        border-left: 1px solid $color-border-gray;
         border-bottom: 1px solid $color-border-gray;
+        border-right: none;
         border-top-right-radius: 0;
         border-top-left-radius: 0;
+
+        &:hover {
+          //border-right: none;
+        }
       }
       a.active {
         padding-top: 0;
         border-top: 2px solid $color-red;
-        border-left: none;
+        border-right: none;
         border-bottom: none;
       }
 
       &:first-child {
+        a.active {
+          //border-left: 1px solid $color-border-gray;
+          border-left: none;
+        }
+      }
+
+      &:last-child {
         a.nav-link {
-          border-left: 1px solid $color-border-gray;
+          border-right: 1px solid $color-border-gray;
         }
       }
     }
@@ -800,7 +812,7 @@ a:hover {
 
       .nav-tabs {
 
-        .nav-item  {
+        .nav-item {
           width: 129px;
           height: 30px;
 

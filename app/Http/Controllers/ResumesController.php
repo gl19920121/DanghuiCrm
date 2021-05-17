@@ -118,6 +118,15 @@ class ResumesController extends Controller
         //return redirect()->route('resumes.show', [$resume]);
     }
 
+    public function status(Resume $resume, Request $request)
+    {
+        if ($request->has('status')) {
+            $resume->status = $request->status;
+            $resume->save();
+        }
+        return redirect()->route('jobs.show', ['id' => $resume->job_id, 'tab' => $request->tab]);
+    }
+
     /**
      * [destroy 删除简历 POST]
      * @author dante 2021-04-19

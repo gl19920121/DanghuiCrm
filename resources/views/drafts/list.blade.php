@@ -1,5 +1,5 @@
-@extends('jobs.layouts.tab')
-@section('tab')
+@extends('jobs.layouts.list')
+@section('list')
 
   <div class="job-list-body">
 

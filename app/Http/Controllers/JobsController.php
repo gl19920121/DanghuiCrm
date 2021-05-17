@@ -208,10 +208,61 @@ class JobsController extends Controller
 
     public function show(Job $job, Request $request)
     {
-        $resumes = Resume::where('job_id', '=', $job->id)->paginate($this->pageSize);
+        $tab = isset($request->tab) ? $request->tab : 'untreated';
+        $resumes = $job->resumes()
+            ->where(
+            function ($query) use($tab) {
+                switch ($tab) {
+                    case 'untreated':
+                        $query->whereIn('status', [1, -1]);
+                        break;
+                    case 'talking':
+                        $query->where('status', '=', 2);
+                        break;
+                    case 'push_resume':
+                        $query->where('status', '=', 3);
+                        break;
+                    case 'interview':
+                        $query->where('status', '=', 4);
+                        break;
+                    case 'offer':
+                        $query->where('status', '=', 5);
+                        break;
+                    case 'onboarding':
+                        $query->where('status', '=', 6);
+                        break;
+                    case 'over_probation':
+                        $query->where('status', '=', 7);
+                        break;
+                    case 'out':
+                        $query->where('status', '=', 0);
+                        break;
+
+                    default:
+                        $query->whereIn('status', [1, -1]);
+                        break;
+                }
+            })
+            ->paginate($this->pageSize);
+
+        $count = [
+            'untreated' => $job->resumes()->whereIn('status', [1, -1])->count(),
+            'talking' => $job->resumes()->where('status', '=', 2)->count(),
+            'push_resume' => $job->resumes()->where('status', '=', 3)->count(),
+            'interview' => $job->resumes()->where('status', '=', 4)->count(),
+            'offer' => $job->resumes()->where('status', '=', 5)->count(),
+            'onboarding' => $job->resumes()->where('status', '=', 6)->count(),
+            'over_probation' => $job->resumes()->where('status', '=', 7)->count(),
+            'out' => $job->resumes()->where('status', '=', 0)->count()
+        ];
+
         $job->increment('pv');
-        $tab = isset($request->tab) ? $request->tab : '';
-        return view('jobs.show', compact('job', 'resumes', 'tab'));
+
+        return view('jobs.show')
+            ->with('job', $job)
+            ->with('resumes', $resumes)
+            ->with('count', $count)
+            ->with('tab', $tab);
     }
 
     public function edit(Job $job)

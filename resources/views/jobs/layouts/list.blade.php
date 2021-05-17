@@ -28,21 +28,7 @@
   </div>
 
   <div>
-    @yield('tab')
-  </div>
-
-  <div hidden class="tab-content">
-    <div class="tab-pane fade show active" id="ing" role="tabpanel" aria-labelledby="ing-tab">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <div class="job-list-body">
-            <div class="default-list">
-
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
+    @yield('list')
   </div>
 </div>
 @stop
