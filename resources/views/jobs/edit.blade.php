@@ -55,8 +55,8 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="nature">工作性质：</label>
                     <select name="nature" class="form-control normal">
-                        @foreach($natureArr as $key => $nature)
-                            <option value="{{ $key }}" @if($key === $job->nature) selected="selected" @endif>{{ $nature }}</option>
+                        @foreach($job->natureArr as $key => $nature)
+                            <option value="{{ $key }}" {{ $nature['selected'] }}>{{ $nature['text'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -87,8 +87,8 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="welfare">福利待遇：</label>
                     <select name="welfare" class="form-control normal">
-                        @foreach($welfareArr as $key => $welfare)
-                            <option value="{{ $key }}" @if($key === $job->welfare) selected="selected" @endif>{{ $welfare }}</option>
+                        @foreach($job->welfareArr as $key => $welfare)
+                            <option value="{{ $key }}" {{ $welfare['selected'] }}>{{ $welfare['text'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -118,8 +118,8 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="education">学历要求：</label>
                     <select name="education" class="form-control normal">
-                        @foreach($educationArr as $key => $education)
-                            <option value="{{ $key }}" @if($key === $job->education) selected="selected" @endif>{{ $education }}</option>
+                        @foreach($job->educationArr as $key => $education)
+                            <option value="{{ $key }}" {{ $education['selected'] }}>{{ $education['text'] }}</option>
                         @endforeach
                     </select>
                     <label class="ml-2">及以上</label>
@@ -127,8 +127,8 @@
                 <div class="form-group form-inline">
                     <span>*</span><label for="experience">经验要求：</label>
                     <select name="experience" class="form-control normal">
-                        @foreach($experienceArr as $key => $experience)
-                            <option value="{{ $key }}" @if($key === $job->experience) selected="selected" @endif>{{ $experience }}</option>
+                        @foreach($job->experienceArr as $key => $experience)
+                            <option value="{{ $key }}" {{ $experience['selected'] }}>{{ $experience['text'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -145,19 +145,19 @@
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="urgency_level">紧急程度：</label>
-                    @foreach ($urgencyLevelArr as $key => $urgencyLevel)
+                    @foreach ($job->urgencyLevelArr as $key => $urgencyLevel)
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}" @if($key === $job->urgency_level) checked @endif>
-                            <label class="custom-control-label" for="urgency_level_{{ $key }}">{{ $urgencyLevel['show'] }}</label>
+                            <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}" {{ $urgencyLevel['checked'] }}>
+                            <label class="custom-control-label" for="urgency_level_{{ $key }}">{{ $urgencyLevel['text'] }}</label>
                         </div>
                     @endforeach
                 </div>
                 <div class="form-group form-inline">
                     <span>*</span><label for="channel">渠道选择：</label>
-                    @foreach ($channelArr as $key => $channel)
+                    @foreach ($job->channelArr as $key => $channel)
                         <div class="custom-control custom-checkbox custom-control-inline">
-                            <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]" @if(in_array($key, json_decode($job->channel, true))) checked @endif>
-                            <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['show'] }}</label>
+                            <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]" {{ $channel['checked'] }}>
+                            <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['text'] }}</label>
                         </div>
                     @endforeach
                 </div>

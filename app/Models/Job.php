@@ -6,8 +6,44 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
-    protected $fillable = [];
+    public const natureArr = [
+        'full' => ['text' => '全职', 'selected' => 'selected'],
+        'part' => ['text' => '兼职'],
+        'all' => ['text' => '全职/兼职']
+    ];
+    public const welfareArr = [
+        'social_insurance' => ['text' => '社会保险', 'selected' => 'selected'],
+        'five_social_insurance_and_one_housing_fund' => ['text' => '五险一金'],
+        'four_social_insurance_and_one_housing_fund' => ['text' => '四险一金']
+    ];
+    public const educationArr = [
+        'unlimited' => ['text' => '不限', 'selected' => 'selected'],
+        'high_schoo' => ['text' => '高中'],
+        'junior' => ['text' => '专科'],
+        'undergraduate' => ['text' => '本科'],
+        'master' => ['text' => '硕士'],
+        'doctor' => ['text' => '博士']
+    ];
+    public const experienceArr = [
+        'unlimited' => ['text' => '经验不限'],
+        'school' => ['text' => '学生在读'],
+        'fresh_graduates' => ['text' => '应届毕业生'],
+        'primary' => ['text' => '1-3'],
+        'middle' => ['text' => '3-5'],
+        'high' => ['text' => '5-10'],
+        'expert' => ['text' => '10年以上']
+    ];
+    public const urgencyLevelArr = [
+        '0' => ['text' => '标准', 'checked' => 'checked'],
+        '1' => ['text' => '急聘']
+    ];
+    public const channelArr = [
+        'applets' => ['text' => '小程序', 'checked' => 'checked'],
+        'website' => ['text' => '官网', 'checked' => 'checked'],
+        'other_platform' => ['text' => '其他']
+    ];
 
+    protected $fillable = [];
     protected $guarded = [];
 
     public function resumes()
@@ -35,6 +71,11 @@ class Job extends Model
         $this->attributes['status'] = $status;
     }
 
+    public function getNoAttribute()
+    {
+        return sprintf('PN%s', str_pad($this->attributes['id'], 8, "0", STR_PAD_LEFT));
+    }
+
     public function getTypeAttribute()
     {
         return json_decode($this->attributes['type']);
@@ -45,69 +86,139 @@ class Job extends Model
         return json_decode($this->attributes['location']);
     }
 
-    public function getCityAttribute()
+    public function getChannelAttribute()
     {
-        $location = $this->getLocationAttribute();
-        return $location->city;
+        return json_decode($this->attributes['channel'], true);
     }
 
-    public function getNoAttribute()
+    public function getChannelShowAttribute()
     {
-        return sprintf('PN%s', str_pad($this->attributes['id'], 8, "0", STR_PAD_LEFT));
-    }
+        $channel = $this->channel;
 
-    public function getNatureAttribute()
-    {
-        $nature = $this->attributes['nature'];
-
-        switch ($nature) {
-            case 'full':
-                $nature = '全职';
-                break;
-            case 'part':
-                $nature = '兼职';
-                break;
-            case 'all':
-                $nature = '全职/兼职';
-                break;
-
-            default:
-                break;
+        foreach ($channel as $index => $value) {
+            $channel[$index] = $this->channelArr[$value]['text'];
         }
 
-        return $nature;
-    }
-
-    public function getWelfareAttribute()
-    {
-        $welfare = $this->attributes['welfare'];
-
-        switch ($welfare) {
-            case 'social_insurance':
-                $welfare = '社会保险';
-                break;
-            case 'five_social_insurance_and_one_housing_fund':
-                $welfare = '五险一金';
-                break;
-            case 'four_social_insurance_and_one_housing_fund':
-                $welfare = '四险一金';
-                break;
-
-            default:
-                break;
-        }
-
-        return $welfare;
+        return implode('/', $channel);
     }
 
     public function getChannelArrAttribute()
     {
-        $channelArr = [
-            'applets' => ['show' => '小程序', 'selected' => true, 'default' => false],
-            'website' => ['show' => '官网', 'selected' => true, 'default' => false],
-            'other_platform' => ['show' => '其他', 'selected' => false, 'default' => false]
-        ];
+        $channelArr = self::channelArr;
+
+        foreach ($channelArr as $key => $value) {
+            if (in_array($key, $this->channel)) {
+                $channelArr[$key]['checked'] = 'checked';
+            } else {
+                $channelArr[$key]['checked'] = '';
+            }
+        }
 
         return $channelArr;
+    }
+
+    public function getNatureShowAttribute()
+    {
+        $nature = self::natureArr[$this->attributes['nature']]['text'];
+        return $nature;
+    }
+
+    public function getNatureArrAttribute()
+    {
+        $natureArr = self::natureArr;
+
+        foreach ($natureArr as $key => $value) {
+            if ($key === $this->attributes['nature']) {
+                $natureArr[$key]['selected'] = 'selected';
+            } else {
+                $natureArr[$key]['selected'] = '';
+            }
+        }
+
+        return $natureArr;
+    }
+
+    public function getWelfareShowAttribute()
+    {
+        $welfare = self::welfareArr[$this->attributes['welfare']]['text'];
+        return $welfare;
+    }
+
+    public function getWelfareArrAttribute()
+    {
+        $welfareArr = self::welfareArr;
+
+        foreach ($welfareArr as $key => $value) {
+            if ($key === $this->attributes['welfare']) {
+                $welfareArr[$key]['selected'] = 'selected';
+            } else {
+                $welfareArr[$key]['selected'] = '';
+            }
+        }
+
+        return $welfareArr;
+    }
+
+    public function getEducationShowAttribute()
+    {
+        $education = self::educationArr[$this->attributes['education']]['text'];
+        return $education;
+    }
+
+    public function getEducationArrAttribute()
+    {
+        $educationArr = self::educationArr;
+
+        foreach ($educationArr as $key => $value) {
+            if ($key === $this->attributes['education']) {
+                $educationArr[$key]['selected'] = 'selected';
+            } else {
+                $educationArr[$key]['selected'] = '';
+            }
+        }
+
+        return $educationArr;
+    }
+
+    public function getExperienceArrShowAttribute()
+    {
+        $experience = self::experienceArr[$this->attributes['experience']]['text'];
+        return $experience;
+    }
+
+    public function getExperienceArrAttribute()
+    {
+        $experienceArr = self::experienceArr;
+
+        foreach ($experienceArr as $key => $value) {
+            if ($key === $this->attributes['experience']) {
+                $experienceArr[$key]['selected'] = 'selected';
+            } else {
+                $experienceArr[$key]['selected'] = '';
+            }
+        }
+
+        return $experienceArr;
+    }
+
+    public function getUrgencyLevelShowAttribute()
+    {
+        $urgencyLevel = self::urgencyLevelArr[$this->attributes['urgency_level']]['text'];
+        return $urgencyLevel;
+    }
+
+    public function getUrgencyLevelArrAttribute()
+    {
+        $urgencyLevelArr = self::urgencyLevelArr;
+
+        foreach ($urgencyLevelArr as $key => $value) {
+            if ($key === $this->attributes['urgency_level']) {
+                $urgencyLevelArr[$key]['checked'] = 'checked';
+            } else {
+                $urgencyLevelArr[$key]['checked'] = '';
+            }
+        }
+
+        return $urgencyLevelArr;
     }
 }

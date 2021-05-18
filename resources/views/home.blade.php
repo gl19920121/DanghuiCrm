@@ -129,8 +129,8 @@
                               </td>
                               <td>{{ $job->company }}</td>
                               <td>
-                                @foreach (json_decode($job->channel) as $index => $item)
-                                  {{ $job->channelArr[$item]['show'] }}{{ $index === 0 ? '/' : '' }}
+                                @foreach ($job->channel as $index => $value)
+                                  {{ App\Models\Job::channelArr[$value]['text'] }}{{ $index === 0 ? '/' : '' }}
                                 @endforeach
                               </td>
                               <td>{{ $job->pv }}</td>
@@ -177,8 +177,8 @@
                                 <td>{{ $job->name }}</td>
                                 <td>{{ $job->company }}</td>
                                 <td>
-                                  @foreach (json_decode($job->channel) as $index => $item)
-                                    {{ $job->channelArr[$item]['show'] }}{{ $index === 0 ? '/' : '' }}
+                                  @foreach ($job->channel as $index => $value)
+                                    {{ App\Models\Job::channelArr[$value]['text'] }}{{ $index === 0 ? '/' : '' }}
                                   @endforeach
                                 </td>
                                 <td>{{ $job->resumes_count }}</td>

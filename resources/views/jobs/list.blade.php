@@ -17,20 +17,20 @@
             </div>
             <div class="col-auto">
               <div class="form-inline">
-                  <select name="urgency_level" class="form-control normal" value="{{ old('nature') }}">
+                  <select name="urgency_level" class="form-control normal" value="{{ old('urgency_level') }}">
                       <option value="">紧急程度</option>
-                      @foreach($appends['urgencyLevelArr'] as $key => $urgencyLevel)
-                          <option value="{{ $key }}" @if($urgencyLevel['selected']) selected @endif>{{ $urgencyLevel['show'] }}</option>
+                      @foreach(App\Models\Job::urgencyLevelArr as $key => $urgencyLevel)
+                          <option value="{{ $key }}" @if($appends['urgencyLevel'] === (string)$key) selected @endif>{{ $urgencyLevel['text'] }}</option>
                       @endforeach
                   </select>
               </div>
             </div>
             <div class="col-auto">
               <div class="form-inline">
-                  <select name="channel" class="form-control normal" value="{{ old('nature') }}">
+                  <select name="channel" class="form-control normal" value="{{ old('channel') }}">
                       <option value="">发布渠道</option>
-                      @foreach($appends['channelArr'] as $key => $channel)
-                          <option value="{{ $key }}" @if($channel['selected']) selected @endif>{{ $channel['show'] }}</option>
+                      @foreach(App\Models\Job::channelArr as $key => $channel)
+                          <option value="{{ $key }}" @if($appends['channel'] === $key) selected @endif>{{ $channel['text'] }}</option>
                       @endforeach
                   </select>
               </div>
@@ -59,12 +59,8 @@
                   <a class="color-red" href="{{ route('jobs.show', $job) }}">{{ $job->name }}</a>
                 </td>
                 <td>{{ $job->company }}</td>
-                <td>{{ $appends['urgencyLevelArr'][$job->urgency_level]['show'] }}</td>
-                <td>
-                  @foreach (json_decode($job->channel) as $index => $item)
-                    {{ $appends['channelArr'][$item]['show'] }}{{ $index === 0 ? '/' : '' }}
-                  @endforeach
-                </td>
+                <td>{{ $job->urgencyLevelShow }}</td>
+                <td>{{ $job->channelShow }}</td>
                 <td class="color-red">{{ $job->resumes_count }}</td>
                 <td>{{ $job->updated_at }}</td>
                 <td>
