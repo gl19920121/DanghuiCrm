@@ -48,6 +48,7 @@ a:hover {
 
 .divider {
   color: #C9CACA;
+  opacity: 1;
 }
 
 .login-bg-1 {
@@ -990,10 +991,6 @@ a:hover {
 
 .commission .row:nth-child(2) .col:nth-child(2) p:nth-child(5) {
   margin-top: 20px;
-}
-
-.job-detail .row:first-child {
-  padding-bottom: 36px;
 }
 
 .job-detail .row .col-12:first-child h5 {

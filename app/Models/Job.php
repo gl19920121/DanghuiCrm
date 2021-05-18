@@ -180,7 +180,7 @@ class Job extends Model
         return $educationArr;
     }
 
-    public function getExperienceArrShowAttribute()
+    public function getExperienceShowAttribute()
     {
         $experience = self::experienceArr[$this->attributes['experience']]['text'];
         return $experience;

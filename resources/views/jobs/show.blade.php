@@ -33,7 +33,7 @@
       <div class="col-auto">
         <div class="row">
           <div class="col-auto" style="width: 207px;">
-            <h6><label>9</label>浏览人数&nbsp;&nbsp;&nbsp;<label>9</label>次投递</h6>
+            <h6><label>{{ $job->pv }}</label>浏览人数&nbsp;&nbsp;&nbsp;<label>{{ $job->resumes()->count() }}</label>次投递</h6>
           </div>
           <div class="col-auto">
             <p>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分享</p>
@@ -81,7 +81,7 @@
         </li>
       </ul>
       <div class="tab-content" id="myTabContent" >
-        <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="job-tab">
+        <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="job-tab">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <div class="my-nav-tabs-top">
@@ -140,7 +140,7 @@
             </li>
           </ul>
         </div>
-        <div class="tab-pane fade show active" id="edit" role="tabpanel" aria-labelledby="accept-tab">
+        <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="accept-tab">
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
                 @include('jobs.shared._job_show_detail')
