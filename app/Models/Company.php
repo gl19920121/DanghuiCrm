@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class JobType extends Model
+class Company extends Model
 {
     protected $fillable = [];
-
     protected $guarded = [];
 }

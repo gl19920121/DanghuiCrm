@@ -51,6 +51,11 @@ class Job extends Model
         return $this->hasMany(Resume::class);
     }
 
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
+
     public function setStatusAttribute($value)
     {
         $status = $value;

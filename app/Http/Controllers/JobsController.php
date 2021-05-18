@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Resume;
 use App\Models\Draft;
-use App\Models\JobType;
 use Auth;
 
 class JobsController extends Controller
@@ -29,6 +28,9 @@ class JobsController extends Controller
             }
             if (isset($oldData['location']) && !empty($oldData['location'])) {
                 $oldData['location'] = json_decode($oldData['location'], true);
+            }
+            if (isset($oldData['company_id']) && !empty($oldData['company_id'])) {
+                $oldData['company'] = Company::find($oldData['company_id'])->toArray();
             }
         }
 

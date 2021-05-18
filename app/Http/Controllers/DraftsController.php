@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Draft;
+use App\Models\Job;
+use App\Models\Company;
 use Auth;
 
 class DraftsController extends Controller
@@ -25,6 +27,9 @@ class DraftsController extends Controller
             $data['execute_uid'] = $request->execute_uid;
         } else {
             $data['execute_uid'] = Auth::user()->id;
+        }
+        if (isset($request->company_id)) {
+            $data['company'] = Company::find($request->company_id);
         }
         $data['type'] = json_encode($data['type']);
         $data['location'] = json_encode($data['location']);

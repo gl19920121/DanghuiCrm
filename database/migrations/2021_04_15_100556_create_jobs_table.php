@@ -15,7 +15,7 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('company')->comment('公司名称');
+            // $table->string('company')->comment('公司名称');
             $table->integer('quota')->nullable()->comment('招聘人数');
             $table->string('name')->comment('职位名称');
             $table->json('type')->comment('职位类别');
@@ -37,10 +37,12 @@ class CreateJobsTable extends Migration
             $table->date('deadline')->comment('截止日期');
             $table->integer('release_uid')->comment('职位发布人')->unsigned();
             $table->integer('execute_uid')->nullable()->comment('职位执行人')->unsigned();
+            $table->integer('company_id')->comment('公司id')->unsigned();
             $table->timestamps();
             $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
             $table->foreign('release_uid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
             $table->foreign('execute_uid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
+            $table->foreign('company_id')->references('id')->on('companys')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
         });
     }
 
