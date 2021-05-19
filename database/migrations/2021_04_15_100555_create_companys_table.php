@@ -13,7 +13,7 @@ class CreateCompanysTable extends Migration
      */
     public function up()
     {
-        Schema::create('companys', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->comment('名称');
             $table->string('nickname')->comment('对外显示名称');

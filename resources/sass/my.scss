@@ -68,6 +68,10 @@ a:hover {
   color: $color-light-gray;
 }
 
+.color-silvery-gray {
+  color: $color-silvery-gray;
+}
+
 .font-size-m {
   font-size: $font-size-m;
 }
@@ -147,8 +151,8 @@ a:hover {
 
         input.form-control {
           border: none;
-            background: transparent;
-            outline:none;
+          background: transparent;
+          outline: none;
         }
 
         input.form-control:focus {
@@ -546,68 +550,68 @@ a:hover {
   padding-left: 39px;
   padding-right: 39px;
   padding-bottom: 113px;
+}
 
-  .default-form {
+.default-form {
 
-    .btn-form-submit {
-      margin-top: 100px;
-    }
+  .btn-form-submit {
+    margin-top: 100px;
+  }
 
-    .form-header {
-      height: 54px;
-    }
+  .form-header {
+    height: 54px;
+  }
 
-    .form-body {
-      padding-left: 55px;
-      //padding-top: 49px;
+  .form-body {
+    padding-left: 55px;
+    //padding-top: 49px;
 
-      .form-group {
-        min-height: 30px;
-        margin-left: 87px;
-        margin-bottom: 18px;
+    .form-group {
+      min-height: 30px;
+      margin-left: 87px;
+      margin-bottom: 18px;
 
-        > span {
-          color: $color-red;
+      > span {
+        color: $color-red;
 
-          &:first-child {
-            width: 11px;
-          }
-        }
-
-        input.form-control {
-          //height: 30px;
-          line-height: 30px;
-          //border: 1px solid $color-n;
-
-          &::-webkit-input-placeholder {
-            font-size: $font-size-m;
-            color: $color-silvery-gray;
-             text-align: left;
-          }
-        }
-
-        .normal {
-          min-width: 429px;
-        }
-
-        input.small {
-          width: 53px;
+        &:first-child {
+          width: 11px;
         }
       }
 
-      .form-title {
-        border-left: 3px solid $color-red;
-        padding-left: 15px;
-        margin-bottom: 37px;
-        margin-top: 61px;
+      input.form-control {
+        //height: 30px;
+        line-height: 30px;
+        //border: 1px solid $color-n;
 
-        h5 {
-          font-size: $font-size-l;
-        }
-
-        p {
+        &::-webkit-input-placeholder {
           font-size: $font-size-m;
+          color: $color-silvery-gray;
+          text-align: left;
         }
+      }
+
+      .normal {
+        min-width: 429px;
+      }
+
+      input.small {
+        width: 53px;
+      }
+    }
+
+    .form-title {
+      border-left: 3px solid $color-red;
+      padding-left: 15px;
+      margin-bottom: 37px;
+      margin-top: 61px;
+
+      h5 {
+        font-size: $font-size-l;
+      }
+
+      p {
+        font-size: $font-size-m;
       }
     }
   }
@@ -865,7 +869,7 @@ a:hover {
           font-size: $font-size-m;
           color: $color-n;
           background: #fafafa;
-          overflow-y:scroll;
+          overflow-y: scroll;
 
           li {
             height: 44px;
@@ -1091,6 +1095,46 @@ a:hover {
     .col {
       p {
         margin-top: 25px;
+      }
+    }
+  }
+}
+
+.company-modal {
+  .modal-dialog  {
+    max-width: 580px;
+
+    .modal-content {
+      width: 580px;
+      height: 625px;
+
+      .modal-header {
+        height: 73px;
+        padding-left: 25px;
+      }
+
+      .modal-body {
+        height: 552px;
+        padding: 0;
+        overflow-y: scroll;
+
+        .default-form {
+          .form-body {
+            padding: 40px 30px 97px 30px;
+
+            .form-group {
+              margin-left: 0;
+
+              .normal {
+                //width: auto;
+              }
+            }
+          }
+
+          button {
+            margin-top: 30px;
+          }
+        }
       }
     }
   }

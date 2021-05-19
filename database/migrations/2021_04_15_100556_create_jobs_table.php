@@ -42,7 +42,7 @@ class CreateJobsTable extends Migration
             $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
             $table->foreign('release_uid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
             $table->foreign('execute_uid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
-            $table->foreign('company_id')->references('id')->on('companys')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
         });
     }
 

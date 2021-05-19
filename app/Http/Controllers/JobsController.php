@@ -42,7 +42,7 @@ class JobsController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->toArray();
+        // $data = $request->toArray();
         // return $data['location'];
         $mssages = [
             'company.required' => '请填写 公司名称',

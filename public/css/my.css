@@ -38,6 +38,10 @@ a:hover {
   color: #727171;
 }
 
+.color-silvery-gray {
+  color: #B5B5B6;
+}
+
 .font-size-m {
   font-size: 14px;
 }
@@ -48,7 +52,6 @@ a:hover {
 
 .divider {
   color: #C9CACA;
-  opacity: 1;
 }
 
 .login-bg-1 {
@@ -525,62 +528,62 @@ a:hover {
   padding-bottom: 113px;
 }
 
-.job-create .default-form .btn-form-submit {
+.default-form .btn-form-submit {
   margin-top: 100px;
 }
 
-.job-create .default-form .form-header {
+.default-form .form-header {
   height: 54px;
 }
 
-.job-create .default-form .form-body {
+.default-form .form-body {
   padding-left: 55px;
 }
 
-.job-create .default-form .form-body .form-group {
+.default-form .form-body .form-group {
   min-height: 30px;
   margin-left: 87px;
   margin-bottom: 18px;
 }
 
-.job-create .default-form .form-body .form-group > span {
+.default-form .form-body .form-group > span {
   color: #D83856;
 }
 
-.job-create .default-form .form-body .form-group > span:first-child {
+.default-form .form-body .form-group > span:first-child {
   width: 11px;
 }
 
-.job-create .default-form .form-body .form-group input.form-control {
+.default-form .form-body .form-group input.form-control {
   line-height: 30px;
 }
 
-.job-create .default-form .form-body .form-group input.form-control::-webkit-input-placeholder {
+.default-form .form-body .form-group input.form-control::-webkit-input-placeholder {
   font-size: 14px;
   color: #B5B5B6;
   text-align: left;
 }
 
-.job-create .default-form .form-body .form-group .normal {
+.default-form .form-body .form-group .normal {
   min-width: 429px;
 }
 
-.job-create .default-form .form-body .form-group input.small {
+.default-form .form-body .form-group input.small {
   width: 53px;
 }
 
-.job-create .default-form .form-body .form-title {
+.default-form .form-body .form-title {
   border-left: 3px solid #D83856;
   padding-left: 15px;
   margin-bottom: 37px;
   margin-top: 61px;
 }
 
-.job-create .default-form .form-body .form-title h5 {
+.default-form .form-body .form-title h5 {
   font-size: 18px;
 }
 
-.job-create .default-form .form-body .form-title p {
+.default-form .form-body .form-title p {
   font-size: 14px;
 }
 
@@ -1000,5 +1003,37 @@ a:hover {
 
 .job-detail .row .col p {
   margin-top: 25px;
+}
+
+.company-modal .modal-dialog {
+  max-width: 580px;
+}
+
+.company-modal .modal-dialog .modal-content {
+  width: 580px;
+  height: 625px;
+}
+
+.company-modal .modal-dialog .modal-content .modal-header {
+  height: 73px;
+  padding-left: 25px;
+}
+
+.company-modal .modal-dialog .modal-content .modal-body {
+  height: 552px;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+.company-modal .modal-dialog .modal-content .modal-body .default-form .form-body {
+  padding: 40px 30px 97px 30px;
+}
+
+.company-modal .modal-dialog .modal-content .modal-body .default-form .form-body .form-group {
+  margin-left: 0;
+}
+
+.company-modal .modal-dialog .modal-content .modal-body .default-form button {
+  margin-top: 30px;
 }
 
