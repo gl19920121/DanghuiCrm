@@ -546,6 +546,14 @@ a:hover {
   margin-bottom: 18px;
 }
 
+.default-form .form-body .form-group a {
+  color: #D83856;
+}
+
+.default-form .form-body .form-group a:hover {
+  color: #D83856;
+}
+
 .default-form .form-body .form-group > span {
   color: #D83856;
 }
@@ -804,6 +812,7 @@ a:hover {
   width: 197px;
   height: 490px;
   padding: 12px 0;
+  margin-bottom: 0;
   font-size: 14px;
   color: #3E3A39;
   background: #fafafa;
@@ -811,18 +820,47 @@ a:hover {
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li {
-  height: 44px;
-  line-height: 44px;
   padding-left: 22px;
   cursor: pointer;
 }
 
+.jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li p {
+  margin-bottom: 0;
+}
+
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li a {
+  height: 44px;
+  line-height: 44px;
   color: #3E3A39;
   text-decoration: none;
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li.selected {
+  padding-left: 18px;
+  border-left: 4px solid;
+  border-color: #D83856;
+  background-color: #fff;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list {
+  width: 100%;
+  height: auto;
+  padding-left: 0;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list li {
+  padding-left: 22px;
+  cursor: pointer;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list li a {
+  height: 44px;
+  line-height: 44px;
+  color: #3E3A39;
+  text-decoration: none;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list li.selected {
   padding-left: 18px;
   border-left: 4px solid;
   border-color: #D83856;
@@ -848,6 +886,22 @@ a:hover {
 
 .jobtype-modal .modal-dialog .modal-content .modal-body .jobtype-item a {
   margin-left: 8px;
+  line-height: 44px;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-all {
+  background: #fafafa;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-all span {
+  cursor: pointer;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body .item-all span a {
+  padding: 5px 10px;
   line-height: 44px;
 }
 

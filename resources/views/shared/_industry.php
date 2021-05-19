@@ -37,15 +37,17 @@
   function jobTypeChange(values = {})
   {
     if (Object.keys(values).length > 0) {
-      $('#industry').val(values.rd);
+      $('#industry').val(values.th);
       $('input[name="industry[st]"]').val(values.st);
       $('input[name="industry[nd]"]').val(values.nd);
       $('input[name="industry[rd]"]').val(values.rd);
+      $('input[name="industry[th]"]').val(values.th);
     } else {
       $('#industry').val('');
       $('input[name="industry[st]"]').val('');
       $('input[name="industry[nd]"]').val('');
       $('input[name="industry[rd]"]').val('');
+      $('input[name="industry[th]"]').val('');
     }
   }
 
@@ -60,21 +62,20 @@
 
   function navSelect(e, pno)
   {
-    e.siblings('li').removeClass('selected');
-    e.addClass('selected');
-
-    addNavItem(e, pno);
+    $('#sec'+pno).closest('li').siblings('li').find('ul').hide();
+    $('#sec'+pno).toggle('fast');
   }
 
-  function navItemSelect(e, item)
+  function navItemSelect(e, rootNo, pno)
   {
+    e.closest('ul').closest('li').siblings('li').find('li').removeClass('selected');
     e.siblings('li').removeClass('selected');
     e.addClass('selected');
 
-    addNavSecItem(item);
+    addNavSecItem(rootNo, pno);
   }
 
-  function navSecItemSelect(e, rootNo)
+  function navSecItemSelect(e, rootNo, pNo)
   {
     $('div').remove('.item-detail');
 
@@ -113,44 +114,49 @@
         )
       );
 
-      relations[no].forEach(function(item) {
+      var all = '全部'+list[no][0];
         $($('.item-detail').children('div').first()).append($('<div>').addClass('col').addClass('text-truncate').attr('data-dismiss', 'modal').attr('aria-label', 'Close').click(function() {
-            jobTypeChange({ st: list[rootNo][0], nd: list[no][0], rd: list[item][0] });
+            jobTypeChange({ st: list[rootNo][0], nd: list[pNo][0], rd: list[no][0], th: list[no][0]});
         })
-          .append($('<span>').attr('title', list[item][0])
-            .append($('<a>').text(list[item][0]))
+          .append($('<span>').attr('title', all)
+            .append($('<a>').text(all))
           )
         )
-      });
+      if (relations.hasOwnProperty(no)) {
+        relations[no].forEach(function(item) {
+            $($('.item-detail').children('div').first()).append($('<div>').addClass('col').addClass('text-truncate').attr('data-dismiss', 'modal').attr('aria-label', 'Close').click(function() {
+                jobTypeChange({ st: list[rootNo][0], nd: list[pNo][0], rd: list[no][0], th: list[item][0] });
+            })
+              .append($('<span>').attr('title', list[item][0])
+                .append($('<a>').text(list[item][0]))
+              )
+            )
+          });
+      }
+
     } else {
       e.find('svg').replaceWith(iconPlus);
       e.attr('data-icon', '0');
     }
   }
 
-  function addNavItem(e, pno)
-  {
-    var pid = pno+'Item';console.log(pid);
-    // e.siblings('li').find('ul').empty();
-    $('#'+pno+'Item').remove();
-
-    var parent = e.append($('<ul>').attr('id', pno+'Item'));
-
-    relations[pno].forEach(function(no) {
-        parent.append($('<li>').addClass('text-truncate')
-            .append($('<a>').text(list[no][0]))
-        )
-    });
-  }
-
-  function addNavSecItem(pno)
+  function addNavSecItem(rootNo, pNo)
   {
     $('#industryBody').empty();
-    relations[pno].forEach(function(no) {
+
+    var all = '全部'+list[pNo][0];
+    $('#industryBody').append($('<div>').addClass('col-12').addClass('item-all').addClass('text-truncate').attr('data-dismiss', 'modal').attr('aria-label', 'Close').click(function() {
+            jobTypeChange({ st: list[rootNo][0], nd: list[pNo][0], rd: list[pNo][0], th: list[pNo][0]});
+        })
+        .append($('<span>').attr('title', all)
+            .append($('<a>').text(all))
+        )
+    );
+    relations[pNo].forEach(function(no) {
       $('#industryBody').append($('<div>').addClass('col')
         .append($('<p>').addClass('jobtype-item').addClass('text-truncate').attr('id', no).attr('data-icon', '0').attr('title', list[no][0])
           .click(function() {
-            navItemSelect($(this), pno);
+            navSecItemSelect($(this), rootNo, pNo);
           })
           .append(iconPlus)
           .append($('<a>')
@@ -163,13 +169,26 @@
 
   function init()
   {
-    root.forEach(function(no) {
-      $('ul#industryLeftNav').append($('<li>').attr('id', no)
-        .click(function() {
-          navSelect($(this), no);
-        })
-        .append($('<a>').text(list[no][0]))
+    root.forEach(function(rootNo) {
+      var secId = 'sec'+rootNo;
+      $('ul#industryLeftNav').append($('<li>').attr('id', rootNo)
+        .append($('<p>')
+            .click(function() {
+              navSelect($(this), rootNo);
+            })
+            .append($('<a>').text(list[rootNo][0]))
+        )
+
+        .append($('<ul>').addClass('sec-list').attr('id', secId).css('display', 'none'))
       )
+      relations[rootNo].forEach(function(no) {
+        $('#'+secId).append($('<li>').addClass('text-truncate')
+            .click(function() {
+              navItemSelect($(this), rootNo, no);
+            })
+            .append($('<a>').text(list[no][0]))
+        )
+      });
     });
 
     // navSelect($('ul#industryLeftNav').children('li:first-child'), defaultOption.no);

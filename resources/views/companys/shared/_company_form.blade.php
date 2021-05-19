@@ -17,6 +17,7 @@
               <input type="hidden" name="industry[st]" value="ddd">
               <input type="hidden" name="industry[nd]" value="ddd">
               <input type="hidden" name="industry[rd]" value="ddd">
+              <input type="hidden" name="industry[th]" value="ddd">
 
               <input type="text" class="form-control normal" id="industry" value="" placeholder="请选择" autocomplete="off">
               <div class="input-group-append">

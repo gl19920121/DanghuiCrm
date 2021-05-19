@@ -50,10 +50,10 @@ li {
 
 a {
   color: $color-white;
-}
 
-a:hover {
-  color: $color-white;
+  &:hover {
+    color: $color-white;
+  }
 }
 
 .color-red {
@@ -571,6 +571,14 @@ a:hover {
       margin-left: 87px;
       margin-bottom: 18px;
 
+      a {
+        color: $color-red;
+
+        &:hover {
+          color: $color-red;
+        }
+      }
+
       > span {
         color: $color-red;
 
@@ -866,18 +874,23 @@ a:hover {
           width: 197px;
           height: 490px;
           padding: 12px 0;
-          font-size: $font-size-m;
-          color: $color-n;
+          margin-bottom: 0;
+          font-size: 14px;
+          color: #3E3A39;
           background: #fafafa;
           overflow-y: scroll;
 
           li {
-            height: 44px;
-            line-height: 44px;
             padding-left: 22px;
             cursor: pointer;
 
+            p {
+              margin-bottom: 0;
+            }
+
             a {
+              height: 44px;
+              line-height: 44px;
               color: $color-n;
               text-decoration: none;
             }
@@ -888,6 +901,31 @@ a:hover {
             border-left: 4px solid;
             border-color: $color-red;
             background-color: #fff;
+          }
+
+          ul.sec-list {
+            width: 100%;
+            height: auto;
+            padding-left: 0;
+
+            li {
+              padding-left: 22px;
+              cursor: pointer;
+
+              a {
+                height: 44px;
+                line-height: 44px;
+                color: $color-n;
+                text-decoration: none;
+              }
+            }
+
+            li.selected {
+              padding-left: 18px;
+              border-left: 4px solid;
+              border-color: $color-red;
+              background-color: #fff;
+            }
           }
         }
 
@@ -907,6 +945,22 @@ a:hover {
           a {
             margin-left: 8px;
             line-height: 44px;
+          }
+        }
+
+        .item-all {
+          background: #fafafa;
+          padding: 10px 0;
+          font-size: $font-size-m;
+          color: #666;
+
+          span {
+            cursor: pointer;
+
+            a {
+              padding: 5px 10px;
+              line-height: 44px;
+            }
           }
         }
 
