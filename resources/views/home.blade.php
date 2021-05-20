@@ -35,7 +35,7 @@
 										<p>没有特别幸运，那么请先特别努力</p>
 									</div>
 									<div class="col text-right">
-										<button class="btn btn-danger">完善资料</button>
+										<a href="{{ route('users.show', Auth::user()) }}" class="btn btn-danger">完善资料</a>
 									</div>
 								</div>
 								<div class="row mt-4 justify-content-start bottom text-center">

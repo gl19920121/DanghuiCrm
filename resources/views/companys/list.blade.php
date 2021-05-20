@@ -47,7 +47,8 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <a class="dropdown-item" href="#">刷新</a>
-                      <a class="dropdown-item" href="{{ route('companys.edit', $company) }}">修改</a>
+                      <a class="dropdown-item" href="#">修改</a>
+                      <!-- route('companys.edit', $company) -->
                       <form method="POST" action="{{ route('companys.destroy', $company) }}">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}

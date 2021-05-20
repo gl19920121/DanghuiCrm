@@ -10,11 +10,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0 text-center">
-                <li class="nav-item {{ Route::currentRouteName() === 'home' ? 'active': '' }}">
+                <li class="nav-item {{ Route::currentRouteName() === 'home' || Route::currentRouteName() === 'users.show' ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('home') }}">
                         首页 <span class="sr-only">(current)</span>
                     </a>
-                    @if (in_array(Route::currentRouteName(), ['home']))
+                    @if (in_array(Route::currentRouteName(), ['home', 'users.show']))
                       <div class="triangle-up"></div>
                     @endif
                 </li>

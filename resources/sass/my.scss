@@ -1257,3 +1257,39 @@ a {
   border-radius: 50%;
   border: 2px solid $color-red;
 }
+
+.user-show {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+
+  .default-form {
+    padding-left: 55px;
+    font-size: $font-size-m;
+
+    .divider {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    .form-header {
+      h5 {
+        line-height: 54px;
+      }
+    }
+
+    .form-body {
+      padding-left: 0;
+      form {
+        .form-title {
+          margin-top: 0;
+          margin-bottom: 37px;
+          font-size: $font-size-m;
+        }
+        > .row {
+          margin-top: 27px;
+        }
+      }
+    }
+  }
+}

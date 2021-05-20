@@ -22,8 +22,13 @@ class CreateUsersTable extends Migration
                 $table->string('name')->comment('姓名');
                 $table->enum('sex', ['男', '女', '其他'])->nullable()->comment('性别');
                 $table->string('job')->nullable()->comment('职位');
-                $table->string('phone')->nullable()->comment('联系方式');
+                $table->string('phone')->nullable()->comment('手机号');
+                $table->string('wechat')->nullable()->comment('微信号');
                 $table->string('email')->nullable()->comment('邮箱地址');
+                $table->string('company')->nullable()->comment('所在企业');
+                $table->string('city')->nullable()->comment('所在城市');
+                $table->string('introduce')->nullable()->comment('优势介绍');
+                $table->string('avatar')->nullable()->comment('头像');
                 $table->integer('role_id')->comment('账号角色ID')->unsigned();
                 $table->rememberToken()->comment('登录状态token'); // 'remember_token' VARCHAR(100) NULL
                 $table->timestamps(); // 'create_at' 'update_at'

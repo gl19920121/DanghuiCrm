@@ -1147,3 +1147,38 @@ a:hover {
   border: 2px solid #D83856;
 }
 
+.user-show {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+}
+
+.user-show .default-form {
+  padding-left: 55px;
+  font-size: 14px;
+}
+
+.user-show .default-form .divider {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.user-show .default-form .form-header h5 {
+  line-height: 54px;
+}
+
+.user-show .default-form .form-body {
+  padding-left: 0;
+}
+
+.user-show .default-form .form-body form .form-title {
+  margin-top: 0;
+  margin-bottom: 37px;
+  font-size: 14px;
+}
+
+.user-show .default-form .form-body form > .row {
+  margin-top: 27px;
+}
+
