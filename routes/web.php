@@ -33,4 +33,5 @@ Route::resource('jobs', 'JobsController'); //职位相关
 Route::get('/drafts/list', 'DraftsController@list')->name('drafts.list');
 Route::resource('drafts', 'DraftsController');
 
+Route::get('/companys/list', 'CompanysController@list')->name('companys.list');
 Route::resource('companys', 'CompanysController');

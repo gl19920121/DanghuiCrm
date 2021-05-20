@@ -127,7 +127,7 @@
                               <td>
                                 <a class="color-red" href="{{ route('jobs.show', $job) }}">{{ $job->name }}</a>
                               </td>
-                              <td>{{ $job->company }}</td>
+                              <td>{{ $job->company->name }}</td>
                               <td>
                                 @foreach ($job->channel as $index => $value)
                                   {{ App\Models\Job::channelArr[$value]['text'] }}{{ $index === 0 ? '/' : '' }}
@@ -175,7 +175,7 @@
                             @foreach($list['newJobs'] as $job)
                               <tr>
                                 <td>{{ $job->name }}</td>
-                                <td>{{ $job->company }}</td>
+                                <td>{{ $job->company->name }}</td>
                                 <td>
                                   @foreach ($job->channel as $index => $value)
                                     {{ App\Models\Job::channelArr[$value]['text'] }}{{ $index === 0 ? '/' : '' }}

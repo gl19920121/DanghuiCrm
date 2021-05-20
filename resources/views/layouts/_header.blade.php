@@ -18,11 +18,11 @@
                       <div class="triangle-up"></div>
                     @endif
                 </li>
-                <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobs.') !== false || Route::currentRouteName() === 'drafts.list' ? 'active': '' }}">
+                <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobs.') !== false || Route::currentRouteName() === 'drafts.list' || Route::currentRouteName() === 'companys.list' || Route::currentRouteName() === 'companys.edit' ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('jobs.list') }}">
                         运作职位
                     </a>
-                    @if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list', 'jobs.show']))
+                    @if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list', 'jobs.show', 'companys.list', 'companys.edit']))
                       <div class="triangle-up"></div>
                     @endif
                 </li>
@@ -66,6 +66,6 @@
     </div>
 </nav>
 
-@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.edit', 'jobs.list', 'jobs.show', 'drafts.list']))
+@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.edit', 'jobs.list', 'jobs.show', 'drafts.list', 'companys.list', 'companys.edit']))
   @include('layouts._second_header')
 @endif

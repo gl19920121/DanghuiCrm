@@ -546,12 +546,52 @@ a:hover {
   margin-bottom: 18px;
 }
 
+.default-form .form-body .form-group .company-pre {
+  width: 429px;
+  min-height: 212px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 15px 20px 30px 25px;
+}
+
+.default-form .form-body .form-group .company-pre > .row > .col:nth-child(1) {
+  padding-bottom: 24px;
+}
+
+.default-form .form-body .form-group .company-pre > .row > .col:nth-child(2) .col:nth-child(2) {
+  padding-right: 4px;
+}
+
+.default-form .form-body .form-group .company-pre > .row > .col:nth-child(2) .col:nth-child(2) {
+  padding-left: 4px;
+}
+
+.default-form .form-body .form-group .company-pre > .row > .col:nth-child(2) .col:nth-child(2) div {
+  width: 110px;
+}
+
+.default-form .form-body .form-group > label:first-child {
+  width: 130px;
+  text-align: right;
+  margin-right: 20px;
+  justify-content: flex-end;
+}
+
+.default-form .form-body .form-group > label:first-child > span {
+  margin-right: 5px;
+  color: #D83856;
+}
+
 .default-form .form-body .form-group a {
   color: #D83856;
 }
 
 .default-form .form-body .form-group a:hover {
   color: #D83856;
+}
+
+.default-form .form-body .form-group a span {
+  margin-left: 10px;
 }
 
 .default-form .form-body .form-group > span {
@@ -562,11 +602,11 @@ a:hover {
   width: 11px;
 }
 
-.default-form .form-body .form-group input.form-control {
+.default-form .form-body .form-group .form-control {
   line-height: 30px;
 }
 
-.default-form .form-body .form-group input.form-control::-webkit-input-placeholder {
+.default-form .form-body .form-group .form-control::-webkit-input-placeholder {
   font-size: 14px;
   color: #B5B5B6;
   text-align: left;
@@ -576,7 +616,15 @@ a:hover {
   min-width: 429px;
 }
 
-.default-form .form-body .form-group input.small {
+.default-form .form-body .form-group .middle {
+  width: 330px;
+}
+
+.default-form .form-body .form-group .middle-append {
+  width: 288px;
+}
+
+.default-form .form-body .form-group .small {
   width: 53px;
 }
 
@@ -1089,5 +1137,13 @@ a:hover {
 
 .company-modal .modal-dialog .modal-content .modal-body .default-form button {
   margin-top: 30px;
+}
+
+.circle-red {
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  border: 2px solid #D83856;
 }
 

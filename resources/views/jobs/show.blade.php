@@ -23,7 +23,7 @@
     </div>
     <div class="row justify-content-start">
       <div class="col-auto" style="width: 207px;">
-        <p>企业：{{ $job->company }}</p>
+        <p>企业：{{ $job->company->name }}</p>
       </div>
       <div class="col-auto">
         <p>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;招聘人数：{{ empty($job->quota) ? '-' : $job->quota }}人</p>

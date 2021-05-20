@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Job;
 
 class Company extends Model
 {
@@ -43,4 +44,34 @@ class Company extends Model
         'not_needed' => ['text' => '不需要融资'],
         'other' => ['text' => '其他']
     ];
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
+
+    public function getNatureAttribute()
+    {
+        return self::natureArr[$this->attributes['nature']]['text'];
+    }
+
+    public function getScaleAttribute()
+    {
+        return self::scaleArr[$this->attributes['scale']]['text'];
+    }
+
+    public function getLocationAttribute()
+    {
+        return implode('-', json_decode($this->attributes['location'], true));
+    }
+
+    public function getIndustryAttribute()
+    {
+        return json_decode($this->attributes['industry'], true)['th'];
+    }
+
+    public function getInvestmentAttribute()
+    {
+        return self::investmentArr[$this->attributes['investment']]['text'];
+    }
 }

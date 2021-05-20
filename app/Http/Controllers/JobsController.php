@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Resume;
 use App\Models\Draft;
+use App\Models\Company;
 use Auth;
 
 class JobsController extends Controller
@@ -34,9 +35,12 @@ class JobsController extends Controller
             }
         }
 
+        $companys = Company::where('status', '=', 1)->get();
+
         return view('jobs.create')
             ->with('draftId', $request->draft_id)
             ->with('oldData', $oldData)
+            ->with('companys', $companys)
             ;
     }
 
@@ -45,7 +49,7 @@ class JobsController extends Controller
         // $data = $request->toArray();
         // return $data['location'];
         $mssages = [
-            'company.required' => '请填写 公司名称',
+            'company_id.required' => '请填写 公司名称',
             'quota.numeric' => '请正确输入 招聘人数',
             'name.required' => '请填写 职位名称',
             'type.st.required' => '请选择 职位类别',
@@ -73,7 +77,7 @@ class JobsController extends Controller
             'deadline.required' => '请填写 截止日期',
         ];
         $this->validate($request, [
-            'company' => 'required',
+            'company_id' => 'required',
             'quota' => 'nullable|numeric',
             'name' => 'required|string',
             'type.st' => 'required',

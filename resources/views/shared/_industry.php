@@ -152,19 +152,21 @@
             .append($('<a>').text(all))
         )
     );
-    relations[pNo].forEach(function(no) {
-      $('#industryBody').append($('<div>').addClass('col')
-        .append($('<p>').addClass('jobtype-item').addClass('text-truncate').attr('id', no).attr('data-icon', '0').attr('title', list[no][0])
-          .click(function() {
-            navSecItemSelect($(this), rootNo, pNo);
-          })
-          .append(iconPlus)
-          .append($('<a>')
-            .append(list[no][0])
-          )
-        )
-      );
-    });
+    if (relations.hasOwnProperty(pNo)) {
+        relations[pNo].forEach(function(no) {
+          $('#industryBody').append($('<div>').addClass('col')
+            .append($('<p>').addClass('jobtype-item').addClass('text-truncate').attr('id', no).attr('data-icon', '0').attr('title', list[no][0])
+              .click(function() {
+                navSecItemSelect($(this), rootNo, pNo);
+              })
+              .append(iconPlus)
+              .append($('<a>')
+                .append(list[no][0])
+              )
+            )
+          );
+        });
+    }
   }
 
   function init()

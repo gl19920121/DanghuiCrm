@@ -35,6 +35,7 @@ class CreateJobsTable extends Migration
             $table->json('channel')->comment('渠道选择');
             $table->string('channel_remark')->nullable()->comment('渠道平台备注');
             $table->date('deadline')->comment('截止日期');
+            $table->integer('pv')->nullable()->default(0)->comment('访问量');
             $table->integer('release_uid')->comment('职位发布人')->unsigned();
             $table->integer('execute_uid')->nullable()->comment('职位执行人')->unsigned();
             $table->integer('company_id')->comment('公司id')->unsigned();

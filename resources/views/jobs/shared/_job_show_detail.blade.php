@@ -4,7 +4,22 @@
             <h5>企业基本信息</h5>
         </div>
         <div class="col">
-            <p class="font-size-m"><span class="color-gray">公司名称：</span>{{ $job->company }}</p>
+            <p class="font-size-m"><span class="color-gray">公司名称：</span>{{ $job->company->name }}</p>
+        </div>
+        <div class="col">
+            <p class="font-size-m"><span class="color-gray">所在地：</span>{{ $job->company->location }}</p>
+        </div>
+        <div class="col">
+            <p class="font-size-m"><span class="color-gray">所属行业：</span>{{ $job->company->industry }}</p>
+        </div>
+        <div class="col">
+            <p class="font-size-m"><span class="color-gray">企业性质：</span>{{ $job->company->nature }}</p>
+        </div>
+        <div class="col">
+            <p class="font-size-m"><span class="color-gray">企业规模：</span>{{ $job->company->scale }}</p>
+        </div>
+        <div class="col">
+            <p class="font-size-m"><span class="color-gray">融资阶段：</span>{{ $job->company->investment }}</p>
         </div>
         <div class="col">
             <p class="font-size-m"><span class="color-gray">招聘人数：</span>{{ $job->quota }}</p>
@@ -62,9 +77,11 @@
         </div>
         <div class="col-12">
           <p class="font-size-m color-gray">工作职责</p>
+          <p class="font-size-m">{{ $job->duty }}</p>
         </div>
         <div class="col-12">
           <p class="font-size-m color-gray">任职要求</p>
+          <p class="font-size-m">{{ $job->requirement }}</p>
         </div>
     </div>
     <hr class="divider">

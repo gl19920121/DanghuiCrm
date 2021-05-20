@@ -58,7 +58,7 @@
                 <td>
                   <a class="color-red" href="{{ route('jobs.show', $job) }}">{{ $job->name }}</a>
                 </td>
-                <td>{{ $job->company }}</td>
+                <td>{{ $job->company->name }}</td>
                 <td>{{ $job->urgencyLevelShow }}</td>
                 <td>{{ $job->channelShow }}</td>
                 <td class="color-red">{{ $job->resumes_count }}</td>

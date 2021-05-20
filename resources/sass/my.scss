@@ -571,11 +571,59 @@ a {
       margin-left: 87px;
       margin-bottom: 18px;
 
+      .company-pre {
+        width: 429px;
+        min-height: 212px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        padding: 15px 20px 30px 25px;
+
+        > .row {
+          > .col {
+            &:nth-child(1) {
+              padding-bottom: 24px;
+            }
+            &:nth-child(2) {
+              .col {
+                &:nth-child(2) {
+                  padding-right: 4px;
+                }
+                &:nth-child(2) {
+                  padding-left: 4px;
+
+                  div {
+                    width: 110px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      > label {
+        &:first-child {
+          width: 130px;
+          text-align:right;
+          margin-right: 20px;
+          justify-content: flex-end;
+
+          > span {
+            margin-right: 5px;
+            color: $color-red;
+          }
+        }
+      }
+
       a {
         color: $color-red;
 
         &:hover {
           color: $color-red;
+        }
+
+        span {
+          margin-left: 10px;
         }
       }
 
@@ -587,7 +635,7 @@ a {
         }
       }
 
-      input.form-control {
+      .form-control {
         //height: 30px;
         line-height: 30px;
         //border: 1px solid $color-n;
@@ -603,7 +651,15 @@ a {
         min-width: 429px;
       }
 
-      input.small {
+      .middle {
+        width: 330px;
+      }
+
+      .middle-append {
+        width: 288px;
+      }
+
+      .small {
         width: 53px;
       }
     }
@@ -876,7 +932,7 @@ a {
           padding: 12px 0;
           margin-bottom: 0;
           font-size: 14px;
-          color: #3E3A39;
+          color: $color-n;
           background: #fafafa;
           overflow-y: scroll;
 
@@ -1192,4 +1248,12 @@ a {
       }
     }
   }
+}
+
+.circle-red {
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  border: 2px solid $color-red;
 }

@@ -12,6 +12,11 @@
               职位管理
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {{ in_array(Route::currentRouteName(), ['companys.list', 'companys.show', 'companys.edit']) ? 'active': '' }}" href="{{ route('companys.list') }}">
+              企业管理
+            </a>
+          </li>
         </ul>
     </div>
   </div>
