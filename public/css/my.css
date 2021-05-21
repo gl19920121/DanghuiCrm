@@ -1174,11 +1174,48 @@ a:hover {
 
 .user-show .default-form .form-body form .form-title {
   margin-top: 0;
-  margin-bottom: 37px;
+  margin-bottom: 0;
   font-size: 14px;
 }
 
-.user-show .default-form .form-body form > .row {
+.user-show .default-form .form-body form > .row > .col:first-child .row {
   margin-top: 27px;
+}
+
+.user-show .default-form .form-body form > .row > .col:last-child {
+  line-height: 12px;
+}
+
+.user-show .default-form .form-body form > .row > .col:last-child a {
+  font-size: 12px;
+  color: #D83856;
+}
+
+.user-show .default-form .form-body form > .row > .col:last-child a:hover {
+  color: #D83856;
+}
+
+.user-edit {
+  margin-top: 25px;
+}
+
+.user-edit .default-form {
+  padding: 95px 75px;
+}
+
+.user-edit .default-form .form-body {
+  background-color: #EFEFEF;
+  border-radius: 5px;
+  padding-left: 68px;
+  padding-top: 48px;
+  padding-bottom: 42px;
+}
+
+.user-edit .default-form .form-body .form-title {
+  margin-top: 0;
+}
+
+.user-edit .default-form .form-body .btn-form-submit {
+  margin-top: 38px;
 }
 

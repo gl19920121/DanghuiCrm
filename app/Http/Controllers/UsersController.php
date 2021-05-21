@@ -39,10 +39,11 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
-    public function edit(User $user)
+    public function edit(User $user, Request $request)
     {
         $this->authorize('update', $user);
-        return view('users.edit', compact('user'));
+        $part = $request->part;
+        return view('users.edit', compact('user', 'part'));
     }
 
     /**
@@ -91,30 +92,20 @@ class UsersController extends Controller
     public function update(User $user, Request $request)
     {
         $this->authorize('update', $user);
-        $this->validate($request, [
-            'account' => 'required|max:50',
-            'password' => 'required|min:10|max:16',
-            'name' => 'required|string|max:255',
-            'sex' => 'nullable|string|max:2',
-            'job' => 'nullable|string|max:255',
-            'phone' => 'nullable|numeric',
-            'email' => 'nullable|email|max:255'
-        ]);
+        // $this->validate($request, [
+        //     'account' => 'required|max:50',
+        //     'password' => 'required|min:10|max:16',
+        //     'name' => 'required|string|max:255'
+        // ]);
 
-        $user->update([
-            'account' => $request->account,
-            'password' => bcrypt($request->password),
-            'name' => $request->name,
-            'sex' => $request->sex,
-            'job' => $request->job,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'role_id' => $request->role_id,
-            'se_tasks_id' => $request->se_tasks_id,
-            're_tasks_id' => $request->re_tasks_id,
-            'remember_token' => $request->remember_token,
-            'status' => $request->status
-        ]);
+        $data = $request->toArray();
+        // foreach ($data as $key => $value) {
+        //     if (isset($user->$key)) {
+        //         $user->$key = $value;
+        //     }
+        // }
+        // $user->save();
+        $user->update($data);
 
         session()->flash('success', '修改成功');
         return redirect()->route('users.show', [$user]);

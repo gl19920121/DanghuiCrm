@@ -10,11 +10,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0 text-center">
-                <li class="nav-item {{ Route::currentRouteName() === 'home' || Route::currentRouteName() === 'users.show' ? 'active': '' }}">
+                <li class="nav-item {{ Route::currentRouteName() === 'home' || Route::currentRouteName() === 'users.show' || Route::currentRouteName() === 'users.edit' ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('home') }}">
                         首页 <span class="sr-only">(current)</span>
                     </a>
-                    @if (in_array(Route::currentRouteName(), ['home', 'users.show']))
+                    @if (in_array(Route::currentRouteName(), ['home', 'users.show', 'users.edit']))
                       <div class="triangle-up"></div>
                     @endif
                 </li>
@@ -52,6 +52,7 @@
                         {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ route('users.show', Auth::user()) }}">编辑资料</a>
                         <a class="dropdown-item" id="logout" href="#">
                             <form action="{{ route('logout') }}" method="POST">
                                 {{ csrf_field() }}

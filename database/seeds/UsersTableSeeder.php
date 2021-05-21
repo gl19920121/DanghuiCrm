@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
         User::create([
             'account' => 'admin',
             'password' => bcrypt('admin123!@#'),
+            'nickname' => '管理员',
             'name' => '管理员',
             'email' => '694986534@qq.com',
             'phone' => '15001332305',

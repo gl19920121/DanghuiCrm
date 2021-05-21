@@ -1283,12 +1283,53 @@ a {
       form {
         .form-title {
           margin-top: 0;
-          margin-bottom: 37px;
+          margin-bottom: 0;
           font-size: $font-size-m;
         }
         > .row {
-          margin-top: 27px;
+          > .col {
+            &:first-child {
+              .row {
+                margin-top: 27px;
+              }
+            }
+            &:last-child {
+              line-height: 12px;
+
+              a {
+                font-size: $font-size-s;
+                color: $color-red;
+                &:hover {
+                  color: $color-red;
+                }
+              }
+            }
+          }
         }
+      }
+    }
+  }
+}
+
+.user-edit {
+  margin-top: 25px;
+
+  .default-form {
+    padding: 95px 75px;
+
+    .form-body {
+      background-color: #EFEFEF;
+      border-radius: 5px;
+      padding-left: 68px;
+      padding-top: 48px;
+      padding-bottom: 42px;
+
+      .form-title {
+        margin-top: 0;
+      }
+
+      .btn-form-submit {
+        margin-top: 38px;
       }
     }
   }
