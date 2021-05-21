@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="route('home')">
+            <a class="navbar-brand" href="{{ route('home') }}">
                 <img alt="" src="{{ URL::asset('images/logo_with_text.png') }}" />
             </a>
         </div>

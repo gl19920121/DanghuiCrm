@@ -156,7 +156,7 @@ class JobsController extends Controller
                 if (!empty($request->name)) {
                     $query->where('name', 'like', '%'.$request->name.'%');
                 }
-                if (!empty($request->urgency_level)) {
+                if (isset($request->urgency_level)) {
                     $query->where('urgency_level', '=', $request->urgency_level);
                 }
                 if (!empty($request->channel)) {

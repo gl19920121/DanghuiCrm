@@ -59,13 +59,13 @@ class GeneralsController extends Controller
             'resume_upload' => 0,
             'job_doing' => $jobs->total(),
             'job_apply' => $newJobs->total(),
-            'job_commission' => 0,
-            'schedule_talking' => 0,
-            'schedule_push_resume' => 0,
-            'schedule_interview' => 0,
-            'schedule_offer' => 0,
-            'schedule_onboarding' => 0,
-            'schedule_over_probation' => 0
+            'job_commission' => $newResumes->total(),
+            'schedule_talking' => Resume::where('status', '=', 2)->count(),
+            'schedule_push_resume' => Resume::where('status', '=', 3)->count(),
+            'schedule_interview' => Resume::where('status', '=', 4)->count(),
+            'schedule_offer' => Resume::where('status', '=', 5)->count(),
+            'schedule_onboarding' => Resume::where('status', '=', 6)->count(),
+            'schedule_over_probation' => Resume::where('status', '=', 7)->count()
         ];
 
         return view('home')->with('statistics', $statistics)
