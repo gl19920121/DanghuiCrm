@@ -36,7 +36,7 @@
                 </li>
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'tasks.') !== false ? 'active': '' }}">
                     <a class="nav-link" href="#">
-                        招聘进度
+                        员工管理
                     </a>
                     @if (in_array(Route::currentRouteName(), []))
                       <div class="triangle-up"></div>
