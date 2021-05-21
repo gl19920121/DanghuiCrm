@@ -36,7 +36,7 @@
                 <td>
                   <span class="color-red">{{ $job->name }}</span>
                 </td>
-                <td>{{ $job->company }}</td>
+                <td>{{ $job->company->name }}</td>
                 <td>
                   @foreach ($job->channel as $index => $item)
                     {{ $appends['channelArr'][$item]['show'] }}{{ $index === 0 ? '/' : '' }}

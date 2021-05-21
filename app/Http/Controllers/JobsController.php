@@ -31,7 +31,7 @@ class JobsController extends Controller
                 $oldData['location'] = json_decode($oldData['location'], true);
             }
             if (isset($oldData['company_id']) && !empty($oldData['company_id'])) {
-                $oldData['company'] = Company::find($oldData['company_id'])->toArray();
+                $oldData['company'] = Company::find($oldData['company_id']);
             }
         }
 
