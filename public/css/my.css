@@ -323,10 +323,15 @@ a:hover {
 
 .main-bg .home .banner {
   width: 100%;
-  min-height: 126px;
+  max-height: 126px;
   background-image: url(/images/nav_bg.png?9366292c4facd1d9cf329f6a5e693fdf);
   background-size: 100% 100%;
   margin-bottom: 26px;
+}
+
+.main-bg .home .banner img {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .main-bg .home .message {

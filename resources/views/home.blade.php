@@ -6,13 +6,13 @@
 		<div class="col">
 			<div class="banner">
 				<div class="row">
-					<div class="col m-auto">
+					<div class="col col-3 m-auto">
 						<img src="{{ URL::asset('images/nav_left.png') }}">
 					</div>
 					<div class="col m-auto">
 						<img class="mr-5" src="{{ URL::asset('images/nav_center.png') }}">
 					</div>
-					<div class="col m-auto">
+					<div class="col m-auto text-right">
 						<img class="mr-5" src="{{ URL::asset('images/nav_right.png') }}">
 					</div>
 				</div>
@@ -128,11 +128,7 @@
                                 <a class="color-red" href="{{ route('jobs.show', $job) }}">{{ $job->name }}</a>
                               </td>
                               <td>{{ $job->company->name }}</td>
-                              <td>
-                                @foreach ($job->channel as $index => $value)
-                                  {{ App\Models\Job::channelArr[$value]['text'] }}{{ $index === 0 ? '/' : '' }}
-                                @endforeach
-                              </td>
+                              <td>{{ $job->channelShow }}</td>
                               <td>{{ $job->pv }}</td>
                               <td>{{ $job->resumes_count }}</td>
                               <td>{{ $job->updated_at }}</td>
@@ -176,11 +172,7 @@
                               <tr>
                                 <td>{{ $job->name }}</td>
                                 <td>{{ $job->company->name }}</td>
-                                <td>
-                                  @foreach ($job->channel as $index => $value)
-                                    {{ App\Models\Job::channelArr[$value]['text'] }}{{ $index === 0 ? '/' : '' }}
-                                  @endforeach
-                                </td>
+                                <td>{{ $job->channelShow }}</td>
                                 <td>{{ $job->resumes_count }}</td>
                                 <td>{{ $job->updated_at }}</td>
                               </tr>
