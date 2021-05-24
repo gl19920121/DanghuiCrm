@@ -101,7 +101,7 @@
     </div>
     <div class="row justify-content-center">
       <div class="col col-auto">
-        <button class="btn btn-danger">编辑本职位信息</button>
+        <a href="{{ route('jobs.edit', $job) }}" class="btn btn-danger">编辑本职位信息</a>
         <button class="btn btn-light">导出职位</button>
       </div>
     </div>

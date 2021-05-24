@@ -238,13 +238,14 @@ class JobsController extends Controller
 
     public function edit(Job $job)
     {
-        return view('jobs.edit', compact('job'));
+        $companys = Company::where('status', '=', 1)->get();
+        return view('jobs.edit', compact('job', 'companys'));
     }
 
     public function update(Job $job, Request $request)
     {
         $mssages = [
-            'company.required' => '请填写 公司名称',
+            'company_id.required' => '请填写 公司名称',
             'quota.numeric' => '请正确输入 招聘人数',
             'name.required' => '请填写 职位名称',
             'type.st.required' => '请选择 职位类别',
@@ -273,7 +274,7 @@ class JobsController extends Controller
         ];
 
         $this->validate($request, [
-            'company' => ['required', 'string'],
+            'company_id' => 'required',
             'quota' => 'nullable|numeric',
             'name' => 'required|string',
             'type' => 'required',

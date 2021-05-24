@@ -14,22 +14,84 @@
                     <h5>企业基本信息</h5>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="company">公司名称：</label>
-                    <input type="text" name="company" class="form-control normal" value="{{ $job->company }}" placeholder="请填写" autocomplete="off">
+                    <label for="company"><span class="color-red">*</span>公司名称：</label>
+                    <select name="company_id" class="form-control normal" value="{{  old('company_id')}}" onchange="companySelect()">
+                        <option value="">请填写</option>
+                        @foreach ($companys as $index => $company)
+                            <option value="{{ $company->id }}" @if($company->id === $job->company->id) selected="selected" @endif data-item="{{ json_encode($company) }}">{{ $company->name }}</option>
+                        @endforeach
+                    </select>
+                    <div>
+                      <a href="#" class="color-red" data-toggle="modal" data-target="#companyModal">
+                        <span>+</span>新增企业
+                      </a>
+                    </div>
+                </div>
+                <div style="display: none;" class="form-group form-inline text-left" id="companyPre">
+                    <label class="align-self-start"><span class="color-red">*</span>企业信息预览：</label>
+                    <div class="company-pre">
+                      <div class="row row-cols-2">
+                        <div class="col col-12" id="companyNickname">
+                        </div>
+                        <div class="col">
+                          <div class="row align-items-center">
+                            <div class="col col-auto align-self-center">
+                              <div class="circle-red"></div>
+                            </div>
+                            <div class="col col-auto">
+                              <div id="companyLocation"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="row align-items-center">
+                            <div class="col col-auto align-self-center">
+                              <div class="circle-red"></div>
+                            </div>
+                            <div class="col col-auto">
+                              <div id="companyNature"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="row align-items-center">
+                            <div class="col col-auto align-self-center">
+                              <div class="circle-red"></div>
+                            </div>
+                            <div class="col col-auto">
+                              <div id="companyScale"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="row align-items-center">
+                            <div class="col col-auto align-self-center">
+                              <div class="circle-red"></div>
+                            </div>
+                            <div class="col col-auto">
+                              <div id="companyIndustry"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-12">
+                          <hr class="divider"></div>
+                          <div class="col col-12" id="companyIntroduction"></div>
+                      </div>
+                    </div>
                 </div>
                 <div class="form-group form-inline">
-                    <span></span><label for="quota">招聘人数：</label>
+                    <label for="quota">招聘人数：</label>
                     <input type="text" name="quota" class="form-control normal" value="{{  $job->quota }}" placeholder="请填写" autocomplete="off" data-type="int">
                 </div>
                 <div class="form-title text-left">
                     <h5>职业基本信息</h5>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="name">职位名称：</label>
+                    <label for="name"><span>*</span>职位名称：</label>
                     <input type="text" name="name" class="form-control normal" value="{{  $job->name }}" placeholder="请输入职位名称"  />
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="type">职位类别：</label>
+                    <label for="type"><span>*</span>职位类别：</label>
                     <div class="input-group" data-toggle="jobtypepicker">
 
                       <input type="hidden" name="type[st]" value="{{ $job->type->st }}">
@@ -53,7 +115,7 @@
                     </div>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="nature">工作性质：</label>
+                    <label for="nature"><span>*</span>工作性质：</label>
                     <select name="nature" class="form-control normal">
                         @foreach($job->natureArr as $key => $nature)
                             <option value="{{ $key }}" {{ $nature['selected'] }}>{{ $nature['text'] }}</option>
@@ -61,7 +123,7 @@
                     </select>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="city">工作城市：</label>
+                    <label for="city"><span>*</span>工作城市：</label>
                     <div data-toggle="distpicker">
                       <select class="form-control" name="location[province]" data-province="{{ $job->location->province }}"></select>
                       <select class="form-control" name="location[city]"  data-city="{{ $job->location->city }}"></select>
@@ -69,7 +131,7 @@
                     </div>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="salary">税前月薪：</label>
+                    <label for="salary"><span>*</span>税前月薪：</label>
                     <div class="input-group">
                         <input type="text" name="salary_min" class="form-control small" value="{{  $job->salary_min }}"  />
                         <div class="input-group-append">
@@ -85,7 +147,7 @@
                     </div>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="welfare">福利待遇：</label>
+                    <label for="welfare"><span>*</span>福利待遇：</label>
                     <select name="welfare" class="form-control normal">
                         @foreach($job->welfareArr as $key => $welfare)
                             <option value="{{ $key }}" {{ $welfare['selected'] }}>{{ $welfare['text'] }}</option>
@@ -93,14 +155,14 @@
                     </select>
                 </div>
                 <div class="form-group form-inline">
-                    <span></span><label for="sparkle">职位亮点：</label>
+                    <label for="sparkle">职位亮点：</label>
                     <input type="text" name="sparkle" class="form-control normal" value="{{  $job->sparkle }}" placeholder="请填写" />
                 </div>
                 <div class="form-title text-left">
                     <h5>职位要求</h5>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="age">年龄范围：</label>
+                    <label for="age"><span>*</span>年龄范围：</label>
                     <div class="input-group">
                         <input type="text" name="age_min" class="form-control small" value="{{  $job->age_min }}"  />
                         <div class="input-group-append">
@@ -116,7 +178,7 @@
                     </div>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="education">学历要求：</label>
+                    <label for="education"><span>*</span>学历要求：</label>
                     <select name="education" class="form-control normal">
                         @foreach($job->educationArr as $key => $education)
                             <option value="{{ $key }}" {{ $education['selected'] }}>{{ $education['text'] }}</option>
@@ -125,7 +187,7 @@
                     <label class="ml-2">及以上</label>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="experience">经验要求：</label>
+                    <label for="experience"><span>*</span>经验要求：</label>
                     <select name="experience" class="form-control normal">
                         @foreach($job->experienceArr as $key => $experience)
                             <option value="{{ $key }}" {{ $experience['selected'] }}>{{ $experience['text'] }}</option>
@@ -133,18 +195,18 @@
                     </select>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="duty">工作职责：</label>
+                    <label for="duty"><span>*</span>工作职责：</label>
                     <textarea name="duty" class="form-control normal">{{  $job->duty }}</textarea>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="requirement">任职要求：</label>
+                    <label for="requirement"><span>*</span>任职要求：</label>
                     <textarea name="requirement" class="form-control normal">{{  $job->requirement }}</textarea>
                 </div>
                 <div class="form-title text-left">
                     <h5>发布设置</h5>
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="urgency_level">紧急程度：</label>
+                    <label for="urgency_level"><span>*</span>紧急程度：</label>
                     @foreach ($job->urgencyLevelArr as $key => $urgencyLevel)
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}" {{ $urgencyLevel['checked'] }}>
@@ -153,7 +215,7 @@
                     @endforeach
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="channel">渠道选择：</label>
+                    <label for="channel"><span>*</span>渠道选择：</label>
                     @foreach ($job->channelArr as $key => $channel)
                         <div class="custom-control custom-checkbox custom-control-inline">
                             <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]" {{ $channel['checked'] }}>
@@ -162,8 +224,7 @@
                     @endforeach
                 </div>
                 <div class="form-group form-inline">
-                    <span>*</span><label for="deadline">截止日期：</label>
-                    <!-- <input type="text" name="deadline" class="form-control normal" value="{{  $job->deadline }}" placeholder="请填写" /> -->
+                    <label for="deadline"><span>*</span>截止日期：</label>
                     <div class="input-group date" id="datetimepicker1">
                       <input type="text" name="deadline" class="form-control normal" value="{{  $job->deadline }}" placeholder="请选择" autocomplete="off">
                       <span class="input-group-text">
@@ -180,13 +241,26 @@
         </div>
     </div>
 </div>
+@include('companys.shared._company_create')
+@include('shared._industry')
 @include('shared._job_type')
 @include('shared._errors')
 <script type="text/javascript">
-  $.fn.distpicker.setDefaults({
-    province: '---- 请选择 ----',
-    city: '---- 请选择 ----',
-    district: '---- 请选择 ----'
-  });
+  function companySelect()
+  {
+    var data = $('select option:selected').attr('data-item');
+    if (typeof(data) == 'undefined') {
+      $('#companyPre').hide('fast');
+      return;
+    }
+    var company = JSON.parse(data);
+    $('#companyPre').show('fast');
+    $('#companyNickname').addClass('text-truncate').attr('title', company.nickname).text(company.nickname);
+    $('#companyLocation').addClass('text-truncate').attr('title', company.location).text(company.location);
+    $('#companyNature').addClass('text-truncate').attr('title', company.nature).text(company.nature);
+    $('#companyScale').addClass('text-truncate').attr('title', company.scale).text(company.scale);
+    $('#companyIndustry').addClass('text-truncate').attr('title', company.industry).text(company.industry);
+    $('#companyIntroduction').addClass('text-truncate').attr('title', company.introduction).text('介绍：'+company.introduction);
+  }
 </script>
 @stop

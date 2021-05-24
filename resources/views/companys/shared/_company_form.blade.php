@@ -80,3 +80,18 @@
     </form>
   </div>
 </div>
+
+<script type="text/javascript">
+  $('#companyEditModal').on('shown.bs.modal', function (e) {
+    var data = $('#companyInfo').val();
+    console.log(data);
+    var company = JSON.parse(data);
+    console.log(company);
+
+    if (typeof(data) == 'undefined') {
+      return;
+    }
+    var company = JSON.parse(data);
+    $('input[name=name]').val(company.name);
+  });
+</script>

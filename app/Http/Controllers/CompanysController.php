@@ -28,10 +28,10 @@ class CompanysController extends Controller
         return view('companys.list', compact('companys', 'appends'));
     }
 
-    public function edit(Company $company)
-    {
-        return view('company.edit', compact('company'));
-    }
+    // public function edit(Company $company)
+    // {
+    //     return view('company.edit', compact('company'));
+    // }
 
     public function store(Request $request)
     {
