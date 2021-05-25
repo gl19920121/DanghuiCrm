@@ -10,6 +10,7 @@ require('./bootstrap');
 
 require('distpicker');
 require('pc-bootstrap4-datetimepicker');
+window.html2canvas = require('html2canvas');
 
 // window.Vue = require('vue');
 

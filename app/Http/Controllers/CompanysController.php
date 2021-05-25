@@ -9,6 +9,13 @@ class CompanysController extends Controller
 {
     private $pageSize = 1;
 
+    public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => []
+        ]);
+    }
+
     public function list(Request $request)
     {
         $companys = Company::where('status', '=', 1)

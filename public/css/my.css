@@ -559,20 +559,25 @@ a:hover {
   padding: 15px 20px 30px 25px;
 }
 
-.default-form .form-body .form-group .company-pre > .row > .col:nth-child(1) {
+.default-form .form-body .form-group .company-pre > .row:nth-child(1) .col {
   padding-bottom: 24px;
 }
 
-.default-form .form-body .form-group .company-pre > .row > .col:nth-child(2) .col:nth-child(2) {
+.default-form .form-body .form-group .company-pre > .row:nth-child(2) > .col .row .col:nth-child(1) {
   padding-right: 4px;
 }
 
-.default-form .form-body .form-group .company-pre > .row > .col:nth-child(2) .col:nth-child(2) {
+.default-form .form-body .form-group .company-pre > .row:nth-child(2) > .col .row .col:nth-child(2) {
+  max-width: 160px;
   padding-left: 4px;
 }
 
-.default-form .form-body .form-group .company-pre > .row > .col:nth-child(2) .col:nth-child(2) div {
-  width: 110px;
+.default-form .form-body .form-group .company-pre > .row:nth-child(4) > .col > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .default-form .form-body .form-group > label:first-child {

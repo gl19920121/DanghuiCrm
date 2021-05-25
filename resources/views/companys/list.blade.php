@@ -34,10 +34,10 @@
             @foreach($companys as $company)
               <tr>
                 <td class="color-red">{{ $company->name }}</td>
-                <td>{{ $company->location }}</td>
-                <td>{{ $company->industry }}</td>
-                <td>{{ $company->scale }}</td>
-                <td>{{ $company->nature }}</td>
+                <td>{{ $company->locationShow }}</td>
+                <td>{{ $company->industryShow }}</td>
+                <td>{{ $company->scaleShow }}</td>
+                <td>{{ $company->natureShow }}</td>
                 <td class="color-red">{{ $company->jobs_count }}</td>
                 <td>{{ $company->updated_at }}</td>
                 <td>
@@ -47,7 +47,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <a class="dropdown-item" href="#">刷新</a>
-                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#companyEditModal" onclick="setCompany({{ json_encode($company) }})">修改</a>
+                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#companyEditModal" data-item="{{ json_encode($company) }}" onclick="{{ session(['company_id' => $company->id]) }}">修改</a>
                       <!-- route('companys.edit', $company) -->
                       <form method="POST" action="{{ route('companys.destroy', $company) }}">
                         {{ csrf_field() }}
@@ -78,16 +78,5 @@
     @endif
   </div>
 </div>
-<input type="hidden" id="companyInfo">
-<script type="text/javascript">
-  function setCompany(data)
-  {
-    //var company = JSON.parse(data);
-    console.log(data);
-    $('#companyInfo').val(data);
-    var data = $('#companyInfo').val();
-    console.log(data);
-  }
-</script>
 @include('companys.shared._company_edit')
 @stop

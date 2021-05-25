@@ -86,9 +86,20 @@ class Job extends Model
         return json_decode($this->attributes['type']);
     }
 
+    public function getTypeShowAttribute()
+    {
+        return $this->getTypeAttribute()->rd;
+    }
+
     public function getLocationAttribute()
     {
         return json_decode($this->attributes['location']);
+    }
+
+    public function getLocationShowAttribute()
+    {
+        $location = json_decode($this->attributes['location'], true);
+        return sprintf('%s-%s-%s', $location['province'], $location['city'], $location['district']);
     }
 
     public function getChannelAttribute()

@@ -18,6 +18,13 @@ class DraftsController extends Controller
 
     private $pageSize = 1;
 
+    public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => []
+        ]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->toArray();

@@ -50,27 +50,29 @@ class Company extends Model
         return $this->hasMany(Job::class);
     }
 
-    public function getNatureAttribute()
+    public function getNatureShowAttribute()
     {
         return self::natureArr[$this->attributes['nature']]['text'];
     }
 
-    public function getScaleAttribute()
+    public function getScaleShowAttribute()
     {
         return self::scaleArr[$this->attributes['scale']]['text'];
     }
 
-    public function getLocationAttribute()
+    public function getLocationShowAttribute()
     {
-        return implode('-', json_decode($this->attributes['location'], true));
+        // return implode('-', json_decode($this->attributes['location'], true));
+        $location = json_decode($this->attributes['location'], true);
+        return sprintf('%s-%s-%s', $location['province'], $location['city'], $location['district']);
     }
 
-    public function getIndustryAttribute()
+    public function getIndustryShowAttribute()
     {
         return json_decode($this->attributes['industry'], true)['th'];
     }
 
-    public function getInvestmentAttribute()
+    public function getInvestmentShowAttribute()
     {
         return self::investmentArr[$this->attributes['investment']]['text'];
     }

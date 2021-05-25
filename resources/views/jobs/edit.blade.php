@@ -28,56 +28,61 @@
                     </div>
                 </div>
                 <div style="display: none;" class="form-group form-inline text-left" id="companyPre">
-                    <label class="align-self-start"><span class="color-red">*</span>企业信息预览：</label>
-                    <div class="company-pre">
-                      <div class="row row-cols-2">
-                        <div class="col col-12" id="companyNickname">
-                        </div>
-                        <div class="col">
-                          <div class="row align-items-center">
-                            <div class="col col-auto align-self-center">
-                              <div class="circle-red"></div>
-                            </div>
-                            <div class="col col-auto">
-                              <div id="companyLocation"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="row align-items-center">
-                            <div class="col col-auto align-self-center">
-                              <div class="circle-red"></div>
-                            </div>
-                            <div class="col col-auto">
-                              <div id="companyNature"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="row align-items-center">
-                            <div class="col col-auto align-self-center">
-                              <div class="circle-red"></div>
-                            </div>
-                            <div class="col col-auto">
-                              <div id="companyScale"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="row align-items-center">
-                            <div class="col col-auto align-self-center">
-                              <div class="circle-red"></div>
-                            </div>
-                            <div class="col col-auto">
-                              <div id="companyIndustry"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col col-12">
-                          <hr class="divider"></div>
-                          <div class="col col-12" id="companyIntroduction"></div>
+                  <label class="align-self-start"><span class="color-red">*</span>企业信息预览：</label>
+                  <div class="company-pre">
+                    <div class="row">
+                      <div class="col" id="companyNickname">
                       </div>
                     </div>
+                    <div class="row row-cols-2">
+                      <div class="col">
+                        <div class="row align-items-center">
+                          <div class="col col-auto align-self-center">
+                            <div class="circle-red"></div>
+                          </div>
+                          <div class="col col-auto">
+                            <div id="companyLocation"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="row align-items-center">
+                          <div class="col col-auto align-self-center">
+                            <div class="circle-red"></div>
+                          </div>
+                          <div class="col col-auto">
+                            <div id="companyNature"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="row align-items-center">
+                          <div class="col col-auto align-self-center">
+                            <div class="circle-red"></div>
+                          </div>
+                          <div class="col col-auto">
+                            <div id="companyScale"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="row align-items-center">
+                          <div class="col col-auto align-self-center">
+                            <div class="circle-red"></div>
+                          </div>
+                          <div class="col col-auto">
+                            <div id="companyIndustry"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="divider">
+                    <div class="row">
+                      <div class="col col-auto">
+                        <div id="companyIntroduction"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group form-inline">
                     <label for="quota">招聘人数：</label>
@@ -255,12 +260,27 @@
     }
     var company = JSON.parse(data);
     $('#companyPre').show('fast');
+
     $('#companyNickname').addClass('text-truncate').attr('title', company.nickname).text(company.nickname);
-    $('#companyLocation').addClass('text-truncate').attr('title', company.location).text(company.location);
-    $('#companyNature').addClass('text-truncate').attr('title', company.nature).text(company.nature);
-    $('#companyScale').addClass('text-truncate').attr('title', company.scale).text(company.scale);
-    $('#companyIndustry').addClass('text-truncate').attr('title', company.industry).text(company.industry);
-    $('#companyIntroduction').addClass('text-truncate').attr('title', company.introduction).text('介绍：'+company.introduction);
+
+    var location = JSON.parse(company.location);
+    var locationShow = location.province + '-' + location.city + '-' + location.district;
+    $('#companyLocation').addClass('text-truncate').attr('title', locationShow).text(locationShow);
+
+    var natureArr = JSON.parse('{!! json_encode(App\Models\Company::natureArr) !!}');
+    var natureShow = natureArr[company.nature].text;
+    $('#companyNature').addClass('text-truncate').attr('title', natureShow).text(natureShow);
+
+    var scaleArr = JSON.parse('{!! json_encode(App\Models\Company::scaleArr) !!}');
+    var scaleShow = scaleArr[company.scale].text;
+    $('#companyScale').addClass('text-truncate').attr('title', scaleShow).text(scaleShow);
+
+    var industry = JSON.parse(company.industry);
+    var industryShow = industry.th;
+    $('#companyIndustry').addClass('text-truncate').attr('title', industryShow).text(industryShow);
+
+    $('#companyIntroduction').attr('title', company.introduction).text('介绍：'+company.introduction);
   }
+  companySelect();
 </script>
 @stop

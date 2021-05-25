@@ -1,7 +1,13 @@
 <div class="default-form">
   <div class="form-body">
+    @if ($act === 'store')
     <form class="text-center" method="POST" action="{{ route('companys.store') }}" enctype="multipart/form-data">
-        {{ csrf_field() }}
+      {{ csrf_field() }}
+    @else
+    <form class="text-center" method="POST" action="{{ route('companys.update', session('company_id')) }}" enctype="multipart/form-data">
+      {{ csrf_field() }}
+      {{ method_field('PATCH') }}
+    @endif
         <div class="form-group form-inline">
             <label for="name"><span>*</span>公司名称：</label>
             <input type="text" name="name" class="form-control middle" value="{{ isset($oldData['company']) ? $oldData['company']->name : '' }}" placeholder="请填写企业全称">
@@ -34,7 +40,7 @@
             <label for="location"><span>*</span>所在地：</label>
             <div data-toggle="distpicker" class="middle">
               <select class="form-control" name="location[province]" data-province=""></select>
-              <select class="form-control" name="location[city]"  data-city=""></select>
+              <select class="form-control" name="location[city]" data-city=""></select>
               <select class="form-control" name="location[district]"  data-district=""></select>
             </div>
         </div>
@@ -83,15 +89,37 @@
 
 <script type="text/javascript">
   $('#companyEditModal').on('shown.bs.modal', function (e) {
-    var data = $('#companyInfo').val();
-    console.log(data);
-    var company = JSON.parse(data);
-    console.log(company);
+    var btnThis = $(e.relatedTarget);
+    var data = btnThis.attr('data-item');
 
     if (typeof(data) == 'undefined') {
       return;
     }
     var company = JSON.parse(data);
     $('input[name=name]').val(company.name);
+    $('input[name=nickname]').val(company.nickname);
+
+    var industry = JSON.parse(company.industry);
+    var industryShow = industry.th;
+    $('input[name="industry[st]"]').val(industry.st);
+    $('input[name="industry[nd]"]').val(industry.nd);
+    $('input[name="industry[rd]"]').val(industry.rd);
+    $('input[name="industry[th]"]').val(industry.th);
+    $('#industry').val(industryShow);
+
+    var location = JSON.parse(company.location);
+    $('select[name="location[province]"]').val(location.province);
+    $('select[name="location[province]"]').trigger("change");
+    $('select[name="location[city]"]').val(location.city);
+    $('select[name="location[city]"]').trigger("change");
+    $('select[name="location[district]"]').val(location.district);
+    $('select[name="location[district]"]').trigger("change");
+
+    $('input[name=address]').val(company.address);
+    $('select[name=nature]').val(company.nature);
+    $('select[name=scale]').val(company.scale);
+    $('select[name=investment]').val(company.investment);
+    // $('input[name=logo]').val(company.logo);
+    $('textarea[name=introduction]').text(company.introduction);
   });
 </script>

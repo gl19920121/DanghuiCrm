@@ -6,7 +6,7 @@
         <h5 class="modal-title mt-auto">企业信息</h5>
       </div>
       <div class="modal-body">
-        @include('companys.shared._company_form')
+        @include('companys.shared._company_form', ['act' => 'update'])
       </div>
     </div>
   </div>

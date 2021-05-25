@@ -1,4 +1,4 @@
-<div class="job-detail">
+<div id="capture" class="job-detail">
     <div class="row row-cols-5">
         <div class="col-12">
             <h5>企业基本信息</h5>
@@ -7,19 +7,19 @@
             <p class="font-size-m"><span class="color-gray">公司名称：</span>{{ $job->company->name }}</p>
         </div>
         <div class="col">
-            <p class="font-size-m"><span class="color-gray">所在地：</span>{{ $job->company->location }}</p>
+            <p class="font-size-m"><span class="color-gray">所在地：</span>{{ $job->company->locationShow }}</p>
         </div>
         <div class="col">
-            <p class="font-size-m"><span class="color-gray">所属行业：</span>{{ $job->company->industry }}</p>
+            <p class="font-size-m"><span class="color-gray">所属行业：</span>{{ $job->company->industryShow }}</p>
         </div>
         <div class="col">
-            <p class="font-size-m"><span class="color-gray">企业性质：</span>{{ $job->company->nature }}</p>
+            <p class="font-size-m"><span class="color-gray">企业性质：</span>{{ $job->company->natureShow }}</p>
         </div>
         <div class="col">
-            <p class="font-size-m"><span class="color-gray">企业规模：</span>{{ $job->company->scale }}</p>
+            <p class="font-size-m"><span class="color-gray">企业规模：</span>{{ $job->company->scaleShow }}</p>
         </div>
         <div class="col">
-            <p class="font-size-m"><span class="color-gray">融资阶段：</span>{{ $job->company->investment }}</p>
+            <p class="font-size-m"><span class="color-gray">融资阶段：</span>{{ $job->company->investmentShow }}</p>
         </div>
         <div class="col">
             <p class="font-size-m"><span class="color-gray">招聘人数：</span>{{ $job->quota }}</p>
@@ -99,10 +99,73 @@
             <p class="font-size-m"><span class="color-gray">截止日期：</span>{{ $job->deadline }}</p>
         </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="col col-auto">
-        <a href="{{ route('jobs.edit', $job) }}" class="btn btn-danger">编辑本职位信息</a>
-        <button class="btn btn-light">导出职位</button>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col col-auto">
+    <a href="{{ route('jobs.edit', $job) }}" class="btn btn-danger">编辑本职位信息</a>
+    <!-- <button class="btn btn-light">导出职位</button> -->
+    <div class="btn-group" role="group">
+      <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        导出职位
+      </button>
+      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        <form method="POST" action="{{ route('jobs.exported') }}">
+          {{ csrf_field() }}
+          <button class="dropdown-item" type="submit">WORD</button>
+        </form>
+        <form method="POST" action="{{ route('jobs.exported') }}">
+          {{ csrf_field() }}
+          <button class="dropdown-item" type="submit">PDF</button>
+        </form>
+        <a href="{{ route('excel.export.job', $job) }}" class="dropdown-item">Excel</a>
+        <a href="#" class="dropdown-item" onclick="takeScreenshot()">JPG</a>
       </div>
     </div>
+  </div>
 </div>
+
+<div hidden id="canvasContainer"></div>
+
+<script type="text/javascript">
+
+  function _fixType(type)
+  {
+    type = type.toLowerCase().replace(/jpg/i, 'jpeg');
+    let r = type.match(/png|jpeg|bmp|gif/)[0];
+    return 'image/' + r;
+  }
+
+  function fileDownload(downloadUrl){
+    let aLink = document.createElement('a');
+    aLink.style.display = 'none';
+    aLink.href = downloadUrl;
+    aLink.download = "{{ $job->name }}.png";
+    // 触发点击-然后移除
+    document.body.appendChild(aLink);
+    aLink.click();
+    document.body.removeChild(aLink);
+  }
+
+  function takeScreenshot()
+  {
+    window.pageYoffset = 0;
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    html2canvas(document.querySelector("#capture")).then(canvas => {
+      document.querySelector("#canvasContainer").appendChild(canvas);
+      //延迟执行确保万无一失，玄学
+      setTimeout(() => {
+        var type = 'png';
+        var oCanvas = document.querySelector("#canvasContainer").getElementsByTagName("canvas")[0];
+        var imgData = oCanvas.toDataURL(type);//canvas转换为图片
+        // 加工image data，替换mime type，方便以后唤起浏览器下载
+        imgData = imgData.replace(_fixType(type), 'image/octet-stream');
+        fileDownload(imgData);
+        $('body').remove('canvas');
+      }, 0);
+    });
+  }
+
+</script>
