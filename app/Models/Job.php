@@ -102,6 +102,16 @@ class Job extends Model
         return sprintf('%s-%s-%s', $location['province'], $location['city'], $location['district']);
     }
 
+    public function getSalaryShowAttribute()
+    {
+        return sprintf('%dK-%dK', $this->attributes['salary_min'], $this->attributes['salary_max']);
+    }
+
+    public function getAgeShowAttribute()
+    {
+        return sprintf('%d岁-%d岁', $this->attributes['age_min'], $this->attributes['age_max']);
+    }
+
     public function getChannelAttribute()
     {
         return json_decode($this->attributes['channel'], true);

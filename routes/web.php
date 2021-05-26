@@ -12,7 +12,7 @@
 */
 
 Route::get('/excel/export/job/{job}','ExcelController@exportJob')->name('excel.export.job');
-Route::get('/word/export','WordController@export')->name('word.export');
+Route::get('/word/export/job/{job}','WordController@exportJob')->name('word.export.job');
 
 Route::get('/', 'SessionsController@index')->name('index');
 Route::get('login', 'SessionsController@create')->name('login'); //登录页面
