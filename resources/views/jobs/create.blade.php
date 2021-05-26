@@ -17,7 +17,7 @@
                 <div class="form-group form-inline">
                     <label for="company"><span class="color-red">*</span>公司名称：</label>
                     <select name="company_id" class="form-control normal" value="{{  old('company_id')}}" onchange="companySelect()">
-                        <option value="">请填写</option>
+                        <option value="" hidden>请填写</option>
                         @foreach ($companys as $index => $company)
                             <option value="{{ $company->id }}" @if(isset($oldData['company']->id) && $company->id === $oldData['company']->id) selected="selected" @endif data-item="{{ json_encode($company) }}">{{ $company->name }}</option>
                         @endforeach
@@ -104,7 +104,7 @@
                       <input type="hidden" name="type[nd]" value="{{ isset($oldData['type']['nd']) ? $oldData['type']['nd'] : '' }}">
                       <input type="hidden" name="type[rd]" value="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : '' }}">
 
-                      <input type="text" class="form-control normal" id="jobType" value="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : '' }}" placeholder="请选择" autocomplete="off">
+                      <input type="text" class="form-control normal append" id="jobType" value="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : '' }}" placeholder="请选择" autocomplete="off">
                       <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon2">
                           <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -123,6 +123,7 @@
                 <div class="form-group form-inline">
                     <label for="nature"><span class="color-red">*</span>工作性质：</label>
                     <select name="nature" class="form-control normal" value="{{  old('nature')}}">
+                        <option value="" hidden>请选择</option>
                         @foreach (App\Models\Job::natureArr as $key => $nature)
                             <option value="{{ $key }}" @if(isset($oldData['nature']) && $key === $oldData['nature']) selected="selected" @endif>{{ $nature['text'] }}</option>
                         @endforeach
@@ -139,14 +140,14 @@
                 <div class="form-group form-inline">
                     <label for="salary"><span class="color-red">*</span>税前月薪：</label>
                     <div class="input-group">
-                        <input type="text" name="salary_min" class="form-control small" value="{{ isset($oldData['salary_min']) ? $oldData['salary_min'] : old('salary_min') }}" autocomplete="off" data-type="int">
+                        <input type="text" name="salary_min" class="form-control small append" value="{{ isset($oldData['salary_min']) ? $oldData['salary_min'] : old('salary_min') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">K</div>
                         </div>
                     </div>
                     <label class="ml-1 mr-1">-</label>
                     <div class="input-group">
-                        <input type="text" name="salary_max" class="form-control small" value="{{ isset($oldData['salary_max']) ? $oldData['salary_max'] : old('salary_max') }}" autocomplete="off" data-type="int">
+                        <input type="text" name="salary_max" class="form-control small append" value="{{ isset($oldData['salary_max']) ? $oldData['salary_max'] : old('salary_max') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">K</div>
                         </div>
@@ -170,14 +171,14 @@
                 <div class="form-group form-inline">
                     <label for="age"><span class="color-red">*</span>年龄范围：</label>
                     <div class="input-group">
-                        <input type="text" name="age_min" class="form-control small" value="{{ isset($oldData['age_min']) ? $oldData['age_min'] : old('age_min') }}" autocomplete="off" data-type="int">
+                        <input type="text" name="age_min" class="form-control small append" value="{{ isset($oldData['age_min']) ? $oldData['age_min'] : old('age_min') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">岁</div>
                         </div>
                     </div>
                     <label class="ml-1 mr-1">-</label>
                     <div class="input-group">
-                        <input type="text" name="age_max" class="form-control small" value="{{ isset($oldData['age_max']) ? $oldData['age_max'] : old('age_max') }}" autocomplete="off" data-type="int">
+                        <input type="text" name="age_max" class="form-control small append" value="{{ isset($oldData['age_max']) ? $oldData['age_max'] : old('age_max') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">岁</div>
                         </div>
@@ -240,22 +241,28 @@
                               @elseif (!empty($channel['checked']))
                                 checked
                               @endif
+                              @if (isset($channel['has_remark']) && $channel['has_remark'])
+                                onclick='setRemark()'
+                              @endif
                             >
                             <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['text'] }}</label>
                         </div>
                     @endforeach
+                    <input style="visibility: hidden;" type="text" name="channel_remark" class="form-control" id="channelRemark" placeholder="请选择招聘平台">
                 </div>
                 <div class="form-group form-inline">
                   <label for="deadline"><span class="color-red">*</span>截止日期：</label>
                   <div class="input-group date" id="datetimepicker1">
-                    <input type="text" name="deadline" class="form-control normal" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请选择" autocomplete="off">
-                    <span class="input-group-text">
-                    <!-- <span class="glyphicon glyphicon-calendar"></span> -->
-                      <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2H0z"/>
-                        <path fill-rule="evenodd" d="M0 3h16v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm6.5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                      </svg>
-                    </span>
+                    <input type="text" name="deadline" class="form-control normal append" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请选择" autocomplete="off">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                      <!-- <span class="glyphicon glyphicon-calendar"></span> -->
+                        <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2H0z"/>
+                          <path fill-rule="evenodd" d="M0 3h16v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm6.5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <button type="submit" class="btn btn-danger btn-form-submit" onclick="this.form.action='{{ route('jobs.store') }}'">发布职位</button>
@@ -299,5 +306,18 @@
 
     $('#companyIntroduction').attr('title', company.introduction).text('介绍：'+company.introduction);
   }
+
+  function setRemark()
+  {
+    let checked = $('#channel_other_platform').is(':checked');
+    if (checked == true) {
+      $('#channelRemark').css('visibility', 'visible');
+    } else {
+      $('#channelRemark').css('visibility', 'hidden');
+    }
+  }
+
+  companySelect();
+  setRemark();
 </script>
 @stop

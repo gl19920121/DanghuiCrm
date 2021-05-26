@@ -22,14 +22,14 @@ class CompanysController extends Controller
             // ->where('execute_uid', '=', Auth::user()->id)
             ->withCount('jobs')
             ->where(function ($query) use($request) {
-                if (!empty($request->name)) {
-                    $query->where('name', 'like', '%'.$request->name.'%');
+                if (!empty($request->company_name)) {
+                    $query->where('name', 'like', '%'.$request->company_name.'%');
                 }
             });
         $companys = $companys->paginate($this->pageSize);
 
         $appends = [
-            'name' => $request->name
+            'name' => $request->company_name
         ];
 
         return view('companys.list', compact('companys', 'appends'));

@@ -223,10 +223,15 @@
                     <label for="channel"><span>*</span>渠道选择：</label>
                     @foreach ($job->channelArr as $key => $channel)
                         <div class="custom-control custom-checkbox custom-control-inline">
-                            <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]" {{ $channel['checked'] }}>
+                            <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]" {{ $channel['checked'] }}
+                            @if (isset($channel['has_remark']) && $channel['has_remark'])
+                              onclick='setRemark()'
+                            @endif
+                            >
                             <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['text'] }}</label>
                         </div>
                     @endforeach
+                    <input style="visibility: hidden;" type="text" name="channel_remark" class="form-control" id="channelRemark" value="{{  $job->channel_remark }}" placeholder="请选择招聘平台">
                 </div>
                 <div class="form-group form-inline">
                     <label for="deadline"><span>*</span>截止日期：</label>
@@ -281,6 +286,18 @@
 
     $('#companyIntroduction').attr('title', company.introduction).text('介绍：'+company.introduction);
   }
+
+  function setRemark()
+  {
+    let checked = $('#channel_other_platform').is(':checked');
+    if (checked == true) {
+      $('#channelRemark').css('visibility', 'visible');
+    } else {
+      $('#channelRemark').css('visibility', 'hidden');
+    }
+  }
+
   companySelect();
+  setRemark();
 </script>
 @stop

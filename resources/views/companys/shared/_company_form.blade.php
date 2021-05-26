@@ -25,7 +25,7 @@
               <input type="hidden" name="industry[rd]" value="">
               <input type="hidden" name="industry[th]" value="">
 
-              <input type="text" class="form-control middle-append" id="industry" value="" placeholder="请选择" autocomplete="off">
+              <input type="text" class="form-control middle-append append" id="industry" value="" placeholder="请选择" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text" id="basic-addon2">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -38,10 +38,10 @@
         </div>
         <div class="form-group form-inline">
             <label for="location"><span>*</span>所在地：</label>
-            <div data-toggle="distpicker" class="middle">
-              <select class="form-control" name="location[province]" data-province=""></select>
-              <select class="form-control" name="location[city]" data-city=""></select>
-              <select class="form-control" name="location[district]"  data-district=""></select>
+            <div data-toggle="distpicker" class="">
+              <select class="form-control mini" name="location[province]" data-province="省"></select>
+              <select class="form-control mini" name="location[city]" data-city="市"></select>
+              <select class="form-control mini" name="location[district]"  data-district="区"></select>
             </div>
         </div>
         <div class="form-group form-inline">
@@ -74,7 +74,8 @@
         </div>
         <div class="form-group form-inline">
           <label for="logo"><span>*</span>公司LOGO：</label>
-          <input type="file" multiple="true" accept="image/png, image/jpeg" name="logo" class="form-control middle">
+          <input hidden type="file" multiple="true" accept="image/png, image/jpeg" name="logo" class="form-control middle">
+          <input type="text" class="form-control middle" id="inputLogo" placeholder="请选择图片" onclick="setLogo()" readonly style="cursor: pointer;">
         </div>
         <div class="form-group form-inline">
             <label for="introduction">企业介绍：</label>
@@ -88,7 +89,7 @@
 </div>
 
 <script type="text/javascript">
-  $('#companyEditModal').on('shown.bs.modal', function (e) {
+  $('#companyEditModal').on('show.bs.modal', function (e) {
     var btnThis = $(e.relatedTarget);
     var data = btnThis.attr('data-item');
 
@@ -121,5 +122,14 @@
     $('select[name=investment]').val(company.investment);
     // $('input[name=logo]').val(company.logo);
     $('textarea[name=introduction]').text(company.introduction);
+  });
+
+  function setLogo()
+  {
+    $('input[name="logo"]').click();
+  }
+
+  $('input[name="logo"]').change(function() {
+    $('#inputLogo').val($(this).val());
   });
 </script>

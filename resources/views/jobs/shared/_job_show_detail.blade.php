@@ -103,10 +103,10 @@
 
 <div class="row justify-content-center">
   <div class="col col-auto">
-    <a href="{{ route('jobs.edit', $job) }}" class="btn btn-danger">编辑本职位信息</a>
+    <a href="{{ route('jobs.edit', $job) }}" class="btn btn-light">编辑本职位信息</a>
     <!-- <button class="btn btn-light">导出职位</button> -->
     <div class="btn-group" role="group">
-      <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         导出职位
       </button>
       <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">

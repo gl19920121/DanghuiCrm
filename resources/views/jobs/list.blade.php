@@ -5,7 +5,7 @@
 
     @if (count($jobs) > 0)
       <div class="default-list">
-        <form class="text-center" method="GET" action="{{ route('jobs.list') }}">
+        <form name="search" class="text-center" method="GET" action="{{ route('jobs.list') }}">
           {{ csrf_field() }}
           <input type="hidden" name="tab" value="{{ $appends['tab'] }}">
           <div class="row align-items-center mb-4">
@@ -69,20 +69,30 @@
                       操作
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                      <a class="dropdown-item" href="#">刷新</a>
+                      <a class="dropdown-item" href="#" onclick="$('form[name=search1]').submit()">刷新</a>
                       <a class="dropdown-item" href="{{ route('jobs.edit', $job) }}">修改</a>
-                      <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'pause']) }}">
-                        {{ csrf_field() }}
-                        <button class="dropdown-item" type="submit">暂停</button>
-                      </form>
-                      <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'end']) }}">
-                        {{ csrf_field() }}
-                        <button class="dropdown-item" type="submit">结束</button>
-                      </form>
+                      @if ($appends['tab'] === 'ing')
+                        <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'pause']) }}">
+                          {{ csrf_field() }}
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">暂停</button>
+                        </form>
+                      @endif
+                      @if ($appends['tab'] === 'pause' || $appends['tab'] === 'end')
+                        <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'ing']) }}">
+                          {{ csrf_field() }}
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">恢复</button>
+                        </form>
+                      @endif
+                      @if ($appends['tab'] !== 'end')
+                        <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'end']) }}">
+                          {{ csrf_field() }}
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">结束</button>
+                        </form>
+                      @endif
                       <form method="POST" action="{{ route('jobs.destroy', $job) }}">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
-                        <button class="dropdown-item" type="submit">删除</button>
+                        <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">删除</button>
                       </form>
                     </div>
                   </div>
@@ -109,4 +119,6 @@
     @endif
 
   </div>
+
+  @include('shared._confirm')
 @stop

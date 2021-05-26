@@ -74616,8 +74616,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // requir
 
 __webpack_require__(/*! distpicker */ "./node_modules/distpicker/dist/distpicker.js");
 
-__webpack_require__(/*! pc-bootstrap4-datetimepicker */ "./node_modules/pc-bootstrap4-datetimepicker/src/js/bootstrap-datetimepicker.js"); // require('html2canvas');
-
+__webpack_require__(/*! pc-bootstrap4-datetimepicker */ "./node_modules/pc-bootstrap4-datetimepicker/src/js/bootstrap-datetimepicker.js");
 
 window.html2canvas = __webpack_require__(/*! html2canvas */ "./node_modules/html2canvas/dist/html2canvas.js"); // window.Vue = require('vue');
 // /**

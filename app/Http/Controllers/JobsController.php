@@ -311,7 +311,8 @@ class JobsController extends Controller
             $job->status = $request->status;
             $job->save();
         }
-        return redirect()->route('jobs.list');
+
+        return back();
     }
 
     public function exportedResume(Request $request)

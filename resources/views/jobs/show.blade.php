@@ -43,10 +43,10 @@
       <div class="col-auto">
         <form method="POST" action="{{ route('jobs.exported', ['job_id' => $job->id, 'job_name' => $job->name, 'job_company' => $job->company, 'created_at' => $job->created_at]) }}">
           {{ csrf_field() }}
-          <button class="btn btn-danger">简历导入</button>
+          <button class="btn btn-info">简历导入</button>
         </form>
         <div class="btn-group" role="group">
-          <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             更多操作
           </button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">

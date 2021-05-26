@@ -72,6 +72,10 @@ a {
   color: $color-silvery-gray;
 }
 
+.font-size-l {
+  font-size: $font-size-l;
+}
+
 .font-size-m {
   font-size: $font-size-m;
 }
@@ -657,12 +661,32 @@ a {
         //height: 30px;
         line-height: 30px;
         //border: 1px solid $color-n;
+        border-radius: 5px;
 
         &::-webkit-input-placeholder {
           font-size: $font-size-m;
           color: $color-silvery-gray;
           text-align: left;
         }
+
+        &:focus {
+          //border: 1px solid $color-red;
+          //box-shadow: none;
+        }
+      }
+
+      select.form-control {
+        option {
+          //color: $color-silvery-gray;
+          font-size: $font-size-m;
+        }
+      }
+
+      .append {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 5px;
       }
 
       .normal {
@@ -679,6 +703,10 @@ a {
 
       .small {
         width: 53px;
+      }
+
+      .mini {
+        width: 107px;
       }
     }
 
@@ -826,12 +854,6 @@ a {
 
     form {
       display: inline;
-    }
-
-    .btn-danger {
-      width: 79px;
-      height: 30px;
-      font-size: 12px;
     }
 
     .row {
@@ -1228,6 +1250,26 @@ a {
   }
 }
 
+.confirm-modal {
+  .modal-dialog  {
+    max-width: 525px;
+
+    .modal-content {
+      width: 525px;
+      height: 195px;
+
+      .modal-header {
+        height: 45px;
+        padding-left: 25px;
+      }
+
+      .modal-body {
+        height: 150px;
+      }
+    }
+  }
+}
+
 .company-modal {
   .modal-dialog  {
     max-width: 580px;
@@ -1353,3 +1395,50 @@ a {
   }
 }
 
+.btn-danger {
+  //width: 79px;
+  //height: 30px;
+  font-size: 12px;
+  background-color: $color-red;
+  color: white;
+}
+
+.btn-info {
+  font-size: 12px;
+  background-color: white;
+  color: $color-red;
+  border: 1px solid $color-red;
+
+  &:hover {
+    background-color: $color-red;
+    color: white;
+    border-color: $color-red;
+  }
+
+  &:focus {
+    background-color: $color-red;
+  }
+
+  &:active {
+    background-color: $color-red;
+  }
+}
+
+.btn-info:not(:disabled):not(.disabled):active, .btn-info:not(:disabled):not(.disabled).active, .show > .btn-info.dropdown-toggle {
+  background-color: $color-red;
+  color: white;
+  border-color: $color-red;
+}
+
+.btn-light {
+  //width: 79px;
+  //height: 30px;
+  font-size: 12px;
+  background-color: white;
+  color: $color-n;
+  border: 1px solid #ced4da;
+}
+
+.btn-dropdown {
+  height: 32px;
+}

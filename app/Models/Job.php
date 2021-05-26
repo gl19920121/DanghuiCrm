@@ -40,7 +40,7 @@ class Job extends Model
     public const channelArr = [
         'applets' => ['text' => '小程序', 'checked' => 'checked'],
         'website' => ['text' => '官网', 'checked' => 'checked'],
-        'other_platform' => ['text' => '其他']
+        'other_platform' => ['text' => '其他', 'has_remark' => true]
     ];
 
     protected $fillable = [];
@@ -123,6 +123,9 @@ class Job extends Model
 
         foreach ($channel as $index => $value) {
             $channel[$index] = $this->channelArr[$value]['text'];
+            if (isset($this->channelArr[$value]['has_remark']) && $this->channelArr[$value]['has_remark']) {
+                $channel[$index] .= sprintf('（%s）', $this->attributes['channel_remark']);
+            }
         }
 
         return implode('/', $channel);

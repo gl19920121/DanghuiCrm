@@ -31,17 +31,19 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($jobs as $job)
+            @foreach ($jobs as $job)
               <tr onclick="window.location = '{{ route('jobs.create', ['draft_id' => $job->id, 'job_data' => $job->data]) }}';">
                 <td>
                   <span class="color-red">{{ $job->name }}</span>
                 </td>
-                <td>{{ $job->company->name }}</td>
                 <td>
-                  @foreach ($job->channel as $index => $item)
-                    {{ $appends['channelArr'][$item]['show'] }}{{ $index === 0 ? '/' : '' }}
-                  @endforeach
+                  @if (isset($job->company->name))
+                    {{ $job->company->name }}
+                  @else
+                    -
+                  @endif
                 </td>
+                <td>{{ $job->channel }}</td>
                 <td>{{ $job->updated_at }}</td>
                 <td>
                   <form method="POST" action="{{ route('drafts.destroy', $job) }}">

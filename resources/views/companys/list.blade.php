@@ -10,7 +10,7 @@
           <div class="row align-items-center mb-4">
             <div class="col-auto">
               <div class="form-inline">
-                  <input type="text" name="name" class="form-control normal" value="{{ $appends['name'] }}" placeholder="请输入企业名称" />
+                  <input type="text" name="company_name" class="form-control normal" value="{{ $appends['name'] }}" placeholder="请输入企业名称" />
               </div>
             </div>
             <button type="submit" class="btn btn-danger">搜索</button>

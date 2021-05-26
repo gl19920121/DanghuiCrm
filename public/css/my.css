@@ -42,6 +42,10 @@ a:hover {
   color: #B5B5B6;
 }
 
+.font-size-l {
+  font-size: 18px;
+}
+
 .font-size-m {
   font-size: 14px;
 }
@@ -614,12 +618,24 @@ a:hover {
 
 .default-form .form-body .form-group .form-control {
   line-height: 30px;
+  border-radius: 5px;
 }
 
 .default-form .form-body .form-group .form-control::-webkit-input-placeholder {
   font-size: 14px;
   color: #B5B5B6;
   text-align: left;
+}
+
+.default-form .form-body .form-group select.form-control option {
+  font-size: 14px;
+}
+
+.default-form .form-body .form-group .append {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 5px;
 }
 
 .default-form .form-body .form-group .normal {
@@ -636,6 +652,10 @@ a:hover {
 
 .default-form .form-body .form-group .small {
   width: 53px;
+}
+
+.default-form .form-body .form-group .mini {
+  width: 107px;
 }
 
 .default-form .form-body .form-title {
@@ -766,12 +786,6 @@ a:hover {
 
 .job-detail .job-detail-header form {
   display: inline;
-}
-
-.job-detail .job-detail-header .btn-danger {
-  width: 79px;
-  height: 30px;
-  font-size: 12px;
 }
 
 .job-detail .job-detail-header .row:nth-child(2) {
@@ -1117,6 +1131,24 @@ a:hover {
   margin-top: 25px;
 }
 
+.confirm-modal .modal-dialog {
+  max-width: 525px;
+}
+
+.confirm-modal .modal-dialog .modal-content {
+  width: 525px;
+  height: 195px;
+}
+
+.confirm-modal .modal-dialog .modal-content .modal-header {
+  height: 45px;
+  padding-left: 25px;
+}
+
+.confirm-modal .modal-dialog .modal-content .modal-body {
+  height: 150px;
+}
+
 .company-modal .modal-dialog {
   max-width: 580px;
 }
@@ -1227,5 +1259,51 @@ a:hover {
 
 .user-edit .default-form .form-body .btn-form-submit {
   margin-top: 38px;
+}
+
+.btn-danger {
+  font-size: 12px;
+  background-color: #D83856;
+  color: white;
+}
+
+.btn-info {
+  font-size: 12px;
+  background-color: white;
+  color: #D83856;
+  border: 1px solid #D83856;
+}
+
+.btn-info:hover {
+  background-color: #D83856;
+  color: white;
+  border-color: #D83856;
+}
+
+.btn-info:focus {
+  background-color: #D83856;
+}
+
+.btn-info:active {
+  background-color: #D83856;
+}
+
+.btn-info:not(:disabled):not(.disabled):active,
+.btn-info:not(:disabled):not(.disabled).active,
+.show > .btn-info.dropdown-toggle {
+  background-color: #D83856;
+  color: white;
+  border-color: #D83856;
+}
+
+.btn-light {
+  font-size: 12px;
+  background-color: white;
+  color: #3E3A39;
+  border: 1px solid #ced4da;
+}
+
+.btn-dropdown {
+  height: 32px;
 }
 

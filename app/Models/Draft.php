@@ -30,6 +30,15 @@ class Draft extends Model
     public function getChannelAttribute()
     {
         $data = json_decode($this->attributes['data']);
-        return json_decode($data->channel, true);
+        $channel = json_decode($data->channel);
+
+        foreach ($channel as $index => $value) {
+            $channel[$index] = Job::channelArr[$value]['text'];
+            if (isset(Job::channelArr[$value]['has_remark']) && Job::channelArr[$value]['has_remark']) {
+                $channel[$index] .= sprintf('（%s）', $data->channel_remark);
+            }
+        }
+
+        return implode('/', $channel);
     }
 }
