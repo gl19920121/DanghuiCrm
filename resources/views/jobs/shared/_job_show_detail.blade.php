@@ -111,10 +111,7 @@
       </button>
       <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
         <a href="{{ route('word.export.job', $job) }}" class="dropdown-item">Word</a>
-        <form method="POST" action="{{ route('jobs.exported') }}">
-          {{ csrf_field() }}
-          <button class="dropdown-item" type="submit">PDF</button>
-        </form>
+        <a href="{{ route('pdf.export.job', $job) }}" class="dropdown-item">PDF</a>
         <a href="{{ route('excel.export.job', $job) }}" class="dropdown-item">Excel</a>
         <a href="#" class="dropdown-item" onclick="takeScreenshot()">JPG</a>
       </div>
