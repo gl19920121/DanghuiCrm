@@ -8,8 +8,27 @@ use App\Models\Job;
 class Resume extends Model
 {
     protected $fillable = [];
-
     protected $guarded = [];
+
+    public const workYearsArr = [
+        '-1' => ['text' => '学生在读'],
+        '-2' => ['text' => '应届毕业生']
+    ];
+
+    public const educationArr = [
+        'high_schoo' => ['text' => '高中'],
+        'junior' => ['text' => '专科'],
+        'undergraduate' => ['text' => '本科'],
+        'master' => ['text' => '硕士'],
+        'doctor' => ['text' => '博士']
+    ];
+
+    public const jobhunterStatusArr = [
+        '0' => ['text' => '在职-暂不考虑'],
+        '1' => ['text' => '在职-考虑机会'],
+        '2' => ['text' => '在职-月内到岗'],
+        '3' => ['text' => '离职-随时到岗']
+    ];
 
     public function job()
     {

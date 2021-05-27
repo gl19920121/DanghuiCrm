@@ -7,10 +7,10 @@
         <title>{{ env('APP_NAME') }}-@yield('title')</title>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
-        <link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <link rel="stylesheet" href="{{ mix('css/my.css') }}">
 
-        <script src="{{ asset('/js/app.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
     </head>
 
     <body class="@if(Route::currentRouteName() === 'login') login-bg-{{ $bgNum }} @else main-bg @endif">

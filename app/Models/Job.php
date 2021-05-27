@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
+    protected $fillable = [];
+    protected $guarded = [];
+
     public const natureArr = [
         'full' => ['text' => '全职', 'selected' => 'selected'],
         'part' => ['text' => '兼职'],
@@ -42,9 +45,6 @@ class Job extends Model
         'website' => ['text' => '官网', 'checked' => 'checked'],
         'other_platform' => ['text' => '其他', 'has_remark' => true]
     ];
-
-    protected $fillable = [];
-    protected $guarded = [];
 
     public function resumes()
     {

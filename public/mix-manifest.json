@@ -2,7 +2,9 @@
     "/js/app.js": "/js/app.js",
     "/css/less.css": "/css/less.css",
     "/css/scss.css": "/css/scss.css",
-    "/css/my.css": "/css/my.css",
+    "/css/common.css": "/css/common.css",
+    "/css/resume.css": "/css/resume.css",
     "/js/my.js": "/js/my.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/css/my.css": "/css/my.css"
 }
