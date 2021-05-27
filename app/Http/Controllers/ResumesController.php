@@ -38,6 +38,11 @@ class ResumesController extends Controller
         return view('resumes.create', compact('educations', 'workYears', 'workNatures', 'jobhunterStatus', 'sources', 'jobs'));
     }
 
+    public function list(Request $request)
+    {
+        return view('resumes.list');
+    }
+
     public function show(Resume $resume)
     {
         return view('resumes.show', compact('resume'));

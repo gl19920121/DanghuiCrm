@@ -25,6 +25,7 @@ Route::get('home', 'GeneralsController@show')->name('home');
 Route::resource('users', 'UsersController'); //账户相关
 
 Route::post('/resumes/{resume}/status', 'ResumesController@status')->name('resumes.status');
+Route::get('/resumes/list', 'ResumesController@list')->name('resumes.list');
 Route::resource('resumes', 'ResumesController'); //简历相关
 
 Route::resource('tasks', 'TasksController'); //任务相关
