@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Resume;
+use App\Models\ResumeEdu;
+use App\Models\ResumeWork;
 
 class ResumesTableSeeder extends Seeder
 {
@@ -12,32 +14,41 @@ class ResumesTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
+        $resumes = [
             [
                 'id' => 1,
                 'name' => '高朗',
                 'sex' => '男',
                 'age' => '29',
-                'city' => '北京',
-                'work_years_flag' => 6,
+                'location' => '{"city": "北京城区", "district": "海淀区", "province": "北京市"}',
+                'work_years_flag' => 0,
                 'work_years' => 6,
-                'education' => '本科',
+                'education' => 'undergraduate',
+                'major' => '计算机科学与技术',
                 'phone_num' => '15001332305',
                 'email' => '694986534@qq.com',
-                'wechat_or_qq' => '694986534',
-                'cur_industry' => '教育',
-                'cur_position' => '中级PHP研发工程师',
+                'wechat' => 'danteandlady',
+                'qq' => '694986534',
+                'cur_industry' => '{"nd": "互联网/移动互联网/电子商务", "rd": "互联网/移动互联网/电子商务", "st": "互联网.游戏.软件", "th": "互联网/移动互联网/电子商务"}',
+                'cur_position' => '{"nd": "后端开发", "rd": "PHP", "st": "互联网+技术"}',
                 'cur_company' => '清泰文化',
                 'cur_salary' => '50',
-                'exp_industry' => '互联网',
-                'exp_position' => 'PHP研发工程师',
-                'exp_work_nature' => '全职',
-                'exp_city' => '北京',
+                'cur_salary_count' => '14',
+                'exp_industry' => '{"nd": "互联网/移动互联网/电子商务", "rd": "互联网/移动互联网/电子商务", "st": "互联网.游戏.软件", "th": "互联网/移动互联网/电子商务"}',
+                'exp_position' => '{"nd": "后端开发", "rd": "PHP", "st": "互联网+技术"}',
+                'exp_work_nature' => 'full',
+                'exp_location' => '{"city": "北京城区", "district": "海淀区", "province": "北京市"}',
                 'exp_salary_flag' => 0,
-                'exp_salary' => NULL,
+                'exp_salary_min' => NULL,
+                'exp_salary_max' => NULL,
+                'exp_salary_count' => NULL,
                 'jobhunter_status' => 0,
-                'source' => 1,
-                'source_remarks' => NULL,
+                'social_home' => 'www.baidu.com',
+                'personal_advantage' => '毫无优势',
+                'blacklist' => '安普诺',
+                'remark' => '无',
+                'source' => '["other_platform"]',
+                'source_remarks' => '猎聘',
                 'upload_uid' => 1,
                 'attachment_path' => '2021-05-19/1/jcMdxsv2QzSJGbWZvcJeT3tThbk8bSMlNCqnclqP.doc',
                 'job_id' => 1,
@@ -46,6 +57,37 @@ class ResumesTableSeeder extends Seeder
                 'status' => 1
             ]
         ];
-        Resume::insert($data);
+        $resume_edus = [
+            [
+                'id' => 1,
+                'school_name' => '北京信息科技大学',
+                'school_level' => 'undergraduate',
+                'major' => '计算机科学与技术',
+                'start_at' => '2010-09-01',
+                'end_at' => '2014-07-01',
+                'resume_id' => 1,
+                'created_at' => '2021-05-24 14:35:00',
+                'updated_at' => '2021-05-24 14:35:00'
+            ]
+        ];
+        $resume_works = [
+            [
+                'id' => 1,
+                'company_name' => '百度',
+                'company_nature' => 'private',
+                'company_scale' => 7,
+                'company_industry' => '{"nd": "互联网/移动互联网/电子商务", "rd": "互联网/移动互联网/电子商务", "st": "互联网.游戏.软件", "th": "互联网/移动互联网/电子商务"}',
+                'job_type' => '{"nd": "后端开发", "rd": "PHP", "st": "互联网+技术"}',
+                'start_at' => '2010-07-01',
+                'end_at' => '2020-11-27',
+                'work_desc' => '百度智能汽车C端研发',
+                'resume_id' => 1,
+                'created_at' => '2021-05-24 14:35:00',
+                'updated_at' => '2021-05-24 14:35:00'
+            ]
+        ];
+        Resume::insert($resumes);
+        ResumeEdu::insert($resume_edus);
+        ResumeWork::insert($resume_works);
     }
 }

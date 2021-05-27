@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Resume;
+use App\Models\ResumeEdu;
+use App\Models\ResumeWork;
 use App\Models\Job;
 use Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,18 +26,8 @@ class ResumesController extends Controller
      */
     public function create()
     {
-        $educations = ['高中', '专科', '本科', '硕士', '博士'];
-        $workYears = [
-            '-1' => '学生在读',
-            '-2' => '应届毕业生'
-        ];
-        $workNatures = ['全职', '兼职', '全职兼职'];
-        $jobhunterStatus = ['在职-暂不考虑', '在职-考虑机会', '在职-月内到岗', '离职-随时到岗'];
-        $sources = ['招聘平台', '小程序', '当会官网', '其他'];
-
-        $jobs = Job::where('execute_uid', '=', Auth::user()->id)->get();
-
-        return view('resumes.create', compact('educations', 'workYears', 'workNatures', 'jobhunterStatus', 'sources', 'jobs'));
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+        return view('resumes.create', compact('jobs'));
     }
 
     public function list(Request $request)
@@ -58,35 +50,58 @@ class ResumesController extends Controller
     {
         // 数据校验
         $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'sex' => 'required|string|max:2',
+            'name' => 'required',
+            'sex' => 'required',
             'age' => 'required|numeric',
-            'city' => 'required|string|max:255',
-            // 'work_years_flag' => 'required|numeric',
+            'location.province' => 'required',
+            'location.city' => 'required',
+            'location.district' => 'required',
+            'work_years_flag' => 'required|numeric',
             'work_years' => 'nullable|numeric',
-            'education' => 'required|string|max:255',
+            'education' => 'required',
+            'major' => 'required',
             'phone_num' => 'required|numeric',
             'email' => 'required|email|max:255',
-            'wechat_or_qq' => 'required|string|max:255',
-            'cur_industry' => 'required|string|max:255',
-            'cur_position' => 'required|string|max:255',
+            'wechat' => 'required|string|max:255',
+            'qq' => 'required|string|max:255',
+            'cur_industry.st' => 'required',
+            'cur_industry.nd' => 'required',
+            'cur_industry.rd' => 'required',
+            'cur_industry.th' => 'required',
+            'cur_position.st' => 'required',
+            'cur_position.nd' => 'required',
+            'cur_position.rd' => 'required',
             'cur_company' => 'required|string|max:255',
             'cur_salary' => 'required|numeric',
-            'exp_industry' => 'required|string|max:255',
-            'exp_position' => 'required|string|max:255',
-            'exp_work_nature' => 'required|string|max:255',
-            'exp_city' => 'required|string|max:255',
-            // 'exp_salary_flag' => 'required|numeric',
-            'exp_salary' => 'required|numeric',
+            'cur_salary_count' => 'required|numeric',
+            'exp_industry.st' => 'required',
+            'exp_industry.nd' => 'required',
+            'exp_industry.rd' => 'required',
+            'exp_industry.th' => 'required',
+            'exp_position.province' => 'required',
+            'exp_position.city' => 'required',
+            'exp_position.district' => 'required',
+            'exp_work_nature' => 'required',
+            'exp_location.province' => 'required',
+            'exp_location.city' => 'required',
+            'exp_location.district' => 'required',
+            'exp_salary_flag' => 'required|numeric',
+            'exp_salary_min' => 'required|numeric',
+            'exp_salary_max' => 'required|numeric',
+            'exp_salary_count' => 'required|numeric',
             'jobhunter_status' => 'required|numeric',
-            'source' => 'required|numeric',
+            'social_home' => 'required',
+            'personal_advantage' => 'required',
+            'blacklist' => 'required',
+            'remark' => 'required',
+            'source' => 'required',
             'source_remarks' => 'nullable|string|max:255',
-            'file' => 'required|file|mimes:doc,docx'
+            'attachment' => 'required|file|mimes:doc,docx'
         ]);
 
         // 简历文件存储
-        $file = $request->file('file');
-        if(!$request->hasFile('file') || !$file->isValid()) {
+        $file = $request->file('attachment');
+        if($request->hasFile('attachment') && !$file->isValid()) {
             session()->flash('danger', '简历上传失败');
             return redirect()->back()->withInput();
         }
@@ -95,32 +110,40 @@ class ResumesController extends Controller
 
         // 格式化db字段
         $data = $request->toArray();
-        if($data['work_years'] < 0) {
-            $data['work_years_flag'] = abs($data['work_years']);
-            unset($data['work_years']);
-        } else {
-            $data['work_years_flag'] = 0;
-        }
-        if($data['exp_salary'] < 0) {
-            $data['exp_salary_flag'] = abs($data['exp_salary']);
-            unset($data['exp_salary']);
-        } else {
-            $data['exp_salary_flag'] = 0;
-        }
-        unset($data['file']);
-        unset($data['edu']);
-        unset($data['work']);
-        unset($data['prj']);
+        unset($data['attachment']);
         $data['upload_uid'] = Auth::user()->id;
         $data['attachment_path'] = $filePath;
+        $data['location'] = json_encode($data['location']);
+        $data['cur_industry'] = json_encode($data['cur_industry']);
+        $data['cur_position'] = json_encode($data['cur_position']);
+        $data['exp_industry'] = json_encode($data['exp_industry']);
+        $data['exp_position'] = json_encode($data['exp_position']);
+        $data['exp_location'] = json_encode($data['exp_location']);
+        $data['source'] = json_encode($data['source']);
+
+        $eduction = $data['eduction_experience'];
+        $work = $data['work_experience'];
+
+        unset($data['eduction_experience']);
+        unset($data['work_experience']);
 
         // db insert
         $resume = Resume::create($data);
 
+        array_walk($eduction, function(&$v, $k, $p) {
+            $v = array_merge($v, $p);
+        }, ['resume_id' => $resume->id]);
+        foreach ($work as $key => $value) {
+            $work[$key]['resume_id'] = $resume->id;
+            $work[$key]['company_industry'] = json_encode($work[$key]['company_industry']);
+            $work[$key]['job_type'] = json_encode($work[$key]['job_type']);
+        }
+
+        $resumeEdu = ResumeEdu::insert($eduction);
+        $resumeWork = ResumeWork::insert($work);
+
         // 返回
-        session()->flash('success', '简历上传成功');
-        return redirect()->route('home');
-        //return redirect()->route('resumes.show', [$resume]);
+        return redirect()->route('resumes.list');
     }
 
     public function status(Resume $resume, Request $request)
@@ -129,7 +152,8 @@ class ResumesController extends Controller
             $resume->status = $request->status;
             $resume->save();
         }
-        return redirect()->route('jobs.show', ['id' => $resume->job_id, 'tab' => $request->tab]);
+
+        return back();
     }
 
     /**

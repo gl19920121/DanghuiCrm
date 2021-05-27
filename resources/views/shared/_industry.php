@@ -24,30 +24,41 @@
 <script type="module">
   import DATA from '/js/industry.js';
 
-  $('#industry').keyup(function(e) {
-    if(e.keyCode == 8 || e.keyCode == 46) {
-      $('#industry').val('');
-    }
+  var thisBtn, inputShow, inputSt, inputNd, inputRd, inputTh;
+
+  $('#industryModal').on('show.bs.modal', function (e) {
+    thisBtn = $(e.relatedTarget);
+    inputShow = thisBtn.prev('input[type="text"]');
+    inputTh = inputShow.prev('input[type="hidden"]');
+    inputRd = inputTh.prev('input[type="hidden"]');
+    inputNd = inputRd.prev('input[type="hidden"]');
+    inputSt = inputNd.prev('input[type="hidden"]');
+
+    inputShow.keyup(function(e) {
+      if(e.keyCode == 8 || e.keyCode == 46) {
+        inputShow.val('');
+      }
+    });
   });
 
   $("[data-toggle='industrypicker']").find('.input-group-append').css('cursor', 'pointer').click(function(e) {
-    $('#industryModal').modal();
+    // $('#industryModal').modal();
   });
 
   function jobTypeChange(values = {})
   {
     if (Object.keys(values).length > 0) {
-      $('#industry').val(values.th);
-      $('input[name="industry[st]"]').val(values.st);
-      $('input[name="industry[nd]"]').val(values.nd);
-      $('input[name="industry[rd]"]').val(values.rd);
-      $('input[name="industry[th]"]').val(values.th);
+      inputShow.val(values.th);
+      inputSt.val(values.st);
+      inputNd.val(values.nd);
+      inputRd.val(values.rd);
+      inputTh.val(values.th);
     } else {
-      $('#industry').val('');
-      $('input[name="industry[st]"]').val('');
-      $('input[name="industry[nd]"]').val('');
-      $('input[name="industry[rd]"]').val('');
-      $('input[name="industry[th]"]').val('');
+      inputShow.val('');
+      inputSt.val('');
+      inputNd.val('');
+      inputRd.val('');
+      inputTh.val('');
     }
   }
 

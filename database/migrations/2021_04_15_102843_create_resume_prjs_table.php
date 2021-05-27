@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResumeWorkTable extends Migration
+class CreateResumePrjsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateResumeWorkTable extends Migration
      */
     public function up()
     {
-        Schema::create('resume_work', function (Blueprint $table) {
+        Schema::create('resume_prjs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('body')->comment('工作经历内容');
+            $table->string('body')->comment('项目经历内容');
             $table->integer('resume_id')->comment('所属简历ID')->unsigned();
             $table->timestamps();
             $table->foreign('resume_id')->references('id')->on('resumes')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
@@ -29,6 +29,6 @@ class CreateResumeWorkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resume_work');
+        Schema::dropIfExists('resume_prj');
     }
 }

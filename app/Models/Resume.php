@@ -11,8 +11,8 @@ class Resume extends Model
     protected $guarded = [];
 
     public const workYearsArr = [
-        '-1' => ['text' => '学生在读'],
-        '-2' => ['text' => '应届毕业生']
+        '1' => ['text' => '学生在读'],
+        '2' => ['text' => '应届毕业生']
     ];
 
     public const educationArr = [

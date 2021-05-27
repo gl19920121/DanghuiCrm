@@ -1,6 +1,6 @@
 $(function () {
 
-  $('#datetimepicker1').datetimepicker({
+  $('.datetimepicker').datetimepicker({
     locale: 'zh-CN',
     debug: false,
     format: 'L',

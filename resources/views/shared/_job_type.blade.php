@@ -24,28 +24,38 @@
 <script type="module">
   import JOBTYPES from '/js/jobtypes.js';
 
-  $('#jobType').keyup(function(e) {
-    if(e.keyCode == 8 || e.keyCode == 46) {
-      $('#jobType').val('');
-    }
-  });
+  var thisBtn, inputShow, inputSt, inputNd, inputRd;
 
   $("[data-toggle='jobtypepicker']").find('.input-group-append').css('cursor', 'pointer').click(function(e) {
-    $('#jobtypeModal').modal();
+    // $('#jobtypeModal').modal();
+  });
+
+  $('#jobtypeModal').on('show.bs.modal', function (e) {
+    thisBtn = $(e.relatedTarget);
+    inputShow = thisBtn.prev('input[type="text"]');
+    inputRd = inputShow.prev('input[type="hidden"]');
+    inputNd = inputRd.prev('input[type="hidden"]');
+    inputSt = inputNd.prev('input[type="hidden"]');
+
+    inputShow.keyup(function(e) {
+      if(e.keyCode == 8 || e.keyCode == 46) {
+        inputShow.val('');
+      }
+    });
   });
 
   function jobTypeChange(values = {})
   {
     if (Object.keys(values).length > 0) {
-      $('#jobType').val(values.rd);
-      $('input[name="type[st]"]').val(values.st);
-      $('input[name="type[nd]"]').val(values.nd);
-      $('input[name="type[rd]"]').val(values.rd);
+      inputShow.val(values.rd);
+      inputSt.val(values.st);
+      inputNd.val(values.nd);
+      inputRd.val(values.rd);
     } else {
-      $('#jobType').val('');
-      $('input[name="type[st]"]').val('');
-      $('input[name="type[nd]"]').val('');
-      $('input[name="type[rd]"]').val('');
+      inputShow.val('');
+      inputSt.val('');
+      inputNd.val('');
+      inputRd.val('');
     }
   }
 

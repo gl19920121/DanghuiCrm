@@ -25,8 +25,8 @@
               <input type="hidden" name="industry[rd]" value="">
               <input type="hidden" name="industry[th]" value="">
 
-              <input type="text" class="form-control middle-append append" id="industry" value="" placeholder="请选择" autocomplete="off">
-              <div class="input-group-append">
+              <input type="text" class="form-control middle-append append" value="" placeholder="请选择" autocomplete="off">
+              <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
                 <span class="input-group-text" id="basic-addon2">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
