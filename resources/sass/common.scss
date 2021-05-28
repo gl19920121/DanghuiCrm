@@ -630,7 +630,7 @@ a {
 
       > label {
         &:first-child {
-          width: 130px;
+          width: 150px;
           text-align:right;
           margin-right: 20px;
           justify-content: flex-end;
@@ -778,6 +778,7 @@ a {
   }
 
   td {
+    vertical-align: middle;
     border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
 
     a {
@@ -1446,4 +1447,10 @@ a {
 
 .btn-dropdown {
   height: 32px;
+}
+
+.dropdown-item {
+  &:hover {
+    color: $color-red;
+  }
 }

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 class ResumesController extends Controller
 {
+    private $pageSize = 1;
+
     public function __construct()
     {
         $this->middleware('auth', [
@@ -30,9 +32,21 @@ class ResumesController extends Controller
         return view('resumes.create', compact('jobs'));
     }
 
+    public function edit(Resume $resume)
+    {
+        // return dd($resume->resumeWorks[0]);
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+        return view('resumes.edit', compact('resume', 'jobs'));
+    }
+
     public function list(Request $request)
     {
-        return view('resumes.list');
+        $resumes = Resume::
+            where('status', '=', 1)
+            ->where('upload_uid', '=', Auth::user()->id)
+            ->paginate($this->pageSize)
+        ;
+        return view('resumes.list', compact('resumes'));
     }
 
     public function show(Resume $resume)

@@ -1,12 +1,12 @@
 @extends('layouts.default')
-@section('title', '上传简历')
+@section('title', '编辑简历')
 @section('content')
 <div class="resume-create bg-white">
   <div class="default-form">
     <div class="form-header"></div>
     <hr class="divider">
     <div class="form-body">
-      <form class="text-center" method="POST" action="{{ route('resumes.store') }}" enctype="multipart/form-data">
+      <form class="text-center" method="POST" action="{{ route('resumes.update', $resume) }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="form-title text-left">
           <h5>个人基本信息</h5>
@@ -16,14 +16,14 @@
             <span class="color-red">*</span>
             姓名：
           </label>
-          <input type="text" name="name" class="form-control normal" value="{{ old('name') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="name" class="form-control normal" value="{{ $resume->name }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="sex">
             <span class="color-red">*</span>
             性别：
           </label>
-          <select name="sex" class="form-control normal" value="{{ old('sex') }}">
+          <select name="sex" class="form-control normal" value="{{ $resume->sex }}>
             <option hidden value="">请选择</option>
             <option>男</option>
             <option>女</option>
@@ -34,7 +34,7 @@
             <span class="color-red">*</span>
             年龄：
           </label>
-          <input type="text" name="age" class="form-control normal" value="{{ old('age') }}" placeholder="请填写" autocomplete="off" data-type="int">
+          <input type="text" name="age" class="form-control normal" value="{{ $resume->age }}" placeholder="请填写" autocomplete="off" data-type="int">
         </div>
         <div class="form-group form-inline">
           <label for="location">
@@ -42,9 +42,9 @@
             所在城市：
           </label>
           <div data-toggle="distpicker">
-            <select class="form-control" name="location[province]" data-province="---- 选择省 ----"></select>
-            <select class="form-control" name="location[city]"  data-city="---- 选择市 ----"></select>
-            <select class="form-control" name="location[district]"  data-district="---- 选择区 ----"></select>
+            <select class="form-control" name="location[province]" data-province="{{ $resume->location->province }}"></select>
+            <select class="form-control" name="location[city]"  data-city="{{ $resume->location->city }}"></select>
+            <select class="form-control" name="location[district]"  data-district="{{ $resume->location->district }}"></select>
           </div>
         </div>
         <div class="form-group form-inline">
@@ -54,14 +54,18 @@
           </label>
           <div class="input-group">
             <input type="hidden" name="work_years_flag" value="0">
-            <input type="text" name="work_years" class="form-control small append" value="{{ old('work_years') }}" autocomplete="off" data-type="int">
+            <input type="text" name="work_years" class="form-control small append" value="{{ $resume->work_years }}" autocomplete="off" data-type="int"
+              @if ($resume->work_years_flag !== 0)
+                disabled
+              @endif
+            >
             <div class="input-group-append">
               <div class="input-group-text">年</div>
             </div>
           </div>
-          @foreach (App\Models\Resume::workYearsArr as $key => $workYears)
+          @foreach ($resume->workYearsArr as $key => $workYears)
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
-              <input type="checkbox" id="work_years_{{ $key }}" class="custom-control-input" onclick="setWorkYears($(this))">
+              <input type="checkbox" id="work_years_{{ $key }}" class="custom-control-input" onchange="setWorkYears($(this))" {{ $workYears['checked'] }}>
               <label class="custom-control-label" for="work_years_{{ $key }}">{{ $workYears['text'] }}</label>
             </div>
           @endforeach
@@ -71,16 +75,16 @@
             <span class="color-red">*</span>
             教育程度：
           </label>
-          <select name="education" class="form-control normal" value="{{ old('education') }}">
+          <select name="education" class="form-control normal">
             <option hidden value="">请选择</option>
-            @foreach (App\Models\Resume::educationArr as $key => $education)
-              <option value="{{ $key }}">{{ $education['text'] }}</option>
+            @foreach ($resume->educationArr as $key => $education)
+              <option value="{{ $key }}" {{ $education['selected'] }}>{{ $education['text'] }}</option>
             @endforeach
           </select>
         </div>
         <div class="form-group form-inline">
           <label for="major">所学专业：</label>
-          <input type="text" name="major" class="form-control normal" value="{{ old('major') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="major" class="form-control normal" value="{{ $resume->major }}" placeholder="请填写" autocomplete="off">
         </div>
 
         <div class="form-title text-left">
@@ -91,28 +95,28 @@
             <span class="color-red">*</span>
             手机号码：
           </label>
-          <input type="text" name="phone_num" class="form-control normal" value="{{ old('phone_num') }}" placeholder="请填写" autocomplete="off" data-type="int">
+          <input type="text" name="phone_num" class="form-control normal" value="{{ $resume->phone_num }}" placeholder="请填写" autocomplete="off" data-type="int">
         </div>
         <div class="form-group form-inline">
           <label for="email">
             <span class="color-red">*</span>
             电子邮箱：
           </label>
-          <input type="text" name="email" class="form-control normal" value="{{ old('email') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="email" class="form-control normal" value="{{ $resume->email }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="wechat">
             <span class="color-red">*</span>
             微信：
           </label>
-          <input type="text" name="wechat" class="form-control normal" value="{{ old('wechat') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="wechat" class="form-control normal" value="{{ $resume->wechat }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="qq">
             <span class="color-red">*</span>
             QQ：
           </label>
-          <input type="text" name="qq" class="form-control normal" value="{{ old('qq') }}" placeholder="请填写" autocomplete="off" data-type="int">
+          <input type="text" name="qq" class="form-control normal" value="{{ $resume->qq }}" placeholder="请填写" autocomplete="off" data-type="int">
         </div>
 
         <div class="form-title text-left">
@@ -121,11 +125,11 @@
         <div class="form-group form-inline">
           <label for="cur_industry"><span>*</span>所在行业：</label>
           <div class="input-group" data-toggle="industrypicker">
-            <input type="hidden" name="cur_industry[st]">
-            <input type="hidden" name="cur_industry[nd]">
-            <input type="hidden" name="cur_industry[rd]">
-            <input type="hidden" name="cur_industry[th]">
-            <input type="text" class="form-control normal append" value="" placeholder="请选择" autocomplete="off">
+            <input type="hidden" name="cur_industry[st]" value="{{ $resume->cur_industry->st }}">
+            <input type="hidden" name="cur_industry[nd]" value="{{ $resume->cur_industry->nd }}">
+            <input type="hidden" name="cur_industry[rd]" value="{{ $resume->cur_industry->rd }}">
+            <input type="hidden" name="cur_industry[th]" value="{{ $resume->cur_industry->th }}">
+            <input type="text" class="form-control normal append" value="{{ $resume->cur_industry_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -139,10 +143,10 @@
         <div class="form-group form-inline">
           <label for="cur_position"><span>*</span>所任职位：</label>
           <div class="input-group" data-toggle="jobtypepicker">
-            <input type="hidden" name="cur_position[st]">
-            <input type="hidden" name="cur_position[nd]">
-            <input type="hidden" name="cur_position[rd]">
-            <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            <input type="hidden" name="cur_position[st]" value="{{ $resume->cur_position->st }}">
+            <input type="hidden" name="cur_position[nd]" value="{{ $resume->cur_position->nd }}">
+            <input type="hidden" name="cur_position[rd]" value="{{ $resume->cur_position->rd }}">
+            <input type="text" class="form-control normal append" value="{{ $resume->cur_position_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -158,19 +162,19 @@
             <span class="color-red">*</span>
             所在公司：
           </label>
-          <input type="text" name="cur_company" class="form-control normal" value="{{ old('cur_company') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="cur_company" class="form-control normal" value="{{ $resume->cur_company }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="cur_salary"><span class="color-red">*</span>目前月薪：</label>
           <div class="input-group">
-            <input type="text" name="cur_salary" class="form-control small append" value="{{ old('cur_salary') }}" autocomplete="off" data-type="int">
+            <input type="text" name="cur_salary" class="form-control small append" value="{{ $resume->cur_salary }}" autocomplete="off" data-type="int">
             <div class="input-group-append">
               <div class="input-group-text">K</div>
             </div>
           </div>
           <label class="ml-1 mr-1">*</label>
           <div class="input-group">
-            <input type="text" name="cur_salary_count" class="form-control small append" value="{{ old('cur_salary_count') }}" autocomplete="off" data-type="int">
+            <input type="text" name="cur_salary_count" class="form-control small append" value="{{ $resume->cur_salary_count }}" autocomplete="off" data-type="int">
             <div class="input-group-append">
               <div class="input-group-text">月</div>
             </div>
@@ -183,11 +187,11 @@
         <div class="form-group form-inline">
           <label for="exp_industry"><span>*</span>期望行业：</label>
           <div class="input-group" data-toggle="industrypicker">
-            <input type="hidden" name="exp_industry[st]">
-            <input type="hidden" name="exp_industry[nd]">
-            <input type="hidden" name="exp_industry[rd]">
-            <input type="hidden" name="exp_industry[th]">
-            <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            <input type="hidden" name="exp_industry[st]" value="{{ $resume->exp_industry->st }}">
+            <input type="hidden" name="exp_industry[nd]" value="{{ $resume->exp_industry->nd }}">
+            <input type="hidden" name="exp_industry[rd]" value="{{ $resume->exp_industry->rd }}">
+            <input type="hidden" name="exp_industry[th]" value="{{ $resume->exp_industry->th }}">
+            <input type="text" class="form-control normal append" value="{{ $resume->exp_industry_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -201,10 +205,10 @@
         <div class="form-group form-inline">
           <label for="exp_position"><span>*</span>期望职位：</label>
           <div class="input-group" data-toggle="jobtypepicker">
-            <input type="hidden" name="exp_position[st]">
-            <input type="hidden" name="exp_position[nd]">
-            <input type="hidden" name="exp_position[rd]">
-            <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            <input type="hidden" name="exp_position[st]" value="{{ $resume->exp_position->st }}">
+            <input type="hidden" name="exp_position[nd]" value="{{ $resume->exp_position->nd }}">
+            <input type="hidden" name="exp_position[rd]" value="{{ $resume->exp_position->rd }}">
+            <input type="text" class="form-control normal append" value="{{ $resume->exp_position_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -217,10 +221,10 @@
         </div>
         <div class="form-group form-inline">
           <label for="exp_work_nature"><span class="color-red">*</span>工作性质：</label>
-          <select name="exp_work_nature" class="form-control normal" value="{{ old('exp_work_nature') }}">
+          <select name="exp_work_nature" class="form-control normal">
             <option value="" hidden>请选择</option>
-            @foreach (App\Models\Job::natureArr as $key => $nature)
-              <option value="{{ $key }}">{{ $nature['text'] }}</option>
+            @foreach ($resume->expWorkNatureArr as $key => $nature)
+              <option value="{{ $key }}" {{ $nature['selected'] }}>{{ $nature['text'] }}</option>
             @endforeach
           </select>
         </div>
@@ -230,36 +234,52 @@
             期望城市：
           </label>
           <div data-toggle="distpicker">
-            <select class="form-control" name="exp_location[province]" data-province="---- 选择省 ----"></select>
-            <select class="form-control" name="exp_location[city]"  data-city="---- 选择市 ----"></select>
-            <select class="form-control" name="exp_location[district]"  data-district="---- 选择区 ----"></select>
+            <select class="form-control" name="exp_location[province]" data-province="{{ $resume->exp_location->province }}"></select>
+            <select class="form-control" name="exp_location[city]"  data-city="{{ $resume->exp_location->city }}"></select>
+            <select class="form-control" name="exp_location[district]"  data-district="{{ $resume->exp_location->district }}"></select>
           </div>
         </div>
         <div class="form-group form-inline">
           <label for="exp_salary"><span class="color-red">*</span>期望薪资：</label>
           <input type="hidden" name="exp_salary_flag" value="0">
           <div class="input-group">
-            <input type="text" name="exp_salary_min" class="form-control small append" value="{{ old('exp_salary_min') }}" autocomplete="off" data-type="int">
+            <input type="text" name="exp_salary_min" class="form-control small append" value="{{ $resume->exp_salary_min }}" autocomplete="off" data-type="int"
+              @if ($resume->exp_salary_flag === 1)
+                disabled
+              @endif
+            >
             <div class="input-group-append">
               <div class="input-group-text">K</div>
             </div>
           </div>
           <label class="ml-1 mr-1">-</label>
           <div class="input-group">
-            <input type="text" name="exp_salary_max" class="form-control small append" value="{{ old('exp_salary_max') }}" autocomplete="off" data-type="int">
+            <input type="text" name="exp_salary_max" class="form-control small append" value="{{ $resume->exp_salary_max }}" autocomplete="off" data-type="int"
+              @if ($resume->exp_salary_flag === 1)
+                disabled
+              @endif
+            >
             <div class="input-group-append">
               <div class="input-group-text">K</div>
             </div>
           </div>
           <label class="ml-1 mr-1">*</label>
           <div class="input-group">
-            <input type="text" name="exp_salary_count" class="form-control small append" value="{{ old('exp_salary_count') }}" autocomplete="off" data-type="int">
+            <input type="text" name="exp_salary_count" class="form-control small append" value="{{ $resume->exp_salary_count }}" autocomplete="off" data-type="int"
+              @if ($resume->exp_salary_flag === 1)
+                disabled
+              @endif
+            >
             <div class="input-group-append">
               <div class="input-group-text">月</div>
             </div>
           </div>
           <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" id="expSalaryDiscuss" class="custom-control-input" onclick="setExpSalary($(this))">
+            <input type="checkbox" id="expSalaryDiscuss" class="custom-control-input" onclick="setExpSalary($(this))"
+              @if ($resume->exp_salary_flag === 1)
+                checked
+              @endif
+            >
             <label class="custom-control-label" for="expSalaryDiscuss">面议</label>
           </div>
         </div>
@@ -272,7 +292,7 @@
             <span class="color-red">*</span>
             公司名称：
           </label>
-          <input type="text" name="work_experience[0][company_name]" class="form-control normal" placeholder="请填写" autocomplete="off">
+          <input type="text" name="work_experience[0][company_name]" class="form-control normal" value="{{ $resume->resumeWorks[0]->company_name }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="work_experience[0][company_nature]">
@@ -282,7 +302,13 @@
           <select name="work_experience[0][company_nature]" class="form-control normal">
             <option hidden value="">请选择</option>
             @foreach (App\Models\Company::natureArr as $key => $nature)
-              <option value="{{ $key }}">{{ $nature['text'] }}</option>
+              <option value="{{ $key }}"
+              @if ($resume->resumeWorks[0]->company_nature === $key)
+                selected
+              @endif
+              >
+                {{ $nature['text'] }}
+              </option>
             @endforeach
           </select>
         </div>
@@ -294,18 +320,24 @@
           <select name="work_experience[0][company_scale]" class="form-control normal">
             <option hidden value="">请选择</option>
             @foreach (App\Models\Company::scaleArr as $key => $scale)
-              <option value="{{ $key }}">{{ $scale['text'] }}</option>
+              <option value="{{ $key }}"
+              @if ($resume->resumeWorks[0]->company_scale === $key)
+                selected
+              @endif
+              >
+                {{ $scale['text'] }}
+              </option>
             @endforeach
           </select>
         </div>
         <div class="form-group form-inline">
           <label for="work_experience[0][company_industry]"><span>*</span>所属行业：</label>
           <div class="input-group" data-toggle="industrypicker">
-            <input type="hidden" name="work_experience[0][company_industry][st]">
-            <input type="hidden" name="work_experience[0][company_industry][nd]">
-            <input type="hidden" name="work_experience[0][company_industry][rd]">
-            <input type="hidden" name="work_experience[0][company_industry][th]">
-            <input type="text" class="form-control normal append" value="" placeholder="请选择" autocomplete="off">
+            <input type="hidden" name="work_experience[0][company_industry][st]" value="{{ $resume->resumeWorks[0]->company_industry->st }}">
+            <input type="hidden" name="work_experience[0][company_industry][nd]" value="{{ $resume->resumeWorks[0]->company_industry->nd }}">
+            <input type="hidden" name="work_experience[0][company_industry][rd]" value="{{ $resume->resumeWorks[0]->company_industry->rd }}">
+            <input type="hidden" name="work_experience[0][company_industry][th]" value="{{ $resume->resumeWorks[0]->company_industry->th }}">
+            <input type="text" class="form-control normal append" value="{{ $resume->resumeWorks[0]->company_industry_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -322,10 +354,10 @@
             职位名称：
           </label>
           <div class="input-group" data-toggle="jobtypepicker">
-            <input type="hidden" name="work_experience[0][job_type][st]">
-            <input type="hidden" name="work_experience[0][job_type][nd]">
-            <input type="hidden" name="work_experience[0][job_type][rd]">
-            <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            <input type="hidden" name="work_experience[0][job_type][st]" value="{{ $resume->resumeWorks[0]->job_type->st }}">
+            <input type="hidden" name="work_experience[0][job_type][nd]" value="{{ $resume->resumeWorks[0]->job_type->nd }}">
+            <input type="hidden" name="work_experience[0][job_type][rd]" value="{{ $resume->resumeWorks[0]->job_type->rd }}">
+            <input type="text" class="form-control normal append" value="{{ $resume->resumeWorks[0]->job_type_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -337,13 +369,13 @@
           </div>
         </div>
         <div class="form-group form-inline">
-          <label for="subordinates">下属人数：</label>
-          <input type="text" name="subordinates" class="form-control normal" value="{{ old('subordinates') }}" placeholder="请填写" autocomplete="off" data-type="int">
+          <label for="work_experience[0][subordinates]">下属人数：</label>
+          <input type="text" name="work_experience[0][subordinates]" class="form-control normal" value="{{ $resume->resumeWorks[0]->subordinates }}" placeholder="请填写" autocomplete="off" data-type="int">
         </div>
         <div class="form-group form-inline">
           <label for="work_experience[0][start_at]"><span class="color-red">*</span>在职时间：</label>
           <div class="input-group date datetimepicker">
-            <input type="text" name="work_experience[0][start_at]" class="form-control mini append" placeholder="入职时间" autocomplete="off">
+            <input type="text" name="work_experience[0][start_at]" class="form-control mini append" value="{{ $resume->resumeWorks[0]->start_at }}" placeholder="入职时间" autocomplete="off">
             <div class="input-group-append">
               <span class="input-group-text">
                 <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -355,7 +387,11 @@
           </div>
           <label class="ml-1 mr-1">——</label>
           <div class="input-group date datetimepicker">
-            <input type="text" name="work_experience[0][end_at]" class="form-control mini append" placeholder="离职时间" autocomplete="off">
+            <input type="text" name="work_experience[0][end_at]" class="form-control mini append" value="{{ $resume->resumeWorks[0]->end_at }}" placeholder="离职时间" autocomplete="off"
+            @if ($resume->resumeWorks[0]->is_not_end)
+              disabled
+            @endif
+            >
             <div class="input-group-append">
               <span class="input-group-text">
                 <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -366,7 +402,11 @@
             </div>
           </div>
           <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" name="work_experience[0][is_end]" id="workAtNow" class="custom-control-input" onclick="setNotEnd($(this))">
+            <input type="checkbox" name="work_experience[0][is_not_end]" id="workAtNow" class="custom-control-input" onchange="setNotEnd($(this))"
+            @if ($resume->resumeWorks[0]->is_not_end)
+              checked
+            @endif
+            >
             <label class="custom-control-label" for="workAtNow">至今</label>
           </div>
         </div>
@@ -375,7 +415,7 @@
             <span class="color-red">*</span>
             工作描述：
           </label>
-          <textarea name="work_experience[0][work_desc]" class="form-control normal" placeholder="请填写"></textarea>
+          <textarea name="work_experience[0][work_desc]" class="form-control normal" placeholder="请填写">{{ $resume->resumeWorks[0]->work_desc }}</textarea>
         </div>
 
         <div class="form-title text-left">
@@ -386,14 +426,14 @@
             <span class="color-red">*</span>
             项目名称：
           </label>
-          <input type="text" name="project_experience[0][name]" class="form-control normal" placeholder="请填写" autocomplete="off">
+          <input type="text" name="project_experience[0][name]" class="form-control normal" value="{{ $resume->resumePrjs[0]->name }}"  placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="project_experience[0][role]">
             <span class="color-red">*</span>
             担任角色：
           </label>
-          <input type="text" name="project_experience[0][role]" class="form-control normal" placeholder="请填写" autocomplete="off">
+          <input type="text" name="project_experience[0][role]" class="form-control normal" value="{{ $resume->resumePrjs[0]->role }}"  placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="project_experience[0][start_at]">
@@ -401,7 +441,7 @@
             项目时间：
           </label>
           <div class="input-group date datetimepicker">
-            <input type="text" name="project_experience[0][start_at]" class="form-control mini append" placeholder="开始时间" autocomplete="off">
+            <input type="text" name="project_experience[0][start_at]" class="form-control mini append" value="{{ $resume->resumePrjs[0]->start_at }}"  placeholder="开始时间" autocomplete="off">
             <div class="input-group-append">
               <span class="input-group-text">
                 <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -413,7 +453,11 @@
           </div>
           <label class="ml-1 mr-1">——</label>
           <div class="input-group date datetimepicker">
-            <input type="text" name="project_experience[0][end_at]" class="form-control mini append" placeholder="结束时间" autocomplete="off">
+            <input type="text" name="project_experience[0][end_at]" class="form-control mini append" value="{{ $resume->resumePrjs[0]->end_at }}" placeholder="结束时间" autocomplete="off"
+            @if ($resume->resumePrjs[0]->is_not_end)
+              disabled
+            @endif
+            >
             <div class="input-group-append">
               <span class="input-group-text">
                 <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -424,7 +468,11 @@
             </div>
           </div>
           <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" name="project_experience[0][is_end]" id="projectAtNow" class="custom-control-input" onclick="setNotEnd($(this))">
+            <input type="checkbox" name="project_experience[0][is_not_end]" id="projectAtNow" class="custom-control-input" onclick="setNotEnd($(this))"
+            @if ($resume->resumePrjs[0]->is_not_end)
+              checked
+            @endif
+            >
             <label class="custom-control-label" for="projectAtNow">至今</label>
           </div>
         </div>
@@ -432,7 +480,7 @@
           <label for="project_experience[0][body]">
             项目内容：
           </label>
-          <textarea name="project_experience[0][body]" class="form-control normal" placeholder="请填写">{{ old('project_experience[0][body]') }}</textarea>
+          <textarea name="project_experience[0][body]" class="form-control normal" placeholder="请填写">{{ $resume->resumePrjs[0]->body }}</textarea>
         </div>
 
         <div class="form-title text-left">
@@ -443,7 +491,7 @@
             <span class="color-red">*</span>
             毕业院校：
           </label>
-          <input type="text" name="eduction_experience[0][school_name]" class="form-control normal" placeholder="请填写" autocomplete="off">
+          <input type="text" name="eduction_experience[0][school_name]" class="form-control normal" value="{{ $resume->resumeEdus[0]->school_name }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="eduction_experience[0][school_level]">
@@ -453,7 +501,13 @@
           <select name="eduction_experience[0][school_level]" class="form-control normal">
             <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::educationArr as $key => $education)
-              <option value="{{ $key }}">{{ $education['text'] }}</option>
+              <option value="{{ $key }}"
+              @if ($resume->resumeEdus[0]->school_level === $key)
+                selected
+              @endif
+              >
+                {{ $education['text'] }}
+              </option>
             @endforeach
           </select>
         </div>
@@ -461,7 +515,7 @@
           <label for="eduction_experience[0][major]">
             所学专业：
           </label>
-          <input type="text" name="eduction_experience[0][major]" class="form-control normal" placeholder="请填写" autocomplete="off">
+          <input type="text" name="eduction_experience[0][major]" class="form-control normal" value="{{ $resume->resumeEdus[0]->major }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="eduction_experience[0][start_at]">
@@ -469,7 +523,7 @@
             在校时间：
           </label>
           <div class="input-group date datetimepicker">
-            <input type="text" name="eduction_experience[0][start_at]" class="form-control mini append" placeholder="入学时间" autocomplete="off">
+            <input type="text" name="eduction_experience[0][start_at]" class="form-control mini append" value="{{ $resume->resumeEdus[0]->start_at }}" placeholder="入学时间" autocomplete="off">
             <div class="input-group-append">
               <span class="input-group-text">
                 <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -481,7 +535,11 @@
           </div>
           <label class="ml-1 mr-1">——</label>
           <div class="input-group date datetimepicker">
-            <input type="text" name="eduction_experience[0][end_at]" class="form-control mini append" placeholder="毕业时间" autocomplete="off">
+            <input type="text" name="eduction_experience[0][end_at]" class="form-control mini append" value="{{ $resume->resumeEdus[0]->end_at }}" placeholder="毕业时间" autocomplete="off"
+            @if ($resume->resumeEdus[0]->is_not_end)
+              disabled
+            @endif
+            >
             <div class="input-group-append">
               <span class="input-group-text">
                 <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -492,7 +550,11 @@
             </div>
           </div>
           <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" name="eduction_experience[0][is_end]" id="eductionAtNow" class="custom-control-input" onclick="setNotEnd($(this))">
+            <input type="checkbox" name="eduction_experience[0][is_not_end]" id="eductionAtNow" class="custom-control-input" onclick="setNotEnd($(this))"
+            @if ($resume->resumeEdus[0]->is_not_end)
+              checked
+            @endif
+            >
             <label class="custom-control-label" for="eductionAtNow">至今</label>
           </div>
         </div>
@@ -504,13 +566,13 @@
           <label for="social_home">
             社交主页：
           </label>
-          <input type="text" name="social_home" class="form-control normal" placeholder="请填写" autocomplete="off">
+          <input type="text" name="social_home" class="form-control normal" value="{{ $resume->social_home }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="personal_advantage">
             个人优势：
           </label>
-          <textarea name="personal_advantage" class="form-control normal" placeholder="请填写"></textarea>
+          <textarea name="personal_advantage" class="form-control normal" placeholder="请填写">{{ $resume->personal_advantage }}</textarea>
         </div>
         <div class="form-group form-inline">
           <label for="attachment">
@@ -526,7 +588,13 @@
           <select name="jobhunter_status" class="form-control normal" value="{{ old('jobhunter_status') }}">
             <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::jobhunterStatusArr as $key => $jobhunterStatus)
-              <option value="{{ $key }}">{{ $jobhunterStatus['text'] }}</option>
+              <option value="{{ $key }}"
+              @if ($resume->jobhunter_status === $key)
+                selected
+              @endif
+              >
+                {{ $jobhunterStatus['text'] }}
+              </option>
             @endforeach
           </select>
         </div>
@@ -534,13 +602,13 @@
           <label for="blacklist">
             屏蔽公司：
           </label>
-          <input type="text" name="blacklist" class="form-control normal" placeholder="请填写" autocomplete="off">
+          <input type="text" name="blacklist" class="form-control normal" value="{{ $resume->blacklist }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="remark">
             其他备注：
           </label>
-          <textarea name="remark" class="form-control normal" placeholder="请填写"></textarea>
+          <textarea name="remark" class="form-control normal" placeholder="请填写">{{ $resume->remark }}</textarea>
         </div>
 
         <div class="form-title text-left">
@@ -551,20 +619,21 @@
             <span class="color-red">*</span>
             渠道选择：
           </label>
-          @foreach (App\Models\Job::channelArr as $key => $channel)
+          @foreach ($resume->sourceArr as $key => $source)
             <div class="custom-control custom-checkbox custom-control-inline">
-                <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="source[{{ $key }}]"
-                  @if (!empty($channel['checked']))
-                    checked
-                  @endif
-                  @if (isset($channel['has_remark']) && $channel['has_remark'])
+                <input type="checkbox" class="custom-control-input" id="source_{{ $key }}" name="source[{{ $key }}]" {{ $source['checked'] }}
+                  @if (isset($source['has_remark']) && $source['has_remark'])
                     onclick='setRemark()'
                   @endif
                 >
-                <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['text'] }}</label>
+                <label class="custom-control-label" for="source_{{ $key }}">{{ $source['text'] }}</label>
             </div>
           @endforeach
-          <input style="visibility: hidden;" type="text" name="source_remarks" class="form-control" id="channelRemark" placeholder="请选择招聘平台">
+          <input type="text" name="source_remarks" class="form-control" id="channelRemark" placeholder="请选择招聘平台" value="{{ $resume->source_remarks }}"
+          @if (!in_array('other_platform', $resume->source))
+            style="visibility: hidden;"
+          @endif
+          >
         </div>
         <div class="form-group form-inline">
           <label for="job_id">
@@ -573,12 +642,18 @@
           <select name="job_id" class="form-control normal">
             <option hidden value="">请选择</option>
             @foreach($jobs as $job)
-              <option value="{{ $job->id }}">{{ $job->name }}</option>
+              <option value="{{ $job->id }}"
+                @if ($resume->job_id === $job->id)
+                  selected
+                @endif
+                >
+                {{ $job->name }}
+              </option>
             @endforeach
           </select>
         </div>
 
-        <button type="submit" class="btn btn-danger btn-form-submit">保存简历并上传</button>
+        <button type="submit" class="btn btn-danger btn-form-submit">保存修改并上传</button>
       </form>
     </div>
   </div>

@@ -2,8 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Resume;
-use App\Models\ResumeEdu;
 use App\Models\ResumeWork;
+use App\Models\ResumePrj;
+use App\Models\ResumeEdu;
 
 class ResumesTableSeeder extends Seeder
 {
@@ -38,7 +39,7 @@ class ResumesTableSeeder extends Seeder
                 'exp_position' => '{"nd": "后端开发", "rd": "PHP", "st": "互联网+技术"}',
                 'exp_work_nature' => 'full',
                 'exp_location' => '{"city": "北京城区", "district": "海淀区", "province": "北京市"}',
-                'exp_salary_flag' => 0,
+                'exp_salary_flag' => 1,
                 'exp_salary_min' => NULL,
                 'exp_salary_max' => NULL,
                 'exp_salary_count' => NULL,
@@ -57,19 +58,7 @@ class ResumesTableSeeder extends Seeder
                 'status' => 1
             ]
         ];
-        $resume_edus = [
-            [
-                'id' => 1,
-                'school_name' => '北京信息科技大学',
-                'school_level' => 'undergraduate',
-                'major' => '计算机科学与技术',
-                'start_at' => '2010-09-01',
-                'end_at' => '2014-07-01',
-                'resume_id' => 1,
-                'created_at' => '2021-05-24 14:35:00',
-                'updated_at' => '2021-05-24 14:35:00'
-            ]
-        ];
+
         $resume_works = [
             [
                 'id' => 1,
@@ -80,14 +69,46 @@ class ResumesTableSeeder extends Seeder
                 'job_type' => '{"nd": "后端开发", "rd": "PHP", "st": "互联网+技术"}',
                 'start_at' => '2010-07-01',
                 'end_at' => '2020-11-27',
+                'is_not_end' => 0,
                 'work_desc' => '百度智能汽车C端研发',
                 'resume_id' => 1,
                 'created_at' => '2021-05-24 14:35:00',
                 'updated_at' => '2021-05-24 14:35:00'
             ]
         ];
+
+        $resume_prjs = [
+            [
+                'id' => 1,
+                'name' => '小天才智能手表',
+                'role' => '研发总监',
+                'start_at' => '2010-07-01',
+                'end_at' => '2020-11-27',
+                'is_not_end' => 1,
+                'body' => '小天才',
+                'resume_id' => 1,
+                'created_at' => '2021-05-24 14:35:00',
+                'updated_at' => '2021-05-24 14:35:00'
+            ]
+        ];
+
+        $resume_edus = [
+            [
+                'id' => 1,
+                'school_name' => '北京信息科技大学',
+                'school_level' => 'undergraduate',
+                'major' => '计算机科学与技术',
+                'start_at' => '2010-09-01',
+                'end_at' => '2014-07-01',
+                'is_not_end' => 0,
+                'resume_id' => 1,
+                'created_at' => '2021-05-24 14:35:00',
+                'updated_at' => '2021-05-24 14:35:00'
+            ]
+        ];
         Resume::insert($resumes);
-        ResumeEdu::insert($resume_edus);
         ResumeWork::insert($resume_works);
+        ResumePrj::insert($resume_prjs);
+        ResumeEdu::insert($resume_edus);
     }
 }

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Job;
+use App\Models\ResumeWork;
+use App\Models\ResumePrj;
+use App\Models\ResumeEdu;
 
 class Resume extends Model
 {
@@ -23,6 +26,12 @@ class Resume extends Model
         'doctor' => ['text' => '博士']
     ];
 
+    public const natureArr = [
+        'full' => ['text' => '全职'],
+        'part' => ['text' => '兼职'],
+        'all' => ['text' => '全职/兼职']
+    ];
+
     public const jobhunterStatusArr = [
         '0' => ['text' => '在职-暂不考虑'],
         '1' => ['text' => '在职-考虑机会'],
@@ -30,9 +39,30 @@ class Resume extends Model
         '3' => ['text' => '离职-随时到岗']
     ];
 
+    public const sourceArr = [
+        'applets' => ['text' => '小程序', 'checked' => 'checked'],
+        'website' => ['text' => '官网', 'checked' => 'checked'],
+        'other_platform' => ['text' => '其他', 'has_remark' => true]
+    ];
+
     public function job()
     {
         return $this->belongsTo(Job::class);
+    }
+
+    public function resumeWorks()
+    {
+        return $this->hasMany(ResumeWork::class);
+    }
+
+    public function resumePrjs()
+    {
+        return $this->hasMany(ResumePrj::class);
+    }
+
+    public function resumeEdus()
+    {
+        return $this->hasMany(ResumeEdu::class);
     }
 
     public function getNoAttribute()
@@ -59,6 +89,26 @@ class Resume extends Model
         return $status;
     }
 
+    public function getLocationAttribute()
+    {
+        return json_decode($this->attributes['location']);
+    }
+
+    public function getWorkYearsArrAttribute()
+    {
+        $workYearsArr = self::workYearsArr;
+
+        foreach ($workYearsArr as $key => $value) {
+            if ($key === $this->attributes['work_years_flag']) {
+                $workYearsArr[$key]['checked'] = 'checked';
+            } else {
+                $workYearsArr[$key]['checked'] = '';
+            }
+        }
+
+        return $workYearsArr;
+    }
+
     public function getWorkYearsShowAttribute()
     {
         $workYears = $this->attributes['work_years'];
@@ -73,16 +123,35 @@ class Resume extends Model
         return $workYears;
     }
 
+    public function getEducationArrAttribute()
+    {
+        $educationArr = self::educationArr;
+
+        foreach ($educationArr as $key => $value) {
+            if ($key === $this->attributes['education']) {
+                $educationArr[$key]['selected'] = 'selected';
+            } else {
+                $educationArr[$key]['selected'] = '';
+            }
+        }
+
+        return $educationArr;
+    }
+
     public function getEducationShowAttribute()
     {
         $education = self::educationArr[$this->attributes['education']]['text'];
         return $education;
     }
 
-    public function getJobhunterStatusShowAttribute()
+    public function getCurIndustryAttribute()
     {
-        $jobhunterStatus = self::jobhunterStatusArr[$this->attributes['jobhunter_status']]['text'];
-        return $jobhunterStatus;
+        return json_decode($this->attributes['cur_industry']);
+    }
+
+    public function getCurIndustryShowAttribute()
+    {
+        return $this->cur_industry->th;
     }
 
     public function getCurPositionAttribute()
@@ -92,6 +161,78 @@ class Resume extends Model
 
     public function getCurPositionShowAttribute()
     {
-        return $this->getCurPositionAttribute()->rd;
+        return $this->cur_position->rd;
+    }
+
+    public function getExpIndustryAttribute()
+    {
+        return json_decode($this->attributes['exp_industry']);
+    }
+
+    public function getExpIndustryShowAttribute()
+    {
+        return $this->exp_industry->th;
+    }
+
+    public function getExpPositionAttribute()
+    {
+        return json_decode($this->attributes['exp_position']);
+    }
+
+    public function getExpPositionShowAttribute()
+    {
+        return $this->exp_position->rd;
+    }
+
+    public function getExpWorkNatureShowAttribute()
+    {
+        $exp_work_nature = self::natureArr[$this->attributes['exp_work_nature']]['text'];
+        return $exp_work_nature;
+    }
+
+    public function getExpWorkNatureArrAttribute()
+    {
+        $natureArr = self::natureArr;
+
+        foreach ($natureArr as $key => $value) {
+            if ($key === $this->exp_work_nature) {
+                $natureArr[$key]['selected'] = 'selected';
+            } else {
+                $natureArr[$key]['selected'] = '';
+            }
+        }
+
+        return $natureArr;
+    }
+
+    public function getExpLocationAttribute()
+    {
+        return json_decode($this->attributes['exp_location']);
+    }
+
+    public function getJobhunterStatusShowAttribute()
+    {
+        $jobhunterStatus = self::jobhunterStatusArr[$this->attributes['jobhunter_status']]['text'];
+        return $jobhunterStatus;
+    }
+
+    public function getSourceAttribute()
+    {
+        return json_decode($this->attributes['source'], true);
+    }
+
+    public function getSourceArrAttribute()
+    {
+        $sourceArr = self::sourceArr;
+
+        foreach ($sourceArr as $key => $value) {
+            if (in_array($key, $this->source)) {
+                $sourceArr[$key]['checked'] = 'checked';
+            } else {
+                $sourceArr[$key]['checked'] = '';
+            }
+        }
+
+        return $sourceArr;
     }
 }

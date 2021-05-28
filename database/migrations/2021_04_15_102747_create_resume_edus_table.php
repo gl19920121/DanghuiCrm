@@ -20,7 +20,7 @@ class CreateResumeEdusTable extends Migration
             $table->string('major')->nullable()->comment('所学专业');
             $table->date('start_at')->comment('入学时间');
             $table->date('end_at')->nullable()->comment('毕业时间');
-            $table->integer('is_end')->nullable()->default(1)->comment('是否结束');
+            $table->integer('is_not_end')->nullable()->default(0)->comment('是否结束');
             $table->integer('resume_id')->comment('所属简历ID')->unsigned();
             $table->timestamps();
             $table->foreign('resume_id')->references('id')->on('resumes')->onUpdate('cascade')->onDelete('cascade'); // 外键约束

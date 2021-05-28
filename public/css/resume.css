@@ -5,3 +5,17 @@
   padding-bottom: 113px;
 }
 
+.resume-list {
+  margin-top: 25px;
+}
+
+.resume-list .resume-list-body {
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+}
+
+.resume-list .resume-list-body .default-list {
+  padding-top: 48px;
+}
+

@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', '修改职位')
+@section('title', '编辑职位')
 @section('content')
 <div class="job-create bg-white">
     <div class="default-form">
