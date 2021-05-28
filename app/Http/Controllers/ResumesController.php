@@ -48,7 +48,49 @@ class ResumesController extends Controller
      */
     public function store(Request $request)
     {
-        // 数据校验
+        // $data = $request->toArray();
+        // return dd($data);
+        // 数据校验 请正确输入
+        $mssages = [
+            'name.required' => '请填写 姓名',
+            'sex.required' => '请选择 性别',
+            'age.required' => '请填写 年龄',
+            'location.province.required' => '请选择 所在城市',
+            'location.city.required' => '请选择 所在城市',
+            'location.district.required' => '请选择 所在城市',
+            'work_years.required_if' => '请填写 工作年限',
+            'education.required' => '请填写 教育程度',
+            'phone_num.required' => '请填写 手机号码',
+            'email.required' => '请填写 电子邮箱地址',
+            'email.email' => '请填写 正确的邮箱地址',
+            'wechat.required' => '请填写 微信号',
+            'qq.required' => '请填写 QQ号',
+            'cur_industry.st.required' => '请填写 所在行业',
+            'cur_industry.nd.required' => '请填写 所在行业',
+            'cur_industry.rd.required' => '请填写 所在行业',
+            'cur_industry.th.required' => '请填写 所在行业',
+            'cur_position.st.required' => '请填写 所任职位',
+            'cur_position.nd.required' => '请填写 所任职位',
+            'cur_position.rd.required' => '请填写 所任职位',
+            'cur_company.required' => '请填写 所在公司',
+            'cur_salary.required' => '请填写 目前月薪',
+            'cur_salary_count.required' => '请填写 目前月薪',
+            'exp_industry.st.required' => '请填写 期望行业',
+            'exp_industry.nd.required' => '请填写 期望行业',
+            'exp_industry.rd.required' => '请填写 期望行业',
+            'exp_industry.th.required' => '请填写 期望行业',
+            'exp_position.st.required' => '请填写 期望职位',
+            'exp_position.nd.required' => '请填写 期望职位',
+            'exp_position.rd.required' => '请填写 期望职位',
+            'exp_work_nature.required' => '请选择 工作性质',
+            'exp_location.province.required' => '请选择 期望城市',
+            'exp_location.city.required' => '请选择 期望城市',
+            'exp_location.district.required' => '请选择 期望城市',
+            'exp_salary_min.required_if' => '请填写 期望薪资',
+            'exp_salary_max.required_if' => '请填写 期望薪资',
+            'exp_salary_count.required_if' => '请填写 期望薪资',
+            'source.required' => '请选择 来源渠道'
+        ];
         $this->validate($request, [
             'name' => 'required',
             'sex' => 'required',
@@ -57,9 +99,9 @@ class ResumesController extends Controller
             'location.city' => 'required',
             'location.district' => 'required',
             'work_years_flag' => 'required|numeric',
-            'work_years' => 'nullable|numeric',
+            'work_years' => 'required_if:work_years_flag,0|numeric',
             'education' => 'required',
-            'major' => 'required',
+            'major' => 'nullable|string|max:255',
             'phone_num' => 'required|numeric',
             'email' => 'required|email|max:255',
             'wechat' => 'required|string|max:255',
@@ -78,34 +120,37 @@ class ResumesController extends Controller
             'exp_industry.nd' => 'required',
             'exp_industry.rd' => 'required',
             'exp_industry.th' => 'required',
-            'exp_position.province' => 'required',
-            'exp_position.city' => 'required',
-            'exp_position.district' => 'required',
+            'exp_position.st' => 'required',
+            'exp_position.nd' => 'required',
+            'exp_position.rd' => 'required',
             'exp_work_nature' => 'required',
             'exp_location.province' => 'required',
             'exp_location.city' => 'required',
             'exp_location.district' => 'required',
             'exp_salary_flag' => 'required|numeric',
-            'exp_salary_min' => 'required|numeric',
-            'exp_salary_max' => 'required|numeric',
-            'exp_salary_count' => 'required|numeric',
+            'exp_salary_min' => 'required_if:exp_salary_flag,0|numeric',
+            'exp_salary_max' => 'required_if:exp_salary_flag,0|numeric',
+            'exp_salary_count' => 'required_if:exp_salary_flag,0|numeric',
             'jobhunter_status' => 'required|numeric',
-            'social_home' => 'required',
-            'personal_advantage' => 'required',
-            'blacklist' => 'required',
-            'remark' => 'required',
+            'social_home' => 'nullable',
+            'personal_advantage' => 'nullable',
+            'blacklist' => 'nullable',
+            'remark' => 'nullable',
             'source' => 'required',
             'source_remarks' => 'nullable|string|max:255',
-            'attachment' => 'required|file|mimes:doc,docx'
-        ]);
+            'attachment' => 'nullable|file|mimes:doc,docx'
+        ], $mssages);
 
         // 简历文件存储
+        $filePath = NULL;
         $file = $request->file('attachment');
-        if($request->hasFile('attachment') && !$file->isValid()) {
-            session()->flash('danger', '简历上传失败');
-            return redirect()->back()->withInput();
+        if($request->hasFile('attachment')) {
+            if (!$file->isValid()) {
+                session()->flash('danger', '简历上传失败');
+                return redirect()->back()->withInput();
+            }
+            $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
         }
-        $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
         unset($file);
 
         // 格式化db字段
@@ -135,8 +180,11 @@ class ResumesController extends Controller
         }, ['resume_id' => $resume->id]);
         foreach ($work as $key => $value) {
             $work[$key]['resume_id'] = $resume->id;
-            $work[$key]['company_industry'] = json_encode($work[$key]['company_industry']);
-            $work[$key]['job_type'] = json_encode($work[$key]['job_type']);
+            $work[$key]['company_industry'] = json_encode($value['company_industry']);
+            $work[$key]['job_type'] = json_encode($value['job_type']);
+            // if (isset($value['end_at_now']) && $value['end_at_now'] === 'on') {
+            //     $work[$key]['end_at_now'] =
+            // }
         }
 
         $resumeEdu = ResumeEdu::insert($eduction);

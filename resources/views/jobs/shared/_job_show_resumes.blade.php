@@ -25,10 +25,10 @@
         @endif
         <td>{{ $resume->sex }}</td>
         <td>{{ $resume->age }}</td>
-        <td>{{ $resume->work_years }}</td>
-        <td>{{ $resume->education }}</td>
+        <td>{{ $resume->work_years_show }}</td>
+        <td>{{ $resume->education_show }}</td>
         <td>{{ $resume->cur_company }}</td>
-        <td>{{ $resume->cur_position }}</td>
+        <td>{{ $resume->cur_position_show }}</td>
         <td>{{ $resume->cur_salary }}K</td>
         <td>{{ $resume->created_at }}</td>
         <td>

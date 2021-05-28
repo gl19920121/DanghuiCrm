@@ -318,6 +318,7 @@ a:hover {
 }
 
 .main-bg {
+  height: auto;
   background-color: #EFEFEF;
 }
 
@@ -589,7 +590,7 @@ a:hover {
 }
 
 .default-form .form-body .form-group > label:first-child {
-  width: 130px;
+  width: 150px;
   text-align: right;
   margin-right: 20px;
   justify-content: flex-end;

@@ -19,7 +19,8 @@ class CreateResumeEdusTable extends Migration
             $table->enum('school_level', ['unlimited', 'high_schoo', 'junior', 'undergraduate', 'master', 'doctor'])->comment('最高学历');
             $table->string('major')->nullable()->comment('所学专业');
             $table->date('start_at')->comment('入学时间');
-            $table->date('end_at')->comment('毕业时间');
+            $table->date('end_at')->nullable()->comment('毕业时间');
+            $table->integer('is_end')->nullable()->default(1)->comment('是否结束');
             $table->integer('resume_id')->comment('所属简历ID')->unsigned();
             $table->timestamps();
             $table->foreign('resume_id')->references('id')->on('resumes')->onUpdate('cascade')->onDelete('cascade'); // 外键约束

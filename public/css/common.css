@@ -318,6 +318,7 @@ a:hover {
 }
 
 .main-bg {
+  height: auto;
   background-color: #EFEFEF;
 }
 

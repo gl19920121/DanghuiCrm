@@ -59,24 +59,39 @@ class Resume extends Model
         return $status;
     }
 
-    public function getWorkYearsAttribute()
+    public function getWorkYearsShowAttribute()
     {
         $workYears = $this->attributes['work_years'];
         $workYearsFlag = $this->attributes['work_years_flag'];
 
-        switch ($workYearsFlag) {
-            case 1:
-                $workYears = '学生在读';
-                break;
-            case 2:
-                $workYears = '应届毕业生';
-                break;
-
-            default:
-                $workYears = sprintf('%s年', $workYears);
-                break;
+        if (isset(self::workYearsArr[$workYearsFlag])) {
+            $workYears = self::workYearsArr[$workYearsFlag]['text'];
+        } else {
+            $workYears = sprintf('%s年', $workYears);
         }
 
         return $workYears;
+    }
+
+    public function getEducationShowAttribute()
+    {
+        $education = self::educationArr[$this->attributes['education']]['text'];
+        return $education;
+    }
+
+    public function getJobhunterStatusShowAttribute()
+    {
+        $jobhunterStatus = self::jobhunterStatusArr[$this->attributes['jobhunter_status']]['text'];
+        return $jobhunterStatus;
+    }
+
+    public function getCurPositionAttribute()
+    {
+        return json_decode($this->attributes['cur_position']);
+    }
+
+    public function getCurPositionShowAttribute()
+    {
+        return $this->getCurPositionAttribute()->rd;
     }
 }

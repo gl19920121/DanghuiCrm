@@ -24,7 +24,7 @@
             性别：
           </label>
           <select name="sex" class="form-control normal" value="{{ old('sex') }}">
-            <option hidden>请选择</option>
+            <option hidden value="">请选择</option>
             <option>男</option>
             <option>女</option>
           </select>
@@ -72,7 +72,7 @@
             教育程度：
           </label>
           <select name="education" class="form-control normal" value="{{ old('education') }}">
-            <option hidden>请选择</option>
+            <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::educationArr as $key => $education)
               <option value="{{ $key }}">{{ $education['text'] }}</option>
             @endforeach
@@ -280,7 +280,7 @@
             公司性质：
           </label>
           <select name="work_experience[0][company_nature]" class="form-control normal">
-            <option hidden>请选择</option>
+            <option hidden value="">请选择</option>
             @foreach (App\Models\Company::natureArr as $key => $nature)
               <option value="{{ $key }}">{{ $nature['text'] }}</option>
             @endforeach
@@ -292,7 +292,7 @@
             公司规模：
           </label>
           <select name="work_experience[0][company_scale]" class="form-control normal">
-            <option hidden>请选择</option>
+            <option hidden value="">请选择</option>
             @foreach (App\Models\Company::scaleArr as $key => $scale)
               <option value="{{ $key }}">{{ $scale['text'] }}</option>
             @endforeach
@@ -359,7 +359,7 @@
             </div>
           </div>
           <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" name="work_experience[0][end_at_now]" id="workAtNow" class="custom-control-input">
+            <input type="checkbox" name="work_experience[0][is_end]" id="workAtNow" class="custom-control-input" onclick="setNotEnd($(this))">
             <label class="custom-control-label" for="workAtNow">至今</label>
           </div>
         </div>
@@ -387,7 +387,7 @@
             最高学历：
           </label>
           <select name="eduction_experience[0][school_level]" class="form-control normal">
-            <option hidden>请选择</option>
+            <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::educationArr as $key => $education)
               <option value="{{ $key }}">{{ $education['text'] }}</option>
             @endforeach
@@ -428,7 +428,7 @@
             </div>
           </div>
           <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" name="eduction_experience[0][end_at_now]" id="eductionAtNow" class="custom-control-input">
+            <input type="checkbox" name="eduction_experience[0][is_end]" id="eductionAtNow" class="custom-control-input" onclick="setNotEnd($(this))">
             <label class="custom-control-label" for="eductionAtNow">至今</label>
           </div>
         </div>
@@ -460,7 +460,7 @@
             求职状态：
           </label>
           <select name="jobhunter_status" class="form-control normal" value="{{ old('jobhunter_status') }}">
-            <option hidden>请选择</option>
+            <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::jobhunterStatusArr as $key => $jobhunterStatus)
               <option value="{{ $key }}">{{ $jobhunterStatus['text'] }}</option>
             @endforeach
@@ -507,7 +507,7 @@
             添加到"我的职位"：
           </label>
           <select name="job_id" class="form-control normal">
-            <option hidden>请选择</option>
+            <option hidden value="">请选择</option>
             @foreach($jobs as $job)
               <option value="{{ $job->id }}">{{ $job->name }}</option>
             @endforeach
@@ -530,14 +530,14 @@
     let flag = 0;
     if (e.is(':checked')) {
       flag = 1;
-      $('input[name="exp_salary[min]"]').attr("disabled", true);
-      $('input[name="exp_salary[max]"]').attr("disabled", true);
-      $('input[name="exp_salary[count]"]').attr("disabled", true);
+      $('input[name="exp_salary_min"]').attr("disabled", true);
+      $('input[name="exp_salary_max"]').attr("disabled", true);
+      $('input[name="exp_salary_count"]').attr("disabled", true);
     } else {
       flag = 0;
-      $('input[name="exp_salary[min]"]').attr("disabled", false);
-      $('input[name="exp_salary[max]"]').attr("disabled", false);
-      $('input[name="exp_salary[count]"]').attr("disabled", false);
+      $('input[name="exp_salary_min"]').attr("disabled", false);
+      $('input[name="exp_salary_max"]').attr("disabled", false);
+      $('input[name="exp_salary_count"]').attr("disabled", false);
     }
     $('input[name="exp_salary_flag"]').val(flag);
   }
@@ -555,7 +555,6 @@
     if (e.is(':checked')) {
       flag = 1;
       $('input[name="work_years"]').attr("disabled", true);
-      // e.closest().siblings('.custom-checkbox').children('input[type="checkbox"]').attr('checked', false);
     } else {
       flag = 0;
       $('input[name="work_years"]').attr("disabled", false);
@@ -575,6 +574,16 @@
       $('#channelRemark').css('visibility', 'visible');
     } else {
       $('#channelRemark').css('visibility', 'hidden');
+    }
+  }
+
+  function setNotEnd(e)
+  {
+    if (e.is(':checked')) {
+      e.closest('.form-group').find('input[type="text"]').last().attr('disabled', true);
+      // e.closest('.form-group').find('input[type="text"]').last().val('');
+    } else {
+      e.closest('.form-group').find('input[type="text"]').attr('disabled', false);
     }
   }
 
