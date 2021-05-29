@@ -53,6 +53,7 @@ class ResumesTableSeeder extends Seeder
                 'upload_uid' => 1,
                 'attachment_path' => '2021-05-19/1/jcMdxsv2QzSJGbWZvcJeT3tThbk8bSMlNCqnclqP.doc',
                 'job_id' => 1,
+                'is_collect' => 0,
                 'created_at' => '2021-05-24 14:35:00',
                 'updated_at' => '2021-05-24 14:35:00',
                 'status' => 1
@@ -65,7 +66,10 @@ class ResumesTableSeeder extends Seeder
                 'company_name' => '百度',
                 'company_nature' => 'private',
                 'company_scale' => 7,
+                'company_investment' => 'not_needed',
                 'company_industry' => '{"nd": "互联网/移动互联网/电子商务", "rd": "互联网/移动互联网/电子商务", "st": "互联网.游戏.软件", "th": "互联网/移动互联网/电子商务"}',
+                'salary' => 15,
+                'salary_count' => 14,
                 'job_type' => '{"nd": "后端开发", "rd": "PHP", "st": "互联网+技术"}',
                 'start_at' => '2010-07-01',
                 'end_at' => '2020-11-27',

@@ -22,7 +22,7 @@
             @break
           @case ('resumes')
             <li class="nav-item">
-              <a class=" nav-link {{ in_array(Route::currentRouteName(), ['resumes.create']) ? 'active': '' }}" href="{{ route('resumes.create') }}">
+              <a class=" nav-link {{ in_array(Route::currentRouteName(), ['resumes.create', 'resumes.edit']) ? 'active': '' }}" href="{{ route('resumes.create') }}">
                 上传简历
               </a>
             </li>

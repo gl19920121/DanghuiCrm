@@ -51,7 +51,8 @@ class ResumesController extends Controller
 
     public function show(Resume $resume)
     {
-        return view('resumes.show', compact('resume'));
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+        return view('resumes.show', compact('resume', 'jobs'));
     }
 
     /**
@@ -196,9 +197,6 @@ class ResumesController extends Controller
             $work[$key]['resume_id'] = $resume->id;
             $work[$key]['company_industry'] = json_encode($value['company_industry']);
             $work[$key]['job_type'] = json_encode($value['job_type']);
-            // if (isset($value['end_at_now']) && $value['end_at_now'] === 'on') {
-            //     $work[$key]['end_at_now'] =
-            // }
         }
 
         $resumeEdu = ResumeEdu::insert($eduction);
@@ -206,6 +204,14 @@ class ResumesController extends Controller
 
         // 返回
         return redirect()->route('resumes.list');
+    }
+
+    public function update(Resume $resume, Request $request)
+    {
+        $data = $request->toArray();
+        $resume->update($data);
+
+        return back();
     }
 
     public function status(Resume $resume, Request $request)
@@ -236,6 +242,6 @@ class ResumesController extends Controller
 
         Resume::destroy($resume->id);
         session()->flash('success', '删除成功');
-        return;
+        return redirect()->route('resumes.list');
     }
 }

@@ -24,6 +24,8 @@ $color-gray: #898989;
 $color-light-gray: #727171;
 $color-silvery-gray: #B5B5B6;
 $color-border-gray: #C9CACA;
+$color-french-gray: #DCDDDD;
+$color-ashy: #F7F8F8;
 
 $img-url-public: "../images/";
 $img-url-login: "../images/login/";
@@ -56,6 +58,10 @@ a {
   }
 }
 
+.color-n {
+  color: $color-n;
+}
+
 .color-red {
   color: $color-red;
 }
@@ -70,6 +76,10 @@ a {
 
 .color-silvery-gray {
   color: $color-silvery-gray;
+}
+
+.font-size-xl {
+  font-size: $font-size-xl;
 }
 
 .font-size-l {
@@ -1453,4 +1463,23 @@ a {
   &:hover {
     color: $color-red;
   }
+  &:active {
+    color: $color-red;
+    background: white;
+  }
+}
+
+.tag {
+  height: 22px;
+  line-height: 22px;
+  padding: 0 14px;
+  font-size: $font-size-s;
+  color: $color-n;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.tag-light {
+  color: $color-n;
+  background-color: rgba(159, 160, 160, 0.2);
 }

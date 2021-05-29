@@ -123,6 +123,20 @@ class Resume extends Model
         return $workYears;
     }
 
+    public function getWorkYearsShowLongAttribute()
+    {
+        $workYears = $this->attributes['work_years'];
+        $workYearsFlag = $this->attributes['work_years_flag'];
+
+        if (isset(self::workYearsArr[$workYearsFlag])) {
+            $workYears = self::workYearsArr[$workYearsFlag]['text'];
+        } else {
+            $workYears = sprintf('%s年工作经验', $workYears);
+        }
+
+        return $workYears;
+    }
+
     public function getEducationArrAttribute()
     {
         $educationArr = self::educationArr;
@@ -234,5 +248,21 @@ class Resume extends Model
         }
 
         return $sourceArr;
+    }
+
+    public function getExpSalaryShowAttribute()
+    {
+        if ($this->exp_salary_flag === 0) {
+            $expSalary = sprintf('%dK-%dK.%d薪', $this->exp_salary_min, $this->exp_salary_max, $this->exp_salary_count);
+        } else {
+            $expSalary = '面议';
+        }
+
+        return $expSalary;
+    }
+
+    public function getCurSalaryShowAttribute()
+    {
+        return sprintf('%dK.%d薪', $this->cur_salary, $this->cur_salary_count);
     }
 }

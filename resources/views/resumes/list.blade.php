@@ -39,6 +39,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <a href="{{ route('resumes.edit', $resume) }}" class="dropdown-item">修改</a>
+                      <a href="{{ route('resumes.show', $resume) }}" class="dropdown-item" target="_blank">预览</a>
                     </div>
                   </div>
                 </td>

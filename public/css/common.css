@@ -26,6 +26,10 @@ a:hover {
   color: #fff;
 }
 
+.color-n {
+  color: #3E3A39;
+}
+
 .color-red {
   color: #D83856;
 }
@@ -40,6 +44,10 @@ a:hover {
 
 .color-silvery-gray {
   color: #B5B5B6;
+}
+
+.font-size-xl {
+  font-size: 24px;
 }
 
 .font-size-l {
@@ -1315,5 +1323,25 @@ a:hover {
 
 .dropdown-item:hover {
   color: #D83856;
+}
+
+.dropdown-item:active {
+  color: #D83856;
+  background: white;
+}
+
+.tag {
+  height: 22px;
+  line-height: 22px;
+  padding: 0 14px;
+  font-size: 12px;
+  color: #3E3A39;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.tag-light {
+  color: #3E3A39;
+  background-color: rgba(159, 160, 160, 0.2);
 }
 

@@ -51,6 +51,7 @@ class CreateResumesTable extends Migration
                 $table->integer('upload_uid')->comment('上传人ID');
                 $table->string('attachment_path')->comment('简历文件路径');
                 $table->integer('job_id')->nullable()->comment('职位id')->unsigned();
+                $table->integer('is_collect')->default(0)->comment('收藏状态');
                 $table->timestamps();
                 $table->integer('status')->nullable()->default(1)->comment('状态');
                 $table->foreign('job_id')->references('id')->on('jobs')->onUpdate('cascade')->onDelete('set null'); // 外键约束
