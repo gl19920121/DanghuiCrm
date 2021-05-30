@@ -331,9 +331,9 @@
       </div>
     </div>
   </form>
+  @include('resumes.shared._list')
 </div>
 
-@include('resumes.shared._list')
 @include('shared._industry')
 @include('shared._job_type')
 
@@ -351,7 +351,9 @@
   }
 
   $('button').click(function() {
-    submitResumeSearchForm();
+    if ($(this).attr('id') != 'btnGroupDrop1') {
+      submitResumeSearchForm();
+    }
   })
 
   $('select').change(function() {

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Resume;
-use App\Models\ResumeEdu;
 use App\Models\ResumeWork;
+use App\Models\ResumePrj;
+use App\Models\ResumeEdu;
 use App\Models\Job;
 use Auth;
 use Illuminate\Support\Facades\Storage;
@@ -41,7 +42,8 @@ class ResumesController extends Controller
     public function list(Request $request)
     {
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->limit(6)->get();
-        if (empty($request->all())) {
+        // if (empty($request->all())) {
+        if (false) {
             $resumes = [];
         } else {
             // return dd($request->all());
@@ -216,7 +218,7 @@ class ResumesController extends Controller
             'exp_salary_min' => 'required_if:exp_salary_flag,0|numeric',
             'exp_salary_max' => 'required_if:exp_salary_flag,0|numeric',
             'exp_salary_count' => 'required_if:exp_salary_flag,0|numeric',
-            'jobhunter_status' => 'required|numeric',
+            'jobhunter_status' => 'nullable|numeric',
             'social_home' => 'nullable',
             'personal_advantage' => 'nullable',
             'blacklist' => 'nullable',
@@ -251,26 +253,42 @@ class ResumesController extends Controller
         $data['exp_location'] = json_encode($data['exp_location']);
         $data['source'] = json_encode($data['source']);
 
-        $eduction = $data['eduction_experience'];
         $work = $data['work_experience'];
+        $project = $data['project_experience'];
+        $education = $data['education_experience'];
 
-        unset($data['eduction_experience']);
+        // $data['jobhunter_status'] = 0;
+        // $data['attachment_path'] = '123';
+        // array_walk($work, function(&$v, $k, $p) {
+        //     $v = array_merge($v, $p);
+        // }, ['salary' => 12]);
+        // array_walk($work, function(&$v, $k, $p) {
+        //     $v = array_merge($v, $p);
+        // }, ['salary_count' => 12]);
+        // return dd($data);
+
         unset($data['work_experience']);
+        unset($data['project_experience']);
+        unset($data['education_experience']);
 
         // db insert
         $resume = Resume::create($data);
 
-        array_walk($eduction, function(&$v, $k, $p) {
-            $v = array_merge($v, $p);
-        }, ['resume_id' => $resume->id]);
         foreach ($work as $key => $value) {
             $work[$key]['resume_id'] = $resume->id;
             $work[$key]['company_industry'] = json_encode($value['company_industry']);
             $work[$key]['job_type'] = json_encode($value['job_type']);
         }
+        array_walk($project, function(&$v, $k, $p) {
+            $v = array_merge($v, $p);
+        }, ['resume_id' => $resume->id]);
+        array_walk($education, function(&$v, $k, $p) {
+            $v = array_merge($v, $p);
+        }, ['resume_id' => $resume->id]);
 
-        $resumeEdu = ResumeEdu::insert($eduction);
         $resumeWork = ResumeWork::insert($work);
+        $resumePrj = ResumePrj::insert($project);
+        $resumeEdu = ResumeEdu::insert($education);
 
         // 返回
         return redirect()->route('resumes.list');

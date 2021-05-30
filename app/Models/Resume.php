@@ -234,7 +234,12 @@ class Resume extends Model
 
     public function getJobhunterStatusShowAttribute()
     {
-        $jobhunterStatus = self::jobhunterStatusArr[$this->attributes['jobhunter_status']]['text'];
+        if (isset(self::jobhunterStatusArr[$this->attributes['jobhunter_status']])) {
+            $jobhunterStatus = self::jobhunterStatusArr[$this->attributes['jobhunter_status']]['text'];
+        } else {
+            $jobhunterStatus = '-';
+        }
+
         return $jobhunterStatus;
     }
 

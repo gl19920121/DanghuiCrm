@@ -1356,6 +1356,12 @@ a:hover {
   padding-bottom: 113px;
 }
 
+.resume-create .addItem {
+  width: 600px;
+  height: 80px;
+  border: 1px dashed #D83856;
+}
+
 .resume-list {
   margin-top: 25px;
 }

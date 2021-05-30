@@ -24,7 +24,7 @@ class CreateCompanysTable extends Migration
             $table->integer('scale')->comment('规模');
             $table->enum('investment', ['angel', 'round_a', 'round_b', 'round_c', 'round_d_and_above', 'fuk', 'strategic', 'undisclosed', 'not_needed', 'other'])->nullable()->comment('融资阶段');
             $table->string('logo')->comment('标志');
-            $table->string('introduction')->comment('介绍');
+            $table->string('introduction')->nullable()->comment('介绍');
             $table->timestamps();
             $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
         });

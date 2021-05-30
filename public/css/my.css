@@ -2704,6 +2704,15 @@ a:hover {
   padding-bottom: 113px;
 }
 
+.resume-create .addItem {
+  width: 760px;
+  height: 80px;
+  border: 1px dashed #D83856;
+  cursor: pointer;
+  line-height: 80px;
+  color: #D83856;
+}
+
 .resume-list {
   margin-top: 25px;
 }

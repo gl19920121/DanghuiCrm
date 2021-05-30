@@ -78,5 +78,8 @@
     @endif
   </div>
 </div>
+
 @include('companys.shared._company_edit')
+@include('shared._industry')
+
 @stop

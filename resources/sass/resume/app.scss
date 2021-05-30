@@ -9,6 +9,15 @@
   padding-left: 39px;
   padding-right: 39px;
   padding-bottom: 113px;
+
+  .addItem {
+    width: 760px;
+    height: 80px;
+    border: 1px dashed #D83856;
+    cursor: pointer;
+    line-height: 80px;
+    color: #D83856;
+  }
 }
 
 .resume-list {

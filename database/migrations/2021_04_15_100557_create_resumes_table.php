@@ -41,7 +41,7 @@ class CreateResumesTable extends Migration
                 $table->integer('exp_salary_min')->nullable()->comment('期望薪资');
                 $table->integer('exp_salary_max')->nullable()->comment('期望薪资');
                 $table->integer('exp_salary_count')->nullable()->comment('期望薪资');
-                $table->integer('jobhunter_status')->comment('求职者状态');
+                $table->integer('jobhunter_status')->nullable()->comment('求职者状态');
                 $table->string('social_home')->nullable()->comment('社交主页');
                 $table->string('personal_advantage')->nullable()->comment('个人优势');
                 $table->string('blacklist')->nullable()->comment('屏蔽公司');
@@ -49,7 +49,7 @@ class CreateResumesTable extends Migration
                 $table->json('source')->comment('来源渠道');
                 $table->string('source_remarks')->nullable()->comment('来源渠道备注');
                 $table->integer('upload_uid')->comment('上传人ID');
-                $table->string('attachment_path')->comment('简历文件路径');
+                $table->string('attachment_path')->nullable()->comment('简历文件路径');
                 $table->integer('job_id')->nullable()->comment('职位id')->unsigned();
                 $table->integer('is_collect')->default(0)->comment('收藏状态');
                 $table->timestamps();

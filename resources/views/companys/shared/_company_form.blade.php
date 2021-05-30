@@ -25,7 +25,7 @@
               <input type="hidden" name="industry[rd]" value="">
               <input type="hidden" name="industry[th]" value="">
 
-              <input type="text" class="form-control middle-append append" value="" placeholder="请选择" autocomplete="off">
+              <input id="industry" type="text" class="form-control middle-append append" value="" placeholder="请选择" autocomplete="off">
               <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
                 <span class="input-group-text" id="basic-addon2">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

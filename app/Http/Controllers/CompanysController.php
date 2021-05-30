@@ -52,8 +52,8 @@ class CompanysController extends Controller
             'scale.required' => '请选择 企业规模',
             'investment.required' => '请选择 融资阶段',
             'logo.required' => '请上传 公司LOGO',
-            'logo.image' => '请上传 JPGE/PNG格式的图片且不超过300K',
-            'introduction.required' => '请填写 企业介绍'
+            'logo.mimes' => '请上传 JPGE/PNG格式的图片且不超过300K',
+            'logo.max' => '请上传 JPGE/PNG格式的图片且不超过300K'
         ];
 
         $this->validate($request, [
@@ -70,8 +70,8 @@ class CompanysController extends Controller
             'nature' => 'required',
             'scale' => 'required',
             'investment' => 'required',
-            'logo' => 'required|mimes:jpeg,png|max:300',
-            'introduction' => 'required'
+            'logo' => 'required|mimes:jpeg,jpg,png|max:300',
+            'introduction' => 'nullable'
         ], $mssages);
 
         $file = $request->file('logo');
