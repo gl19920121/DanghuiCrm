@@ -1510,3 +1510,82 @@ a:hover {
   margin-bottom: 25px;
 }
 
+.resume-search {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+}
+
+.resume-search .resume-search-form .form-control {
+  width: 380px;
+  line-height: 30px;
+  border-radius: 5px;
+}
+
+.resume-search .resume-search-form .form-control::-webkit-input-placeholder {
+  font-size: 16px;
+  color: #B5B5B6;
+  text-align: left;
+}
+
+.resume-search .resume-search-form .form-control .input-group .append:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.resume-search .resume-search-form .normal {
+  width: 160px;
+}
+
+.resume-search .resume-search-form .small {
+  width: 80px;
+}
+
+.resume-search .resume-search-form .append {
+  width: 338px;
+}
+
+.resume-search .resume-search-form .resume-search-header {
+  max-height: 245px;
+  padding-top: 55px;
+  padding-bottom: 26px;
+  padding-left: 93px;
+  padding-right: 93px;
+  background-color: #F7F8F8;
+}
+
+.resume-search .resume-search-form .resume-search-header .cur-jobs {
+  width: 407px;
+  border: 1px solid #C9CACA;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.resume-search .resume-search-form .resume-search-header .cur-jobs span:nth-child(2) {
+  max-width: 157px;
+}
+
+.resume-search .resume-search-form .resume-search-header .cur-jobs span:nth-child(3) {
+  max-width: 74px;
+}
+
+.resume-search .resume-search-form .resume-search-header .cur-jobs span:nth-child(3) {
+  max-width: 74px;
+}
+
+.resume-search .resume-search-form .resume-search-body {
+  padding-top: 31px;
+  padding-bottom: 31px;
+  padding-left: 93px;
+  padding-right: 93px;
+  background-color: white;
+}
+
+.resume-search .resume-search-form .resume-search-footer {
+  padding-bottom: 56px;
+  padding-left: 93px;
+  padding-right: 93px;
+  background-color: white;
+}
+

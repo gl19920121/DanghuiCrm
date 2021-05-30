@@ -34,19 +34,89 @@ class ResumesController extends Controller
 
     public function edit(Resume $resume)
     {
-        // return dd($resume->resumeWorks[0]);
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
         return view('resumes.edit', compact('resume', 'jobs'));
     }
 
     public function list(Request $request)
     {
-        $resumes = Resume::
-            where('status', '=', 1)
-            ->where('upload_uid', '=', Auth::user()->id)
-            ->paginate($this->pageSize)
-        ;
-        return view('resumes.list', compact('resumes'));
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->limit(6)->get();
+        if (empty($request->all())) {
+            $resumes = [];
+        } else {
+            // return dd($request->all());
+            $resumes = Resume::
+                where('status', '=', 1)
+                ->where('upload_uid', '=', Auth::user()->id)
+                ->where(function ($query) use($request) {
+                    if (isset($request->job_name)) {
+                        $arr = explode(' ', $request->job_name);
+                        $query->whereJsonContains('cur_position', $arr);
+                        $query->whereJsonContains('exp_position', $arr);
+                    }
+                    if (!empty($request->cur_company)) {
+                        $likes = $this->formatLikeKey($request->cur_company);
+                        foreach ($likes as $like) {
+                            $query->where('cur_company', 'like', $like);
+                        }
+                    }
+                    if (isset($request->location)) {
+                        $query->whereJsonContains('location', $request->location);
+                    }
+                    if (isset($request->exp_location)) {
+                        $query->whereJsonContains('exp_location', $request->exp_location);
+                    }
+                    if (isset($request->experience)) {
+                        switch ($request->experience) {
+                            case 'school':
+                                $query->where('work_years_flag', '=', 1);
+                                break;
+                            case 'fresh_graduates':
+                                $query->where('work_years_flag', '=', 2);
+                                break;
+                            case 'primary':
+                                $query->where('work_years', '>=', 1)->where('work_years', '<=', 3);
+                                break;
+                            case 'middle':
+                                $query->where('work_years', '>=', 3)->where('work_years', '<=', 5);
+                                break;
+                            case 'high':
+                                $query->where('work_years', '>=', 5)->where('work_years', '<=', 10);
+                                break;
+                            case 'expert':
+                                $query->where('work_years', '>', 10);
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                    if (isset($request->education)) {
+                        $query->where('education', $request->education);
+                    }
+                    if (isset($request->cur_position)) {
+                        $query->whereJsonContains('cur_position', $request->cur_position);
+                    }
+                    if (isset($request->exp_position)) {
+                        $query->whereJsonContains('exp_position', $request->exp_position);
+                    }
+                })
+                ->paginate($this->pageSize)
+            ;
+        }
+
+        $parms = $request->all();
+
+        return view('resumes.list', compact('resumes', 'jobs', 'parms'));
+    }
+
+    private function formatLikeKey(String $string)
+    {
+        $arr = explode(' ', $string);
+        foreach ($arr as $index => $value) {
+            $arr[$index] = '%' . implode('%', str_split($value)) . '%';
+        }
+        return $arr;
     }
 
     public function show(Resume $resume)

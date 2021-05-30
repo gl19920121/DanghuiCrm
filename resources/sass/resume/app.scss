@@ -191,3 +191,88 @@
     margin-bottom: 25px;
   }
 }
+
+.resume-search {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+
+  .resume-search-form {
+    .form-control {
+      width: 380px;
+      line-height: 30px;
+      border-radius: 5px;
+
+      &::-webkit-input-placeholder {
+        font-size: $font-size-n;
+        color: $color-silvery-gray;
+        text-align: left;
+      }
+
+      .input-group {
+        .append {
+          &:not(:first-child) {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+        }
+      }
+    }
+
+    .normal {
+      width: 160px;
+    }
+
+    .small {
+      width: 80px;
+    }
+
+    .append {
+      width: 338px;
+    }
+
+    .resume-search-header {
+      max-height: 245px;
+      padding-top: 55px;
+      padding-bottom: 26px;
+      padding-left: 93px;
+      padding-right: 93px;
+      background-color: $color-ashy;
+
+      .cur-jobs {
+        width: 407px;
+        border: 1px solid $color-border-gray;
+        border-radius: 5px;
+        cursor: pointer;
+
+        span {
+          &:nth-child(2) {
+            max-width: 157px;
+          }
+          &:nth-child(3) {
+            max-width: 74px;
+          }
+          &:nth-child(3) {
+            max-width: 74px;
+          }
+        }
+      }
+    }
+
+    .resume-search-body {
+      padding-top: 31px;
+      padding-bottom: 31px;
+      padding-left: 93px;
+      padding-right: 93px;
+      background-color: white;
+    }
+
+    .resume-search-footer {
+      padding-bottom: 56px;
+      padding-left: 93px;
+      padding-right: 93px;
+      background-color: white;
+    }
+  }
+}

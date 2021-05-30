@@ -45,6 +45,14 @@ class Resume extends Model
         'other_platform' => ['text' => '其他', 'has_remark' => true]
     ];
 
+    public const updateDateArr = [
+        '1' => ['text' => '最近三天'],
+        '2' => ['text' => '最近一周'],
+        '3' => ['text' => '最近两周'],
+        '4' => ['text' => '最近一个月'],
+        '5' => ['text' => '一个月以上']
+    ];
+
     public function job()
     {
         return $this->belongsTo(Job::class);
