@@ -268,7 +268,7 @@
             <div class="col-12">
               <p class="bg-gray p-2">
                 <span>{{ $project->name }}</span>
-                <span class="color-gray font-size-s">（工作时间：{{ $project->duration }}，{{ $project->long }}）</span>
+                <span class="color-gray font-size-s">（项目时间：{{ $project->duration }}，{{ $project->long }}）</span>
               </p>
             </div>
             <div class="col-12">
@@ -342,7 +342,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                   <a href="{{ route('word.export.resume', $resume) }}" class="dropdown-item">Word</a>
-                  <a href="{{ route('pdf.export.resume', $resume) }}" class="dropdown-item">PDF</a>
+                  <!-- <a href="{{ route('pdf.export.resume', $resume) }}" class="dropdown-item">PDF</a> -->
                   <a href="#" class="dropdown-item" onclick="takeScreenshot()">JPG</a>
                 </div>
               </div>
@@ -403,6 +403,24 @@
 <div hidden id="canvasContainer"></div>
 
 <script type="text/javascript">
+  function _fixType(type)
+  {
+    type = type.toLowerCase().replace(/jpg/i, 'jpeg');
+    let r = type.match(/png|jpeg|bmp|gif/)[0];
+    return 'image/' + r;
+  }
+
+  function fileDownload(downloadUrl){
+    let aLink = document.createElement('a');
+    aLink.style.display = 'none';
+    aLink.href = downloadUrl;
+    aLink.download = "{{ $job->name }}.png";
+    // 触发点击-然后移除
+    document.body.appendChild(aLink);
+    aLink.click();
+    document.body.removeChild(aLink);
+  }
+
   function takeScreenshot()
   {
     window.pageYoffset = 0;
