@@ -13,13 +13,15 @@ use Illuminate\Support\Facades\Storage;
 
 class ResumesController extends Controller
 {
-    private $pageSize = 1;
+    private $pageSize;
 
     public function __construct()
     {
         $this->middleware('auth', [
             'except' => []
         ]);
+
+        $this->pageSize = config('public.page_size');
     }
 
     /**

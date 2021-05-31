@@ -11,13 +11,15 @@ use Auth;
 
 class JobsController extends Controller
 {
-    private $pageSize = 1;
+    private $pageSize;
 
     public function __construct()
     {
         $this->middleware('auth', [
             'except' => []
         ]);
+
+        $this->pageSize = config('public.page_size');
     }
 
     public function create(Request $request)
