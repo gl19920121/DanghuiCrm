@@ -94,7 +94,7 @@
                 <div class="form-group form-inline">
                     <label for="experience">工作经验：</label>
                     <select name="experience" class="form-control">
-                      <option>不限</option>
+                      <option value="">不限</option>
                       @foreach (App\Models\Job::experienceArr as $key => $experience)
                         <option value="{{ $key }}"
                         @if (isset($parms['experience']) && $key === $parms['experience'])
@@ -111,8 +111,8 @@
                 <div class="form-group form-inline">
                     <label for="education">教育经历：</label>
                     <select name="education" class="form-control">
-                      <option>不限</option>
-                      @foreach (App\Models\Job::educationArr as $key => $education)
+                      <option value="">不限</option>
+                      @foreach (App\Models\Resume::educationArr as $key => $education)
                         <option value="{{ $key }}"
                         @if (isset($parms['education']) && $key === $parms['education'])
                           selected
@@ -175,7 +175,7 @@
                   </div>
                   <label class="ml-4" for="sex">性别：</label>
                   <select name="sex" value="{{ isset($parms['sex']) ? $parms['sex'] : '' }}" class="form-control normal">
-                    <option>不限</option>
+                    <option value="">不限</option>
                     <option @if(isset($parms['sex']) && $parms['sex'] === '男') selected @endif>男</option>
                     <option @if(isset($parms['sex']) && $parms['sex'] === '女') selected @endif>女</option>
                   </select>
@@ -183,16 +183,16 @@
               </div>
               <div class="col">
                 <div class="form-group form-inline">
-                  <label for="jobhunter_statu">求职状态：</label>
-                  <select name="jobhunter_statu" class="form-control normal">
-                    <option>不限</option>
-                    @foreach (App\Models\Resume::jobhunterStatusArr as $key => $jobhunterStatu)
+                  <label for="jobhunter_status">求职状态：</label>
+                  <select name="jobhunter_status" class="form-control normal">
+                    <option value="">不限</option>
+                    @foreach (App\Models\Resume::jobhunterStatusArr as $key => $jobhunterStatus)
                       <option value="{{ $key }}"
-                      @if (isset($parms['jobhunter_statu']) && $key === $parms['jobhunter_statu'])
+                      @if (isset($parms['jobhunter_status']) && (int)$key === (int)$parms['jobhunter_status'])
                         selected
                       @endif
                       >
-                        {{ $jobhunterStatu['text'] }}
+                        {{ $jobhunterStatus['text'] }}
                       </option>
                     @endforeach
                   </select>
@@ -202,7 +202,7 @@
                 <div class="form-group form-inline">
                   <label for="source">来源渠道：</label>
                   <select name="source" class="form-control normal">
-                    <option>不限</option>
+                    <option value="">不限</option>
                     @foreach (App\Models\Resume::sourceArr as $key => $source)
                       <option value="{{ $key }}"
                       @if (isset($parms['source']) && $key === $parms['source'])
@@ -215,10 +215,10 @@
                   </select>
                   <label class="ml-4" for="updated_at">更新时间：</label>
                   <select name="updated_at" class="form-control normal">
-                    <option>不限</option>
+                    <option value="">不限</option>
                     @foreach (App\Models\Resume::updateDateArr as $key => $updateDate)
                       <option value="{{ $key }}"
-                      @if (isset($parms['updated_at']) && $key === $parms['updated_at'])
+                      @if (isset($parms['updated_at']) && (int)$key === (int)$parms['updated_at'])
                         selected
                       @endif
                       >
@@ -244,11 +244,11 @@
                 <div class="form-group form-inline">
                   <label for="exp_salary">期望年薪：</label>
                   <div class="input-group">
-                      <input type="text" name="exp_salary_min" class="form-control small" value="{{ isset($parms['cur_salary_min']) ? $parms['exp_salary_min'] : '' }}" placeholder="万" autocomplete="off" data-type="int">
+                      <input type="text" name="exp_year_salary_min" class="form-control small" value="{{ isset($parms['exp_year_salary_min']) ? $parms['exp_year_salary_min'] : '' }}" placeholder="万" autocomplete="off" data-type="int">
                   </div>
                   <label class="ml-1 mr-1">-</label>
                   <div class="input-group">
-                      <input type="text" name="exp_salary_max" class="form-control small" value="{{ isset($parms['cur_salary_min']) ? $parms['exp_salary_max'] : '' }}" placeholder="不限" autocomplete="off" data-type="int">
+                      <input type="text" name="exp_year_salary_max" class="form-control small" value="{{ isset($parms['exp_year_salary_max']) ? $parms['exp_year_salary_max'] : '' }}" placeholder="不限" autocomplete="off" data-type="int">
                   </div>
                 </div>
               </div>
@@ -256,11 +256,11 @@
                 <div class="form-group form-inline">
                   <label for="cur_salary">目前年薪：</label>
                   <div class="input-group">
-                      <input type="text" name="cur_salary_min" class="form-control small" value="{{ isset($parms['cur_salary_min']) ? $parms['cur_salary_min'] : '' }}" placeholder="万" autocomplete="off" data-type="int">
+                      <input type="text" name="cur_year_salary_min" class="form-control small" value="{{ isset($parms['cur_year_salary_min']) ? $parms['cur_year_salary_min'] : '' }}" placeholder="万" autocomplete="off" data-type="int">
                   </div>
                   <label class="ml-1 mr-1">-</label>
                   <div class="input-group">
-                      <input type="text" name="cur_salary_max" class="form-control small" value="{{ isset($parms['cur_salary_max']) ? $parms['cur_salary_max'] : '' }}" placeholder="不限" autocomplete="off" data-type="int">
+                      <input type="text" name="cur_year_salary_max" class="form-control small" value="{{ isset($parms['cur_year_salary_max']) ? $parms['cur_year_salary_max'] : '' }}" placeholder="不限" autocomplete="off" data-type="int">
                   </div>
                 </div>
               </div>
@@ -316,7 +316,7 @@
               </div>
               <div class="col">
                 <div class="form-group form-inline">
-                    <label for="major">毕业院校：</label>
+                    <label for="major">专业名称：</label>
                     <div class="input-group">
                       <input type="text" name="major" class="form-control append" value="{{ isset($parms['major']) ? $parms['major'] : '' }}" placeholder="请输入专业名称" autocomplete="off">
                       <div class="input-group-append" data-toggle="modal">
@@ -331,7 +331,27 @@
       </div>
     </div>
   </form>
-  @include('resumes.shared._list')
+
+  <div class="resume-list bg-white">
+    <div class="resume-list-header">
+      <div class="row justify-content-between">
+        <div class="col col-auto">
+          <div class="custom-control custom-checkbox custom-control-inline ml-3">
+            <input type="checkbox" id="chooseAll" class="custom-control-input" onclick="chooseAll($(this))">
+            <label class="custom-control-label" for="chooseAll">全选</label>
+          </div>
+        </div>
+        <div class="col col-auto">
+          <span>共<span class="color-red">{{ count($resumes) > 0 ? $resumes->total() : 0 }}</span>位人选</span>
+          <img src="{{ URL::asset('images/icon_general.png') }}">
+          <img src="{{ URL::asset('images/icon_detail_checked.png') }}">
+        </div>
+      </div>
+    </div>
+    <div class="resume-list-body">
+      @include('resumes.shared._list_general')
+    </div>
+  </div>
 </div>
 
 @include('shared._industry')
@@ -357,6 +377,14 @@
   })
 
   $('select').change(function() {
+    submitResumeSearchForm();
+  })
+
+  $('#jobtypeModal').on('hide.bs.modal', function (e) {
+    submitResumeSearchForm();
+  })
+
+  $('#industryModal').on('hide.bs.modal', function (e) {
     submitResumeSearchForm();
   })
 

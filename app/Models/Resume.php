@@ -278,4 +278,9 @@ class Resume extends Model
     {
         return sprintf('%dK.%d薪', $this->cur_salary, $this->cur_salary_count);
     }
+
+    public function getCurSalaryShowLongAttribute()
+    {
+        return sprintf('%dK * %d月', $this->cur_salary, $this->cur_salary_count);
+    }
 }

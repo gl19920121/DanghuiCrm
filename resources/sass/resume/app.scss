@@ -22,10 +22,15 @@
 
 .resume-list {
   margin-top: 25px;
+  padding: 0 92px;
+
+  .resume-list-header {
+    padding-top: 34px;
+    padding-bottom: 23px;
+    border-bottom: 1px solid $color-border-gray;
+  }
 
   .resume-list-body {
-    padding-left: 39px;
-    padding-right: 39px;
     padding-bottom: 113px;
 
     .default-list {
@@ -282,6 +287,38 @@
       padding-left: 93px;
       padding-right: 93px;
       background-color: white;
+    }
+  }
+}
+
+.resume-list-general {
+  .resume-table-general {
+    border: 1px solid rgba(137, 137, 137, 0.1);
+
+    thead {
+      font-size: $font-size-m;
+      font-weight: bold;
+      background-color: $color-ashy;
+      border: none;
+
+      tr {
+        border: none;
+
+        th {
+          border: none;
+          //border-top: 1px solid rgba(137, 137, 137, 0.1);
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border: none;
+
+        &:not(:first-child) {
+          border-top: 1px solid rgb(201, 202, 202),
+        }
+      }
     }
   }
 }

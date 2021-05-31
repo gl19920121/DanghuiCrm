@@ -1357,18 +1357,26 @@ a:hover {
 }
 
 .resume-create .addItem {
-  width: 600px;
+  width: 760px;
   height: 80px;
   border: 1px dashed #D83856;
+  cursor: pointer;
+  line-height: 80px;
+  color: #D83856;
 }
 
 .resume-list {
   margin-top: 25px;
+  padding: 0 92px;
+}
+
+.resume-list .resume-list-header {
+  padding-top: 34px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #C9CACA;
 }
 
 .resume-list .resume-list-body {
-  padding-left: 39px;
-  padding-right: 39px;
   padding-bottom: 113px;
 }
 
@@ -1593,5 +1601,32 @@ a:hover {
   padding-left: 93px;
   padding-right: 93px;
   background-color: white;
+}
+
+.resume-list-general .resume-table-general {
+  border: 1px solid rgba(137, 137, 137, 0.1);
+}
+
+.resume-list-general .resume-table-general thead {
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #F7F8F8;
+  border: none;
+}
+
+.resume-list-general .resume-table-general thead tr {
+  border: none;
+}
+
+.resume-list-general .resume-table-general thead tr th {
+  border: none;
+}
+
+.resume-list-general .resume-table-general tbody tr {
+  border: none;
+}
+
+.resume-list-general .resume-table-general tbody tr:not(:first-child) {
+  border-top: 1px solid #c9caca;
 }
 
