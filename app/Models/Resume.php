@@ -145,6 +145,20 @@ class Resume extends Model
         return $workYears;
     }
 
+    public function getWorkYearsShowListAttribute()
+    {
+        $workYears = $this->attributes['work_years'];
+        $workYearsFlag = $this->attributes['work_years_flag'];
+
+        if (isset(self::workYearsArr[$workYearsFlag])) {
+            $workYears = self::workYearsArr[$workYearsFlag]['text'];
+        } else {
+            $workYears = sprintf('工作%s年', $workYears);
+        }
+
+        return $workYears;
+    }
+
     public function getEducationArrAttribute()
     {
         $educationArr = self::educationArr;
@@ -261,6 +275,20 @@ class Resume extends Model
         }
 
         return $sourceArr;
+    }
+
+    public function getSourceShowAttribute()
+    {
+        $source = $this->source;
+
+        foreach ($source as $index => $value) {
+            $source[$index] = $this->sourceArr[$value]['text'];
+            if (isset($this->sourceArr[$value]['has_remark']) && $this->sourceArr[$value]['has_remark']) {
+                $source[$index] .= sprintf('（%s）', $this->attributes['source_remarks']);
+            }
+        }
+
+        return implode('/', $source);
     }
 
     public function getExpSalaryShowAttribute()

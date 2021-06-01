@@ -322,3 +322,56 @@
     }
   }
 }
+
+.resume-list-detail {
+  .resume-list-detail-item {
+    padding: 38px 0;
+
+    &:nth-child(2n) {
+      background-color: $color-ashy;
+    }
+
+    > .row {
+      &:nth-child(2) {
+        margin-top: 26px;
+      }
+    }
+  }
+}
+
+.apart {
+  > .col {
+    &:not(:first-child) {
+      &:before {
+        content: '';
+        position: absolute;
+        top: 6px;
+        left: 0px;
+        background: $color-french-gray;
+        width: 1px;
+        height: 13px;
+      }
+    }
+  }
+}
+
+.resume-mine {
+  .mine-nav {
+    width: 303px;
+
+    ul {
+      width: 100%;
+
+      > li {
+        width: 253px;
+        cursor: pointer;
+      }
+
+      li.active {
+        color: $color-red;
+        background-color: white;
+        border-left: 3px solid $color-red;
+      }
+    }
+  }
+}

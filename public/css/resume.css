@@ -26,12 +26,24 @@ a:hover {
   color: #fff;
 }
 
+a.a-gray {
+  color: #B5B5B6;
+}
+
+a.a-gray:hover {
+  color: #B5B5B6;
+}
+
 .color-n {
   color: #3E3A39;
 }
 
 .color-red {
   color: #D83856;
+}
+
+.color-dark {
+  color: #303540;
 }
 
 .color-gray {
@@ -1345,6 +1357,72 @@ a:hover {
   background-color: rgba(159, 160, 160, 0.2);
 }
 
+ul.nav-sec-left {
+  width: auto;
+  height: auto;
+  padding: 12px 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: #3E3A39;
+  background: white;
+  overflow-y: scroll;
+}
+
+ul.nav-sec-left > li {
+  line-height: 40px;
+  padding-left: 22px;
+  cursor: pointer;
+}
+
+ul.nav-sec-left > li:before {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -9px;
+}
+
+ul.nav-sec-left > li p {
+  margin-bottom: 0;
+}
+
+ul.nav-sec-left > li a {
+  height: 40px;
+  color: #3E3A39;
+  text-decoration: none;
+}
+
+ul.nav-sec-left li.selected {
+  padding-left: 18px;
+  border-left: 4px solid;
+  border-color: #D83856;
+  background-color: #fff;
+}
+
+ul.nav-sec-left ul.sub {
+  width: 100%;
+  height: auto;
+  padding-left: 0;
+}
+
+ul.nav-sec-left ul.sub li {
+  padding-left: 22px;
+  cursor: pointer;
+}
+
+ul.nav-sec-left ul.sub li a {
+  height: 44px;
+  line-height: 44px;
+  color: #3E3A39;
+  text-decoration: none;
+}
+
+ul.nav-sec-left ul.sub li.selected {
+  padding-left: 18px;
+  border-left: 4px solid;
+  border-color: #D83856;
+  background-color: #fff;
+}
+
 .bg-gray {
   background-color: #F7F8F8;
 }
@@ -1628,5 +1706,46 @@ a:hover {
 
 .resume-list-general .resume-table-general tbody tr:not(:first-child) {
   border-top: 1px solid #c9caca;
+}
+
+.resume-list-detail .resume-list-detail-item {
+  padding: 38px 0;
+}
+
+.resume-list-detail .resume-list-detail-item:nth-child(2n) {
+  background-color: #F7F8F8;
+}
+
+.resume-list-detail .resume-list-detail-item > .row:nth-child(2) {
+  margin-top: 26px;
+}
+
+.apart > .col:not(:first-child):before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0px;
+  background: #DCDDDD;
+  width: 1px;
+  height: 13px;
+}
+
+.resume-mine .mine-nav {
+  width: 303px;
+}
+
+.resume-mine .mine-nav ul {
+  width: 100%;
+}
+
+.resume-mine .mine-nav ul > li {
+  width: 253px;
+  cursor: pointer;
+}
+
+.resume-mine .mine-nav ul li.active {
+  color: #D83856;
+  background-color: white;
+  border-left: 3px solid #D83856;
 }
 

@@ -45,13 +45,12 @@ class ResumesController extends Controller
     {
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->limit(6)->get();
         if (empty($request->all())) {
-        // if (false) {
             $resumes = [];
         } else {
             // return dd($request->all());
             $resumes = Resume::
                 where('status', '=', 1)
-                ->where('upload_uid', '=', Auth::user()->id)
+                // ->where('upload_uid', '=', Auth::user()->id)
                 ->where(function ($query) use($request) {
                     if (!empty($request->all)) {
                         $likes = $this->formatLikeKey($request->all);
@@ -258,7 +257,13 @@ class ResumesController extends Controller
                     if (!empty($request->major)) {
                         $query->where('major', 'like', '%'.$request->major.'%');
                     }
-                });
+                })
+                ->where(function ($query) use($request) {
+                    if (!empty($request->hide_get) && $request->hide_get == 1) {
+                        $query->where('is_collect', 0);
+                    }
+                })
+                ;
 
             if (!empty($request->school)) {
                 $resumes = $resumes->whereHas('resumeEdus', function ($query) use($request) {
@@ -266,12 +271,27 @@ class ResumesController extends Controller
                 });
             }
 
-            $resumes = $resumes->paginate($this->pageSize);
+            $resumes = $resumes->with(['resumeEdus' => function($query) {
+                $query->where('is_not_end', 0)->orderBy('end_at', 'desc');
+            }])->paginate($this->pageSize);
         }
 
         $parms = $request->all();
+        $tab = isset($request->tab) ? $request->tab : '';
+        $showDetail = isset($request->show_detail) ? (int)$request->show_detail : 0;
+        $hideGet = isset($request->hide_get) ? $request->hide_get : 0;
+        // return dd($request->hide_get);
 
-        return view('resumes.list', compact('resumes', 'jobs', 'parms'));
+        return view('resumes.list', compact('resumes', 'jobs', 'parms', 'tab', 'showDetail', 'hideGet'));
+    }
+
+    public function mine(Request $request)
+    {
+        $resumes = Resume::
+            where('status', '=', 1)
+            ->where('upload_uid', '=', Auth::user()->id)
+        ;
+        return view('resumes.mine', compact('resumes'));
     }
 
     private function mb_str_split($str) {

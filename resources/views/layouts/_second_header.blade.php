@@ -32,7 +32,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ in_array(Route::currentRouteName(), []) ? 'active': '' }}" href="#">
+              <a class="nav-link {{ in_array(Route::currentRouteName(), ['resumes.mine']) ? 'active': '' }}" href="{{ route('resumes.mine') }}">
                 人才管理
               </a>
             </li>

@@ -3,7 +3,7 @@
     <table class="table resume-table-general">
       <thead>
         <tr>
-          <th scope="col"></th>
+          <th hidden scope="col"></th>
           <th scope="col">姓名</th>
           <th scope="col">性别/年龄</th>
           <th scope="col">所在地</th>
@@ -19,9 +19,9 @@
       <tbody>
         @foreach($resumes as $resume)
           <tr>
-            <td>
-              <div class="custom-control custom-checkbox custom-control-inline ml-3">
-                <input type="checkbox" class="custom-control-input" onclick="chooseAll($(this))">
+            <td hidden>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input">
                 <label class="custom-control-label"></label>
               </div>
             </td>

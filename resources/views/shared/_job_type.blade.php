@@ -42,6 +42,8 @@
         inputShow.val('');
       }
     });
+
+    init();
   });
 
   function jobTypeChange(values = {})
@@ -76,7 +78,7 @@
 
   function navItemSelect(e, rootNo)
   {
-    $('div').remove('.item-detail');
+    $('.item-detail').closest('div.col-12').remove();
 
     var no = e.attr('id');
     var item = e.parent('div.col');
@@ -90,6 +92,7 @@
     if (targetIndex > maxIndex) {
       targetIndex = maxIndex;
     }
+
     if (colIndex == 0) {
       colClass = 'st';
     } else if (colIndex == 1) {

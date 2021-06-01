@@ -39,6 +39,8 @@
         inputShow.val('');
       }
     });
+
+    init();
   });
 
   $("[data-toggle='industrypicker']").find('.input-group-append').css('cursor', 'pointer').click(function(e) {
@@ -88,7 +90,7 @@
 
   function navSecItemSelect(e, rootNo, pNo)
   {
-    $('div').remove('.item-detail');
+    $('.item-detail').closest('div.col-12').remove();
 
     var no = e.attr('id');
     var item = e.parent('div.col');
@@ -154,15 +156,18 @@
   function addNavSecItem(rootNo, pNo)
   {
     $('#industryBody').empty();
+    $('#industryBody').prev().empty();
 
     var all = '全部'+list[pNo][0];
-    $('#industryBody').append($('<div>').addClass('col-12').addClass('item-all').addClass('text-truncate').attr('data-dismiss', 'modal').attr('aria-label', 'Close').click(function() {
-            jobTypeChange({ st: list[rootNo][0], nd: list[pNo][0], rd: list[pNo][0], th: list[pNo][0]});
-        })
-        .append($('<span>').attr('title', all)
-            .append($('<a>').text(all))
-        )
-    );
+    $('#industryBody').before($('<div>').addClass('row')
+            .append($('<div>').addClass('col-12').addClass('item-all').addClass('text-truncate').attr('data-dismiss', 'modal').attr('aria-label', 'Close').click(function() {
+                    jobTypeChange({ st: list[rootNo][0], nd: list[pNo][0], rd: list[pNo][0], th: list[pNo][0]});
+                })
+                .append($('<span>').attr('title', all)
+                    .append($('<a>').text(all))
+                )
+            )
+        );
     if (relations.hasOwnProperty(pNo)) {
         relations[pNo].forEach(function(no) {
           $('#industryBody').append($('<div>').addClass('col')

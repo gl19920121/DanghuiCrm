@@ -1,52 +1,91 @@
 @if (count($resumes) > 0)
-  <div class="default-list">
-      <table class="table table-striped default-table">
-        <thead>
-          <tr>
-            <th scope="col">姓名</th>
-            <th scope="col">性别</th>
-            <th scope="col">年龄</th>
-            <th scope="col">工作年限</th>
-            <th scope="col">教育程度</th>
-            <th scope="col">目前公司</th>
-            <th scope="col">目前职位</th>
-            <th scope="col">目前月薪</th>
-            <th scope="col">投递时间</th>
-            <th scope="col">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($resumes as $resume)
-            <tr>
-              <td class="color-red">{{ $resume->name }}</td>
-              <td>{{ $resume->sex }}</td>
-              <td>{{ $resume->age }}</td>
-              <td>{{ $resume->work_years_show }}</td>
-              <td>{{ $resume->education_show }}</td>
-              <td>{{ $resume->cur_company }}</td>
-              <td>{{ $resume->cur_position_show }}</td>
-              <td>{{ $resume->cur_salary }}K</td>
-              <td>{{ $resume->created_at }}</td>
-              <td>
-                <div class="btn-group" role="group">
-                  <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    操作
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a href="{{ route('resumes.edit', $resume) }}" class="dropdown-item">修改</a>
-                    <a href="{{ route('resumes.show', $resume) }}" class="dropdown-item" target="_blank">预览</a>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          @endforeach
-        </tbody>
-      </table>
-      <div class="row justify-content-end">
-        <div class="col-auto">
-          {{ $resumes->links('vendor.pagination.bootstrap-4') }}
+  <div class="resume-list-detail">
+    @foreach ($resumes as $resume)
+      <div class="resume-list-detail-item">
+        <div class="row">
+          <div class="col col-2 text-center">
+            <img src="{{ URL::asset('images/avatar_default.png') }}">
+          </div>
+          <div class="col">
+            <div class="row color-dark apart">
+              <div class="col col-auto">
+                {{ $resume->name }}
+              </div>
+              <div class="col col-auto">
+                {{ $resume->sex }}
+              </div>
+              <div class="col col-auto">
+                {{ $resume->age }}
+              </div>
+              <div class="col col-auto">
+                {{ $resume->location->city }}
+              </div>
+              <div class="col col-auto">
+                {{ $resume->education_show }}
+              </div>
+              <div class="col col-auto">
+                {{ $resume->work_years_show_list }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col">
+                目前月薪：{{ $resume->cur_salary_show_long }}
+              </div>
+              <div class="col">
+                来源渠道：{{ $resume->source_show }}
+              </div>
+            </div>
+          </div>
+          <div class="col text-truncate">
+            @foreach ($resume->resumeWorks as $index => $work)
+              <p title="{{ sprintf('%s %s %s（%s） 月薪：%s', $work->company_name, $work->job_type_show, $work->duration, $work->long, $work->salary_show) }}">
+                <span>{{ $work->company_name }}</span>
+                <span>{{ $work->job_type_show }}</span>
+                <span>{{ $work->duration }}</span>
+                <span class="color-silvery-gray">（{{ $work->long }}）</span>
+                <span>月薪：{{ $work->salary_show }}</span>
+              </p>
+            @endforeach
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-2 text-center">
+            <p class="color-light-gray">{{ $resume->updated_at }}</p>
+          </div>
+          <div class="col">
+            <button class="btn btn-light">期望城市：{{ $resume->exp_location->city }}</button>
+            <button class="btn btn-light">期望职位：{{ $resume->exp_position_show }}</button>
+            <button class="btn btn-light">求职者状态：{{ $resume->jobhunter_status_show }}</button>
+          </div>
+          <div class="col col-auto">
+            <div class="btn-group" role="group">
+              <button id="addToMyJob" type="button" class="btn dropdown-toggle btn-dropdown btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                加入我的职位
+              </button>
+              <div class="dropdown-menu" aria-labelledby="addToMyJob">
+                @foreach ($jobs as $job)
+                  <form method="POST" action="{{ route('resumes.update', $job) }}">
+                    {{ csrf_field() }}
+                    {{ method_field('PATCH') }}
+                    <button type="submit" class="dropdown-item">{{ $job->name }}</button>
+                  </form>
+                @endforeach
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      @include('shared._confirm')
+    @endforeach
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        {{ $resumes->links('vendor.pagination.bootstrap-4') }}
+      </div>
+    </div>
+    @include('shared._confirm')
   </div>
 @endif

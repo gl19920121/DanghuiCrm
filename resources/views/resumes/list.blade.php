@@ -69,8 +69,8 @@
       <div class="row">
         <div class="col col-12">
           <div class="resume-search-body">
-            <div class="row row-cols-2">
-              <div class="col-12">
+            <div class="row row-cols-2 justify-content-between">
+              <div class="col-10">
                 <div class="form-group form-inline">
                   <label for="location">目前城市：</label>
                   <div data-toggle="distpicker">
@@ -80,7 +80,10 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12">
+              <div class="col col-auto">
+                <a class="a-gray" href="{{ route('resumes.list') }}">清空搜索条件</a>
+              </div>
+              <div class="col col-12">
                 <div class="form-group form-inline">
                   <label for="exp_location">期望城市：</label>
                   <div data-toggle="distpicker">
@@ -173,17 +176,18 @@
                   <div class="input-group">
                       <input type="text" name="age_max" class="form-control small" value="{{ isset($parms['age_max']) ? $parms['age_max'] : '' }}" placeholder="不限" autocomplete="off" data-type="int">
                   </div>
-                  <label class="ml-4" for="sex">性别：</label>
+                  <button class="btn btn-secondary ml-3">确定</button>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group form-inline">
+                  <label for="sex">性别：</label>
                   <select name="sex" value="{{ isset($parms['sex']) ? $parms['sex'] : '' }}" class="form-control normal">
                     <option value="">不限</option>
                     <option @if(isset($parms['sex']) && $parms['sex'] === '男') selected @endif>男</option>
                     <option @if(isset($parms['sex']) && $parms['sex'] === '女') selected @endif>女</option>
                   </select>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-group form-inline">
-                  <label for="jobhunter_status">求职状态：</label>
+                  <label class="ml-3" for="jobhunter_status">求职状态：</label>
                   <select name="jobhunter_status" class="form-control normal">
                     <option value="">不限</option>
                     @foreach (App\Models\Resume::jobhunterStatusArr as $key => $jobhunterStatus)
@@ -213,7 +217,7 @@
                       </option>
                     @endforeach
                   </select>
-                  <label class="ml-4" for="updated_at">更新时间：</label>
+                  <label class="ml-3" for="updated_at">更新时间：</label>
                   <select name="updated_at" class="form-control normal">
                     <option value="">不限</option>
                     @foreach (App\Models\Resume::updateDateArr as $key => $updateDate)
@@ -229,11 +233,16 @@
                 </div>
               </div>
             </div>
+            <div class="row text-center">
+              <div class="col">
+                <a id="btnToggleDetail" class="a-gray" href="javascript:void(0);" onclick="toggleDetail($(this))">展开更多条件</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
+      <div id="resumeSearchDetail" class="row">
         <div class="col col-12">
           <div class="resume-search-footer">
             <div class="row row-cols-2">
@@ -250,6 +259,7 @@
                   <div class="input-group">
                       <input type="text" name="exp_year_salary_max" class="form-control small" value="{{ isset($parms['exp_year_salary_max']) ? $parms['exp_year_salary_max'] : '' }}" placeholder="不限" autocomplete="off" data-type="int">
                   </div>
+                  <button class="btn btn-secondary ml-3">确定</button>
                 </div>
               </div>
               <div class="col">
@@ -262,6 +272,7 @@
                   <div class="input-group">
                       <input type="text" name="cur_year_salary_max" class="form-control small" value="{{ isset($parms['cur_year_salary_max']) ? $parms['cur_year_salary_max'] : '' }}" placeholder="不限" autocomplete="off" data-type="int">
                   </div>
+                  <button class="btn btn-secondary ml-3">确定</button>
                 </div>
               </div>
               <div class="col">
@@ -329,27 +340,51 @@
           </div>
         </div>
       </div>
+      <input type="hidden" name="tab">
+      <input type="hidden" name="show_detail">
+      <input type="hidden" name="hide_get">
     </div>
   </form>
 
-  <div class="resume-list bg-white">
+  <div id="resumeList" class="resume-list bg-white">
     <div class="resume-list-header">
       <div class="row justify-content-between">
         <div class="col col-auto">
-          <div class="custom-control custom-checkbox custom-control-inline ml-3">
+          <div hidden class="custom-control custom-checkbox custom-control-inline ml-3">
             <input type="checkbox" id="chooseAll" class="custom-control-input" onclick="chooseAll($(this))">
             <label class="custom-control-label" for="chooseAll">全选</label>
           </div>
+          <button hidden class="btn btn-light">批量查看</button>
+          <div class="custom-control custom-checkbox custom-control-inline ml-3">
+            <input type="checkbox" id="hideSeen" class="custom-control-input">
+            <label class="custom-control-label" for="hideSeen">隐藏已查看</label>
+          </div>
+          <div class="custom-control custom-checkbox custom-control-inline ml-3">
+            <input type="checkbox" id="hideGet" @if($hideGet) checked @endif onclick="hideGet($(this))" class="custom-control-input">
+            <label class="custom-control-label" for="hideGet">隐藏已获取</label>
+          </div>
         </div>
         <div class="col col-auto">
-          <span>共<span class="color-red">{{ count($resumes) > 0 ? $resumes->total() : 0 }}</span>位人选</span>
-          <img src="{{ URL::asset('images/icon_general.png') }}">
-          <img src="{{ URL::asset('images/icon_detail_checked.png') }}">
+          <span class="color-silvery-gray mr-3">共<span class="color-red">{{ count($resumes) > 0 ? $resumes->total() : 0 }}</span>位人选</span>
+          @if ($tab === 'detail')
+            <a href="#resumeList" onclick="changeTab('general')"><img class="mr-3" src="{{ URL::asset('images/icon_general.png') }}"></a>
+            <a href="#resumeList" onclick="changeTab('detail')"><img src="{{ URL::asset('images/icon_detail_checked.png') }}"></a>
+          @elseif ($tab === 'general')
+            <a href="#resumeList" onclick="changeTab('general')"><img class="mr-3" src="{{ URL::asset('images/icon_general_checked.png') }}"></a>
+            <a href="#resumeList" onclick="changeTab('detail')"><img src="{{ URL::asset('images/icon_detail.png') }}"></a>
+          @else
+            <a href="#resumeList" onclick="changeTab('general')"><img class="mr-3" src="{{ URL::asset('images/icon_general.png') }}"></a>
+            <a href="#resumeList" onclick="changeTab('detail')"><img src="{{ URL::asset('images/icon_detail.png') }}"></a>
+          @endif
         </div>
       </div>
     </div>
     <div class="resume-list-body">
-      @include('resumes.shared._list_general')
+      @if ($tab === 'detail')
+        @include('resumes.shared._list_detail')
+      @else
+        @include('resumes.shared._list_general')
+      @endif
     </div>
   </div>
 </div>
@@ -370,13 +405,57 @@
     $('#resumeSearchForm').submit();
   }
 
+  function changeTab(tab)
+  {
+    $('input[name="tab"]').val(tab);
+    submitResumeSearchForm();
+  }
+
+  function toggleDetail(e)
+  {
+    if ($('#resumeSearchDetail').is(":hidden")) {
+      $('input[name="show_detail"]').val('1');
+      $('#resumeSearchDetail').show('fast');
+      e.text('收起');
+    } else {
+      $('input[name="show_detail"]').val('0');
+      $('#resumeSearchDetail').hide();
+      e.text('展开更多条件');
+    }
+    // $('#resumeSearchDetail').toggle();
+  }
+
+  function hideGet(e)
+  {
+    if (e.is(':checked')) {
+      $('input[name="hide_get"]').val(1);
+    } else {
+      $('input[name="hide_get"]').val(0);
+    }
+  }
+
+  function init()
+  {
+    @if ($showDetail === 0)
+      $('#resumeSearchDetail').hide();
+      $('#btnToggleDetail').text('展开更多条件');
+    @else
+      $('#resumeSearchDetail').show();
+      $('#btnToggleDetail').text('收起');
+    @endif
+  }
+
   $('button').click(function() {
-    if ($(this).attr('id') != 'btnGroupDrop1') {
+    if ($(this).attr('id') != 'btnGroupDrop1' && $(this).attr('id') != 'addToMyJob') {
       submitResumeSearchForm();
     }
   })
 
   $('select').change(function() {
+    submitResumeSearchForm();
+  })
+
+  $('input[type="checkbox"]').change(function() {
     submitResumeSearchForm();
   })
 
@@ -387,6 +466,8 @@
   $('#industryModal').on('hide.bs.modal', function (e) {
     submitResumeSearchForm();
   })
+
+  init();
 
 </script>
 @stop
