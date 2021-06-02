@@ -58,6 +58,10 @@ a.a-gray:hover {
   color: #B5B5B6;
 }
 
+.color-text-gray {
+  color: #9FA0A0;
+}
+
 .font-size-xl {
   font-size: 24px;
 }
@@ -1364,63 +1368,59 @@ ul.nav-sec-left {
   margin-bottom: 0;
   font-size: 16px;
   color: #3E3A39;
-  background: white;
-  overflow-y: scroll;
 }
 
 ul.nav-sec-left > li {
   line-height: 40px;
-  padding-left: 22px;
   cursor: pointer;
 }
 
 ul.nav-sec-left > li:before {
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #EFEFEF;
   position: absolute;
   bottom: 0;
   left: 50%;
   margin-left: -9px;
 }
 
-ul.nav-sec-left > li p {
-  margin-bottom: 0;
-}
-
 ul.nav-sec-left > li a {
-  height: 40px;
+  height: 44px;
+  height: 44px;
+  padding-left: 22px;
+  font-size: 16px;
   color: #3E3A39;
-  text-decoration: none;
 }
 
-ul.nav-sec-left li.selected {
-  padding-left: 18px;
-  border-left: 4px solid;
-  border-color: #D83856;
-  background-color: #fff;
-}
-
-ul.nav-sec-left ul.sub {
+ul.nav-sec-left > li ul.sub {
   width: 100%;
   height: auto;
   padding-left: 0;
 }
 
-ul.nav-sec-left ul.sub li {
-  padding-left: 22px;
+ul.nav-sec-left > li ul.sub > li {
   cursor: pointer;
 }
 
-ul.nav-sec-left ul.sub li a {
+ul.nav-sec-left > li ul.sub > li a {
   height: 44px;
   line-height: 44px;
+  padding-left: 36px;
+  font-size: 14px;
   color: #3E3A39;
-  text-decoration: none;
 }
 
-ul.nav-sec-left ul.sub li.selected {
-  padding-left: 18px;
-  border-left: 4px solid;
-  border-color: #D83856;
-  background-color: #fff;
+ul.nav-sec-left > li ul.sub > li.active {
+  border-left: 4px solid #D83856;
+  background-color: white;
+}
+
+ul.nav-sec-left > li ul.sub > li.active a {
+  padding-left: 32px;
+  color: #D83856;
 }
 
 .bg-gray {
@@ -1730,6 +1730,14 @@ ul.nav-sec-left ul.sub li.selected {
   height: 13px;
 }
 
+.resume-mine {
+  margin-top: 22px;
+}
+
+.resume-mine > .row:first-child > .col > div:first-child {
+  height: 100%;
+}
+
 .resume-mine .mine-nav {
   width: 303px;
 }
@@ -1740,12 +1748,34 @@ ul.nav-sec-left ul.sub li.selected {
 
 .resume-mine .mine-nav ul > li {
   width: 253px;
-  cursor: pointer;
 }
 
-.resume-mine .mine-nav ul li.active {
-  color: #D83856;
-  background-color: white;
-  border-left: 3px solid #D83856;
+.resume-mine .mine-body {
+  padding: 53px 35px;
+}
+
+.resume-mine .mine-body .search .search-detail {
+  padding: 35px;
+}
+
+.resume-mine .large {
+  width: 580px;
+}
+
+.resume-mine .normal {
+  width: 185px;
+}
+
+.resume-mine .small {
+  width: 100px;
+}
+
+.resume-mine .append {
+  border-radius: 5px;
+}
+
+.resume-mine .append:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 

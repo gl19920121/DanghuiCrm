@@ -37,7 +37,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ in_array(Route::currentRouteName(), []) ? 'active': '' }}" href="#">
+              <a class="nav-link {{ in_array(Route::currentRouteName(), ['resumes.current']) ? 'active': '' }}" href="{{ route('resumes.current') }}">
                 新上传
               </a>
             </li>

@@ -288,10 +288,51 @@ class ResumesController extends Controller
     public function mine(Request $request)
     {
         $resumes = Resume::
-            where('status', '=', 1)
+            where('status', '!=', 0)
             ->where('upload_uid', '=', Auth::user()->id)
+            ->with(['resumeEdus' => function($query) {
+                $query->orderBy('end_at', 'desc');
+            }])
+            ->with(['resumeWorks' => function($query) {
+                $query->orderBy('end_at', 'desc');
+            }])
         ;
-        return view('resumes.mine', compact('resumes'));
+
+        $countInfo = [
+            'all' => $resumes->count(),
+            'seen' => $resumes->count(),
+            'apply' => $resumes->count(),
+            'commission' => $resumes->count(),
+            'collect' => $resumes->where('is_collect', 1)->count(),
+            'seenmy' => $resumes->count(),
+            'relay' => $resumes->count(),
+        ];
+
+        $resumes = $resumes->paginate($this->pageSize);
+        $tab = isset($request->tab) ? $request->tab : 'all';
+        $showDetail = isset($request->show_detail) ? (int)$request->show_detail : 0;
+        // return dd($showDetail);
+
+        return view('resumes.mine', compact('resumes', 'tab', 'showDetail', 'countInfo'));
+    }
+
+    public function current(Request $request)
+    {
+        $resumes = Resume::
+            where('status', '!=', 0)
+            ->where('upload_uid', '=', Auth::user()->id)
+            ->with(['resumeEdus' => function($query) {
+                $query->orderBy('end_at', 'desc');
+            }])
+            ->with(['resumeWorks' => function($query) {
+                $query->orderBy('end_at', 'desc');
+            }])
+            ->paginate($this->pageSize)
+        ;
+
+        $jobs = Job::where('status', '!=', 0)->where('execute_uid', '=', Auth::user()->id)->get();
+
+        return view('resumes.current', compact('resumes', 'jobs'));
     }
 
     private function mb_str_split($str) {

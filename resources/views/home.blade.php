@@ -207,7 +207,7 @@
                                   <p class="color-light-gray font-size-s">ID:{{ $resume->no }}</p>
                                 </div>
                                 <div class="col col-auto">
-                                  <p class="color-light-gray font-size-s">投递时间：{{ $job->created_at }}</p>
+                                  <p class="color-light-gray font-size-s">投递时间：{{ $resume->job->created_at }}</p>
                                 </div>
                               </div>
                               <div class="row">
@@ -216,13 +216,13 @@
                                 </div>
                                 <div class="col">
                                   <p class="color-red">
-                                    {{ $resume->name }}<span>|</span>{{ $resume->sex }}<span>|</span>{{ sprintf('%s岁', $resume->age) }}<span>|</span>{{ $resume->city }}<span>|</span>{{ $resume->education }}<span>|</span>{{ sprintf('工作%s年', $resume->work_years) }}
+                                    {{ $resume->name }}<span>|</span>{{ $resume->sex }}<span>|</span>{{ sprintf('%s岁', $resume->age) }}<span>|</span>{{ $resume->city }}<span>|</span>{{ $resume->education_show }}<span>|</span>{{ sprintf('工作%s年', $resume->work_years) }}
                                   </p>
                                   <p>最高学历：</p>
                                   <p>近期工作：</p>
                                   <p>
-                                    <span>求职者状态：</span>
-                                    <span class="ml-2">来源渠道：</span>
+                                    <span>求职者状态：{{ $resume->jobhunter_status_show }}</span>
+                                    <span class="ml-2">来源渠道：{{ $resume->source_show }}</span>
                                   </p>
                                   <p>委托职位：<span class="color-red">{{ $resume->job->name }}</span></p>
                                 </div>

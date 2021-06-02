@@ -356,6 +356,19 @@
 }
 
 .resume-mine {
+  margin-top: 22px;
+
+  > .row {
+    &:first-child {
+      > .col {
+        > div {
+          &:first-child {
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
   .mine-nav {
     width: 303px;
 
@@ -364,14 +377,38 @@
 
       > li {
         width: 253px;
-        cursor: pointer;
       }
+    }
+  }
 
-      li.active {
-        color: $color-red;
-        background-color: white;
-        border-left: 3px solid $color-red;
+  .mine-body {
+    padding: 53px 35px;
+
+    .search {
+      .search-detail {
+        padding: 35px;
       }
+    }
+  }
+
+  .large {
+    width: 580px;
+  }
+
+  .normal {
+    width: 185px;
+  }
+
+  .small {
+    width: 100px;
+  }
+
+  .append {
+    border-radius: 5px;
+
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
 }

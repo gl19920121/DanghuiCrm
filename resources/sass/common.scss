@@ -26,6 +26,7 @@ $color-silvery-gray: #B5B5B6;
 $color-border-gray: #C9CACA;
 $color-french-gray: #DCDDDD;
 $color-ashy: #F7F8F8;
+$color-text-gray: #9FA0A0;
 
 $img-url-public: "../images/";
 $img-url-login: "../images/login/";
@@ -88,6 +89,10 @@ a.a-gray {
 
 .color-silvery-gray {
   color: $color-silvery-gray;
+}
+
+.color-text-gray {
+  color: $color-text-gray;
 }
 
 .font-size-xl {
@@ -478,7 +483,7 @@ a.a-gray {
             margin-bottom: 30px;
           }
           p {
-            color: #9FA0A0;
+            color: $color-text-gray;
           }
         }
       }
@@ -1503,12 +1508,9 @@ ul.nav-sec-left {
   margin-bottom: 0;
   font-size: $font-size-n;
   color: $color-n;
-  background: white;
-  overflow-y: scroll;
 
   > li {
     line-height: 40px;
-    padding-left: 22px;
     cursor: pointer;
 
     &:before {
@@ -1523,46 +1525,40 @@ ul.nav-sec-left {
       margin-left: -9px;
     }
 
-    p {
-      margin-bottom: 0;
-    }
-
     a {
-      height: 40px;
-      color: $color-n;
-      text-decoration: none;
-    }
-  }
-
-  li.selected {
-    padding-left: 18px;
-    border-left: 4px solid;
-    border-color: $color-red;
-    background-color: #fff;
-  }
-
-  ul.sub {
-    width: 100%;
-    height: auto;
-    padding-left: 0;
-
-    li {
+      height: 44px;
+      height: 44px;
       padding-left: 22px;
-      cursor: pointer;
-
-      a {
-        height: 44px;
-        line-height: 44px;
-        color: $color-n;
-        text-decoration: none;
-      }
+      font-size: $font-size-n;
+      color: $color-n;
     }
 
-    li.selected {
-      padding-left: 18px;
-      border-left: 4px solid;
-      border-color: $color-red;
-      background-color: #fff;
+    ul.sub {
+      width: 100%;
+      height: auto;
+      padding-left: 0;
+
+      > li {
+        cursor: pointer;
+
+        a {
+          height: 44px;
+          line-height: 44px;
+          padding-left: 36px;
+          font-size: $font-size-m;
+          color: $color-n;
+        }
+      }
+
+      > li.active {
+        border-left: 4px solid $color-red;
+        background-color: white;
+
+        a {
+          padding-left: 32px;
+          color: $color-red;
+        }
+      }
     }
   }
 }
