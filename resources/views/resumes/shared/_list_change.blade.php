@@ -84,7 +84,9 @@
   })
 
   $('select').change(function() {
-    submitResumeSearchForm();
+    if (isSubmit) {
+      submitResumeSearchForm();
+    }
   })
 
   $('input[type="checkbox"]').change(function() {

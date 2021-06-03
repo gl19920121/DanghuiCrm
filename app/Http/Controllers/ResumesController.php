@@ -55,11 +55,9 @@ class ResumesController extends Controller
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->limit(6)->get();
 
         if (!$isShow) {
-
             $resumes = [];
             $tab = isset($request->tab) ? $request->tab : '';
         } else {
-
             $resumes = self::getBaseSearch($request, $jobId);
             if (!empty($request->school)) {
                 $resumes = $resumes->whereHas('resumeEdus', function ($query) use($request) {
@@ -435,13 +433,19 @@ class ResumesController extends Controller
         return preg_split('/(?<!^)(?!$)/u', $str );
     }
 
-    private function formatLikeKey(String $string)
+    private function formatLikeKey($string, $all = [])
     {
+        if (empty($string)) {
+            return $all;
+        }
+
         $arr = explode(' ', $string);
         foreach ($arr as $index => $value) {
-            $arr[$index] = '%' . implode('%', $this->mb_str_split($value)) . '%';
+            // $arr[$index] = '%' . implode('%', $this->mb_str_split($value)) . '%';
+            $arr[$index] = '%' . $value . '%';
         }
-        return $arr;
+
+        return array_merge($arr, $all);
     }
 
     private function doOperation($resumeId, $userId, $type)
@@ -465,27 +469,33 @@ class ResumesController extends Controller
 
     private function getBaseSearch($request, $jobId = null)
     {
-        if ($jobId !== null) {
-            $job = Job::find($jobId);
-            // return dd($job);
-            $input['all'] = null;
-            $input['job_name'] = $job->name;
+        if (empty($request->all)) {
+            $hasAll = false;
+            $allLikes = [];
         } else {
-            $input = $request->all();
+            $hasAll = true;
+            $allLikes = $this->formatLikeKey($request->all);
         }
-        // return dd($input);
+        // return dd($allLikes);
 
         return Resume::
             where('status', '!=', 0)
             ->where(function ($query) use($request) {
                 if (!empty($request->all)) {
                     $likes = $this->formatLikeKey($request->all);
-                    foreach ($likes as $index => $like) {
-                        if ($index === 0) {
-                            $query->where('name', 'like', $like);
-                        } else {
-                            $query->orWhere('name', 'like', $like);
-                        }
+                    foreach ($likes as $like) {
+                        $query->orWhere('cur_company', 'like', $like);
+
+                        $query->orWhere('location', 'like', $like);
+                        $query->orWhere('exp_location', 'like', $like);
+
+                        $query->orWhere('cur_industry', 'like', $like);
+                        $query->orWhere('cur_position', 'like', $like);
+
+                        $query->orWhere('exp_industry', 'like', $like);
+                        $query->orWhere('exp_position', 'like', $like);
+
+                        $query->orWhere('major', 'like', $like);
                     }
                 }
             })

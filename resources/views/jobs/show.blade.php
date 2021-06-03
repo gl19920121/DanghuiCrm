@@ -41,19 +41,35 @@
         </div>
       </div>
       <div class="col-auto">
-        <form method="POST" action="{{ route('jobs.exported', ['job_id' => $job->id, 'job_name' => $job->name, 'job_company' => $job->company, 'created_at' => $job->created_at]) }}">
-          {{ csrf_field() }}
-          <button class="btn btn-info">简历导入</button>
-        </form>
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            简历导入
+          </button>
+          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            @foreach ($availableResumes as $resume)
+              <form method="POST" action="{{ route('resumes.update', [$resume, 'job_id' => $job->id]) }}">
+                {{ csrf_field() }}
+                {{ method_field('PATCH') }}
+                <button class="dropdown-item" type="submit" data-toggle="modal" data-target="#confirmModal">{{ $resume->name }}</button>
+              </form>
+            @endforeach
+          </div>
+        </div>
         <div class="btn-group" role="group">
           <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             更多操作
           </button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <a class="dropdown-item" href="#">刷新</a>
-            <a class="dropdown-item" href="#">修改</a>
-            <a class="dropdown-item" href="#">暂停</a>
-            <a class="dropdown-item" href="#">结束</a>
+            <a class="dropdown-item" href="{{ route('jobs.show', $job) }}">刷新</a>
+            <a class="dropdown-item" href="{{ route('jobs.edit', $job) }}">修改</a>
+            <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'pause']) }}">
+              {{ csrf_field() }}
+              <button type="submit" class="dropdown-item">暂停</button>
+            </form>
+            <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'end']) }}">
+              {{ csrf_field() }}
+              <button type="submit" class="dropdown-item">结束</button>
+            </form>
             <form method="POST" action="{{ route('jobs.destroy', $job) }}">
               {{ csrf_field() }}
               {{ method_field('DELETE') }}

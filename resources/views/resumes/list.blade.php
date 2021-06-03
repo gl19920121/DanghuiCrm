@@ -353,6 +353,8 @@
 
 <script type="text/javascript">
 
+  var isSubmit = true;
+
   function submitResumeSearchForm()
   {
     $('#resumeSearchForm').submit();
@@ -365,13 +367,27 @@
     let job = JSON.parse(jobInfo);
     // let company = JSON.parse(companyInfo);
 
-    console.log(job.location.province);
+    console.log(job.sex);
+
+    isSubmit = false;
 
     $('input[name="job_name"]').val(job.name);
     $('input[name="company_name"]').val(companyName);
-    // $('input[name="location[province]"]').text(job.location.province);
 
-    // submitResumeSearchForm();
+    $('select[name="location[province]"]').val(job.location.province);
+    $('select[name="location[province]"]').trigger("change");
+    $('select[name="location[city]"]').val(job.location.city);
+    $('select[name="location[city]"]').trigger("change");
+    $('select[name="location[district]"]').val(job.location.district);
+    $('select[name="location[district]"]').trigger("change");
+
+    $('select[name="experience"]').val(job.experience);
+    $('select[name="education"]').val(job.education);
+
+    $('input[name="age_min"]').val(job.age_min);
+    $('input[name="age_max"]').val(job.age_max);
+
+    submitResumeSearchForm();
   }
 
   function init()

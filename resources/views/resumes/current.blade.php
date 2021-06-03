@@ -5,13 +5,13 @@
     <input type="hidden" name="tab" value="{{ $tab }}">
     @include('resumes.shared._list_change')
   </form>
+
+  <script type="text/javascript">
+
+    function submitResumeSearchForm()
+    {
+      $('#resumeSearchForm').submit();
+    }
+
+  </script>
 @stop
-
-<script type="text/javascript">
-
-  function submitResumeSearchForm()
-  {
-    $('#resumeSearchForm').submit();
-  }
-
-</script>

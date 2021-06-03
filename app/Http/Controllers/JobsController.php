@@ -218,6 +218,8 @@ class JobsController extends Controller
             })
             ->paginate($this->pageSize);
 
+        $availableResumes = Resume::where('status', 1)->where('job_id', null)->get();
+
         $count = [
             'untreated' => $job->resumes()->whereIn('status', [1, -1])->count(),
             'talking' => $job->resumes()->where('status', '=', 2)->count(),
@@ -235,7 +237,8 @@ class JobsController extends Controller
             ->with('job', $job)
             ->with('resumes', $resumes)
             ->with('count', $count)
-            ->with('tab', $tab);
+            ->with('tab', $tab)
+            ->with('availableResumes', $availableResumes);
     }
 
     public function edit(Job $job)
