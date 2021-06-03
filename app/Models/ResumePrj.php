@@ -7,6 +7,9 @@ use DateTime;
 
 class ResumePrj extends Model
 {
+    protected $fillable = [];
+    protected $guarded = [];
+
     public function getDurationAttribute()
     {
         if ($this->is_not_end) {

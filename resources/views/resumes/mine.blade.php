@@ -29,10 +29,10 @@
                             <li @if($tab === 'collect') class="active" @endif>
                                 <a href="{{ route('resumes.mine', ['tab' => 'collect']) }}">收藏的简历（{{ $countInfo['collect'] }}）</a>
                             </li>
-                            <li @if($tab === 'seenmy') class="active" @endif>
+                            <li hidden @if($tab === 'seenmy') class="active" @endif>
                                 <a href="{{ route('resumes.mine', ['tab' => 'seenmy']) }}">看过我的人（{{ $countInfo['seenmy'] }}）</a>
                             </li>
-                            <li @if($tab === 'relay') class="active" @endif>
+                            <li hidden @if($tab === 'relay') class="active" @endif>
                                 <a href="{{ route('resumes.mine', ['tab' => 'relay']) }}">转发的简历（{{ $countInfo['relay'] }}）</a>
                             </li>
                         </ul>

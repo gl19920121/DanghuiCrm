@@ -3,10 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Job;
-use App\Models\ResumeWork;
-use App\Models\ResumePrj;
-use App\Models\ResumeEdu;
+use Auth;
 
 class Resume extends Model
 {
@@ -53,9 +50,34 @@ class Resume extends Model
         '5' => ['text' => '一个月以上']
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'upload_uid');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id);
+    }
+
+    public function usersSeen()
+    {
+        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'seen');
+    }
+
+    public function usersCollect()
+    {
+        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'collect');
+    }
+
+    public function usersRelay()
+    {
+        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'relay');
+    }
+
     public function job()
     {
-        return $this->belongsTo(Job::class);
+        return $this->belongsTo(Job::class)->where('execute_uid', Auth::user()->id);
     }
 
     public function resumeWorks()

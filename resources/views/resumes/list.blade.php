@@ -46,10 +46,10 @@
               <div class="col-12">
                 <div class="form-group form-inline">
                   <label>发布中的职位：</label>
-                  <form id="searchByCurJob" method="GET" action="{{ route('resumes.list') }}">
+                  <form id="curJobs" method="GET" action="{{ route('resumes.list') }}">
                     <input type="hidden" name="job_id">
                     @foreach ($jobs as $job)
-                      <div class="cur-jobs font-size-m mr-4" onclick="searchByCurJob('{{ $job->id }}')">
+                      <div class="cur-jobs font-size-m mr-4" onclick="searchByCurJob('{{ $job }}', '{{ $job->company->name }}')">
                         <p class="text-truncate m-1" title="{{ sprintf('%s | %s | %s', $job->company->name, $job->location_show, $job->salary_show) }}">
                           <span>{{ $job->name }}</span>
                           <span class="color-silvery-gray text-truncate">（{{ $job->company->name }} | </span>
@@ -57,6 +57,7 @@
                           <span class="color-silvery-gray text-truncate">{{ $job->salary_show }}）</span>
                         </p>
                       </div>
+                      <input type="hidden" data-jobid="{{ $job }}">
                     @endforeach
                   </form>
                 </div>
@@ -340,53 +341,11 @@
           </div>
         </div>
       </div>
-      <input type="hidden" name="tab">
-      <input type="hidden" name="show_detail">
-      <input type="hidden" name="hide_get">
+      <input type="hidden" name="tab" value="{{ $tab }}">
+      <input type="hidden" name="show_detail" value="{{ $showDetail }}">
+      @include('resumes.shared._list_change')
     </div>
   </form>
-
-  <div id="resumeList" class="resume-list bg-white">
-    <div class="resume-list-header">
-      <div class="row justify-content-between">
-        <div class="col col-auto">
-          <div hidden class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" id="chooseAll" class="custom-control-input" onclick="chooseAll($(this))">
-            <label class="custom-control-label" for="chooseAll">全选</label>
-          </div>
-          <button hidden class="btn btn-light">批量查看</button>
-          <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" id="hideSeen" class="custom-control-input">
-            <label class="custom-control-label" for="hideSeen">隐藏已查看</label>
-          </div>
-          <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" id="hideGet" @if($hideGet) checked @endif onclick="hideGet($(this))" class="custom-control-input">
-            <label class="custom-control-label" for="hideGet">隐藏已获取</label>
-          </div>
-        </div>
-        <div class="col col-auto">
-          <span class="color-silvery-gray mr-3">共<span class="color-red">{{ count($resumes) > 0 ? $resumes->total() : 0 }}</span>位人选</span>
-          @if ($tab === 'detail')
-            <a href="#resumeList" onclick="changeTab('general')"><img class="mr-3" src="{{ URL::asset('images/icon_general.png') }}"></a>
-            <a href="#resumeList" onclick="changeTab('detail')"><img src="{{ URL::asset('images/icon_detail_checked.png') }}"></a>
-          @elseif ($tab === 'general')
-            <a href="#resumeList" onclick="changeTab('general')"><img class="mr-3" src="{{ URL::asset('images/icon_general_checked.png') }}"></a>
-            <a href="#resumeList" onclick="changeTab('detail')"><img src="{{ URL::asset('images/icon_detail.png') }}"></a>
-          @else
-            <a href="#resumeList" onclick="changeTab('general')"><img class="mr-3" src="{{ URL::asset('images/icon_general.png') }}"></a>
-            <a href="#resumeList" onclick="changeTab('detail')"><img src="{{ URL::asset('images/icon_detail.png') }}"></a>
-          @endif
-        </div>
-      </div>
-    </div>
-    <div class="resume-list-body">
-      @if ($tab === 'detail')
-        @include('resumes.shared._list_detail')
-      @else
-        @include('resumes.shared._list_general')
-      @endif
-    </div>
-  </div>
 </div>
 
 @include('shared._industry')
@@ -394,44 +353,25 @@
 
 <script type="text/javascript">
 
-  function searchByCurJob(jobId)
-  {
-    $('input[name="job_id"]').val(jobId);
-    $('#searchByCurJob').submit();
-  }
-
   function submitResumeSearchForm()
   {
     $('#resumeSearchForm').submit();
   }
 
-  function changeTab(tab)
+  function searchByCurJob(jobInfo, companyName)
   {
-    $('input[name="tab"]').val(tab);
-    submitResumeSearchForm();
-  }
+    // console.log(jobInfo);
 
-  function toggleDetail(e)
-  {
-    if ($('#resumeSearchDetail').is(":hidden")) {
-      $('input[name="show_detail"]').val('1');
-      $('#resumeSearchDetail').show('fast');
-      e.text('收起');
-    } else {
-      $('input[name="show_detail"]').val('0');
-      $('#resumeSearchDetail').hide();
-      e.text('展开更多条件');
-    }
-    // $('#resumeSearchDetail').toggle();
-  }
+    let job = JSON.parse(jobInfo);
+    // let company = JSON.parse(companyInfo);
 
-  function hideGet(e)
-  {
-    if (e.is(':checked')) {
-      $('input[name="hide_get"]').val(1);
-    } else {
-      $('input[name="hide_get"]').val(0);
-    }
+    console.log(job.location.province);
+
+    $('input[name="job_name"]').val(job.name);
+    $('input[name="company_name"]').val(companyName);
+    // $('input[name="location[province]"]').text(job.location.province);
+
+    // submitResumeSearchForm();
   }
 
   function init()
@@ -444,28 +384,6 @@
       $('#btnToggleDetail').text('收起');
     @endif
   }
-
-  $('button').click(function() {
-    if ($(this).attr('id') != 'btnGroupDrop1' && $(this).attr('id') != 'addToMyJob') {
-      submitResumeSearchForm();
-    }
-  })
-
-  $('select').change(function() {
-    submitResumeSearchForm();
-  })
-
-  $('input[type="checkbox"]').change(function() {
-    submitResumeSearchForm();
-  })
-
-  $('#jobtypeModal').on('hide.bs.modal', function (e) {
-    submitResumeSearchForm();
-  })
-
-  $('#industryModal').on('hide.bs.modal', function (e) {
-    submitResumeSearchForm();
-  })
 
   init();
 

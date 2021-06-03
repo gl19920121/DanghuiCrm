@@ -235,7 +235,7 @@
                 </div>
                 <div class="form-group form-inline">
                     <label for="deadline"><span>*</span>截止日期：</label>
-                    <div class="input-group date" id="datetimepicker1">
+                    <div class="input-group date datetimepicker">
                       <input type="text" name="deadline" class="form-control normal" value="{{  $job->deadline }}" placeholder="请选择" autocomplete="off">
                       <span class="input-group-text">
                         <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -284,7 +284,11 @@
     var industryShow = industry.th;
     $('#companyIndustry').addClass('text-truncate').attr('title', industryShow).text(industryShow);
 
-    $('#companyIntroduction').attr('title', company.introduction).text('介绍：'+company.introduction);
+    if (company.introduction != null) {
+      $('#companyIntroduction').attr('title', company.introduction).text('介绍：'+company.introduction);
+    } else {
+      $('#companyIntroduction').empty();
+    }
   }
 
   function setRemark()

@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Job;
 
 class ResumeEdu extends Model
 {
+    protected $fillable = [];
+    protected $guarded = [];
+
     public function getStartAtShowAttribute()
     {
         return date('Y.m.d', strtotime($this->start_at));

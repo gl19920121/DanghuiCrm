@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
-use App\Models\Company;
 
 class ResumeWork extends Model
 {
+    protected $fillable = [];
+    protected $guarded = [];
+
     public function getCompanyIndustryAttribute()
     {
         return json_decode($this->attributes['company_industry']);

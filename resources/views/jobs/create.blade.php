@@ -252,7 +252,7 @@
                 </div>
                 <div class="form-group form-inline">
                   <label for="deadline"><span class="color-red">*</span>截止日期：</label>
-                  <div class="input-group date" id="datetimepicker1">
+                  <div class="input-group date datetimepicker">
                     <input type="text" name="deadline" class="form-control normal append" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请选择" autocomplete="off">
                     <div class="input-group-append">
                       <span class="input-group-text">
@@ -304,7 +304,11 @@
     var industryShow = industry.th;
     $('#companyIndustry').addClass('text-truncate').attr('title', industryShow).text(industryShow);
 
-    $('#companyIntroduction').attr('title', company.introduction).text('介绍：'+company.introduction);
+    if (company.introduction != null) {
+      $('#companyIntroduction').attr('title', company.introduction).text('介绍：'+company.introduction);
+    } else {
+      $('#companyIntroduction').empty();
+    }
   }
 
   function setRemark()

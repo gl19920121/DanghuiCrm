@@ -27,10 +27,16 @@
                 {{ $resume->work_years_show_list }}
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-
-              </div>
+            <div class="row apart mt-3">
+              @foreach ($resume->resumeEdus as $index => $resumeEdu)
+                @if ($index === 0)
+                    <div class="col col-auto">
+                      最高学历：{{ $resumeEdu->duration }}
+                    </div>
+                    <div class="col col-auto">{{ $resumeEdu->school_name }}</div>
+                    <div class="col col-auto">{{ $resumeEdu->school_level_show }}</div>
+                @endif
+              @endforeach
             </div>
             <div class="row mt-3">
               <div class="col">

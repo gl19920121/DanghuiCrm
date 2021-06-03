@@ -24,7 +24,6 @@ class GeneralsController extends Controller
 
     public function show(Request $request)
     {
-        // $this->authorize('view', [User::Class, Route::current()]);
         $jobs = Job::where('status', '=', 1)
             ->where('execute_uid', '=', Auth::user()->id)
             ->withCount('resumes')
@@ -41,12 +40,18 @@ class GeneralsController extends Controller
                 $query->where('status', '=', 1);
                 $query->where('execute_uid', '=', Auth::user()->id);
             })
-            ->with(['job' => function($query) {
-                $query->select('id', 'name');
-            }])
+            ->with([
+                'job' => function($query) {
+                    $query->select('id', 'name');
+                },
+                'resumeEdus' => function($query) {
+                    $query->orderBy('end_at', 'desc');
+                },
+                'resumeWorks' => function($query) {
+                    $query->orderBy('end_at', 'desc');
+                }
+            ])
             ->paginate($this->pageSize, ['*'], 'nrpage');
-
-        // return dd($newResumes->toArray()['data']);
 
         $list = [
             'jobs' => $jobs,

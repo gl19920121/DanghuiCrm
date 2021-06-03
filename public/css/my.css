@@ -2871,12 +2871,13 @@ ul.nav-sec-left > li ul.sub > li.active a {
 
 .resume-list {
   margin-top: 25px;
-  padding: 0 92px;
 }
 
 .resume-list .resume-list-header {
   padding-top: 34px;
   padding-bottom: 23px;
+  margin-left: 92px;
+  margin-right: 92px;
   border-bottom: 1px solid #C9CACA;
 }
 
@@ -3107,8 +3108,13 @@ ul.nav-sec-left > li ul.sub > li.active a {
   background-color: white;
 }
 
+.resume-list-general {
+  padding: 0 92px;
+}
+
 .resume-list-general .resume-table-general {
   border: 1px solid rgba(137, 137, 137, 0.1);
+  border-top: none;
 }
 
 .resume-list-general .resume-table-general thead {
@@ -3135,7 +3141,7 @@ ul.nav-sec-left > li ul.sub > li.active a {
 }
 
 .resume-list-detail .resume-list-detail-item {
-  padding: 38px 0;
+  padding: 38px 92px;
 }
 
 .resume-list-detail .resume-list-detail-item:nth-child(2n) {

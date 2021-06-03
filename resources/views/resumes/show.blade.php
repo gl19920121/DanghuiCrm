@@ -122,11 +122,10 @@
             <div class="col col-auto align-self-end">
               <div class="row">
                 <div class="col col-auto">
-                  <form id="collect_form" method="POST" action="{{ route('resumes.update', [$resume, 'is_collect' => $resume->is_collect === 0 ? 1 : 0]) }}">
+                  <form id="collect_form" method="POST" action="{{ route('resumes.operation', [$resume, 'user_id' => Auth::user()->id, 'type' => 'collect']) }}">
                     {{ csrf_field() }}
-                    {{ method_field('PATCH') }}
                     <a href="javascript:document:collect_form.submit();" class="color-n mr-3">
-                      @if ($resume->is_collect === 1)
+                      @if ($resume->usersCollect()->count() > 0)
                         <img style="margin-bottom: 4px;" src="{{ URL::asset('images/icon_collected.png') }}">
                         <span>取消收藏</span>
                       @else

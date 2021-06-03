@@ -8,6 +8,7 @@ use App\Models\ResumeWork;
 use App\Models\ResumePrj;
 use App\Models\ResumeEdu;
 use App\Models\Job;
+use App\Models\ResumeUser;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -43,253 +44,77 @@ class ResumesController extends Controller
 
     public function list(Request $request)
     {
+        // return dd($request->job_id);
+        $parms = $request->all();
+        $showDetail = isset($request->show_detail) ? (int)$request->show_detail : 0;
+        $hideGet = isset($request->hide_get) ? $request->hide_get : 0;
+        $hideSeen = isset($request->hide_seen) ? $request->hide_seen : 0;
+        $isShow = empty($request->all()) ? false : true;
+        $jobId = $request->job_id;
+
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->limit(6)->get();
-        if (empty($request->all())) {
+
+        if (!$isShow) {
+
             $resumes = [];
+            $tab = isset($request->tab) ? $request->tab : '';
         } else {
-            // return dd($request->all());
-            $resumes = Resume::
-                where('status', '=', 1)
-                // ->where('upload_uid', '=', Auth::user()->id)
-                ->where(function ($query) use($request) {
-                    if (!empty($request->all)) {
-                        $likes = $this->formatLikeKey($request->all);
-                        foreach ($likes as $index => $like) {
-                            if ($index === 0) {
-                                $query->where('name', 'like', $like);
-                            } else {
-                                $query->orWhere('name', 'like', $like);
-                            }
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->job_name)) {
-                        $likes = $this->formatLikeKey($request->job_name);
-                        foreach ($likes as $index => $like) {
-                            if ($index === 0) {
-                                $query->where('cur_position->st', 'like', $like);
-                            } else {
-                                $query->orWhere('cur_position->st', 'like', $like);
-                            }
-                            $query->orWhere('cur_position->nd', 'like', $like);
-                            $query->orWhere('cur_position->rd', 'like', $like);
-                            $query->orWhere('exp_position->st', 'like', $like);
-                            $query->orWhere('exp_position->nd', 'like', $like);
-                            $query->orWhere('exp_position->rd', 'like', $like);
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->company_name)) {
-                        $likes = $this->formatLikeKey($request->company_name);
-                        foreach ($likes as $index => $like) {
-                            if ($index === 0) {
-                                $query->where('cur_company', 'like', $like);
-                            } else {
-                                $query->orWhere('cur_company', 'like', $like);
-                            }
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->location)) {
-                        foreach ($request->location as $key => $location) {
-                            if (empty($location)) {
-                                continue;
-                            }
-                            $query->where("location->$key", '=', $location);
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->exp_location)) {
-                        foreach ($request->exp_location as $key => $exp_location) {
-                            if (empty($exp_location)) {
-                                continue;
-                            }
-                            $query->where("exp_location->$key", '=', $exp_location);
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->experience)) {
-                        switch ($request->experience) {
-                            case 'school':
-                                $query->where('work_years_flag', '=', 1);
-                                break;
-                            case 'fresh_graduates':
-                                $query->where('work_years_flag', '=', 2);
-                                break;
-                            case 'primary':
-                                $query->where('work_years', '>=', 1)->where('work_years', '<=', 3);
-                                break;
-                            case 'middle':
-                                $query->where('work_years', '>=', 3)->where('work_years', '<=', 5);
-                                break;
-                            case 'high':
-                                $query->where('work_years', '>=', 5)->where('work_years', '<=', 10);
-                                break;
-                            case 'expert':
-                                $query->where('work_years', '>', 10);
-                                break;
 
-                            default:
-                                break;
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->education)) {
-                        $query->where('education', $request->education);
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->cur_industry)) {
-                        foreach ($request->cur_industry as $key => $cur_industry) {
-                            if (empty($cur_industry)) {
-                                continue;
-                            }
-                            $query->where("cur_industry->$key", '=', $cur_industry);
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->cur_position)) {
-                        foreach ($request->cur_position as $key => $cur_position) {
-                            if (empty($cur_position)) {
-                                continue;
-                            }
-                            $query->where("cur_position->$key", '=', $cur_position);
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->age_min)) {
-                        $query->where('age', '>=', $request->age_min);
-                    }
-                    if (!empty($request->age_max)) {
-                        $query->where('age', '<=', $request->age_max);
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->sex)) {
-                        $query->where('sex', $request->sex);
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->jobhunter_status)) {
-                        $query->where('jobhunter_status', $request->jobhunter_status);
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->source)) {
-                        $query->where('source', $request->source);
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->updated_at)) {
-                        switch ($request->updated_at) {
-                            case '1':
-                                $query->whereRaw('date(updated_at) >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)');
-                                break;
-                            case '2':
-                                $query->whereRaw('date(updated_at) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)');
-                                break;
-                            case '3':
-                                $query->whereRaw('date(updated_at) >= DATE_SUB(CURDATE(), INTERVAL 14 DAY)');
-                                break;
-                            case '4':
-                                $query->whereRaw('date(updated_at) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)');
-                                break;
-                            case '5':
-                                $query->whereRaw('date(updated_at) < DATE_SUB(CURDATE(), INTERVAL 1 MONTH)');
-                                break;
-
-                            default:
-                                break;
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->exp_year_salary_min)) {
-                        $query->whereRaw($request->exp_year_salary_min . ' <= (exp_salary_max * exp_salary_count / 10)');
-
-                        if (!empty($request->exp_year_salary_max)) {
-                            $query->whereRaw($request->exp_year_salary_max . ' >= (exp_salary_min * exp_salary_count / 10)');
-                        } else {
-                            $query->whereRaw('1');
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->cur_year_salary_min)) {
-                        $query->whereRaw($request->cur_year_salary_min . ' <= (cur_salary * cur_salary_count / 10)');
-
-                        if (!empty($request->cur_year_salary_max)) {
-                            $query->whereRaw($request->cur_year_salary_max . ' >= (cur_salary * cur_salary_count / 10)');
-                        } else {
-                            $query->whereRaw('1');
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->exp_industry)) {
-                        foreach ($request->exp_industry as $key => $exp_industry) {
-                            if (empty($exp_industry)) {
-                                continue;
-                            }
-                            $query->where("exp_industry->$key", '=', $exp_industry);
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->exp_position)) {
-                        foreach ($request->exp_position as $key => $exp_position) {
-                            if (empty($exp_position)) {
-                                continue;
-                            }
-                            $query->where("exp_position->$key", '=', $exp_position);
-                        }
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->major)) {
-                        $query->where('major', 'like', '%'.$request->major.'%');
-                    }
-                })
-                ->where(function ($query) use($request) {
-                    if (!empty($request->hide_get) && $request->hide_get == 1) {
-                        $query->where('is_collect', 0);
-                    }
-                })
-                ;
-
+            $resumes = self::getBaseSearch($request, $jobId);
             if (!empty($request->school)) {
                 $resumes = $resumes->whereHas('resumeEdus', function ($query) use($request) {
                     $query->where('school_name', 'like', '%'.$request->school.'%');
+                });
+            }
+            if ($request->hide_get === 'on') {
+                $resumes->whereDoesntHave('users', function ($query) {
+                    $query->where('type', 'collect');
+                });
+            }
+            if ($request->hide_seen === 'on') {
+                $resumes->whereDoesntHave('users', function ($query) {
+                    $query->where('type', 'seen');
                 });
             }
 
             $resumes = $resumes->with(['resumeEdus' => function($query) {
                 $query->where('is_not_end', 0)->orderBy('end_at', 'desc');
             }])->paginate($this->pageSize);
+
+            $tab = isset($request->tab) ? $request->tab : 'detail';
         }
 
-        $parms = $request->all();
-        $tab = isset($request->tab) ? $request->tab : '';
-        $showDetail = isset($request->show_detail) ? (int)$request->show_detail : 0;
-        $hideGet = isset($request->hide_get) ? $request->hide_get : 0;
-        // return dd($request->hide_get);
-
-        return view('resumes.list', compact('resumes', 'jobs', 'parms', 'tab', 'showDetail', 'hideGet'));
+        return view('resumes.list', compact('resumes', 'jobs', 'parms', 'tab', 'showDetail', 'hideGet', 'hideSeen'));
     }
 
     public function mine(Request $request)
     {
-        $resumes = Resume::
-            where('status', '!=', 0)
-            ->where('upload_uid', '=', Auth::user()->id)
+        $tab = isset($request->tab) ? $request->tab : 'all';
+        $showDetail = isset($request->show_detail) ? (int)$request->show_detail : 0;
+
+        $resumes = self::getBaseSearch($request);
+        switch ($tab) {
+            case 'all':
+                $resumes->has('user');
+                break;
+            case 'seen':
+                $resumes->whereHas('users', function ($query) {
+                    $query->where('type', 'seen');
+                });
+                break;
+            case 'collect':
+                $resumes->whereHas('users', function ($query) {
+                    $query->where('type', 'collect');
+                });
+                break;
+            case 'apply':
+            case 'commission':
+                $resumes->has('job');
+
+            default:
+                break;
+        }
+        $resumes = $resumes
             ->with(['resumeEdus' => function($query) {
                 $query->orderBy('end_at', 'desc');
             }])
@@ -298,69 +123,72 @@ class ResumesController extends Controller
             }])
         ;
 
-        $countInfo = [
-            'all' => $resumes->count(),
-            'seen' => $resumes->count(),
-            'apply' => $resumes->count(),
-            'commission' => $resumes->count(),
-            'collect' => $resumes->where('is_collect', 1)->count(),
-            'seenmy' => $resumes->count(),
-            'relay' => $resumes->count(),
-        ];
-
         $resumes = $resumes->paginate($this->pageSize);
-        $tab = isset($request->tab) ? $request->tab : 'all';
-        $showDetail = isset($request->show_detail) ? (int)$request->show_detail : 0;
-        // return dd($showDetail);
 
-        return view('resumes.mine', compact('resumes', 'tab', 'showDetail', 'countInfo'));
+        $countInfo = [
+            'all' => Resume::where('status', '!=', 0)->has('user')->count(),
+            'seen' => Resume::where('status', '!=', 0)->has('usersSeen')->count(),
+            'apply' => Resume::where('status', '!=', 0)->has('job')->count(),
+            'commission' => Resume::where('status', '!=', 0)->has('job')->count(),
+            'collect' => Resume::where('status', '!=', 0)->has('usersCollect')->count(),
+            'seenmy' => Resume::where('status', '!=', 0)->has('user')->count(),
+            'relay' => Resume::where('status', '!=', 0)->has('usersRelay')->count()
+        ];
+        $parms = $request->all();
+
+        return view('resumes.mine', compact('resumes', 'parms', 'tab', 'showDetail', 'countInfo'));
     }
 
     public function current(Request $request)
     {
         $resumes = Resume::
             where('status', '!=', 0)
-            ->where('upload_uid', '=', Auth::user()->id)
+            ->has('user')
             ->with(['resumeEdus' => function($query) {
                 $query->orderBy('end_at', 'desc');
             }])
             ->with(['resumeWorks' => function($query) {
                 $query->orderBy('end_at', 'desc');
             }])
-            ->paginate($this->pageSize)
         ;
 
+        if ($request->hide_get === 'on') {
+            $resumes->whereDoesntHave('users', function ($query) {
+                $query->where('type', 'collect');
+            });
+        }
+        if ($request->hide_seen === 'on') {
+            $resumes->whereDoesntHave('users', function ($query) {
+                $query->where('type', 'seen');
+            });
+        }
+
+        $resumes = $resumes->paginate($this->pageSize);
         $jobs = Job::where('status', '!=', 0)->where('execute_uid', '=', Auth::user()->id)->get();
 
-        return view('resumes.current', compact('resumes', 'jobs'));
-    }
+        $tab = isset($request->tab) ? $request->tab : 'detail';
+        $hideGet = isset($request->hide_get) ? $request->hide_get : 0;
+        $hideSeen = isset($request->hide_seen) ? $request->hide_seen : 0;
 
-    private function mb_str_split($str) {
-        return preg_split('/(?<!^)(?!$)/u', $str );
+        return view('resumes.current', compact('resumes', 'jobs', 'tab', 'hideGet', 'hideSeen'));
     }
-
-    private function formatLikeKey(String $string)
-    {
-        $arr = explode(' ', $string);
-        foreach ($arr as $index => $value) {
-            $arr[$index] = '%' . implode('%', $this->mb_str_split($value)) . '%';
-        }
-        return $arr;
-    }
-
-    // private function formatLikeKey(Array $string)
-    // {
-    //     $arr = explode(' ', $string);
-    //     foreach ($arr as $index => $value) {
-    //         $arr[$index] = '%' . implode('%', $this->mb_str_split($value)) . '%';
-    //     }
-    //     return $arr;
-    // }
 
     public function show(Resume $resume)
     {
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+        $this->doOperation($resume->id, Auth::user()->id, 'seen');
         return view('resumes.show', compact('resume', 'jobs'));
+    }
+
+    public function operation(Resume $resume, Request $request)
+    {
+        $resumeId = $resume->id;
+        $userId = $request->user_id;
+        $type = $request->type;
+
+        $this->doOperation($resumeId, $userId, $type);
+
+        return back();
     }
 
     /**
@@ -487,21 +315,11 @@ class ResumesController extends Controller
         $data['exp_industry'] = json_encode($data['exp_industry']);
         $data['exp_position'] = json_encode($data['exp_position']);
         $data['exp_location'] = json_encode($data['exp_location']);
-        $data['source'] = json_encode($data['source']);
+        $data['source'] = json_encode(array_keys($data['source']));
 
         $work = $data['work_experience'];
         $project = $data['project_experience'];
         $education = $data['education_experience'];
-
-        // $data['jobhunter_status'] = 0;
-        // $data['attachment_path'] = '123';
-        // array_walk($work, function(&$v, $k, $p) {
-        //     $v = array_merge($v, $p);
-        // }, ['salary' => 12]);
-        // array_walk($work, function(&$v, $k, $p) {
-        //     $v = array_merge($v, $p);
-        // }, ['salary_count' => 12]);
-        // return dd($data);
 
         unset($data['work_experience']);
         unset($data['project_experience']);
@@ -533,6 +351,50 @@ class ResumesController extends Controller
     public function update(Resume $resume, Request $request)
     {
         $data = $request->toArray();
+
+        if (isset($request->attachment)) {
+            // 简历文件存储
+            $filePath = NULL;
+            $file = $request->file('attachment');
+            if($request->hasFile('attachment')) {
+                if (!$file->isValid()) {
+                    session()->flash('danger', '简历上传失败');
+                    return redirect()->back()->withInput();
+                }
+                $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
+            }
+            unset($file);
+            unset($data['attachment']);
+            $data['attachment_path'] = $filePath;
+        }
+
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                if ($key === 'source') {
+                    $data[$key] = json_encode(array_keys($value));
+                } else {
+                    $data[$key] = json_encode($value);
+                }
+            }
+        }
+
+        // 格式化db字段
+        // $data['location'] = json_encode($data['location']);
+        // $data['cur_industry'] = json_encode($data['cur_industry']);
+        // $data['cur_position'] = json_encode($data['cur_position']);
+        // $data['exp_industry'] = json_encode($data['exp_industry']);
+        // $data['exp_position'] = json_encode($data['exp_position']);
+        // $data['exp_location'] = json_encode($data['exp_location']);
+        // $data['source'] = json_encode($data['source']);
+
+        // $work = $data['work_experience'];
+        // $project = $data['project_experience'];
+        // $education = $data['education_experience'];
+
+        unset($data['work_experience']);
+        unset($data['project_experience']);
+        unset($data['education_experience']);
+
         $resume->update($data);
 
         return back();
@@ -567,5 +429,266 @@ class ResumesController extends Controller
         Resume::destroy($resume->id);
         session()->flash('success', '删除成功');
         return redirect()->route('resumes.list');
+    }
+
+    private function mb_str_split($str) {
+        return preg_split('/(?<!^)(?!$)/u', $str );
+    }
+
+    private function formatLikeKey(String $string)
+    {
+        $arr = explode(' ', $string);
+        foreach ($arr as $index => $value) {
+            $arr[$index] = '%' . implode('%', $this->mb_str_split($value)) . '%';
+        }
+        return $arr;
+    }
+
+    private function doOperation($resumeId, $userId, $type)
+    {
+        $resumeUser = ResumeUser::where('resume_id', $resumeId)->where('user_id', $userId)->where('type', $type)->first();
+
+        if (empty($resumeUser)) {
+            $data = [
+                'resume_id' => $resumeId,
+                'user_id' => $userId,
+                'type' => $type
+            ];
+
+            ResumeUser::create($data);
+        } else {
+            if ($type === 'collect') {
+                $resumeUser->delete();
+            }
+        }
+    }
+
+    private function getBaseSearch($request, $jobId = null)
+    {
+        if ($jobId !== null) {
+            $job = Job::find($jobId);
+            // return dd($job);
+            $input['all'] = null;
+            $input['job_name'] = $job->name;
+        } else {
+            $input = $request->all();
+        }
+        // return dd($input);
+
+        return Resume::
+            where('status', '!=', 0)
+            ->where(function ($query) use($request) {
+                if (!empty($request->all)) {
+                    $likes = $this->formatLikeKey($request->all);
+                    foreach ($likes as $index => $like) {
+                        if ($index === 0) {
+                            $query->where('name', 'like', $like);
+                        } else {
+                            $query->orWhere('name', 'like', $like);
+                        }
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->job_name)) {
+                    $likes = $this->formatLikeKey($request->job_name);
+                    foreach ($likes as $index => $like) {
+                        if ($index === 0) {
+                            $query->where('cur_position->st', 'like', $like);
+                        } else {
+                            $query->orWhere('cur_position->st', 'like', $like);
+                        }
+                        $query->orWhere('cur_position->nd', 'like', $like);
+                        $query->orWhere('cur_position->rd', 'like', $like);
+                        $query->orWhere('exp_position->st', 'like', $like);
+                        $query->orWhere('exp_position->nd', 'like', $like);
+                        $query->orWhere('exp_position->rd', 'like', $like);
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->company_name)) {
+                    $likes = $this->formatLikeKey($request->company_name);
+                    foreach ($likes as $index => $like) {
+                        if ($index === 0) {
+                            $query->where('cur_company', 'like', $like);
+                        } else {
+                            $query->orWhere('cur_company', 'like', $like);
+                        }
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->location)) {
+                    foreach ($request->location as $key => $location) {
+                        if (empty($location)) {
+                            continue;
+                        }
+                        $query->where("location->$key", '=', $location);
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->exp_location)) {
+                    foreach ($request->exp_location as $key => $exp_location) {
+                        if (empty($exp_location)) {
+                            continue;
+                        }
+                        $query->where("exp_location->$key", '=', $exp_location);
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->experience)) {
+                    switch ($request->experience) {
+                        case 'school':
+                            $query->where('work_years_flag', '=', 1);
+                            break;
+                        case 'fresh_graduates':
+                            $query->where('work_years_flag', '=', 2);
+                            break;
+                        case 'primary':
+                            $query->where('work_years', '>=', 1)->where('work_years', '<=', 3);
+                            break;
+                        case 'middle':
+                            $query->where('work_years', '>=', 3)->where('work_years', '<=', 5);
+                            break;
+                        case 'high':
+                            $query->where('work_years', '>=', 5)->where('work_years', '<=', 10);
+                            break;
+                        case 'expert':
+                            $query->where('work_years', '>', 10);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->education)) {
+                    $query->where('education', $request->education);
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->cur_industry)) {
+                    foreach ($request->cur_industry as $key => $cur_industry) {
+                        if (empty($cur_industry)) {
+                            continue;
+                        }
+                        $query->where("cur_industry->$key", '=', $cur_industry);
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->cur_position)) {
+                    foreach ($request->cur_position as $key => $cur_position) {
+                        if (empty($cur_position)) {
+                            continue;
+                        }
+                        $query->where("cur_position->$key", '=', $cur_position);
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->age_min)) {
+                    $query->where('age', '>=', $request->age_min);
+                }
+                if (!empty($request->age_max)) {
+                    $query->where('age', '<=', $request->age_max);
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->sex)) {
+                    $query->where('sex', $request->sex);
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->jobhunter_status)) {
+                    $query->where('jobhunter_status', $request->jobhunter_status);
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->source)) {
+                    $query->where('source', $request->source);
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->updated_at)) {
+                    switch ($request->updated_at) {
+                        case '1':
+                            $query->whereRaw('date(updated_at) >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)');
+                            break;
+                        case '2':
+                            $query->whereRaw('date(updated_at) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)');
+                            break;
+                        case '3':
+                            $query->whereRaw('date(updated_at) >= DATE_SUB(CURDATE(), INTERVAL 14 DAY)');
+                            break;
+                        case '4':
+                            $query->whereRaw('date(updated_at) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)');
+                            break;
+                        case '5':
+                            $query->whereRaw('date(updated_at) < DATE_SUB(CURDATE(), INTERVAL 1 MONTH)');
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->exp_year_salary_min)) {
+                    $query->whereRaw($request->exp_year_salary_min . ' <= (exp_salary_max * exp_salary_count / 10)');
+
+                    if (!empty($request->exp_year_salary_max)) {
+                        $query->whereRaw($request->exp_year_salary_max . ' >= (exp_salary_min * exp_salary_count / 10)');
+                    } else {
+                        $query->whereRaw('1');
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->cur_year_salary_min)) {
+                    $query->whereRaw($request->cur_year_salary_min . ' <= (cur_salary * cur_salary_count / 10)');
+
+                    if (!empty($request->cur_year_salary_max)) {
+                        $query->whereRaw($request->cur_year_salary_max . ' >= (cur_salary * cur_salary_count / 10)');
+                    } else {
+                        $query->whereRaw('1');
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->exp_industry)) {
+                    foreach ($request->exp_industry as $key => $exp_industry) {
+                        if (empty($exp_industry)) {
+                            continue;
+                        }
+                        $query->where("exp_industry->$key", '=', $exp_industry);
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->exp_position)) {
+                    foreach ($request->exp_position as $key => $exp_position) {
+                        if (empty($exp_position)) {
+                            continue;
+                        }
+                        $query->where("exp_position->$key", '=', $exp_position);
+                    }
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->major)) {
+                    $query->where('major', 'like', '%'.$request->major.'%');
+                }
+            })
+            ->where(function ($query) use($request) {
+                if (!empty($request->hide_get) && $request->hide_get == 1) {
+                    $query->where('is_collect', 0);
+                }
+            })
+        ;
     }
 }

@@ -8,6 +8,7 @@
     <div class="form-body">
       <form class="text-center" method="POST" action="{{ route('resumes.update', $resume) }}" enctype="multipart/form-data">
         {{ csrf_field() }}
+        {{ method_field('PATCH') }}
         <div class="form-title text-left">
           <h5>个人基本信息</h5>
         </div>
@@ -487,18 +488,18 @@
           <h5>教育经历</h5>
         </div>
         <div class="form-group form-inline">
-          <label for="eduction_experience[0][school_name]">
+          <label for="education_experience[0][school_name]">
             <span class="color-red">*</span>
             毕业院校：
           </label>
-          <input type="text" name="eduction_experience[0][school_name]" class="form-control normal" value="{{ $resume->resumeEdus[0]->school_name }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="education_experience[0][school_name]" class="form-control normal" value="{{ $resume->resumeEdus[0]->school_name }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
-          <label for="eduction_experience[0][school_level]">
+          <label for="education_experience[0][school_level]">
             <span class="color-red">*</span>
             最高学历：
           </label>
-          <select name="eduction_experience[0][school_level]" class="form-control normal">
+          <select name="education_experience[0][school_level]" class="form-control normal">
             <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::educationArr as $key => $education)
               <option value="{{ $key }}"
@@ -512,18 +513,18 @@
           </select>
         </div>
         <div class="form-group form-inline">
-          <label for="eduction_experience[0][major]">
+          <label for="education_experience[0][major]">
             所学专业：
           </label>
-          <input type="text" name="eduction_experience[0][major]" class="form-control normal" value="{{ $resume->resumeEdus[0]->major }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="education_experience[0][major]" class="form-control normal" value="{{ $resume->resumeEdus[0]->major }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
-          <label for="eduction_experience[0][start_at]">
+          <label for="education_experience[0][start_at]">
             <span class="color-red">*</span>
             在校时间：
           </label>
           <div class="input-group date datetimepicker">
-            <input type="text" name="eduction_experience[0][start_at]" class="form-control mini append" value="{{ $resume->resumeEdus[0]->start_at }}" placeholder="入学时间" autocomplete="off">
+            <input type="text" name="education_experience[0][start_at]" class="form-control mini append" value="{{ $resume->resumeEdus[0]->start_at }}" placeholder="入学时间" autocomplete="off">
             <div class="input-group-append">
               <span class="input-group-text">
                 <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -535,7 +536,7 @@
           </div>
           <label class="ml-1 mr-1">——</label>
           <div class="input-group date datetimepicker">
-            <input type="text" name="eduction_experience[0][end_at]" class="form-control mini append" value="{{ $resume->resumeEdus[0]->end_at }}" placeholder="毕业时间" autocomplete="off"
+            <input type="text" name="education_experience[0][end_at]" class="form-control mini append" value="{{ $resume->resumeEdus[0]->end_at }}" placeholder="毕业时间" autocomplete="off"
             @if ($resume->resumeEdus[0]->is_not_end)
               disabled
             @endif
@@ -550,7 +551,7 @@
             </div>
           </div>
           <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" name="eduction_experience[0][is_not_end]" id="eductionAtNow" class="custom-control-input" onclick="setNotEnd($(this))"
+            <input type="checkbox" name="education_experience[0][is_not_end]" id="eductionAtNow" class="custom-control-input" onclick="setNotEnd($(this))"
             @if ($resume->resumeEdus[0]->is_not_end)
               checked
             @endif

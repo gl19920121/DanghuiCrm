@@ -22,11 +22,13 @@
 
 .resume-list {
   margin-top: 25px;
-  padding: 0 92px;
+  //padding: 0 92px;
 
   .resume-list-header {
     padding-top: 34px;
     padding-bottom: 23px;
+    margin-left: 92px;
+    margin-right: 92px;
     border-bottom: 1px solid $color-border-gray;
   }
 
@@ -292,8 +294,11 @@
 }
 
 .resume-list-general {
+  padding: 0 92px;
+
   .resume-table-general {
     border: 1px solid rgba(137, 137, 137, 0.1);
+    border-top: none;
 
     thead {
       font-size: $font-size-m;
@@ -324,8 +329,9 @@
 }
 
 .resume-list-detail {
+
   .resume-list-detail-item {
-    padding: 38px 0;
+    padding: 38px 92px;;
 
     &:nth-child(2n) {
       background-color: $color-ashy;
