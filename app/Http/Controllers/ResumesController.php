@@ -10,6 +10,7 @@ use App\Models\ResumeEdu;
 use App\Models\Job;
 use App\Models\ResumeUser;
 use Auth;
+use DateTime;
 use Illuminate\Support\Facades\Storage;
 
 class ResumesController extends Controller
@@ -96,18 +97,35 @@ class ResumesController extends Controller
                 $resumes->has('user');
                 break;
             case 'seen':
-                $resumes->whereHas('users', function ($query) {
-                    $query->where('type', 'seen');
+                $resumes->whereHas('usersSeen', function ($query) use ($request) {
+                    if (!empty($request->start_at)) {
+                        $query->whereRaw('date(resume_user.updated_at) >= "' . $request->start_at . '"');
+                    }
+                    if (!empty($request->end_at)) {
+                        $query->whereRaw('date(resume_user.updated_at) <= "' . $request->end_at . '"');
+                    }
                 });
                 break;
             case 'collect':
-                $resumes->whereHas('users', function ($query) {
-                    $query->where('type', 'collect');
+                $resumes->whereHas('usersCollect', function ($query) use ($request) {
+                    if (!empty($request->start_at)) {
+                        $query->whereRaw('date(resume_user.updated_at) >= "' . $request->start_at . '"');
+                    }
+                    if (!empty($request->end_at)) {
+                        $query->whereRaw('date(resume_user.updated_at) <= "' . $request->end_at . '"');
+                    }
                 });
                 break;
             case 'apply':
             case 'commission':
-                $resumes->has('job');
+                $resumes->whereHas('job', function ($query) use ($request) {
+                    if (!empty($request->start_at)) {
+                        $query->whereRaw('date(updated_at) >= "' . $request->start_at . '"');
+                    }
+                    if (!empty($request->end_at)) {
+                        $query->whereRaw('date(updated_at) <= "' . $request->end_at . '"');
+                    }
+                });
 
             default:
                 break;
@@ -474,6 +492,10 @@ class ResumesController extends Controller
 
             ResumeUser::create($data);
         } else {
+            if ($type === 'seen') {
+                $resumeUser->updated_at = new DateTime();
+                $resumeUser->save();
+            }
             if ($type === 'collect') {
                 $resumeUser->delete();
             }

@@ -43,7 +43,8 @@
 
         <div class="col">
             <div class="mine-body bg-white">
-                <form id="searchForm"  method="GET" action="{{ route('resumes.mine') }}">
+                <form id="searchForm"  method="GET" action="{{ route('resumes.mine', ['tab' => $tab]) }}">
+                  <input type="hidden" name="tab" value="{{ $tab }}">
                     <div class="mine-form">
                         @if ($tab === 'all')
                             <div class="mt-2 mb-2">
@@ -93,7 +94,7 @@
                                 <div class="col">
                                     <div class="form-group form-inline">
                                         <div class="input-group date datetimepicker normal">
-                                          <input type="text" name="work_experience[0][start_at]" class="form-control append" placeholder="开始时间" autocomplete="off">
+                                          <input type="text" name="start_at" value="{{ isset($parms['start_at']) ? $parms['start_at'] : '' }}" class="form-control append" placeholder="开始时间" autocomplete="off">
                                           <div class="input-group-append">
                                             <span class="input-group-text">
                                               <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -105,7 +106,7 @@
                                         </div>
                                         <label class="ml-2 mr-2">至</label>
                                         <div class="input-group date datetimepicker normal">
-                                          <input type="text" name="work_experience[0][end_at]" class="form-control append" placeholder="结束时间" autocomplete="off">
+                                          <input type="text" name="end_at" value="{{ isset($parms['end_at']) ? $parms['end_at'] : '' }}" class="form-control append" placeholder="结束时间" autocomplete="off">
                                           <div class="input-group-append">
                                             <span class="input-group-text">
                                               <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -115,6 +116,7 @@
                                             </span>
                                           </div>
                                         </div>
+                                        <button type="submit" class="btn btn-danger ml-3">确定</button>
                                     </div>
                                 </div>
                                 <div class="col col-auto">
