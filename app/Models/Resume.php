@@ -52,7 +52,7 @@ class Resume extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'upload_uid');
+        return $this->belongsTo(User::class, 'upload_uid')->where('upload_uid', Auth::user()->id);
     }
 
     public function users()
