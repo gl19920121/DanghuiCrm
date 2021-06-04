@@ -102,7 +102,7 @@ class ResumesTableSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'name' => '田种儿',
+                'name' => '姜海洋',
                 'sex' => '男',
                 'age' => '35',
                 'location' => '{"city": "北京城区", "district": "海淀区", "province": "北京市"}',

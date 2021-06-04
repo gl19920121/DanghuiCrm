@@ -75,7 +75,7 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="addToMyJob">
                 @foreach ($jobs as $job)
-                  <form method="POST" action="{{ route('resumes.update', $job) }}">
+                  <form method="POST" action="{{ route('resumes.update', [$resume, 'job_id' => $job->id, 'status' => 1]) }}">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
                     <button type="submit" class="dropdown-item">{{ $job->name }}</button>

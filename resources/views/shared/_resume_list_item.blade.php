@@ -40,7 +40,7 @@
       <p>委托职位：<span class="color-red">{{ $resume->job->name }}</span></p>
     </div>
     <div class="col col-auto align-self-end">
-      <a href="{{ route('resumes.show', $resume) }}" class="btn btn-danger">查看简历</a>
+      <a href="{{ route('resumes.show', $resume) }}" class="btn btn-danger" target="_blank">查看简历</a>
     </div>
   </div>
 </div>

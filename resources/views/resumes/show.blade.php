@@ -93,7 +93,7 @@
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                           @foreach ($jobs as $job)
                             @if ($resume->job_id !== $job->id)
-                              <form method="POST" action="{{ route('resumes.update', [$resume, 'job_id' => $job->id]) }}">
+                              <form method="POST" action="{{ route('resumes.update', [$resume, 'job_id' => $job->id, 'status' => 1]) }}">
                                 {{ csrf_field() }}
                                 {{ method_field('PATCH') }}
                                 <button class="dropdown-item" type="submit" data-toggle="modal" data-target="#confirmModal">{{ $job->name }}</button>

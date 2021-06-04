@@ -92,9 +92,11 @@ class ResumesController extends Controller
         $showDetail = isset($request->show_detail) ? (int)$request->show_detail : 0;
 
         $resumes = self::getBaseSearch($request);
+        //$resumes->where('status', '!=', 0)->where('upload_uid', Auth::user()->id);
         switch ($tab) {
             case 'all':
                 $resumes->has('user');
+                $resumes->where('status', '!=', 0);
                 break;
             case 'seen':
                 $resumes->whereHas('usersSeen', function ($query) use ($request) {
@@ -118,6 +120,7 @@ class ResumesController extends Controller
                 break;
             case 'apply':
             case 'commission':
+                $resumes->where('status', '!=', 0);
                 $resumes->whereHas('job', function ($query) use ($request) {
                     if (!empty($request->start_at)) {
                         $query->whereRaw('date(updated_at) >= "' . $request->start_at . '"');
@@ -143,12 +146,12 @@ class ResumesController extends Controller
 
         $countInfo = [
             'all' => Resume::where('status', '!=', 0)->has('user')->count(),
-            'seen' => Resume::where('status', '!=', 0)->has('usersSeen')->count(),
+            'seen' => Resume::has('usersSeen')->count(),
             'apply' => Resume::where('status', '!=', 0)->has('job')->count(),
             'commission' => Resume::where('status', '!=', 0)->has('job')->count(),
-            'collect' => Resume::where('status', '!=', 0)->has('usersCollect')->count(),
-            'seenmy' => Resume::where('status', '!=', 0)->has('user')->count(),
-            'relay' => Resume::where('status', '!=', 0)->has('usersRelay')->count()
+            'collect' => Resume::has('usersCollect')->count(),
+            'seenmy' => Resume::has('user')->count(),
+            'relay' => Resume::has('usersRelay')->count()
         ];
         $parms = $request->all();
 
@@ -514,11 +517,12 @@ class ResumesController extends Controller
         // return dd($allLikes);
 
         return Resume::
-            where('status', '!=', 0)
-            ->where(function ($query) use($request) {
+            where(function ($query) use($request) {
                 if (!empty($request->all)) {
                     $likes = $this->formatLikeKey($request->all);
                     foreach ($likes as $like) {
+                        $query->orWhere('name', 'like', $like);
+
                         $query->orWhere('cur_company', 'like', $like);
 
                         $query->orWhere('location', 'like', $like);
