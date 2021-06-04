@@ -142,6 +142,7 @@ class ResumesController extends Controller
         $resumes = Resume::
             where('status', '!=', 0)
             ->has('user')
+            ->whereRaw('date(created_at) >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)')
             ->with(['resumeEdus' => function($query) {
                 $query->orderBy('end_at', 'desc');
             }])
@@ -330,13 +331,25 @@ class ResumesController extends Controller
             $work[$key]['resume_id'] = $resume->id;
             $work[$key]['company_industry'] = json_encode($value['company_industry']);
             $work[$key]['job_type'] = json_encode($value['job_type']);
+            $work[$key]['is_not_end'] = (isset($value['is_not_end']) && $value['is_not_end'] === 'on') ? 1 : 0;
+            unset($work[$key]['is_end']);
         }
-        array_walk($project, function(&$v, $k, $p) {
-            $v = array_merge($v, $p);
-        }, ['resume_id' => $resume->id]);
-        array_walk($education, function(&$v, $k, $p) {
-            $v = array_merge($v, $p);
-        }, ['resume_id' => $resume->id]);
+        foreach ($project as $key => $value) {
+            $project[$key]['resume_id'] = $resume->id;
+            $project[$key]['is_not_end'] = (isset($value['is_not_end']) && $value['is_not_end'] === 'on') ? 1 : 0;
+            unset($project[$key]['is_end']);
+        }
+        foreach ($education as $key => $value) {
+            $education[$key]['resume_id'] = $resume->id;
+            $education[$key]['is_not_end'] = (isset($value['is_not_end']) && $value['is_not_end'] === 'on') ? 1 : 0;
+            unset($education[$key]['is_end']);
+        }
+        // array_walk($project, function(&$v, $k, $p) {
+        //     $v = array_merge($v, $p);
+        // }, ['resume_id' => $resume->id]);
+        // array_walk($education, function(&$v, $k, $p) {
+        //     $v = array_merge($v, $p);
+        // }, ['resume_id' => $resume->id]);
 
         $resumeWork = ResumeWork::insert($work);
         $resumePrj = ResumePrj::insert($project);

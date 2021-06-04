@@ -187,6 +187,8 @@
 
   function init()
   {
+    $('ul#defaultOption.no').empty();
+
     root.forEach(function(rootNo) {
       var secId = 'sec'+rootNo;
       $('ul#industryLeftNav').append($('<li>').attr('id', rootNo)
@@ -211,7 +213,5 @@
 
     // navSelect($('ul#industryLeftNav').children('li:first-child'), defaultOption.no);
   }
-
-  init();
 
 </script>

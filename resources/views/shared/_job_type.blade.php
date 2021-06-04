@@ -165,6 +165,4 @@
     addNavItem(defaultOption.no);
   }
 
-  init();
-
 </script>

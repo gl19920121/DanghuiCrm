@@ -21,7 +21,7 @@ class ResumeEdu extends Model
 
     public function getDurationAttribute()
     {
-        if ($this->is_not_end) {
+        if ($this->is_not_end === 1) {
             $duration = sprintf('%s-至今', $this->start_at_show);
         } else {
             $duration = sprintf('%s-%s', $this->start_at_show, $this->end_at_show);

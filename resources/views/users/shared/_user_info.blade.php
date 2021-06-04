@@ -10,7 +10,10 @@
   </div>
   <div class="form-group form-inline">
       <label for="sex"><span class="color-red">*</span>性别：</label>
-      <input type="text" name="sex" class="form-control normal" value="{{ $user->sex }}" placeholder="请输入真实性别" autocomplete="off">
+      <select name="sex" class="form-control normal">
+        <option @if($user->sex === '男') selected @endif>男</option>
+        <option @if($user->sex === '女') selected @endif>女</option>
+      </select>
   </div>
   <div class="form-group form-inline">
       <label for="city"><span class="color-red">*</span>所在城市：</label>

@@ -49,7 +49,7 @@
           </div>
           <div class="col text-truncate">
             @foreach ($resume->resumeWorks as $index => $work)
-              <p title="{{ sprintf('%s %s %s（%s） 月薪：%s', $work->company_name, $work->job_type_show, $work->duration, $work->long, $work->salary_show) }}">
+              <p class="text-truncate" title="{{ sprintf('%s %s %s（%s） 月薪：%s', $work->company_name, $work->job_type_show, $work->duration, $work->long, $work->salary_show) }}">
                 <span>{{ $work->company_name }}</span>
                 <span>{{ $work->job_type_show }}</span>
                 <span>{{ $work->duration }}</span>

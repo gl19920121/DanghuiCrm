@@ -395,7 +395,7 @@
               </div>
             </div>
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
-              <input type="checkbox" name="work_experience[0][is_end]" id="workAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))">
+              <input type="checkbox" name="work_experience[0][is_not_end]" id="workAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))">
               <label class="custom-control-label" for="workAtNow-0">至今</label>
             </div>
           </div>
@@ -460,7 +460,7 @@
               </div>
             </div>
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
-              <input type="checkbox" name="project_experience[0][is_end]" id="projectAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))">
+              <input type="checkbox" name="project_experience[0][is_not_end]" id="projectAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))">
               <label class="custom-control-label" for="projectAtNow-0">至今</label>
             </div>
           </div>
@@ -535,7 +535,7 @@
               </div>
             </div>
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
-              <input type="checkbox" name="education_experience[0][is_end]" id="educationAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))">
+              <input type="checkbox" name="education_experience[0][is_not_end]" id="educationAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))">
               <label class="custom-control-label" for="educationAtNow-0">至今</label>
             </div>
           </div>
@@ -836,7 +836,7 @@
               '</div>' +
             '</div>' +
             '<div class="custom-control custom-checkbox custom-control-inline ml-3">' +
-              '<input type="checkbox" name="work_experience[' + next + '][is_end]" id="workAtNow-' + next + '" class="custom-control-input" onclick="setNotEnd($(this))">' +
+              '<input type="checkbox" name="work_experience[' + next + '][is_not_end]" id="workAtNow-' + next + '" class="custom-control-input" onclick="setNotEnd($(this))">' +
               '<label class="custom-control-label" for="workAtNow-' + next + '">至今</label>' +
             '</div>' +
           '</div>' +
@@ -902,7 +902,7 @@
           '</div>' +
         '</div>' +
         '<div class="custom-control custom-checkbox custom-control-inline ml-3">' +
-          '<input type="checkbox" name="project_experience[' + next + '][is_end]" id="projectAtNow-' + next + '" class="custom-control-input" onclick="setNotEnd($(this))">' +
+          '<input type="checkbox" name="project_experience[' + next + '][is_not_end]" id="projectAtNow-' + next + '" class="custom-control-input" onclick="setNotEnd($(this))">' +
           '<label class="custom-control-label" for="projectAtNow-' + next + '">至今</label>' +
         '</div>' +
       '</div>' +
@@ -977,7 +977,7 @@
           '</div>' +
         '</div>' +
         '<div class="custom-control custom-checkbox custom-control-inline ml-3">' +
-          '<input type="checkbox" name="education_experience[' + next + '][is_end]" id="educationAtNow-' + next + '" class="custom-control-input" onclick="setNotEnd($(this))">' +
+          '<input type="checkbox" name="education_experience[' + next + '][is_not_end]" id="educationAtNow-' + next + '" class="custom-control-input" onclick="setNotEnd($(this))">' +
           '<label class="custom-control-label" for="educationAtNow-' + next + '">至今</label>' +
         '</div>' +
       '</div>'

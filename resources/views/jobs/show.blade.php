@@ -35,7 +35,7 @@
           <div class="col-auto" style="width: 207px;">
             <h6><label>{{ $job->pv }}</label>浏览人数&nbsp;&nbsp;&nbsp;<label>{{ $job->resumes()->count() }}</label>次投递</h6>
           </div>
-          <div class="col-auto">
+          <div hidden class="col-auto">
             <p>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分享</p>
           </div>
         </div>

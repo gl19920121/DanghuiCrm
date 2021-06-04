@@ -13,16 +13,16 @@
                   更新时间：{{ $resume->created_at }}
                   @break
                 @case ('seen')
-                  浏览时间：{{ $resume->created_at }}
+                  浏览时间：{{ $resume->usersSeen->first()->pivot->created_at }}
                   @break
                 @case ('apply')
-                  应聘时间：{{ $resume->created_at }}
+                  应聘时间：{{ $resume->usersSeen->first()->pivot->created_at }}
                   @break
                 @case ('commission')
                   委托时间：{{ $resume->created_at }}
                   @break
                 @case ('collect')
-                  收藏时间：{{ $resume->created_at }}
+                  收藏时间：{{ $resume->usersCollect->first()->pivot->created_at }}
                   @break
                 @case ('seenmy')
                   查看时间：{{ $resume->created_at }}

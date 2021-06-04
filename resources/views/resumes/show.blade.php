@@ -413,7 +413,7 @@
     let aLink = document.createElement('a');
     aLink.style.display = 'none';
     aLink.href = downloadUrl;
-    aLink.download = "{{ $job->name }}.png";
+    aLink.download = "{{ $resume->name }}.png";
     // 触发点击-然后移除
     document.body.appendChild(aLink);
     aLink.click();

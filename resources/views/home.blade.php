@@ -271,7 +271,7 @@
             <p>满意指数：<span class="color-red">0</span></p>
           </div>
           <div class="col">
-            <p>当前星级：</p>
+            <p>当前星级：1</p>
           </div>
         </div>
         <hr class="divider">

@@ -62,12 +62,12 @@ class Resume extends Model
 
     public function usersSeen()
     {
-        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'seen');
+        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'seen')->withTimestamps();
     }
 
     public function usersCollect()
     {
-        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'collect');
+        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'collect')->withTimestamps();
     }
 
     public function usersRelay()

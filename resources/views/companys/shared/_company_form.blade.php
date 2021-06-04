@@ -4,7 +4,7 @@
     <form class="text-center" method="POST" action="{{ route('companys.store') }}" enctype="multipart/form-data">
       {{ csrf_field() }}
     @else
-    <form class="text-center" method="POST" action="{{ route('companys.update', session('company_id')) }}" enctype="multipart/form-data">
+    <form class="text-center" method="POST" action="{{ route('companys.update', Session::get('company_id','')) }}" enctype="multipart/form-data">
       {{ csrf_field() }}
       {{ method_field('PATCH') }}
     @endif
