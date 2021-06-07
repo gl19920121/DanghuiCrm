@@ -9,6 +9,7 @@ use App\Models\ResumePrj;
 use App\Models\ResumeEdu;
 use App\Models\Job;
 use App\Models\ResumeUser;
+use App\Http\Services\APIHelper;
 use Auth;
 use DateTime;
 use Illuminate\Support\Facades\Storage;
@@ -322,7 +323,25 @@ class ResumesController extends Controller
             }
             $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
         }
-        unset($file);
+        // unset($file);
+
+        // $api = new APIHelper(config('public.resumesdk'));
+        // $file_cont = Storage::disk('resume')->get($filePath);
+        // $file_cont = base64_encode($file_cont);
+        // $body = [
+        //     'file_name' => storage_path('resume/'.$filePath),
+        //     'file_cont' => $file_cont,
+        //     'need_avatar' => 0,
+        //     'ocr_type' => 1
+        // ];
+        // $body = json_encode($body, JSON_UNESCAPED_UNICODE);
+        // $res = $api->post($body, 'ResumeParser');
+        // $data = json_decode($res);
+        // return dd($data);
+
+        // $api = new APIHelper();
+        // $res = $api->resumesdk($filePath);
+        // return dd($res);
 
         // 格式化db字段
         $data = $request->toArray();

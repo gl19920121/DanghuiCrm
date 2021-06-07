@@ -23,10 +23,10 @@
             <span class="color-red">*</span>
             性别：
           </label>
-          <select name="sex" class="form-control normal" value="{{ old('sex') }}">
+          <select name="sex" class="form-control normal">
             <option hidden value="">请选择</option>
-            <option>男</option>
-            <option>女</option>
+            <option @if(old('sex') === '男') selected @endif>男</option>
+            <option @if(old('sex') === '女') selected @endif>女</option>
           </select>
         </div>
         <div class="form-group form-inline">
@@ -42,9 +42,15 @@
             所在城市：
           </label>
           <div data-toggle="distpicker">
-            <select class="form-control" name="location[province]" data-province="---- 选择省 ----"></select>
-            <select class="form-control" name="location[city]"  data-city="---- 选择市 ----"></select>
-            <select class="form-control" name="location[district]"  data-district="---- 选择区 ----"></select>
+            @if (old('location'))
+              <select class="form-control" name="location[province]" data-province="{{ old('location')['province'] }}"></select>
+              <select class="form-control" name="location[city]"  data-city="{{ old('location')['city'] }}"></select>
+              <select class="form-control" name="location[district]"  data-district="{{ old('location')['district'] }}"></select>
+            @else
+              <select class="form-control" name="location[province]" data-province="---- 选择省 ----"></select>
+              <select class="form-control" name="location[city]"  data-city="---- 选择市 ----"></select>
+              <select class="form-control" name="location[district]"  data-district="---- 选择区 ----"></select>
+            @endif
           </div>
         </div>
         <div class="form-group form-inline">
@@ -54,14 +60,22 @@
           </label>
           <div class="input-group">
             <input type="hidden" name="work_years_flag" value="0">
-            <input type="text" name="work_years" class="form-control small append" value="{{ old('work_years') }}" autocomplete="off" data-type="int">
+            <input type="text" name="work_years" class="form-control small append" value="{{ old('work_years') }}" autocomplete="off" data-type="int"
+            @if (old('work_years_flag') != 0)
+              disabled
+            @endif
+            >
             <div class="input-group-append">
               <div class="input-group-text">年</div>
             </div>
           </div>
           @foreach (App\Models\Resume::workYearsArr as $key => $workYears)
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
-              <input type="checkbox" id="work_years_{{ $key }}" class="custom-control-input" onclick="setWorkYears($(this))">
+              <input type="checkbox" id="work_years_{{ $key }}" class="custom-control-input" onclick="setWorkYears($(this))"
+              @if (old('work_years_flag') == $key)
+                checked
+              @endif
+              >
               <label class="custom-control-label" for="work_years_{{ $key }}">{{ $workYears['text'] }}</label>
             </div>
           @endforeach
@@ -74,7 +88,13 @@
           <select name="education" class="form-control normal" value="{{ old('education') }}">
             <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::educationArr as $key => $education)
-              <option value="{{ $key }}">{{ $education['text'] }}</option>
+              <option value="{{ $key }}"
+              @if (old('education') == $key)
+                selected
+              @endif
+              >
+                {{ $education['text'] }}
+              </option>
             @endforeach
           </select>
         </div>
@@ -121,11 +141,19 @@
         <div class="form-group form-inline">
           <label for="cur_industry"><span>*</span>所在行业：</label>
           <div class="input-group" data-toggle="industrypicker">
-            <input type="hidden" name="cur_industry[st]">
-            <input type="hidden" name="cur_industry[nd]">
-            <input type="hidden" name="cur_industry[rd]">
-            <input type="hidden" name="cur_industry[th]">
-            <input type="text" class="form-control normal append" value="" placeholder="请选择" autocomplete="off">
+            @if (old('cur_industry'))
+              <input type="hidden" name="cur_industry[st]" value="{{ old('cur_industry')['st'] }}">
+              <input type="hidden" name="cur_industry[nd]" value="{{ old('cur_industry')['nd'] }}">
+              <input type="hidden" name="cur_industry[rd]" value="{{ old('cur_industry')['rd'] }}">
+              <input type="hidden" name="cur_industry[th]" value="{{ old('cur_industry')['th'] }}">
+              <input type="text" class="form-control normal append" value="{{ old('cur_industry')['th'] }}" placeholder="请选择" autocomplete="off">
+            @else
+              <input type="hidden" name="cur_industry[st]">
+              <input type="hidden" name="cur_industry[nd]">
+              <input type="hidden" name="cur_industry[rd]">
+              <input type="hidden" name="cur_industry[th]">
+              <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            @endif
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -139,10 +167,17 @@
         <div class="form-group form-inline">
           <label for="cur_position"><span>*</span>所任职位：</label>
           <div class="input-group" data-toggle="jobtypepicker">
-            <input type="hidden" name="cur_position[st]">
-            <input type="hidden" name="cur_position[nd]">
-            <input type="hidden" name="cur_position[rd]">
-            <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            @if (old('cur_position'))
+              <input type="hidden" name="cur_position[st]" value="{{ old('cur_position')['st'] }}">
+              <input type="hidden" name="cur_position[nd]" value="{{ old('cur_position')['nd'] }}">
+              <input type="hidden" name="cur_position[rd]" value="{{ old('cur_position')['rd'] }}">
+              <input type="text" class="form-control normal append" value="{{ old('cur_position')['rd'] }}" placeholder="请选择" autocomplete="off">
+            @else
+              <input type="hidden" name="cur_position[st]">
+              <input type="hidden" name="cur_position[nd]">
+              <input type="hidden" name="cur_position[rd]">
+              <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            @endif
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -183,11 +218,19 @@
         <div class="form-group form-inline">
           <label for="exp_industry"><span>*</span>期望行业：</label>
           <div class="input-group" data-toggle="industrypicker">
-            <input type="hidden" name="exp_industry[st]">
-            <input type="hidden" name="exp_industry[nd]">
-            <input type="hidden" name="exp_industry[rd]">
-            <input type="hidden" name="exp_industry[th]">
-            <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            @if (old('exp_industry'))
+              <input type="hidden" name="exp_industry[st]" value="{{ old('exp_industry')['st'] }}">
+              <input type="hidden" name="exp_industry[nd]" value="{{ old('exp_industry')['nd'] }}">
+              <input type="hidden" name="exp_industry[rd]" value="{{ old('exp_industry')['rd'] }}">
+              <input type="hidden" name="exp_industry[th]" value="{{ old('exp_industry')['th'] }}">
+              <input type="text" class="form-control normal append" value="{{ old('exp_industry')['th'] }}" placeholder="请选择" autocomplete="off">
+            @else
+              <input type="hidden" name="exp_industry[st]">
+              <input type="hidden" name="exp_industry[nd]">
+              <input type="hidden" name="exp_industry[rd]">
+              <input type="hidden" name="exp_industry[th]">
+              <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            @endif
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -201,10 +244,17 @@
         <div class="form-group form-inline">
           <label for="exp_position"><span>*</span>期望职位：</label>
           <div class="input-group" data-toggle="jobtypepicker">
-            <input type="hidden" name="exp_position[st]">
-            <input type="hidden" name="exp_position[nd]">
-            <input type="hidden" name="exp_position[rd]">
-            <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            @if (old('exp_position'))
+              <input type="hidden" name="exp_position[st]" value="{{ old('exp_position')['st'] }}">
+              <input type="hidden" name="exp_position[nd]" value="{{ old('exp_position')['nd'] }}">
+              <input type="hidden" name="exp_position[rd]" value="{{ old('exp_position')['rd'] }}">
+              <input type="text" class="form-control normal append" value="{{ old('exp_position')['rd'] }}" placeholder="请选择" autocomplete="off">
+            @else
+              <input type="hidden" name="exp_position[st]">
+              <input type="hidden" name="exp_position[nd]">
+              <input type="hidden" name="exp_position[rd]">
+              <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+            @endif
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
                 <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -217,10 +267,16 @@
         </div>
         <div class="form-group form-inline">
           <label for="exp_work_nature"><span class="color-red">*</span>工作性质：</label>
-          <select name="exp_work_nature" class="form-control normal" value="{{ old('exp_work_nature') }}">
+          <select name="exp_work_nature" class="form-control normal">
             <option value="" hidden>请选择</option>
             @foreach (App\Models\Job::natureArr as $key => $nature)
-              <option value="{{ $key }}">{{ $nature['text'] }}</option>
+              <option value="{{ $key }}"
+              @if (old('exp_work_nature') == $key)
+                selected
+              @endif
+              >
+                {{ $nature['text'] }}
+              </option>
             @endforeach
           </select>
         </div>
@@ -230,36 +286,58 @@
             期望城市：
           </label>
           <div data-toggle="distpicker">
-            <select class="form-control" name="exp_location[province]" data-province="---- 选择省 ----"></select>
-            <select class="form-control" name="exp_location[city]"  data-city="---- 选择市 ----"></select>
-            <select class="form-control" name="exp_location[district]"  data-district="---- 选择区 ----"></select>
+            @if (old('exp_location'))
+              <select class="form-control" name="exp_location[province]" data-province="{{ old('exp_location')['province'] }}"></select>
+              <select class="form-control" name="exp_location[city]"  data-city="{{ old('exp_location')['city'] }}"></select>
+              <select class="form-control" name="exp_location[district]"  data-district="{{ old('exp_location')['district'] }}"></select>
+            @else
+              <select class="form-control" name="exp_location[province]" data-province="---- 选择省 ----"></select>
+              <select class="form-control" name="exp_location[city]"  data-city="---- 选择市 ----"></select>
+              <select class="form-control" name="exp_location[district]"  data-district="---- 选择区 ----"></select>
+            @endif
           </div>
         </div>
         <div class="form-group form-inline">
           <label for="exp_salary"><span class="color-red">*</span>期望薪资：</label>
           <input type="hidden" name="exp_salary_flag" value="0">
           <div class="input-group">
-            <input type="text" name="exp_salary_min" class="form-control small append" value="{{ old('exp_salary_min') }}" autocomplete="off" data-type="int">
+            <input type="text" name="exp_salary_min" class="form-control small append" value="{{ old('exp_salary_min') }}" autocomplete="off" data-type="int"
+            @if (old('exp_salary_flag') != 0)
+              disabled
+            @endif
+            >
             <div class="input-group-append">
               <div class="input-group-text">K</div>
             </div>
           </div>
           <label class="ml-1 mr-1">-</label>
           <div class="input-group">
-            <input type="text" name="exp_salary_max" class="form-control small append" value="{{ old('exp_salary_max') }}" autocomplete="off" data-type="int">
+            <input type="text" name="exp_salary_max" class="form-control small append" value="{{ old('exp_salary_max') }}" autocomplete="off" data-type="int"
+            @if (old('exp_salary_flag') != 0)
+              disabled
+            @endif
+            >
             <div class="input-group-append">
               <div class="input-group-text">K</div>
             </div>
           </div>
           <label class="ml-1 mr-1">*</label>
           <div class="input-group">
-            <input type="text" name="exp_salary_count" class="form-control small append" value="{{ old('exp_salary_count') }}" autocomplete="off" data-type="int">
+            <input type="text" name="exp_salary_count" class="form-control small append" value="{{ old('exp_salary_count') }}" autocomplete="off" data-type="int"
+            @if (old('exp_salary_flag') != 0)
+              disabled
+            @endif
+            >
             <div class="input-group-append">
               <div class="input-group-text">月</div>
             </div>
           </div>
           <div class="custom-control custom-checkbox custom-control-inline ml-3">
-            <input type="checkbox" id="expSalaryDiscuss" class="custom-control-input" onclick="setExpSalary($(this))">
+            <input type="checkbox" id="expSalaryDiscuss" class="custom-control-input" onclick="setExpSalary($(this))"
+            @if (old('exp_salary_flag') == 1)
+              checked
+            @endif
+            >
             <label class="custom-control-label" for="expSalaryDiscuss">面议</label>
           </div>
         </div>
@@ -273,7 +351,7 @@
               <span class="color-red">*</span>
               公司名称：
             </label>
-            <input type="text" name="work_experience[0][company_name]" class="form-control normal" placeholder="请填写" autocomplete="off">
+            <input type="text" name="work_experience[0][company_name]" value="{{ !empty(old('work_experience')[0]['company_name']) ? old('work_experience')[0]['company_name'] : '' }}" class="form-control normal" placeholder="请填写" autocomplete="off">
           </div>
           <div class="form-group form-inline">
             <label for="work_experience[0][company_nature]">
@@ -283,7 +361,13 @@
             <select name="work_experience[0][company_nature]" class="form-control normal">
               <option hidden value="">请选择</option>
               @foreach (App\Models\Company::natureArr as $key => $nature)
-                <option value="{{ $key }}">{{ $nature['text'] }}</option>
+                <option value="{{ $key }}"
+                @if (isset(old('work_experience')[0]['company_nature']) && old('work_experience')[0]['company_nature'] == $key)
+                  selected
+                @endif
+                >
+                  {{ $nature['text'] }}
+                </option>
               @endforeach
             </select>
           </div>
@@ -295,7 +379,13 @@
             <select name="work_experience[0][company_scale]" class="form-control normal">
               <option hidden value="">请选择</option>
               @foreach (App\Models\Company::scaleArr as $key => $scale)
-                <option value="{{ $key }}">{{ $scale['text'] }}</option>
+                <option value="{{ $key }}"
+                @if (isset(old('work_experience')[0]['company_scale']) && old('work_experience')[0]['company_scale'] == $key)
+                  selected
+                @endif
+                >
+                  {{ $scale['text'] }}
+                </option>
               @endforeach
             </select>
           </div>
@@ -307,18 +397,32 @@
             <select name="work_experience[0][company_investment]" class="form-control normal">
               <option hidden value="">请选择</option>
               @foreach (App\Models\Company::investmentArr as $key => $investment)
-                <option value="{{ $key }}">{{ $investment['text'] }}</option>
+                <option value="{{ $key }}"
+                @if (isset(old('work_experience')[0]['company_investment']) && old('work_experience')[0]['company_investment'] == $key)
+                  selected
+                @endif
+                >
+                  {{ $investment['text'] }}
+                </option>
               @endforeach
             </select>
           </div>
           <div class="form-group form-inline">
             <label for="work_experience[0][company_industry]"><span>*</span>所属行业：</label>
             <div class="input-group" data-toggle="industrypicker">
-              <input type="hidden" name="work_experience[0][company_industry][st]">
-              <input type="hidden" name="work_experience[0][company_industry][nd]">
-              <input type="hidden" name="work_experience[0][company_industry][rd]">
-              <input type="hidden" name="work_experience[0][company_industry][th]">
-              <input type="text" class="form-control normal append" value="" placeholder="请选择" autocomplete="off">
+              @if (isset(old('work_experience')[0]['company_industry']))
+                <input type="hidden" name="work_experience[0][company_industry][st]" value="{{ old('work_experience')[0]['company_industry']['st'] }}">
+                <input type="hidden" name="work_experience[0][company_industry][nd]" value="{{ old('work_experience')[0]['company_industry']['nd'] }}">
+                <input type="hidden" name="work_experience[0][company_industry][rd]" value="{{ old('work_experience')[0]['company_industry']['rd'] }}">
+                <input type="hidden" name="work_experience[0][company_industry][th]" value="{{ old('work_experience')[0]['company_industry']['th'] }}">
+                <input type="text" class="form-control normal append" value="{{ old('work_experience')[0]['company_industry']['th'] }}" placeholder="请选择" autocomplete="off">
+              @else
+                <input type="hidden" name="work_experience[0][company_industry][st]">
+                <input type="hidden" name="work_experience[0][company_industry][nd]">
+                <input type="hidden" name="work_experience[0][company_industry][rd]">
+                <input type="hidden" name="work_experience[0][company_industry][th]">
+                <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+              @endif
               <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
                 <span class="input-group-text" id="basic-addon2">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -335,10 +439,17 @@
               职位名称：
             </label>
             <div class="input-group" data-toggle="jobtypepicker">
-              <input type="hidden" name="work_experience[0][job_type][st]">
-              <input type="hidden" name="work_experience[0][job_type][nd]">
-              <input type="hidden" name="work_experience[0][job_type][rd]">
-              <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+              @if (isset(old('work_experience')[0]['job_type']))
+                <input type="hidden" name="work_experience[0][job_type][st]" value="{{ old('work_experience')[0]['company_industry']['st'] }}">
+                <input type="hidden" name="work_experience[0][job_type][nd]" value="{{ old('work_experience')[0]['company_industry']['nd'] }}">
+                <input type="hidden" name="work_experience[0][job_type][rd]" value="{{ old('work_experience')[0]['company_industry']['rd'] }}">
+                <input type="text" class="form-control normal append" value="{{ old('work_experience')[0]['company_industry']['rd'] }}" placeholder="请选择" autocomplete="off">
+              @else
+                <input type="hidden" name="work_experience[0][job_type][st]">
+                <input type="hidden" name="work_experience[0][job_type][nd]">
+                <input type="hidden" name="work_experience[0][job_type][rd]">
+                <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+              @endif
               <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
                 <span class="input-group-text" id="basic-addon2">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -352,14 +463,14 @@
           <div class="form-group form-inline">
             <label for="work_experience[0][salary]"><span class="color-red">*</span>月薪：</label>
             <div class="input-group">
-              <input type="text" name="work_experience[0][salary]" class="form-control small append" autocomplete="off" data-type="int">
+              <input type="text" name="work_experience[0][salary]" value="{{ isset(old('work_experience')[0]['salary']) ? old('work_experience')[0]['salary'] : '' }}" class="form-control small append" autocomplete="off" data-type="int">
               <div class="input-group-append">
                 <div class="input-group-text">K</div>
               </div>
             </div>
             <label class="ml-1 mr-1">*</label>
             <div class="input-group">
-              <input type="text" name="work_experience[0][salary_count]" class="form-control small append" autocomplete="off" data-type="int">
+              <input type="text" name="work_experience[0][salary_count]" value="{{ isset(old('work_experience')[0]['salary_count']) ? old('work_experience')[0]['salary_count'] : '' }}" class="form-control small append" autocomplete="off" data-type="int">
               <div class="input-group-append">
                 <div class="input-group-text">月</div>
               </div>
@@ -367,12 +478,12 @@
           </div>
           <div class="form-group form-inline">
             <label for="work_experience[0][subordinates]">下属人数：</label>
-            <input type="text" name="work_experience[0][subordinates]" class="form-control normal" placeholder="请填写" autocomplete="off" data-type="int">
+            <input type="text" name="work_experience[0][subordinates]" value="{{ isset(old('work_experience')[0]['subordinates']) ? old('work_experience')[0]['subordinates'] : '' }}" class="form-control normal" placeholder="请填写" autocomplete="off" data-type="int">
           </div>
           <div class="form-group form-inline">
             <label for="work_experience[0][start_at]"><span class="color-red">*</span>在职时间：</label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="work_experience[0][start_at]" class="form-control mini append" placeholder="入职时间" autocomplete="off">
+              <input type="text" name="work_experience[0][start_at]" value="{{ isset(old('work_experience')[0]['start_at']) ? old('work_experience')[0]['start_at'] : '' }}" class="form-control mini append" placeholder="入职时间" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text">
                   <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -384,7 +495,11 @@
             </div>
             <label class="ml-1 mr-1">——</label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="work_experience[0][end_at]" class="form-control mini append" placeholder="离职时间" autocomplete="off">
+              <input type="text" name="work_experience[0][end_at]" value="{{ isset(old('work_experience')[0]['end_at']) ? old('work_experience')[0]['end_at'] : '' }}" class="form-control mini append" placeholder="离职时间" autocomplete="off"
+              @if (isset(old('work_experience')[0]['is_not_end']))
+                disabled
+              @endif
+              >
               <div class="input-group-append">
                 <span class="input-group-text">
                   <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -395,7 +510,11 @@
               </div>
             </div>
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
-              <input type="checkbox" name="work_experience[0][is_not_end]" id="workAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))">
+              <input type="checkbox" name="work_experience[0][is_not_end]" id="workAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))"
+              @if (isset(old('work_experience')[0]['is_not_end']))
+                checked
+              @endif
+              >
               <label class="custom-control-label" for="workAtNow-0">至今</label>
             </div>
           </div>
@@ -404,7 +523,7 @@
               <span class="color-red">*</span>
               工作描述：
             </label>
-            <textarea name="work_experience[0][work_desc]" class="form-control normal" placeholder="请填写"></textarea>
+            <textarea name="work_experience[0][work_desc]" class="form-control normal" placeholder="请填写">{{ isset(old('work_experience')[0]['work_desc']) ? old('work_experience')[0]['work_desc'] : '' }}</textarea>
           </div>
         </div>
         <div class="form-group form-inline">
@@ -422,14 +541,14 @@
               <span class="color-red">*</span>
               项目名称：
             </label>
-            <input type="text" name="project_experience[0][name]" class="form-control normal" placeholder="请填写" autocomplete="off">
+            <input type="text" name="project_experience[0][name]" value="{{ isset(old('project_experience')[0]['name']) ? old('project_experience')[0]['name'] : '' }}" class="form-control normal" placeholder="请填写" autocomplete="off">
           </div>
           <div class="form-group form-inline">
             <label for="project_experience[0][role]">
               <span class="color-red">*</span>
               担任角色：
             </label>
-            <input type="text" name="project_experience[0][role]" class="form-control normal" placeholder="请填写" autocomplete="off">
+            <input type="text" name="project_experience[0][role]" value="{{ isset(old('project_experience')[0]['role']) ? old('project_experience')[0]['role'] : '' }}" class="form-control normal" placeholder="请填写" autocomplete="off">
           </div>
           <div class="form-group form-inline">
             <label for="project_experience[0][start_at]">
@@ -437,7 +556,7 @@
               项目时间：
             </label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="project_experience[0][start_at]" class="form-control mini append" placeholder="开始时间" autocomplete="off">
+              <input type="text" name="project_experience[0][start_at]" value="{{ isset(old('project_experience')[0]['start_at']) ? old('project_experience')[0]['start_at'] : '' }}" class="form-control mini append" placeholder="开始时间" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text">
                   <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -449,7 +568,11 @@
             </div>
             <label class="ml-1 mr-1">——</label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="project_experience[0][end_at]" class="form-control mini append" placeholder="结束时间" autocomplete="off">
+              <input type="text" name="project_experience[0][end_at]" value="{{ isset(old('project_experience')[0]['end_at']) ? old('project_experience')[0]['end_at'] : '' }}" class="form-control mini append" placeholder="结束时间" autocomplete="off"
+              @if (isset(old('project_experience')[0]['is_not_end']))
+                disabled
+              @endif
+              >
               <div class="input-group-append">
                 <span class="input-group-text">
                   <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -460,7 +583,11 @@
               </div>
             </div>
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
-              <input type="checkbox" name="project_experience[0][is_not_end]" id="projectAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))">
+              <input type="checkbox" name="project_experience[0][is_not_end]" id="projectAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))"
+              @if (isset(old('project_experience')[0]['is_not_end']))
+                checked
+              @endif
+              >
               <label class="custom-control-label" for="projectAtNow-0">至今</label>
             </div>
           </div>
@@ -468,7 +595,7 @@
             <label for="project_experience[0][body]">
               项目内容：
             </label>
-            <textarea name="project_experience[0][body]" class="form-control normal" placeholder="请填写">{{ old('project_experience[0][body]') }}</textarea>
+            <textarea name="project_experience[0][body]" class="form-control normal" placeholder="请填写">{{ isset(old('project_experience')[0]['body']) ? old('project_experience')[0]['body'] : '' }}</textarea>
           </div>
         </div>
         <div class="form-group form-inline">
@@ -486,7 +613,7 @@
               <span class="color-red">*</span>
               毕业院校：
             </label>
-            <input type="text" name="education_experience[0][school_name]" class="form-control normal" placeholder="请填写" autocomplete="off">
+            <input type="text" name="education_experience[0][school_name]" value="{{ isset(old('education_experience')[0]['school_name']) ? old('education_experience')[0]['school_name'] : '' }}" class="form-control normal" placeholder="请填写" autocomplete="off">
           </div>
           <div class="form-group form-inline">
             <label for="education_experience[0][school_level]">
@@ -496,7 +623,13 @@
             <select name="education_experience[0][school_level]" class="form-control normal">
               <option hidden value="">请选择</option>
               @foreach (App\Models\Resume::educationArr as $key => $education)
-                <option value="{{ $key }}">{{ $education['text'] }}</option>
+                <option value="{{ $key }}"
+                @if (isset(old('education_experience')[0]['school_level']) && old('education_experience')[0]['school_level'] == $key)
+                  selected
+                @endif
+                >
+                  {{ $education['text'] }}
+                </option>
               @endforeach
             </select>
           </div>
@@ -504,7 +637,7 @@
             <label for="education_experience[0][major]">
               所学专业：
             </label>
-            <input type="text" name="education_experience[0][major]" class="form-control normal" placeholder="请填写" autocomplete="off">
+            <input type="text" name="education_experience[0][major]" value="{{ isset(old('education_experience')[0]['major']) ? old('education_experience')[0]['major'] : '' }}" class="form-control normal" placeholder="请填写" autocomplete="off">
           </div>
           <div class="form-group form-inline">
             <label for="education_experience[0][start_at]">
@@ -512,7 +645,7 @@
               在校时间：
             </label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="education_experience[0][start_at]" class="form-control mini append" placeholder="入学时间" autocomplete="off">
+              <input type="text" name="education_experience[0][start_at]" value="{{ isset(old('education_experience')[0]['start_at']) ? old('education_experience')[0]['start_at'] : '' }}" class="form-control mini append" placeholder="入学时间" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text">
                   <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -524,7 +657,11 @@
             </div>
             <label class="ml-1 mr-1">——</label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="education_experience[0][end_at]" class="form-control mini append" placeholder="毕业时间" autocomplete="off">
+              <input type="text" name="education_experience[0][end_at]" value="{{ isset(old('education_experience')[0]['end_at']) ? old('education_experience')[0]['end_at'] : '' }}" class="form-control mini append" placeholder="毕业时间" autocomplete="off"
+              @if (isset(old('education_experience')[0]['is_not_end']))
+                disabled
+              @endif
+              >
               <div class="input-group-append">
                 <span class="input-group-text">
                   <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -535,7 +672,11 @@
               </div>
             </div>
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
-              <input type="checkbox" name="education_experience[0][is_not_end]" id="educationAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))">
+              <input type="checkbox" name="education_experience[0][is_not_end]" id="educationAtNow-0" class="custom-control-input" onclick="setNotEnd($(this))"
+              @if (isset(old('education_experience')[0]['is_not_end']))
+                checked
+              @endif
+              >
               <label class="custom-control-label" for="educationAtNow-0">至今</label>
             </div>
           </div>
@@ -553,13 +694,13 @@
           <label for="social_home">
             社交主页：
           </label>
-          <input type="text" name="social_home" class="form-control normal" placeholder="请填写" autocomplete="off">
+          <input type="text" name="social_home" value="{{ old('social_home') }}" class="form-control normal" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="personal_advantage">
             个人优势：
           </label>
-          <textarea name="personal_advantage" class="form-control normal" placeholder="请填写"></textarea>
+          <textarea name="personal_advantage" class="form-control normal" placeholder="请填写">{{ old('personal_advantage') }}</textarea>
         </div>
         <div class="form-group form-inline">
           <label for="attachment">
@@ -572,10 +713,16 @@
           <label for="jobhunter_status">
             求职状态：
           </label>
-          <select name="jobhunter_status" class="form-control normal" value="{{ old('jobhunter_status') }}">
+          <select name="jobhunter_status" class="form-control normal">
             <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::jobhunterStatusArr as $key => $jobhunterStatus)
-              <option value="{{ $key }}">{{ $jobhunterStatus['text'] }}</option>
+              <option value="{{ $key }}"
+              @if (old('jobhunter_status') == $key)
+                selected
+              @endif
+              >
+                {{ $jobhunterStatus['text'] }}
+              </option>
             @endforeach
           </select>
         </div>
@@ -583,13 +730,13 @@
           <label for="blacklist">
             屏蔽公司：
           </label>
-          <input type="text" name="blacklist" class="form-control normal" placeholder="请填写" autocomplete="off">
+          <input type="text" name="blacklist" value="{{ old('blacklist') }}" class="form-control normal" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="remark">
             其他备注：
           </label>
-          <textarea name="remark" class="form-control normal" placeholder="请填写"></textarea>
+          <textarea name="remark" class="form-control normal" placeholder="请填写">{{ old('remark') }}</textarea>
         </div>
 
         <div class="form-title text-left">
@@ -603,9 +750,16 @@
           @foreach (App\Models\Job::channelArr as $key => $channel)
             <div class="custom-control custom-checkbox custom-control-inline">
                 <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="source[{{ $key }}]"
-                  @if (!empty($channel['checked']))
-                    checked
+                  @if (empty(old('source')))
+                    @if (!empty($channel['checked']))
+                      checked
+                    @endif
+                  @else
+                    @if (isset(old('source')[$key]))
+                      checked
+                    @endif
                   @endif
+
                   @if (isset($channel['has_remark']) && $channel['has_remark'])
                     onclick='setRemark()'
                   @endif
@@ -613,7 +767,11 @@
                 <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['text'] }}</label>
             </div>
           @endforeach
-          <input style="visibility: hidden;" type="text" name="source_remarks" class="form-control" id="channelRemark" placeholder="请选择招聘平台">
+          <input type="text" name="source_remarks" value="{{ old('source_remarks') }}" class="form-control" id="channelRemark" placeholder="请选择招聘平台"
+          @if (!isset(old('source')['other_platform']))
+            style="visibility: hidden;"
+          @endif
+          >
         </div>
         <div class="form-group form-inline">
           <label for="job_id">
@@ -622,7 +780,13 @@
           <select name="job_id" class="form-control normal">
             <option hidden value="">请选择</option>
             @foreach($jobs as $job)
-              <option value="{{ $job->id }}">{{ $job->name }}</option>
+              <option value="{{ $job->id }}"
+              @if (old('job_id') == $job->id)
+                selected
+              @endif
+              >
+                {{ $job->name }}
+              </option>
             @endforeach
           </select>
         </div>
