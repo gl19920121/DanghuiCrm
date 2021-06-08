@@ -34,6 +34,10 @@ a.a-gray:hover {
   color: #B5B5B6;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .color-n {
   color: #3E3A39;
 }

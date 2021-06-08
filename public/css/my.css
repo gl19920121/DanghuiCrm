@@ -34,6 +34,10 @@ a.a-gray:hover {
   color: #B5B5B6;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .color-n {
   color: #3E3A39;
 }
@@ -1460,6 +1464,10 @@ a.a-gray:hover {
   color: #B5B5B6;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .color-n {
   color: #3E3A39;
 }
@@ -2853,6 +2861,10 @@ ul.nav-sec-left > li ul.sub > li.active a {
   background-color: #F7F8F8;
 }
 
+.border-gray {
+  border-color: #C9CACA;
+}
+
 .resume-create {
   margin-top: 25px;
   padding-left: 39px;
@@ -2861,12 +2873,14 @@ ul.nav-sec-left > li ul.sub > li.active a {
 }
 
 .resume-create .addItem {
-  width: 760px;
-  height: 80px;
+  width: 710px;
+  height: 45px;
   border: 1px dashed #D83856;
   cursor: pointer;
-  line-height: 80px;
+  line-height: 45px;
   color: #D83856;
+  background-color: rgba(216, 56, 86, 0.1);
+  margin-left: 60px;
 }
 
 .resume-list {
