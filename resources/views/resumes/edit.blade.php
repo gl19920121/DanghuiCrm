@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('title', '编辑简历')
 @section('content')
-<div class="resume-create bg-white">
+<div class="resume-create-form bg-white">
   <div class="default-form">
     <div class="form-header"></div>
     <hr class="divider">

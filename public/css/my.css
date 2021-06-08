@@ -926,7 +926,6 @@ a.a-gray:hover {
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li {
-  padding-left: 22px;
   cursor: pointer;
 }
 
@@ -937,15 +936,19 @@ a.a-gray:hover {
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li a {
   height: 44px;
   line-height: 44px;
+  padding-left: 22px;
   color: #3E3A39;
   text-decoration: none;
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li.selected {
-  padding-left: 18px;
   border-left: 4px solid;
   border-color: #D83856;
   background-color: #fff;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li.selected a {
+  padding-left: 18px;
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list {
@@ -955,7 +958,7 @@ a.a-gray:hover {
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list li {
-  padding-left: 22px;
+  padding-left: 34px;
   cursor: pointer;
 }
 
@@ -967,7 +970,7 @@ a.a-gray:hover {
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list li.selected {
-  padding-left: 18px;
+  padding-left: 30px;
   border-left: 4px solid;
   border-color: #D83856;
   background-color: #fff;
@@ -2356,7 +2359,6 @@ a.a-gray:hover {
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li {
-  padding-left: 22px;
   cursor: pointer;
 }
 
@@ -2367,15 +2369,19 @@ a.a-gray:hover {
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li a {
   height: 44px;
   line-height: 44px;
+  padding-left: 22px;
   color: #3E3A39;
   text-decoration: none;
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li.selected {
-  padding-left: 18px;
   border-left: 4px solid;
   border-color: #D83856;
   background-color: #fff;
+}
+
+.jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list li.selected a {
+  padding-left: 18px;
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list {
@@ -2385,7 +2391,7 @@ a.a-gray:hover {
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list li {
-  padding-left: 22px;
+  padding-left: 34px;
   cursor: pointer;
 }
 
@@ -2397,7 +2403,7 @@ a.a-gray:hover {
 }
 
 .jobtype-modal .modal-dialog .modal-content .modal-body ul.jobtype-list ul.sec-list li.selected {
-  padding-left: 18px;
+  padding-left: 30px;
   border-left: 4px solid;
   border-color: #D83856;
   background-color: #fff;
@@ -2872,7 +2878,23 @@ ul.nav-sec-left > li ul.sub > li.active a {
   padding-bottom: 113px;
 }
 
-.resume-create .addItem {
+.resume-create .body {
+  max-width: 1094px;
+  margin-left: 100px;
+  margin-right: 100px;
+  padding: 43px 50px 68px 50px;
+  border: 1px dashed #3E3A39;
+  border-radius: 5px;
+}
+
+.resume-create-form {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+}
+
+.resume-create-form .addItem {
   width: 710px;
   height: 45px;
   border: 1px dashed #D83856;

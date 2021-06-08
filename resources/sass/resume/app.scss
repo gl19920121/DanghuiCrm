@@ -14,6 +14,23 @@
   padding-right: 39px;
   padding-bottom: 113px;
 
+  .body {
+    max-width: 1094px;
+    //max-height: 25px;
+    margin-left: 100px;
+    margin-right: 100px;
+    padding: 43px 50px 68px 50px;
+    border: 1px dashed $color-n;
+    border-radius: 5px;
+  }
+}
+
+.resume-create-form {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+
   .addItem {
     width: 710px;
     height: 45px;

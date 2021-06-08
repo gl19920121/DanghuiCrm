@@ -1014,7 +1014,7 @@ a.a-gray {
           overflow-y: scroll;
 
           li {
-            padding-left: 22px;
+            //padding-left: 22px;
             cursor: pointer;
 
             p {
@@ -1024,16 +1024,20 @@ a.a-gray {
             a {
               height: 44px;
               line-height: 44px;
+              padding-left: 22px;
               color: $color-n;
               text-decoration: none;
             }
           }
 
           li.selected {
-            padding-left: 18px;
             border-left: 4px solid;
             border-color: $color-red;
             background-color: #fff;
+
+            a {
+              padding-left: 18px;
+            }
           }
 
           ul.sec-list {
@@ -1042,7 +1046,7 @@ a.a-gray {
             padding-left: 0;
 
             li {
-              padding-left: 22px;
+              padding-left: 34px;
               cursor: pointer;
 
               a {
@@ -1054,7 +1058,7 @@ a.a-gray {
             }
 
             li.selected {
-              padding-left: 18px;
+              padding-left: 30px;
               border-left: 4px solid;
               border-color: $color-red;
               background-color: #fff;

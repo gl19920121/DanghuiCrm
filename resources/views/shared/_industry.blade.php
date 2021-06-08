@@ -187,7 +187,9 @@
 
   function init()
   {
-    $('ul#defaultOption.no').empty();
+    $('#industryLeftNav').empty();
+    $('#industryBody').prev().remove();
+    $('#industryBody').empty();
 
     root.forEach(function(rootNo) {
       var secId = 'sec'+rootNo;

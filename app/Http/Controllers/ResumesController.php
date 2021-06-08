@@ -34,8 +34,7 @@ class ResumesController extends Controller
      */
     public function create()
     {
-        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
-        return view('resumes.create', compact('jobs'));
+        return view('resumes.create');
     }
 
     public function edit(Resume $resume)
@@ -201,16 +200,62 @@ class ResumesController extends Controller
         return view('resumes.show', compact('resume', 'jobs'));
     }
 
-    public function operation(Resume $resume, Request $request)
+    public function manual(Request $request)
     {
-        $resumeId = $resume->id;
-        $userId = $request->user_id;
-        $type = $request->type;
-
-        $this->doOperation($resumeId, $userId, $type);
-
-        return back();
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+        return view('resumes.create_form', compact('jobs'));
     }
+
+    public function auto(Request $request)
+    {
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+
+        $filePath = NULL;
+        $file = $request->file('resume');
+        if($request->hasFile('resume')) {
+            if (!$file->isValid()) {
+                session()->flash('danger', '简历上传失败');
+                return redirect()->back()->withInput();
+            }
+            $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
+        }
+        unset($file);
+
+        // $api = new APIHelper();
+        // $res = $api->resumesdk($filePath);
+        // return dd($res);
+        // if ($res['status']['code'] !== 200) {
+        //     session()->flash('danger', '简历解析失败');
+        //     return redirect()->back();
+        // }
+        $resKeys = [
+            'name', 'gender', 'age', 'living_address_norm', 'work_year', 'degree', 'major', 'phone', 'email', 'weixin', 'qq', 'work_company', 'work_salary_min', 'work_salary', 'work_job_nature'
+        ];
+        $result = $res['result'];
+        foreach ($resKeys as $key) {
+            if (!isset($result[$key])) {
+                $result[$key] = '';
+            }
+        }
+
+        $resume = [
+            'name' => $result['name'],
+            'sex' => $result['gender'],
+            'age' => $result['age'],
+            'phone_num' => $result['phone'],
+            'location' => explode('-', $result['living_address_norm']),
+            'work_years' => $result['work_year'],
+            'work_years_flag' => 0,
+            'education' => $result['degree'],
+            'major' => $result['major'],
+            'cur_company' => $result['work_company'],
+            'cur_salary' => $result['work_salary_min'],
+            'cur_salary_count' => floor((int)$result['work_salary'] / (int)$result['work_salary_min'])
+        ];
+
+        return view('resumes.create_form', compact('resume', 'jobs'));
+    }
+
 
     /**
      * [store 创建简历 POST]
@@ -323,25 +368,7 @@ class ResumesController extends Controller
             }
             $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
         }
-        // unset($file);
-
-        // $api = new APIHelper(config('public.resumesdk'));
-        // $file_cont = Storage::disk('resume')->get($filePath);
-        // $file_cont = base64_encode($file_cont);
-        // $body = [
-        //     'file_name' => storage_path('resume/'.$filePath),
-        //     'file_cont' => $file_cont,
-        //     'need_avatar' => 0,
-        //     'ocr_type' => 1
-        // ];
-        // $body = json_encode($body, JSON_UNESCAPED_UNICODE);
-        // $res = $api->post($body, 'ResumeParser');
-        // $data = json_decode($res);
-        // return dd($data);
-
-        // $api = new APIHelper();
-        // $res = $api->resumesdk($filePath);
-        // return dd($res);
+        unset($file);
 
         // 格式化db字段
         $data = $request->toArray();
@@ -447,6 +474,17 @@ class ResumesController extends Controller
         unset($data['education_experience']);
 
         $resume->update($data);
+
+        return back();
+    }
+
+    public function operation(Resume $resume, Request $request)
+    {
+        $resumeId = $resume->id;
+        $userId = $request->user_id;
+        $type = $request->type;
+
+        $this->doOperation($resumeId, $userId, $type);
 
         return back();
     }
