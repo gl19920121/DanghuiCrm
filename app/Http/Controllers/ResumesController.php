@@ -17,6 +17,52 @@ use Illuminate\Support\Facades\Storage;
 class ResumesController extends Controller
 {
     private $pageSize;
+    private $resumeKeys = [
+        'name' => '',
+        'gender' => '',
+        'age' => '',
+        'living_address_norm' => '',
+        'work_year' => '',
+        'degree' => '',
+        'major' => '',
+        'phone' => '',
+        'email' => '',
+        'weixin' => '',
+        'qq' => '',
+        'work_industry' => '',
+        'work_position' => '',
+        'work_company' => '',
+        'work_salary_min' => '',
+        'work_salary' => '',
+        'expect_industry' => '',
+        'expect_job' => '',
+        'work_job_nature' => '',
+        'expect_salary' => '',
+        'expect_salary_min' => '',
+        'expect_salary_max' => '',
+        'job_exp_objs' => [
+            'job_cpy' => '',
+            'job_cpy_size' => '',
+            'job_industry' => '',
+            'job_position' => '',
+            'start_date' => '',
+            'end_date' => '',
+            'job_content' => ''
+        ],
+        'proj_exp_objs' => [
+            'proj_name' => '',
+            'start_date' => '',
+            'end_date' => '',
+            'proj_resp' => ''
+        ],
+        'education_objs' => [
+            'edu_college' => '',
+            'edu_degree_norm' => '',
+            'edu_major' => '',
+            'start_date' => '',
+            'end_date' => ''
+        ]
+    ];
 
     public function __construct()
     {
@@ -35,6 +81,226 @@ class ResumesController extends Controller
     public function create()
     {
         return view('resumes.create');
+    }
+
+    private function getNumber($data)
+    {
+        $num = $data;
+        if (!empty($data) && preg_match('/\d+/', $data, $arr)) {
+           $num = (int)$arr[0];
+        }
+
+        return $num;
+    }
+
+    private function getDate($data)
+    {
+        $datetime = new DateTime(strtotime($data));
+        return $datetime->format('Y/m/d');
+    }
+
+    private function handleEducation($data)
+    {
+        if (strpos($data, '高') !== false) {
+            $education = 'high_schoo';
+        } elseif (strpos($data, '专') !== false) {
+            $education = 'junior';
+        } elseif (strpos($data, '本') !== false) {
+            $education = 'undergraduate';
+        } elseif (strpos($data, '硕') !== false) {
+            $education = 'master';
+        } elseif (strpos($data, '博') !== false) {
+            $education = 'doctor';
+        }
+
+        return $education;
+    }
+
+    private function handleResumeData($result)
+    {
+        $cur_salary_count = '';
+        if (!empty($result['work_salary']) && preg_match('/\d+/', $result['work_salary'], $arr)) {
+           $year_salary = (int)$arr[0];
+           $salary = (int)$result['work_salary_min'];
+           $cur_salary_count = floor($year_salary / $salary);
+        }
+
+        $living_address_norm = explode('-', $result['living_address_norm']);
+        if (count($living_address_norm) >= 3) {
+            $location = [
+                'province' => $living_address_norm[1],
+                'city' => $living_address_norm[2],
+                'district' => '',
+            ];
+        } else {
+            $location = [
+                'province' => '',
+                'city' => '',
+                'district' => ''
+            ];
+        }
+
+        $education = $this->handleEducation($result['degree']);
+
+        $exp_work_nature = $result['work_job_nature'];
+        if (strpos($exp_work_nature, '全') !== false && strpos($exp_work_nature, '兼')) {
+            $exp_work_nature = 'all';
+        } elseif (strpos($exp_work_nature, '全') !== false) {
+            $exp_work_nature = 'full';
+        } elseif (strpos($exp_work_nature, '兼') !== false) {
+            $exp_work_nature = 'part';
+        }
+
+        $exp_salary_min = '';
+        $exp_salary_max = '';
+        if (!empty($result['expect_salary_min']) && preg_match('/\d+/', $result['expect_salary_min'], $arr)) {
+           $exp_salary_min = (int)$arr[0];
+        }
+        if (!empty($result['expect_salary_max']) && preg_match('/\d+/', $result['expect_salary_max'], $arr)) {
+           $exp_salary_max = (int)$arr[0];
+        }
+
+        $resume = [
+            'name' => $result['name'],
+            'sex' => $result['gender'],
+            'age' => $result['age'],
+            'location' => $location,
+            'work_years' => $result['work_year'],
+            'work_years_flag' => 0,
+            'education' => $education,
+            'major' => $result['major'],
+            'phone_num' => $result['phone'],
+            'email' => $result['email'],
+            'wechat' => $result['weixin'],
+            'qq' => $result['qq'],
+            'cur_industry' => [
+                'st' => $result['work_industry'],
+                'nd' => $result['work_industry'],
+                'rd' => $result['work_industry'],
+                'th' => $result['work_industry']
+            ],
+            'cur_position' => [
+                'st' => $result['work_position'],
+                'nd' => $result['work_position'],
+                'rd' => $result['work_position']
+            ],
+            'cur_company' => $result['work_company'],
+            'cur_salary' => $result['work_salary_min'],
+            'cur_salary_count' => $cur_salary_count,
+            'exp_industry' => [
+                'st' => $result['expect_industry'],
+                'nd' => $result['expect_industry'],
+                'rd' => $result['expect_industry'],
+                'th' => $result['expect_industry']
+            ],
+            'exp_position' => [
+                'st' => $result['expect_job'],
+                'nd' => $result['expect_job'],
+                'rd' => $result['expect_job']
+            ],
+            'exp_work_nature' => $exp_work_nature,
+            'exp_salary_min' => $exp_salary_min,
+            'exp_salary_max' => $exp_salary_max,
+            'work_experience' => [],
+            'project_experience' => [],
+            'education_experience' => []
+        ];
+
+        foreach ($result['job_exp_objs'] as $index => $work_experience) {
+
+            $resume['work_experience'][$index] = [
+                'company_name' => $work_experience['job_cpy'],
+                'company_scale' => $work_experience['job_cpy_size'],
+                'company_industry' => [
+                    'st' => $work_experience['job_industry'],
+                    'nd' => $work_experience['job_industry'],
+                    'rd' => $work_experience['job_industry'],
+                    'th' => $work_experience['job_industry']
+                ],
+                'job_type' => [
+                    'st' => $work_experience['job_position'],
+                    'nd' => $work_experience['job_position'],
+                    'rd' => $work_experience['job_position']
+                ],
+                'salary' => $this->getNumber($work_experience['job_salary']),
+                'start_at' => $this->getDate($work_experience['start_date']),
+                'end_at' => $this->getDate($work_experience['end_date']),
+                'is_not_end' => strstr($work_experience['end_date'], '至今') === false ? '' : 'on',
+                'work_desc' => $work_experience['job_content']
+            ];
+        }
+
+        foreach ($result['proj_exp_objs'] as $index => $project_experience) {
+
+            $resume['project_experience'][$index] = [
+                'name' => $project_experience['proj_name'],
+                'start_at' => $this->getDate($project_experience['start_date']),
+                'end_at' => $this->getDate($project_experience['end_date']),
+                'is_not_end' => strstr($project_experience['end_date'], '至今') === false ? '' : 'on',
+                'body' => $project_experience['proj_resp']
+            ];
+        }
+
+        foreach ($result['education_objs'] as $index => $education_experience) {
+
+            $resume['education_experience'][$index] = [
+                'school_name' => $education_experience['edu_college'],
+                'school_level' => $this->handleEducation($education_experience['edu_degree_norm']),
+                'major' => $education_experience['edu_major'],
+                'start_at' => $this->getDate($education_experience['start_date']),
+                'end_at' => $this->getDate($education_experience['end_date']),
+                'is_not_end' => strstr($education_experience['end_date'], '至今') === false ? '' : 'on'
+            ];
+        }
+
+        return $resume;
+    }
+
+    public function manual(Request $request)
+    {
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+
+        if ($request->has('resume')) {
+            $resume = $request->resume;
+        } else {
+            $result = [];
+            $this->handleResData($result);
+            $resume = $this->handleResumeData($result);
+        }
+        // return dd($resume);
+
+        return view('resumes.create_form', compact('jobs', 'resume'));
+    }
+
+    public function auto(Request $request)
+    {
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+
+        $filePath = NULL;
+        $file = $request->file('resume');
+        if($request->hasFile('resume')) {
+            if (!$file->isValid()) {
+                session()->flash('danger', '简历上传失败');
+                return redirect()->back()->withInput();
+            }
+            $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
+        }
+        unset($file);
+
+        $api = new APIHelper();
+        $res = $api->resumesdk($filePath);
+
+        if ($res['status']['code'] !== 200) {
+            session()->flash('danger', '简历解析失败');
+            return redirect()->back();
+        }
+
+        $result = $res['result'];
+        // return dd($result);
+        $this->handleResData($result);
+        $resume = $this->handleResumeData($result);
+
+        return redirect()->route('resumes.create.manual', ['resume' => $resume]);
     }
 
     public function edit(Resume $resume)
@@ -200,63 +466,6 @@ class ResumesController extends Controller
         return view('resumes.show', compact('resume', 'jobs'));
     }
 
-    public function manual(Request $request)
-    {
-        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
-        return view('resumes.create_form', compact('jobs'));
-    }
-
-    public function auto(Request $request)
-    {
-        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
-
-        $filePath = NULL;
-        $file = $request->file('resume');
-        if($request->hasFile('resume')) {
-            if (!$file->isValid()) {
-                session()->flash('danger', '简历上传失败');
-                return redirect()->back()->withInput();
-            }
-            $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
-        }
-        unset($file);
-
-        // $api = new APIHelper();
-        // $res = $api->resumesdk($filePath);
-        // return dd($res);
-        // if ($res['status']['code'] !== 200) {
-        //     session()->flash('danger', '简历解析失败');
-        //     return redirect()->back();
-        // }
-        $resKeys = [
-            'name', 'gender', 'age', 'living_address_norm', 'work_year', 'degree', 'major', 'phone', 'email', 'weixin', 'qq', 'work_company', 'work_salary_min', 'work_salary', 'work_job_nature'
-        ];
-        $result = $res['result'];
-        foreach ($resKeys as $key) {
-            if (!isset($result[$key])) {
-                $result[$key] = '';
-            }
-        }
-
-        $resume = [
-            'name' => $result['name'],
-            'sex' => $result['gender'],
-            'age' => $result['age'],
-            'phone_num' => $result['phone'],
-            'location' => explode('-', $result['living_address_norm']),
-            'work_years' => $result['work_year'],
-            'work_years_flag' => 0,
-            'education' => $result['degree'],
-            'major' => $result['major'],
-            'cur_company' => $result['work_company'],
-            'cur_salary' => $result['work_salary_min'],
-            'cur_salary_count' => floor((int)$result['work_salary'] / (int)$result['work_salary_min'])
-        ];
-
-        return view('resumes.create_form', compact('resume', 'jobs'));
-    }
-
-
     /**
      * [store 创建简历 POST]
      * @author dante 2021-04-19
@@ -306,7 +515,32 @@ class ResumesController extends Controller
             'exp_salary_min.required_if' => '请填写 期望薪资',
             'exp_salary_max.required_if' => '请填写 期望薪资',
             'exp_salary_count.required_if' => '请填写 期望薪资',
-            'source.required' => '请选择 来源渠道'
+            'source.required' => '请选择 来源渠道',
+            'work_experience.*.company_name.required' => '请填写 公司名称',
+            'work_experience.*.company_nature.required' => '请选择 公司性质',
+            'work_experience.*.company_scale.required' => '请选择 公司规模',
+            'work_experience.*.company_investment.required' => '请选择 融资阶段',
+            'work_experience.*.company_industry.st.required' => '请选择 所属行业',
+            'work_experience.*.company_industry.nd.required' => '请选择 所属行业',
+            'work_experience.*.company_industry.rd.required' => '请选择 所属行业',
+            'work_experience.*.company_industry.th.required' => '请选择 所属行业',
+            'work_experience.*.job_type.st.required' => '请选择 职位名称',
+            'work_experience.*.job_type.nd.required' => '请选择 职位名称',
+            'work_experience.*.job_type.rd.required' => '请选择 职位名称',
+            'work_experience.*.salary.required' => '请填写 月薪',
+            'work_experience.*.salary_count.required' => '请填写 月薪',
+            'work_experience.*.subordinates.numeric' => '请正确填写 下属人数',
+            'work_experience.*.start_at.required' => '请填写 入职时间',
+            'work_experience.*.end_at.required_without' => '请填写 离职时间',
+            'work_experience.*.work_desc.required' => '请填写 工作描述',
+            'project_experience.*.name.required' => '请填写 项目名称',
+            'project_experience.*.role.required' => '请填写 担任角色',
+            'project_experience.*.start_at.required' => '请填写 项目开始时间',
+            'project_experience.*.end_at.required_without' => '请填写 项目结束时间',
+            'education_experience.*.school_name.required' => '请填写 毕业院校',
+            'education_experience.*.school_level.required' => '请选择 最高学历',
+            'education_experience.*.start_at.required' => '请填写 入学时间',
+            'education_experience.*.end_at.required_without' => '请填写 毕业时间',
         ];
         $this->validate($request, [
             'name' => 'required',
@@ -355,7 +589,40 @@ class ResumesController extends Controller
             'remark' => 'nullable',
             'source' => 'required',
             'source_remarks' => 'nullable|string|max:255',
-            'attachment' => 'nullable|file|mimes:doc,docx'
+            'attachment' => 'nullable|file|mimes:doc,docx',
+            'work_experience' => 'required|array',
+            'work_experience.*.company_name' => 'required',
+            'work_experience.*.company_nature' => 'required',
+            'work_experience.*.company_scale' => 'required',
+            'work_experience.*.company_investment' => 'required',
+            'work_experience.*.company_industry.st' => 'required',
+            'work_experience.*.company_industry.nd' => 'required',
+            'work_experience.*.company_industry.rd' => 'required',
+            'work_experience.*.company_industry.th' => 'required',
+            'work_experience.*.job_type.st' => 'required',
+            'work_experience.*.job_type.nd' => 'required',
+            'work_experience.*.job_type.rd' => 'required',
+            'work_experience.*.salary' => 'required',
+            'work_experience.*.salary_count' => 'required',
+            'work_experience.*.subordinates' => 'nullable|numeric',
+            'work_experience.*.start_at' => 'required',
+            'work_experience.*.end_at' => 'required_without:work_experience.*.is_not_end',
+            'work_experience.*.is_not_end' => 'filled',
+            'work_experience.*.work_desc' => 'required',
+            'project_experience' => 'required|array',
+            'project_experience.*.name' => 'required',
+            'project_experience.*.role' => 'required',
+            'project_experience.*.start_at' => 'required|date',
+            'project_experience.*.end_at' => 'required_without:project_experience.*.is_not_end|date',
+            'project_experience.*.is_not_end' => 'filled',
+            'project_experience.*.body' => 'nullable',
+            'education_experience' => 'required|array',
+            'education_experience.*.school_name' => 'required',
+            'education_experience.*.school_level' => 'required',
+            'education_experience.*.major' => 'nullable',
+            'education_experience.*.start_at' => 'required|date',
+            'education_experience.*.end_at' => 'required_without:education_experience.*.is_not_end|date',
+            'education_experience.*.is_not_end' => 'filled'
         ], $mssages);
 
         // 简历文件存储
@@ -561,6 +828,34 @@ class ResumesController extends Controller
             }
         }
     }
+
+    private function handleResData(&$result)
+    {
+        $default = $this->resumeKeys;
+
+        foreach ($default as $key => $value) {
+            if (is_array($value)) {
+                $stKey = $key;
+                if (!isset($result[$stKey])) {
+                    $result[$stKey] = [];
+                }
+                foreach ($result[$stKey] as $index => $item) {
+                    foreach ($value as $ndKey => $ndValue) {
+                        if (!isset($item[$ndKey])) {
+                            $result[$stKey][$index][$ndKey] = $ndValue;
+                        }
+                    }
+                }
+
+            } else {
+                if (!isset($result[$key])) {
+                    $result[$key] = $value;
+                }
+            }
+        }
+    }
+
+
 
     private function getBaseSearch($request, $jobId = null)
     {

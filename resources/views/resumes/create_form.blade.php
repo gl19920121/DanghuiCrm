@@ -16,7 +16,7 @@
             <span class="color-red">*</span>
             姓名：
           </label>
-          <input type="text" name="name" class="form-control normal" value="{{ old('name') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="name" class="form-control normal" value="{{ empty(old('name')) ? $resume['name'] : old('name') }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="sex">
@@ -25,8 +25,24 @@
           </label>
           <select name="sex" class="form-control normal">
             <option hidden value="">请选择</option>
-            <option @if(old('sex') === '男') selected @endif>男</option>
-            <option @if(old('sex') === '女') selected @endif>女</option>
+            <option
+            @if (old('sex') === '男')
+              selected
+            @elseif ($resume['sex'] === '男')
+              selected
+            @endif
+            >
+              男
+            </option>
+            <option
+            @if (old('sex') === '女')
+              selected
+            @elseif ($resume['sex'] === '女')
+              selected
+            @endif
+            >
+              女
+            </option>
           </select>
         </div>
         <div class="form-group form-inline">
@@ -34,7 +50,7 @@
             <span class="color-red">*</span>
             年龄：
           </label>
-          <input type="text" name="age" class="form-control normal" value="{{ old('age') }}" placeholder="请填写" autocomplete="off" data-type="int">
+          <input type="text" name="age" class="form-control normal" value="{{ empty(old('age')) ? $resume['age'] : old('age') }}" placeholder="请填写" autocomplete="off" data-type="int">
         </div>
         <div class="form-group form-inline">
           <label for="location">
@@ -60,7 +76,7 @@
           </label>
           <div class="input-group">
             <input type="hidden" name="work_years_flag" value="0">
-            <input type="text" name="work_years" class="form-control small append" value="{{ old('work_years') }}" autocomplete="off" data-type="int"
+            <input type="text" name="work_years" class="form-control small append" value="{{ empty(old('work_years')) ? $resume['work_years'] : old('work_years') }}" autocomplete="off" data-type="int"
             @if (old('work_years_flag') != 0)
               disabled
             @endif
@@ -89,7 +105,9 @@
             <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::educationArr as $key => $education)
               <option value="{{ $key }}"
-              @if (old('education') == $key)
+              @if (old('education') === $key)
+                selected
+              @elseif ($resume['education'] === $key)
                 selected
               @endif
               >
@@ -100,7 +118,7 @@
         </div>
         <div class="form-group form-inline">
           <label for="major">所学专业：</label>
-          <input type="text" name="major" class="form-control normal" value="{{ old('major') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="major" class="form-control normal" value="{{ empty(old('major')) ? $resume['major'] : old('major') }}" placeholder="请填写" autocomplete="off">
         </div>
 
         <div class="form-title text-left">
@@ -111,28 +129,28 @@
             <span class="color-red">*</span>
             手机号码：
           </label>
-          <input type="text" name="phone_num" class="form-control normal" value="{{ old('phone_num') }}" placeholder="请填写" autocomplete="off" data-type="int">
+          <input type="text" name="phone_num" class="form-control normal" value="{{ empty(old('phone_num')) ? $resume['phone_num'] : old('phone_num') }}" placeholder="请填写" autocomplete="off" data-type="int">
         </div>
         <div class="form-group form-inline">
           <label for="email">
             <span class="color-red">*</span>
             电子邮箱：
           </label>
-          <input type="text" name="email" class="form-control normal" value="{{ old('email') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="email" class="form-control normal" value="{{ empty(old('email')) ? $resume['email'] : old('email') }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="wechat">
             <span class="color-red">*</span>
             微信：
           </label>
-          <input type="text" name="wechat" class="form-control normal" value="{{ old('wechat') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="wechat" class="form-control normal" value="{{ empty(old('wechat')) ? $resume['wechat'] : old('wechat') }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="qq">
             <span class="color-red">*</span>
             QQ：
           </label>
-          <input type="text" name="qq" class="form-control normal" value="{{ old('qq') }}" placeholder="请填写" autocomplete="off" data-type="int">
+          <input type="text" name="qq" class="form-control normal" value="{{ empty(old('qq')) ? $resume['qq'] : old('qq') }}" placeholder="请填写" autocomplete="off" data-type="int">
         </div>
 
         <div class="form-title text-left">
@@ -148,11 +166,11 @@
               <input type="hidden" name="cur_industry[th]" value="{{ old('cur_industry')['th'] }}">
               <input type="text" class="form-control normal append" value="{{ old('cur_industry')['th'] }}" placeholder="请选择" autocomplete="off">
             @else
-              <input type="hidden" name="cur_industry[st]">
-              <input type="hidden" name="cur_industry[nd]">
-              <input type="hidden" name="cur_industry[rd]">
-              <input type="hidden" name="cur_industry[th]">
-              <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+              <input type="hidden" name="cur_industry[st]" value="{{ $resume['cur_industry']['st'] }}">
+              <input type="hidden" name="cur_industry[nd]" value="{{ $resume['cur_industry']['nd'] }}">
+              <input type="hidden" name="cur_industry[rd]" value="{{ $resume['cur_industry']['rd'] }}">
+              <input type="hidden" name="cur_industry[th]" value="{{ $resume['cur_industry']['th'] }}">
+              <input type="text" class="form-control normal append" value="{{ $resume['cur_industry']['th'] }}" placeholder="请选择" autocomplete="off">
             @endif
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
@@ -173,10 +191,10 @@
               <input type="hidden" name="cur_position[rd]" value="{{ old('cur_position')['rd'] }}">
               <input type="text" class="form-control normal append" value="{{ old('cur_position')['rd'] }}" placeholder="请选择" autocomplete="off">
             @else
-              <input type="hidden" name="cur_position[st]">
-              <input type="hidden" name="cur_position[nd]">
-              <input type="hidden" name="cur_position[rd]">
-              <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+              <input type="hidden" name="cur_position[st]" value="{{ $resume['cur_position']['st'] }}">
+              <input type="hidden" name="cur_position[nd]" value="{{ $resume['cur_position']['nd'] }}">
+              <input type="hidden" name="cur_position[rd]" value="{{ $resume['cur_position']['rd'] }}">
+              <input type="text" class="form-control normal append" value="{{ $resume['cur_position']['rd'] }}" placeholder="请选择" autocomplete="off">
             @endif
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
@@ -193,19 +211,19 @@
             <span class="color-red">*</span>
             所在公司：
           </label>
-          <input type="text" name="cur_company" class="form-control normal" value="{{ old('cur_company') }}" placeholder="请填写" autocomplete="off">
+          <input type="text" name="cur_company" class="form-control normal" value="{{ empty(old('cur_company')) ? $resume['cur_company'] : old('cur_company') }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="cur_salary"><span class="color-red">*</span>目前月薪：</label>
           <div class="input-group">
-            <input type="text" name="cur_salary" class="form-control small append" value="{{ old('cur_salary') }}" autocomplete="off" data-type="int">
+            <input type="text" name="cur_salary" class="form-control small append" value="{{ empty(old('cur_salary')) ? $resume['cur_salary'] : old('cur_salary') }}" autocomplete="off" data-type="int">
             <div class="input-group-append">
               <div class="input-group-text">K</div>
             </div>
           </div>
           <label class="ml-1 mr-1">*</label>
           <div class="input-group">
-            <input type="text" name="cur_salary_count" class="form-control small append" value="{{ old('cur_salary_count') }}" autocomplete="off" data-type="int">
+            <input type="text" name="cur_salary_count" class="form-control small append" value="{{ empty(old('cur_salary_count')) ? $resume['cur_salary_count'] : old('cur_salary_count') }}" autocomplete="off" data-type="int">
             <div class="input-group-append">
               <div class="input-group-text">月</div>
             </div>
@@ -225,11 +243,11 @@
               <input type="hidden" name="exp_industry[th]" value="{{ old('exp_industry')['th'] }}">
               <input type="text" class="form-control normal append" value="{{ old('exp_industry')['th'] }}" placeholder="请选择" autocomplete="off">
             @else
-              <input type="hidden" name="exp_industry[st]">
-              <input type="hidden" name="exp_industry[nd]">
-              <input type="hidden" name="exp_industry[rd]">
-              <input type="hidden" name="exp_industry[th]">
-              <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+              <input type="hidden" name="exp_industry[st]" value="{{ $resume['exp_industry']['st'] }}">
+              <input type="hidden" name="exp_industry[nd]" value="{{ $resume['exp_industry']['nd'] }}">
+              <input type="hidden" name="exp_industry[rd]" value="{{ $resume['exp_industry']['rd'] }}">
+              <input type="hidden" name="exp_industry[th]" value="{{ $resume['exp_industry']['th'] }}">
+              <input type="text" class="form-control normal append" value="{{ $resume['exp_industry']['th'] }}" placeholder="请选择" autocomplete="off">
             @endif
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
@@ -250,10 +268,10 @@
               <input type="hidden" name="exp_position[rd]" value="{{ old('exp_position')['rd'] }}">
               <input type="text" class="form-control normal append" value="{{ old('exp_position')['rd'] }}" placeholder="请选择" autocomplete="off">
             @else
-              <input type="hidden" name="exp_position[st]">
-              <input type="hidden" name="exp_position[nd]">
-              <input type="hidden" name="exp_position[rd]">
-              <input type="text" class="form-control normal append" placeholder="请选择" autocomplete="off">
+              <input type="hidden" name="exp_position[st]" value="{{ $resume['exp_position']['st'] }}">
+              <input type="hidden" name="exp_position[nd]" value="{{ $resume['exp_position']['nd'] }}">
+              <input type="hidden" name="exp_position[rd]" value="{{ $resume['exp_position']['rd'] }}">
+              <input type="text" class="form-control normal append" value="{{ $resume['exp_position']['rd'] }}" placeholder="请选择" autocomplete="off">
             @endif
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
@@ -271,7 +289,9 @@
             <option value="" hidden>请选择</option>
             @foreach (App\Models\Job::natureArr as $key => $nature)
               <option value="{{ $key }}"
-              @if (old('exp_work_nature') == $key)
+              @if (old('exp_work_nature') === $key)
+                selected
+              @elseif ($resume['exp_work_nature'] === $key)
                 selected
               @endif
               >
@@ -301,7 +321,7 @@
           <label for="exp_salary"><span class="color-red">*</span>期望薪资：</label>
           <input type="hidden" name="exp_salary_flag" value="0">
           <div class="input-group">
-            <input type="text" name="exp_salary_min" class="form-control small append" value="{{ old('exp_salary_min') }}" autocomplete="off" data-type="int"
+            <input type="text" name="exp_salary_min" class="form-control small append" value="{{ empty(old('exp_salary_min')) ? $resume['exp_salary_min'] : old('exp_salary_min') }}" autocomplete="off" data-type="int"
             @if (old('exp_salary_flag') != 0)
               disabled
             @endif
@@ -312,7 +332,7 @@
           </div>
           <label class="ml-1 mr-1">-</label>
           <div class="input-group">
-            <input type="text" name="exp_salary_max" class="form-control small append" value="{{ old('exp_salary_max') }}" autocomplete="off" data-type="int"
+            <input type="text" name="exp_salary_max" class="form-control small append" value="{{ empty(old('exp_salary_max')) ? $resume['exp_salary_max'] : old('exp_salary_max') }}" autocomplete="off" data-type="int"
             @if (old('exp_salary_flag') != 0)
               disabled
             @endif
@@ -361,7 +381,11 @@
           'work_desc' => ''
         ])
         @if (empty(old('work_experience')))
-          @php ($work_experiences = [$work_experience_default])
+          @if (isset($resume['work_experience']) && count($resume['work_experience']) > 0)
+            @php ($work_experiences = $resume['work_experience'])
+          @else
+            @php ($work_experiences = [$work_experience_default])
+          @endif
         @else
           @php ($work_experiences = old('work_experience'))
         @endif
@@ -390,7 +414,7 @@
                   <option hidden value="">请选择</option>
                   @foreach (App\Models\Company::natureArr as $key => $nature)
                     <option value="{{ $key }}"
-                    @if ($work_experience['company_nature'] == $key)
+                    @if ($work_experience['company_nature'] === $key)
                       selected
                     @endif
                     >
@@ -408,7 +432,7 @@
                   <option hidden value="">请选择</option>
                   @foreach (App\Models\Company::scaleArr as $key => $scale)
                     <option value="{{ $key }}"
-                    @if ($work_experience['company_scale'] == $key)
+                    @if ($work_experience['company_scale'] === $key)
                       selected
                     @endif
                     >
@@ -559,7 +583,11 @@
           'body' => ''
         ])
         @if (empty(old('project_experience')))
-          @php ($project_experiences = [$project_experience_default])
+          @if (isset($resume['project_experience']) && count($resume['project_experience']) > 0)
+            @php ($project_experiences = $resume['project_experience'])
+          @else
+            @php ($project_experiences = [$project_experience_default])
+          @endif
         @else
           @php ($project_experiences = old('project_experience'))
         @endif
@@ -654,7 +682,11 @@
           'is_not_end' => ''
         ])
         @if (empty(old('education_experience')))
-          @php ($education_experiences = [$education_experience_default])
+          @if (isset($resume['education_experience']) && count($resume['education_experience']) > 0)
+            @php ($education_experiences = $resume['education_experience'])
+          @else
+            @php ($education_experiences = [$education_experience_default])
+          @endif
         @else
           @php ($education_experiences = old('education_experience'))
         @endif
