@@ -1,0 +1,44 @@
+@import '../common.scss';
+
+.management-job {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+
+	.banner {
+	  width: 100%;
+	  max-height: 126px;
+	  background-image: url('#{$img-url-home}nav_bg.png');
+	  background-size: 100% 100%;
+	  margin-bottom: 26px;
+
+	  img {
+	    max-width: 100%;
+	    max-height: 100%;
+	  }
+	}
+
+  .body {
+    .tip {
+      > .col {
+        width: 168px;
+        margin-top: 46px;
+        margin-bottom: 46px;
+        border-left: 1px solid $color-border-gray;
+
+        &:first-child {
+          border-left: none;
+        }
+      }
+    }
+
+    .list {
+      .job-list {
+        .nav-tabs-border {
+          border-top: 1px solid $color-border-gray;
+        }
+      }
+    }
+  }
+}

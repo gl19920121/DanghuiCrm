@@ -34,14 +34,16 @@
                       <div class="triangle-up"></div>
                     @endif
                 </li>
-                <li hidden class="nav-item {{ strpos(Route::currentRouteName(), 'tasks.') !== false ? 'active': '' }}">
-                    <a class="nav-link" href="#">
+                @if (Gate::allows('see-management'))
+                <li class="nav-item {{ strpos(Route::currentRouteName(), 'management.') !== false ? 'active': '' }}">
+                    <a class="nav-link" href="{{ route('management.job.list') }}">
                         员工管理
                     </a>
-                    @if (in_array(Route::currentRouteName(), []))
+                    @if (in_array(Route::currentRouteName(), ['management.job.list']))
                       <div class="triangle-up"></div>
                     @endif
                 </li>
+                @endif
             </ul>
             <div class="form-inline ml-auto">
                 <div class="notice">
@@ -71,4 +73,6 @@
   @include('layouts._second_header', ['tab' => 'jobs'])
 @elseif (in_array(Route::currentRouteName(), ['resumes.create', 'resumes.create.manual', 'resumes.edit', 'resumes.list', 'resumes.show', 'resumes.mine', 'resumes.current']))
   @include('layouts._second_header', ['tab' => 'resumes'])
+@elseif (in_array(Route::currentRouteName(), ['management.job.list']))
+  @include('layouts._second_header', ['tab' => 'management'])
 @endif

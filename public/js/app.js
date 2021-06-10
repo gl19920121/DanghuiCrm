@@ -74730,6 +74730,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/management/app.scss":
+/*!********************************************!*\
+  !*** ./resources/sass/management/app.scss ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/resume/app.scss":
 /*!****************************************!*\
   !*** ./resources/sass/resume/app.scss ***!
@@ -74742,9 +74753,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/less/app.less ./resources/sass/app.scss ./resources/sass/common.scss ./resources/sass/resume/app.scss ***!
-  \*****************************************************************************************************************************************************/
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/less/app.less ./resources/sass/app.scss ./resources/sass/common.scss ./resources/sass/resume/app.scss ./resources/sass/management/app.scss ***!
+  \******************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -74752,7 +74763,8 @@ __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/js/app.js */"./resour
 __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/less/app.less */"./resources/less/app.less");
 __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/app.scss */"./resources/sass/app.scss");
 __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/common.scss */"./resources/sass/common.scss");
-module.exports = __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/resume/app.scss */"./resources/sass/resume/app.scss");
+__webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/resume/app.scss */"./resources/sass/resume/app.scss");
+module.exports = __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/management/app.scss */"./resources/sass/management/app.scss");
 
 
 /***/ })

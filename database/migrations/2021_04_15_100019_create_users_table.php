@@ -30,11 +30,9 @@ class CreateUsersTable extends Migration
                 $table->string('city')->nullable()->comment('所在城市');
                 $table->string('introduce')->nullable()->comment('优势介绍');
                 $table->string('avatar')->nullable()->comment('头像');
-                $table->integer('role_id')->comment('账号角色ID')->unsigned();
                 $table->rememberToken()->comment('登录状态token'); // 'remember_token' VARCHAR(100) NULL
                 $table->timestamps(); // 'create_at' 'update_at'
                 $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
-                $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
             });
         }
     }

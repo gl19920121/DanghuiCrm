@@ -56,6 +56,41 @@ class Job extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function scopeStatus($query, $tab)
+    {
+        $scope;
+        switch ($tab) {
+            case 'job_doing':
+                $scope = $query->where('status', 1);
+                break;
+            case 'job_end':
+                $scope = $query->where('status', 0);
+                break;
+            case 'job_need_check':
+                $scope = $query->where('status', -1);
+                break;
+
+            default:
+                $scope = $query->where('status', 1);
+                break;
+        }
+        return $scope;
+    }
+
+    public function scopeSearchByName($query, $name)
+    {
+        if (!empty($name)) {
+            return $query->where('name', 'like', '%' . $name . '%');
+        }
+    }
+
+    public function scopeSearchByChannel($query, $channel)
+    {
+        if (!empty($channel)) {
+            return $query->whereJsonContains('channel', $channel);
+        }
+    }
+
     public function setStatusAttribute($value)
     {
         $status = $value;

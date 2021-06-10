@@ -12,29 +12,27 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
-            [
-                'role_name' => 'admin',
-                'level' => 1,
-                'permission' => json_encode([])
-            ],
-            [
-                'role_name' => 'RPO总监',
-                'level' => 2,
-                'permission' => json_encode([])
-            ],
-            [
-                'role_name' => '交付专员',
-                'level' => 3,
-                'permission' => json_encode([])
-            ],
-            [
-                'role_name' => '创意总监',
-                'level' => 3,
-                'permission' => json_encode([])
-            ]
-        ];
+        $admin = Role::create([
+            'name' => '管理员',
+            'slug' => 'admin',
+            'level' => 0,
+            'is_root' => true,
+            'permissions' => []
+        ]);
 
-        Role::insert($roles);
+        $rpo = Role::create([
+            'name' => 'RPO总监',
+            'slug' => 'rpo',
+            'level' => 1,
+            'is_root' => true,
+            'permissions' => []
+        ]);
+
+        $deliver = Role::create([
+            'name' => '交付专员',
+            'slug' => 'deliver',
+            'level' => 2,
+            'permissions' => []
+        ]);
     }
 }

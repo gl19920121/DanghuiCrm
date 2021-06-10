@@ -555,6 +555,10 @@ a.a-gray {
     margin-left: 362px;
   }
 
+  .management {
+    margin-left: 645px;
+  }
+
   .container {
     min-height: 60px;
   }
@@ -1565,6 +1569,51 @@ ul.nav-sec-left {
         a {
           padding-left: 32px;
           color: $color-red;
+        }
+      }
+    }
+  }
+}
+
+.nav-tabs-border {
+  > ul.nav-tabs {
+    border-bottom: 0;
+
+    .nav-item  {
+      width: 130px;
+      height: 50px;
+
+      a.nav-link {
+        color: $color-n;
+        line-height: 50px;
+        padding: 1px 0 0 0;
+        border-top: 1px solid $color-border-gray;
+        border-left: 1px solid $color-border-gray;
+        border-bottom: 1px solid $color-border-gray;
+        border-right: none;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+
+        &:hover {
+        }
+      }
+
+      a.active {
+        padding-top: 0;
+        border-top: 2px solid $color-red;
+        border-right: none;
+        border-bottom: none;
+      }
+
+      &:first-child {
+        a.active {
+          border-left: none;
+        }
+      }
+
+      &:last-child {
+        a.nav-link {
+          border-right: 1px solid $color-border-gray;
         }
       }
     }

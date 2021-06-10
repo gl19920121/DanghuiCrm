@@ -26,6 +26,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Gate
+        Gate::define('see-management', function ($user) {
+            return $user->inRole('rpo', 1);
+        });
     }
 }

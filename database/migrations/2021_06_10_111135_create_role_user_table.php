@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResumeUserTable extends Migration
+class CreateRoleUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateResumeUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('resume_user', function (Blueprint $table) {
+        Schema::create('role_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('resume_id')->comment('简历id');
-            $table->unsignedInteger('user_id')->comment('用户id');
-            $table->enum('type', ['seen', 'collect'])->comment('操作行为');
+            $table->unsignedInteger('role_id');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
 
-            $table->unique(['resume_id', 'user_id', 'type']);
-            $table->foreign('resume_id')->references('id')->on('resumes')->onDelete('cascade');
+            $table->unique(['role_id', 'user_id']);
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -33,6 +32,6 @@ class CreateResumeUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resume_user');
+        Schema::dropIfExists('role_user');
     }
 }

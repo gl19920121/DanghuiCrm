@@ -530,6 +530,10 @@ a.a-gray:hover {
   margin-left: 362px;
 }
 
+.second-navbar .management {
+  margin-left: 645px;
+}
+
 .second-navbar .container {
   min-height: 60px;
 }
@@ -1428,5 +1432,41 @@ ul.nav-sec-left > li ul.sub > li.active {
 ul.nav-sec-left > li ul.sub > li.active a {
   padding-left: 32px;
   color: #D83856;
+}
+
+.nav-tabs-border > ul.nav-tabs {
+  border-bottom: 0;
+}
+
+.nav-tabs-border > ul.nav-tabs .nav-item {
+  width: 130px;
+  height: 50px;
+}
+
+.nav-tabs-border > ul.nav-tabs .nav-item a.nav-link {
+  color: #3E3A39;
+  line-height: 50px;
+  padding: 1px 0 0 0;
+  border-top: 1px solid #C9CACA;
+  border-left: 1px solid #C9CACA;
+  border-bottom: 1px solid #C9CACA;
+  border-right: none;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.nav-tabs-border > ul.nav-tabs .nav-item a.active {
+  padding-top: 0;
+  border-top: 2px solid #D83856;
+  border-right: none;
+  border-bottom: none;
+}
+
+.nav-tabs-border > ul.nav-tabs .nav-item:first-child a.active {
+  border-left: none;
+}
+
+.nav-tabs-border > ul.nav-tabs .nav-item:last-child a.nav-link {
+  border-right: 1px solid #C9CACA;
 }
 

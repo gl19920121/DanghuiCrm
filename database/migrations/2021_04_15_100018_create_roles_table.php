@@ -16,10 +16,13 @@ class CreateRolesTable extends Migration
         if (!Schema::hasTable('roles')) {
             Schema::create('roles', function (Blueprint $table) {
                 $table->increments('id');
-                $table->string('role_name')->unique()->comment('角色名');
-                $table->string('level')->comment('权限等级');
-                $table->json('permission')->comment('权限列表');
-                $table->timestamps(); // 'create_at' 'update_at'
+                $table->string('name')->comment('角色名');
+                $table->string('slug')->unique()->comment('权限等级');
+                $table->integer('level')->comment('权限等级');
+                $table->boolean('is_root')->default(false);
+                $table->unsignedInteger('parent_id')->nullable()->comment('父ID');
+                $table->jsonb('permissions')->comment('权限列表');
+                $table->timestamps();
                 $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
             });
         }

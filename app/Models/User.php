@@ -38,4 +38,36 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+    }
+
+    public function scopeSubordinate($query)
+    {
+        return $query->$this->roles()->where('parent_id', $this->id);
+    }
+
+    /**
+     * Checks if User has access to $permission.
+     */
+    public function hasAccess($permission)
+    {
+        // check if the permission is available in any role
+        foreach ($this->roles as $role) {
+            if($role->hasAccess($permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the user belongs to role.
+     */
+    public function inRole($roleSlug, $rolesLevel)
+    {
+        return $this->roles()->where('slug', $roleSlug)->where('level', $rolesLevel)->count() == 1;
+    }
 }

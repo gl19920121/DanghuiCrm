@@ -35,8 +35,6 @@ Route::get('/resumes/mine', 'ResumesController@mine')->name('resumes.mine');
 Route::get('/resumes/current', 'ResumesController@current')->name('resumes.current');
 Route::resource('resumes', 'ResumesController'); //简历相关
 
-Route::resource('tasks', 'TasksController'); //任务相关
-
 Route::get('/jobs/list', 'JobsController@list')->name('jobs.list'); //职位列表
 Route::post('/jobs/exported', 'JobsController@exportedResume')->name('jobs.exported');
 Route::post('/jobs/{job}/status', 'JobsController@status')->name('jobs.status');
@@ -47,3 +45,7 @@ Route::resource('drafts', 'DraftsController');
 
 Route::get('/companys/list', 'CompanysController@list')->name('companys.list');
 Route::resource('companys', 'CompanysController');
+
+Route::get('/management/job/list', 'ManagementController@jobList')->name('management.job.list');
+Route::get('/management/staff/list', 'ManagementController@staffList')->name('management.staff.list');
+Route::get('/management/resume/list', 'ManagementController@resumeList')->name('management.resume.list');

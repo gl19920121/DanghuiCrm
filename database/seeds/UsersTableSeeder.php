@@ -20,7 +20,6 @@ class UsersTableSeeder extends Seeder
                 'name' => '管理员',
                 'email' => '694986534@qq.com',
                 'phone' => '15001332305',
-                'role_id' => 1,
                 'is_admin' => true
             ],
             [
@@ -30,7 +29,6 @@ class UsersTableSeeder extends Seeder
                 'name' => '田德雨',
                 'email' => '',
                 'phone' => '',
-                'role_id' => 2,
                 'is_admin' => false
             ],
             [
@@ -40,7 +38,6 @@ class UsersTableSeeder extends Seeder
                 'name' => '姜海洋',
                 'email' => '',
                 'phone' => '',
-                'role_id' => 2,
                 'is_admin' => false
             ],
             [
@@ -50,7 +47,6 @@ class UsersTableSeeder extends Seeder
                 'name' => '李瑞珊',
                 'email' => '',
                 'phone' => '',
-                'role_id' => 3,
                 'is_admin' => false
             ],
             [
@@ -60,7 +56,6 @@ class UsersTableSeeder extends Seeder
                 'name' => '于存享',
                 'email' => '',
                 'phone' => '',
-                'role_id' => 3,
                 'is_admin' => false
             ],
             [
@@ -70,7 +65,6 @@ class UsersTableSeeder extends Seeder
                 'name' => '支宪璐',
                 'email' => '',
                 'phone' => '',
-                'role_id' => 4,
                 'is_admin' => false
             ]
         ];
