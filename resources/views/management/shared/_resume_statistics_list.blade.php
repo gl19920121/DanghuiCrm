@@ -1,6 +1,6 @@
 <div class="job-list-body">
 
-  @if (count($jobs) > 0)
+  @if (count($list) > 0)
     <div class="default-list">
       <form name="search" class="text-center" method="GET" action="{{ route('management.job.list') }}">
         {{ csrf_field() }}
@@ -23,9 +23,6 @@
             </div>
           </div>
           <button type="submit" class="btn btn-danger">搜索</button>
-          @if ($appends['tab'] === 'job_doing')
-            <label class="color-gray ml-3 mt-auto">共有<span class="color-red">{{ $jobs->total() }}</span>个发布中的职位</label>
-          @endif
         </div>
       </form>
 

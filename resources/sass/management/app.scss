@@ -40,31 +40,54 @@
         }
       }
 
-      .default-table {
-        border: 1px solid $color-ashy;
-        font-size: 14px;
+      .default-list {
+        padding-top: 0px;
+      }
+    }
+  }
+}
 
-        thead {
-          background-color: $color-ashy;
+.management-staff {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
 
-          th {
-            color: $color-n;
-            font-weight: normal;
-            border-top: 1px solid $color-ashy;
-            border-bottom: 1px solid $color-ashy;
-          }
-        }
+  .list {
+    .job-list {
+      .nav-tabs-border {
+        border-top: 1px solid $color-border-gray;
+      }
+    }
 
-        td {
-          vertical-align: middle;
-          border-bottom: 1px solid $color-ashy;
+    .default-list {
+      padding-top: 0px;
+    }
+  }
+}
 
-          a {
-            &:hover {
-              color: $color-n;
-            }
-          }
-        }
+.default-table {
+  border: 1px solid $color-ashy;
+  font-size: 14px;
+
+  thead {
+    background-color: $color-ashy;
+
+    th {
+      color: $color-n;
+      font-weight: normal;
+      border-top: 1px solid $color-ashy;
+      border-bottom: 1px solid $color-ashy;
+    }
+  }
+
+  td {
+    vertical-align: middle;
+    border-bottom: 1px solid $color-ashy;
+
+    a {
+      &:hover {
+        color: $color-n;
       }
     }
   }

@@ -1505,28 +1505,47 @@ ul.nav-sec-left > li ul.sub > li.active a {
   border-top: 1px solid #C9CACA;
 }
 
-.management-job .body .list .default-table {
+.management-job .body .list .default-list {
+  padding-top: 0px;
+}
+
+.management-staff {
+  margin-top: 25px;
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-bottom: 113px;
+}
+
+.management-staff .list .job-list .nav-tabs-border {
+  border-top: 1px solid #C9CACA;
+}
+
+.management-staff .list .default-list {
+  padding-top: 0px;
+}
+
+.default-table {
   border: 1px solid #F7F8F8;
   font-size: 14px;
 }
 
-.management-job .body .list .default-table thead {
+.default-table thead {
   background-color: #F7F8F8;
 }
 
-.management-job .body .list .default-table thead th {
+.default-table thead th {
   color: #3E3A39;
   font-weight: normal;
   border-top: 1px solid #F7F8F8;
   border-bottom: 1px solid #F7F8F8;
 }
 
-.management-job .body .list .default-table td {
+.default-table td {
   vertical-align: middle;
   border-bottom: 1px solid #F7F8F8;
 }
 
-.management-job .body .list .default-table td a:hover {
+.default-table td a:hover {
   color: #3E3A39;
 }
 

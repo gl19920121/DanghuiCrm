@@ -46,10 +46,7 @@ Route::resource('drafts', 'DraftsController');
 Route::get('/companys/list', 'CompanysController@list')->name('companys.list');
 Route::resource('companys', 'CompanysController');
 
-//if (Gate::allows('see-management'))
-//
 Route::middleware(['can:see-management'])->group(function () {
     Route::get('/management/job/list', 'ManagementController@jobList')->name('management.job.list');
     Route::get('/management/staff/list', 'ManagementController@staffList')->name('management.staff.list');
-    Route::get('/management/resume/list', 'ManagementController@resumeList')->name('management.resume.list');
 });

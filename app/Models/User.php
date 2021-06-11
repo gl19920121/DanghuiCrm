@@ -44,6 +44,33 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
+    public function executeJobs()
+    {
+        return $this->hasMany(Job::class, 'execute_uid');
+    }
+
+    public function executeJobResumes()
+    {
+        return $this->hasManyThrough(Resume::class, Job::class, 'execute_uid');
+    }
+
+    public function getBranchAttribute()
+    {
+        $rids = $this->roles->pluck('id');
+        $roles = Role::branch($rids)->get();
+        $udis = [];
+        foreach ($roles as $role) {
+            $udis = array_merge($udis, $role->users->pluck('id')->toArray());
+        }
+
+        return $udis;
+    }
+
+    public function scopeBranch($query, $uids)
+    {
+        return $query->whereIn('id', $uids);
+    }
+
     public function scopeSubordinate($query)
     {
         return $query->$this->roles()->where('parent_id', $this->id);

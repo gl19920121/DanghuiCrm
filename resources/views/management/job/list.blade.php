@@ -55,7 +55,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link @if($appends['tab'] === 'resume_need_check') active @endif" data-toggle="link" href="{{ route('management.resume.list', ['tab' => 'resume_need_check']) }}" role="tab">
+            <a class="nav-link @if($appends['tab'] === 'resume_need_check') active @endif" data-toggle="link" href="{{ route('management.job.list', ['tab' => 'resume_need_check']) }}" role="tab">
               简历审核
             </a>
           </li>

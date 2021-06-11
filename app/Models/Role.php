@@ -15,6 +15,11 @@ class Role extends Model
         return $this->belongsToMany(User::class, 'role_user', 'role_id', 'user_id');
     }
 
+    public function scopeBranch($query, $rids)
+    {
+        return $query->whereIn('parent_id', $rids);
+    }
+
     public function hasAccess($permission)
     {
         return $this->hasPermission($permission);
