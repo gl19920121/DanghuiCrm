@@ -23,7 +23,6 @@ class ManagementController extends Controller
 
     public function jobList(Request $request)
     {
-        $statistics = $this->getStatistics();
         $appends = [
             'tab' => $request->query('tab', 'job_doing'),
             'job_name' => $request->query('job_name', ''),
@@ -32,12 +31,13 @@ class ManagementController extends Controller
 
         $roles = Auth::user()->roles->pluck('id');
         $subRoles = Role::whereIn('parent_id', $roles)->get();
-        $subUsers = [];
+        $udis = [];
         foreach ($subRoles as $role) {
-            $subUsers = array_merge($subUsers, $role->users->pluck('id')->toArray());
+            $udis = array_merge($udis, $role->users->pluck('id')->toArray());
         }
 
-        $jobs = Job::status($appends['tab'])->searchByName($appends['job_name'])->searchByChannel($appends['job_channel'])->whereIn('execute_uid', $subUsers)->paginate($this->pageSize);
+        $jobs = Job::status($appends['tab'])->searchByName($appends['job_name'])->searchByChannel($appends['job_channel'])->branch($udis)->paginate($this->pageSize);
+        $statistics = $this->getStatistics($udis);
 
         $list = $jobs;
         return view('management.job.list', compact('statistics', 'appends', 'list'));
@@ -50,18 +50,30 @@ class ManagementController extends Controller
 
     public function resumeList(Request $request)
     {
-        $statistics = $this->getStatistics();
-        $tab = $request->query('tab', 'job_doing');
+        $appends = [
+            'tab' => $request->query('tab', 'job_doing'),
+            'job_name' => $request->query('job_name', ''),
+            'job_channel' => $request->query('job_channel', ''),
+        ];
 
-        return view('management.job.list', compact('statistics', 'tab'));
+        $roles = Auth::user()->roles->pluck('id');
+        $subRoles = Role::whereIn('parent_id', $roles)->get();
+        $udis = [];
+        foreach ($subRoles as $role) {
+            $udis = array_merge($udis, $role->users->pluck('id')->toArray());
+        }
+
+        $statistics = $this->getStatistics($udis);
+
+        return view('management.job.list', compact('statistics', 'appends'));
     }
 
-    private function getStatistics()
+    private function getStatistics($udis)
     {
         $statistics = [
-            'staff' => 0,
-            'job_doing' => 0,
-            'job_need_check' => 0,
+            'staff' => count($udis),
+            'job_doing' => Job::status(1)->branch($udis)->count(),
+            'job_need_check' => Job::status(-1)->branch($udis)->count(),
             'resume_need_check' => 0
         ];
 

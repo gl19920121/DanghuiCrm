@@ -39,6 +39,33 @@
           border-top: 1px solid $color-border-gray;
         }
       }
+
+      .default-table {
+        border: 1px solid $color-ashy;
+        font-size: 14px;
+
+        thead {
+          background-color: $color-ashy;
+
+          th {
+            color: $color-n;
+            font-weight: normal;
+            border-top: 1px solid $color-ashy;
+            border-bottom: 1px solid $color-ashy;
+          }
+        }
+
+        td {
+          vertical-align: middle;
+          border-bottom: 1px solid $color-ashy;
+
+          a {
+            &:hover {
+              color: $color-n;
+            }
+          }
+        }
+      }
     }
   }
 }

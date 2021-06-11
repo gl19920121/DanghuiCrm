@@ -27,6 +27,7 @@ $color-border-gray: #C9CACA;
 $color-french-gray: #DCDDDD;
 $color-ashy: #F7F8F8;
 $color-text-gray: #9FA0A0;
+$color-light-red: rgba(216, 56 ,86, 0.1);
 
 $img-url-public: "../images/";
 $img-url-login: "../images/login/";
@@ -798,23 +799,23 @@ a.a-gray {
 }
 
 .default-table {
-  border: 1px solid rgba(216, 56 ,86, 0.1);
+  border: 1px solid $color-light-red;
   font-size: 14px;
 
   thead {
-    background-color: rgba(216, 56 ,86, 0.1);
+    background-color: $color-light-red;
 
     th {
       color: $color-red;
       font-weight: normal;
-      border-top: 1px solid rgba(216, 56 ,86, 0.1);
-      border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
+      border-top: 1px solid $color-light-red;
+      border-bottom: 1px solid $color-light-red;
     }
   }
 
   td {
     vertical-align: middle;
-    border-bottom: 1px solid rgba(216, 56 ,86, 0.1);
+    border-bottom: 1px solid $color-light-red;
 
     a {
       &:hover {
@@ -1234,7 +1235,7 @@ a.a-gray {
 
 .commission {
   padding: 30px 35px;
-  border: 1px solid rgba(216, 56 ,86, 0.1);
+  border: 1px solid $color-light-red;
   margin-bottom: 16px;
 
   p {

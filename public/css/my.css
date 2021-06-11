@@ -4835,3 +4835,28 @@ ul.nav-sec-left > li ul.sub > li.active a {
   border-top: 1px solid #C9CACA;
 }
 
+.management-job .body .list .default-table {
+  border: 1px solid #F7F8F8;
+  font-size: 14px;
+}
+
+.management-job .body .list .default-table thead {
+  background-color: #F7F8F8;
+}
+
+.management-job .body .list .default-table thead th {
+  color: #3E3A39;
+  font-weight: normal;
+  border-top: 1px solid #F7F8F8;
+  border-bottom: 1px solid #F7F8F8;
+}
+
+.management-job .body .list .default-table td {
+  vertical-align: middle;
+  border-bottom: 1px solid #F7F8F8;
+}
+
+.management-job .body .list .default-table td a:hover {
+  color: #3E3A39;
+}
+

@@ -44,7 +44,7 @@
             @break
           @case ('management')
             <li class="nav-item">
-              <a class=" nav-link {{ in_array(Route::currentRouteName(), ['management.job.list']) ? 'active': '' }}" href="{{ route('management.job.list') }}">
+              <a class=" nav-link {{ in_array(Route::currentRouteName(), ['management.job.list', 'management.resume.list']) ? 'active': '' }}" href="{{ route('management.job.list') }}">
                 职位管控
               </a>
             </li>

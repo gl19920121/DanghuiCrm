@@ -46,6 +46,16 @@ class Job extends Model
         'other_platform' => ['text' => '其他', 'has_remark' => true]
     ];
 
+    public function releaseUser()
+    {
+        return $this->belongsTo(User::class, 'release_uid');
+    }
+
+    public function executeUser()
+    {
+        return $this->belongsTo(User::class, 'execute_uid');
+    }
+
     public function resumes()
     {
         return $this->hasMany(Resume::class);
@@ -56,25 +66,36 @@ class Job extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function scopeStatus($query, $tab)
+    public function scopeStatus($query, $status)
     {
         $scope;
-        switch ($tab) {
-            case 'job_doing':
-                $scope = $query->where('status', 1);
-                break;
-            case 'job_end':
-                $scope = $query->where('status', 0);
-                break;
-            case 'job_need_check':
-                $scope = $query->where('status', -1);
-                break;
 
-            default:
-                $scope = $query->where('status', 1);
-                break;
+        if (is_numeric($status)) {
+            $scope = $query->where('status', $status);
+        } else {
+            switch ($status) {
+                case 'job_doing':
+                    $scope = $query->where('status', 1);
+                    break;
+                case 'job_end':
+                    $scope = $query->where('status', 3);
+                    break;
+                case 'job_need_check':
+                    $scope = $query->where('status', -1);
+                    break;
+
+                default:
+                    $scope = $query->where('status', 1);
+                    break;
+            }
         }
+
         return $scope;
+    }
+
+    public function scopeBranch($query, $uids)
+    {
+        return $query->whereIn('execute_uid', $uids);
     }
 
     public function scopeSearchByName($query, $name)

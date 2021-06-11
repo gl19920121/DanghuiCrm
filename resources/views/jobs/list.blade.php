@@ -61,7 +61,7 @@
                 <td>{{ $job->company->name }}</td>
                 <td>{{ $job->urgencyLevelShow }}</td>
                 <td>{{ $job->channelShow }}</td>
-                <td class="color-red">{{ $job->resumes_count }}</td>
+                <td class="color-red">{{ $job->resumes->count() }}</td>
                 <td>{{ $job->updated_at }}</td>
                 <td>
                   <div class="btn-group" role="group">

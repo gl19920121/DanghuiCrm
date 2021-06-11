@@ -22,34 +22,36 @@
                 </select>
             </div>
           </div>
-
           <button type="submit" class="btn btn-danger">搜索</button>
+          @if ($appends['tab'] === 'job_doing')
+            <label class="color-gray ml-3 mt-auto">共有<span class="color-red">{{ $jobs->total() }}</span>个发布中的职位</label>
+          @endif
         </div>
       </form>
 
       <table class="table table-striped default-table">
         <thead>
           <tr>
-            <th scope="col">职位</th>
+            <th scope="col">发布顾问</th>
+            <th scope="col">职位编号</th>
+            <th scope="col">职位名称</th>
             <th scope="col">招聘企业</th>
-            <th scope="col">紧急程度</th>
             <th scope="col">发布渠道</th>
-            <th scope="col">新增应聘</th>
-            <th scope="col">更新时间</th>
+            <th scope="col">应聘简历</th>
+            <th scope="col">发布日期</th>
             <th scope="col">操作</th>
           </tr>
         </thead>
         <tbody>
           @foreach($jobs as $job)
             <tr>
-              <td>
-                <a class="color-red" href="{{ route('jobs.show', $job) }}">{{ $job->name }}</a>
-              </td>
+              <td>{{ $job->executeUser->name }}</td>
+              <td>{{ $job->no }}</td>
+              <td class="color-red">{{ $job->name }}</td>
               <td>{{ $job->company->name }}</td>
-              <td>{{ $job->urgencyLevelShow }}</td>
               <td>{{ $job->channelShow }}</td>
-              <td class="color-red">{{ $job->resumes_count }}</td>
-              <td>{{ $job->updated_at }}</td>
+              <td>{{ $job->resumes->count() }}</td>
+              <td>{{ $job->created_at }}</td>
               <td>
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,30 +59,19 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <a class="dropdown-item" href="#" onclick="$('form[name=search1]').submit()">刷新</a>
-                    <a class="dropdown-item" href="{{ route('jobs.edit', $job) }}">修改</a>
-                    @if ($appends['tab'] === 'ing')
-                      <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'pause']) }}">
-                        {{ csrf_field() }}
-                        <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">暂停</button>
-                      </form>
-                    @endif
-                    @if ($appends['tab'] === 'pause' || $appends['tab'] === 'end')
-                      <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'ing']) }}">
-                        {{ csrf_field() }}
-                        <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">恢复</button>
-                      </form>
-                    @endif
-                    @if ($appends['tab'] !== 'end')
+                    @if ($appends['tab'] === 'job_doing')
                       <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'end']) }}">
                         {{ csrf_field() }}
                         <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">结束</button>
                       </form>
                     @endif
-                    <form method="POST" action="{{ route('jobs.destroy', $job) }}">
-                      {{ csrf_field() }}
-                      {{ method_field('DELETE') }}
-                      <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">删除</button>
-                    </form>
+                    @if ($appends['tab'] === 'job_end')
+                      <form method="POST" action="{{ route('jobs.destroy', $job) }}">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">删除</button>
+                      </form>
+                    @endif
                   </div>
                 </div>
               </td>
