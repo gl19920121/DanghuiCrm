@@ -111,6 +111,8 @@ class ResumesController extends Controller
             $education = 'master';
         } elseif (strpos($data, '博') !== false) {
             $education = 'doctor';
+        } else {
+            $education = $data;
         }
 
         return $education;
@@ -462,7 +464,7 @@ class ResumesController extends Controller
     public function show(Resume $resume)
     {
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
-        $this->doOperation($resume->id, Auth::user()->id, 'seen');
+        ResumeUser::store($resume->id, Auth::user()->id, 'seen');
         return view('resumes.show', compact('resume', 'jobs'));
     }
 
@@ -689,6 +691,8 @@ class ResumesController extends Controller
         $resumePrj = ResumePrj::insert($project);
         $resumeEdu = ResumeEdu::insert($education);
 
+        ResumeUser::store($resume->id, Auth::user()->id, 'upload');
+
         // 返回
         return redirect()->route('resumes.list');
     }
@@ -748,10 +752,10 @@ class ResumesController extends Controller
     public function operation(Resume $resume, Request $request)
     {
         $resumeId = $resume->id;
-        $userId = $request->user_id;
+        $userId = Auth::user()->id;
         $type = $request->type;
 
-        $this->doOperation($resumeId, $userId, $type);
+        ResumeUser::store($resumeId, $userId, $type);
 
         return back();
     }
@@ -804,29 +808,6 @@ class ResumesController extends Controller
         }
 
         return array_merge($arr, $all);
-    }
-
-    private function doOperation($resumeId, $userId, $type)
-    {
-        $resumeUser = ResumeUser::where('resume_id', $resumeId)->where('user_id', $userId)->where('type', $type)->first();
-
-        if (empty($resumeUser)) {
-            $data = [
-                'resume_id' => $resumeId,
-                'user_id' => $userId,
-                'type' => $type
-            ];
-
-            ResumeUser::create($data);
-        } else {
-            if ($type === 'seen') {
-                $resumeUser->updated_at = new DateTime();
-                $resumeUser->save();
-            }
-            if ($type === 'collect') {
-                $resumeUser->delete();
-            }
-        }
     }
 
     private function handleResData(&$result)

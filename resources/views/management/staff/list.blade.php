@@ -22,8 +22,8 @@
           @include('management.shared._job_statistics_list', ['appends' => $appends, 'users' => $list])
         </div>
       @elseif ($appends['tab'] === 'resume')
-        <div class="resume-list">
-          @include('management.shared._resume_statistics_list', ['appends' => $appends])
+        <div class="job-list">
+          @include('management.shared._resume_statistics_list', ['appends' => $appends, 'users' => $list])
         </div>
       @endif
     </div>

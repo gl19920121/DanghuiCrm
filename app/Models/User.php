@@ -54,6 +54,22 @@ class User extends Authenticatable
         return $this->hasManyThrough(Resume::class, Job::class, 'execute_uid');
     }
 
+    public function uploadResumes()
+    {
+        // return $this->hasMany(Resume::class, 'upload_uid');
+        return $this->belongsToMany(Resume::class)->wherePivot('type', 'upload')->withTimestamps();
+    }
+
+    public function seenResumes()
+    {
+        return $this->belongsToMany(Resume::class)->wherePivot('type', 'seen')->withTimestamps();
+    }
+
+    public function downloadResumes()
+    {
+        return $this->belongsToMany(Resume::class)->wherePivot('type', 'download')->withTimestamps();
+    }
+
     public function getBranchAttribute()
     {
         $rids = $this->roles->pluck('id');
@@ -96,5 +112,10 @@ class User extends Authenticatable
     public function inRole($roleSlug, $rolesLevel)
     {
         return $this->roles()->where('slug', $roleSlug)->where('level', $rolesLevel)->count() == 1;
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->is_admin && $this->inRole('admin', 0);
     }
 }

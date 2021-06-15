@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpWord\PhpWord;
 use App\Models\Job;
 use App\Models\Resume;
+use App\Models\ResumeUser;
+use Auth;
 
 class WordController extends Controller
 {
@@ -157,6 +159,8 @@ class WordController extends Controller
 
     public function exportResume(Resume $resume)
     {
+        ResumeUser::store($resume->id, Auth::user()->id, 'download');
+
         $phpword = new PHPWord(); //实例化phpword类
         $section = $phpword->addSection(); //整体页面
 

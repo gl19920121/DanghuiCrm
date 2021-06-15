@@ -156,7 +156,39 @@ class ManagementController extends Controller
             ])->paginate($this->pageSize);
 
         } elseif ($tab === 'resume') {
-            $list = [];
+            $list = User::branch($udis)->withCount([
+                'seenResumes'  => function ($query) use ($request) {
+                    if ($request->filled('start_at')) {
+                        $query->where('resume_user.created_at', '>=', $request->start_at);
+                    }
+                    if ($request->filled('is_not_end') && $request->is_not_end) {
+                        $query->where('resume_user.created_at', '<=', new DateTime());
+                    } elseif ($request->filled('end_at')) {
+                        $query->where('resume_user.created_at', '<=', $request->end_at);
+                    }
+                },
+                'uploadResumes'  => function ($query) use ($request) {
+                    if ($request->filled('start_at')) {
+                        $query->where('resume_user.created_at', '>=', $request->start_at);
+                    }
+                    if ($request->filled('is_not_end') && $request->is_not_end) {
+                        $query->where('resume_user.created_at', '<=', new DateTime());
+                    } elseif ($request->filled('end_at')) {
+                        $query->where('resume_user.created_at', '<=', $request->end_at);
+                    }
+                },
+                'downloadResumes'  => function ($query) use ($request) {
+                    if ($request->filled('start_at')) {
+                        $query->where('resume_user.created_at', '>=', $request->start_at);
+                    }
+                    if ($request->filled('is_not_end') && $request->is_not_end) {
+                        $query->where('resume_user.created_at', '<=', new DateTime());
+                    } elseif ($request->filled('end_at')) {
+                        $query->where('resume_user.created_at', '<=', $request->end_at);
+                    }
+                }
+            ])
+            ->paginate($this->pageSize);
         }
 
         return view('management.staff.list', compact('appends', 'list'));

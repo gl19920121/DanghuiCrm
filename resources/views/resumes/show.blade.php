@@ -122,7 +122,7 @@
             <div class="col col-auto align-self-end">
               <div class="row">
                 <div class="col col-auto">
-                  <form id="collect_form" method="POST" action="{{ route('resumes.operation', [$resume, 'user_id' => Auth::user()->id, 'type' => 'collect']) }}">
+                  <form id="collect_form" method="POST" action="{{ route('resumes.operation', [$resume, 'type' => 'collect']) }}">
                     {{ csrf_field() }}
                     <a href="javascript:document:collect_form.submit();" class="color-n mr-3">
                       @if ($resume->usersCollect()->count() > 0)
