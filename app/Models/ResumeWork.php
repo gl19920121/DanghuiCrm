@@ -22,12 +22,12 @@ class ResumeWork extends Model
 
     public function getCompanyInvestmentShowAttribute()
     {
-        return Company::investmentArr[$this->company_investment]['text'];
+        return !empty($this->company_investment) ? Company::investmentArr[$this->company_investment]['text'] : '其他';
     }
 
     public function getCompanyScaleShowAttribute()
     {
-        return Company::scaleArr[$this->company_scale]['text'];
+        return !empty($this->company_scale) ? Company::scaleArr[$this->company_scale]['text'] : '其他';
     }
 
     public function getCompanyNatureShowAttribute()

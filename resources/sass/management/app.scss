@@ -6,6 +6,33 @@
   padding-right: 39px;
   padding-bottom: 113px;
 
+  .default-table {
+    border: 1px solid $color-ashy;
+    font-size: 14px;
+
+    thead {
+      background-color: $color-ashy;
+
+      th {
+        color: $color-n;
+        font-weight: normal;
+        border-top: 1px solid $color-ashy;
+        border-bottom: 1px solid $color-ashy;
+      }
+    }
+
+    td {
+      vertical-align: middle;
+      border-bottom: 1px solid $color-ashy;
+
+      a {
+        &:hover {
+          color: $color-n;
+        }
+      }
+    }
+  }
+
 	.banner {
 	  width: 100%;
 	  max-height: 126px;
@@ -53,6 +80,33 @@
   padding-right: 39px;
   padding-bottom: 113px;
 
+  .default-table {
+    border: 1px solid $color-ashy;
+    font-size: 14px;
+
+    thead {
+      background-color: $color-ashy;
+
+      th {
+        color: $color-n;
+        font-weight: normal;
+        border-top: 1px solid $color-ashy;
+        border-bottom: 1px solid $color-ashy;
+      }
+    }
+
+    td {
+      vertical-align: middle;
+      border-bottom: 1px solid $color-ashy;
+
+      a {
+        &:hover {
+          color: $color-n;
+        }
+      }
+    }
+  }
+
   .list {
     .job-list {
       .nav-tabs-border {
@@ -62,33 +116,6 @@
 
     .default-list {
       padding-top: 0px;
-    }
-  }
-}
-
-.default-table {
-  border: 1px solid $color-ashy;
-  font-size: 14px;
-
-  thead {
-    background-color: $color-ashy;
-
-    th {
-      color: $color-n;
-      font-weight: normal;
-      border-top: 1px solid $color-ashy;
-      border-bottom: 1px solid $color-ashy;
-    }
-  }
-
-  td {
-    vertical-align: middle;
-    border-bottom: 1px solid $color-ashy;
-
-    a {
-      &:hover {
-        color: $color-n;
-      }
     }
   }
 }

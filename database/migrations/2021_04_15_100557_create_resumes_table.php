@@ -26,16 +26,16 @@ class CreateResumesTable extends Migration
                 $table->string('major')->nullable()->comment('所学专业');
                 $table->string('phone_num')->comment('手机号');
                 $table->string('email')->comment('邮箱');
-                $table->string('wechat')->comment('微信');
-                $table->string('qq')->comment('QQ');
-                $table->json('cur_industry')->comment('所在行业');
-                $table->json('cur_position')->comment('所任职位');
-                $table->string('cur_company')->comment('所在公司');
-                $table->integer('cur_salary')->comment('目前月薪');
-                $table->integer('cur_salary_count')->comment('目前月薪');
-                $table->json('exp_industry')->comment('期望行业');
+                $table->string('wechat')->nullable()->comment('微信');
+                $table->string('qq')->nullable()->comment('QQ');
+                $table->json('cur_industry')->nullable()->comment('所在行业');
+                $table->json('cur_position')->nullable()->comment('所任职位');
+                $table->string('cur_company')->nullable()->comment('所在公司');
+                $table->integer('cur_salary')->nullable()->comment('目前月薪');
+                $table->integer('cur_salary_count')->nullable()->comment('目前月薪');
+                $table->json('exp_industry')->nullable()->comment('期望行业');
                 $table->json('exp_position')->comment('期望职位');
-                $table->enum('exp_work_nature', ['full', 'part', 'all'])->comment('工作性质');
+                $table->enum('exp_work_nature', ['full', 'part', 'all'])->nullable()->comment('工作性质');
                 $table->json('exp_location')->comment('期望城市');
                 $table->integer('exp_salary_flag')->comment('期望薪资标识');
                 $table->integer('exp_salary_min')->nullable()->comment('期望薪资');
@@ -53,7 +53,7 @@ class CreateResumesTable extends Migration
                 $table->integer('job_id')->nullable()->comment('职位id')->unsigned();
                 $table->integer('is_collect')->default(0)->comment('收藏状态');
                 $table->timestamps();
-                $table->integer('status')->nullable()->default(1)->comment('状态');
+                $table->integer('status')->default(1)->comment('状态');
                 $table->foreign('job_id')->references('id')->on('jobs')->onUpdate('cascade')->onDelete('set null'); // 外键约束
             });
         }

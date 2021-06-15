@@ -53,7 +53,7 @@
                 {{ sprintf('%s岁', $resume->age) }}
               </div>
               <div class="col col-auto">
-                {{ $resume->location->city }}
+                {{ $resume->location_show }}
               </div>
               <div class="col col-auto">
                 {{ $resume->education_show }}

@@ -27,7 +27,7 @@
             </td>
             <td>{{ $resume->name }}</td>
             <td>{{ sprintf('%s/%s岁', $resume->sex, $resume->age) }}</td>
-            <td>{{ $resume->location->city }}</td>
+            <td>{{ $resume->location_show }}</td>
             <td>{{ $resume->education_show }}</td>
             <td>{{ $resume->work_years_show }}</td>
             <td>{{ $resume->cur_company }}</td>

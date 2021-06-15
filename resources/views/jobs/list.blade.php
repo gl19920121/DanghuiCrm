@@ -43,11 +43,13 @@
         <table class="table table-striped default-table">
           <thead>
             <tr>
+              <th scope="col">进度</th>
               <th scope="col">职位</th>
-              <th scope="col">招聘企业</th>
+              <th scope="col">公司名称</th>
               <th scope="col">紧急程度</th>
               <th scope="col">发布渠道</th>
-              <th scope="col">新增应聘</th>
+              <th scope="col">发布状态</th>
+              <th scope="col">待处理简历</th>
               <th scope="col">更新时间</th>
               <th scope="col">操作</th>
             </tr>
@@ -56,11 +58,15 @@
             @foreach($jobs as $job)
               <tr>
                 <td>
+                  <a class="color-red" href="#">查看</a>
+                </td>
+                <td>
                   <a class="color-red" href="{{ route('jobs.show', $job) }}">{{ $job->name }}</a>
                 </td>
                 <td>{{ $job->company->name }}</td>
                 <td>{{ $job->urgencyLevelShow }}</td>
                 <td>{{ $job->channelShow }}</td>
+                <td>{{ $job->statusShow }}</td>
                 <td class="color-red">{{ $job->resumes->count() }}</td>
                 <td>{{ $job->updated_at }}</td>
                 <td>

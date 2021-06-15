@@ -41,9 +41,15 @@ class Job extends Model
         '1' => ['text' => '急聘']
     ];
     public const channelArr = [
-        'applets' => ['text' => '小程序', 'checked' => 'checked'],
-        'website' => ['text' => '官网', 'checked' => 'checked'],
+        'applets' => ['text' => '小程序'],
+        'website' => ['text' => '官网'],
         'other_platform' => ['text' => '其他', 'has_remark' => true]
+    ];
+
+    protected $casts = [
+        'type' => 'array',
+        'location' => 'array',
+        'channel' => 'array'
     ];
 
     public function releaseUser()
@@ -130,6 +136,31 @@ class Job extends Model
                 break;
         }
         $this->attributes['status'] = $status;
+    }
+
+    public function getStatusShowAttribute()
+    {
+        $status = $this->status;
+
+        switch ($status) {
+            case -1:
+                $status = '审核中';
+                break;
+            case 1:
+                $status = '已发布';
+                break;
+            case 2:
+                $status = '已暂停';
+                break;
+            case 3:
+                $status = '已结束';
+                break;
+
+            default:
+                break;
+        }
+
+        return $status;
     }
 
     public function getNoAttribute()

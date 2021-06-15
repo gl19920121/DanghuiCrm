@@ -4807,6 +4807,31 @@ ul.nav-sec-left > li ul.sub > li.active a {
   padding-bottom: 113px;
 }
 
+.management-job .default-table {
+  border: 1px solid #F7F8F8;
+  font-size: 14px;
+}
+
+.management-job .default-table thead {
+  background-color: #F7F8F8;
+}
+
+.management-job .default-table thead th {
+  color: #3E3A39;
+  font-weight: normal;
+  border-top: 1px solid #F7F8F8;
+  border-bottom: 1px solid #F7F8F8;
+}
+
+.management-job .default-table td {
+  vertical-align: middle;
+  border-bottom: 1px solid #F7F8F8;
+}
+
+.management-job .default-table td a:hover {
+  color: #3E3A39;
+}
+
 .management-job .banner {
   width: 100%;
   max-height: 126px;
@@ -4846,36 +4871,36 @@ ul.nav-sec-left > li ul.sub > li.active a {
   padding-bottom: 113px;
 }
 
-.management-staff .list .job-list .nav-tabs-border {
-  border-top: 1px solid #C9CACA;
-}
-
-.management-staff .list .default-list {
-  padding-top: 0px;
-}
-
-.default-table {
+.management-staff .default-table {
   border: 1px solid #F7F8F8;
   font-size: 14px;
 }
 
-.default-table thead {
+.management-staff .default-table thead {
   background-color: #F7F8F8;
 }
 
-.default-table thead th {
+.management-staff .default-table thead th {
   color: #3E3A39;
   font-weight: normal;
   border-top: 1px solid #F7F8F8;
   border-bottom: 1px solid #F7F8F8;
 }
 
-.default-table td {
+.management-staff .default-table td {
   vertical-align: middle;
   border-bottom: 1px solid #F7F8F8;
 }
 
-.default-table td a:hover {
+.management-staff .default-table td a:hover {
   color: #3E3A39;
+}
+
+.management-staff .list .job-list .nav-tabs-border {
+  border-top: 1px solid #C9CACA;
+}
+
+.management-staff .list .default-list {
+  padding-top: 0px;
 }
 

@@ -46,7 +46,7 @@
                   <span>{{ $resume->sex }}</span>
                 </div>
                 <div class="col col-auto">
-                  <p>{{ $resume->location->city }}</p>
+                  <p>{{ $resume->location_show }}</p>
                 </div>
                 <div class="col col-auto">
                   {{ $resume->education_show }}
@@ -164,7 +164,7 @@
             <div class="col">
               <p class="font-size-m">
                 <span class="color-gray">期望城市：</span>
-                {{ $resume->exp_location->city }}
+                {{ $resume->exp_location_show }}
               </p>
             </div>
             <div class="col">

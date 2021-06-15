@@ -61,9 +61,13 @@
           </li>
         </ul>
 
-        @if (in_array($appends['tab'], ['job_doing', 'job_end', 'job_need_check']))
+        @if (in_array($appends['tab'], ['job_doing', 'job_end']))
           <div class="job-list">
             @include('management.shared._job_list', ['jobs' => $list, 'appends' => $appends])
+          </div>
+        @elseif ($appends['tab'] === 'job_need_check')
+          <div class="job-list">
+            @include('management.shared._job_list_need_check', ['jobs' => $list, 'appends' => $appends])
           </div>
         @endif
       </div>

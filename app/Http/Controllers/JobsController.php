@@ -113,9 +113,11 @@ class JobsController extends Controller
         } else {
             $data['execute_uid'] = Auth::user()->id;
         }
-        $data['type'] = json_encode($data['type']);
-        $data['location'] = json_encode($data['location']);
-        $data['channel'] = json_encode(array_keys($data['channel']));
+        // $data['type'] = json_encode($data['type']);
+        // $data['location'] = json_encode($data['location']);
+        // $data['channel'] = json_encode(array_keys($data['channel']));
+        $data['channel'] = array_keys($data['channel']);
+        $data['status'] = -1;
         $job = Job::create($data);
 
         if (isset($request->draft_id)) {
@@ -302,9 +304,10 @@ class JobsController extends Controller
         ], $mssages);
 
         $data = $request->toArray();
-        $data['type'] = json_encode($data['type']);
-        $data['location'] = json_encode($data['location']);
-        $data['channel'] = json_encode(array_keys($data['channel']));
+        // $data['type'] = json_encode($data['type']);
+        // $data['location'] = json_encode($data['location']);
+        // $data['channel'] = json_encode(array_keys($data['channel']));
+        $data['channel'] = array_keys($data['channel']);
         $job->update($data);
 
         return redirect()->route('jobs.list');
@@ -353,7 +356,7 @@ class JobsController extends Controller
     {
         $job->delete();
         session()->flash('success', '删除成功');
-        return redirect()->route('jobs.list');
+        return back();
     }
 
     private function exported(String $fileName, Array $header, Array $list)

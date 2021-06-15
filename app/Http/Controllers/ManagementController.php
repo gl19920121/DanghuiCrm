@@ -54,7 +54,6 @@ class ManagementController extends Controller
         ];
 
         $udis = Auth::user()->branch;
-        // return dd($udis);
         if ($tab === 'job') {
             $list = User::branch($udis)->withCount([
                 'executeJobs as jobs_count' => function ($query) use ($request) {

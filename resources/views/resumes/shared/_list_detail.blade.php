@@ -18,7 +18,7 @@
                 {{ $resume->age }}
               </div>
               <div class="col col-auto">
-                {{ $resume->location->city }}
+                {{ $resume->location_show }}
               </div>
               <div class="col col-auto">
                 {{ $resume->education_show }}
@@ -64,7 +64,7 @@
             <p class="color-light-gray">{{ $resume->updated_at }}</p>
           </div>
           <div class="col">
-            <button class="btn btn-light">期望城市：{{ $resume->exp_location->city }}</button>
+            <button class="btn btn-light">期望城市：{{ $resume->exp_location_show }}</button>
             <button class="btn btn-light">期望职位：{{ $resume->exp_position_show }}</button>
             <button class="btn btn-light">求职者状态：{{ $resume->jobhunter_status_show }}</button>
           </div>

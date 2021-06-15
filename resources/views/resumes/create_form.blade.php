@@ -129,7 +129,7 @@
             <span class="color-red">*</span>
             手机号码：
           </label>
-          <input type="text" name="phone_num" class="form-control normal" value="{{ empty(old('phone_num')) ? $resume['phone_num'] : old('phone_num') }}" placeholder="请填写" autocomplete="off" data-type="int">
+          <input type="text" name="phone_num" class="form-control normal" value="{{ empty(old('phone_num')) ? $resume['phone_num'] : old('phone_num') }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="email">
@@ -140,14 +140,12 @@
         </div>
         <div class="form-group form-inline">
           <label for="wechat">
-            <span class="color-red">*</span>
             微信：
           </label>
           <input type="text" name="wechat" class="form-control normal" value="{{ empty(old('wechat')) ? $resume['wechat'] : old('wechat') }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
           <label for="qq">
-            <span class="color-red">*</span>
             QQ：
           </label>
           <input type="text" name="qq" class="form-control normal" value="{{ empty(old('qq')) ? $resume['qq'] : old('qq') }}" placeholder="请填写" autocomplete="off" data-type="int">
@@ -157,7 +155,7 @@
           <h5>目前职业概况</h5>
         </div>
         <div class="form-group form-inline">
-          <label for="cur_industry"><span>*</span>所在行业：</label>
+          <label for="cur_industry">所在行业：</label>
           <div class="input-group" data-toggle="industrypicker">
             @if (old('cur_industry'))
               <input type="hidden" name="cur_industry[st]" value="{{ old('cur_industry')['st'] }}">
@@ -183,7 +181,7 @@
           </div>
         </div>
         <div class="form-group form-inline">
-          <label for="cur_position"><span>*</span>所任职位：</label>
+          <label for="cur_position">所任职位：</label>
           <div class="input-group" data-toggle="jobtypepicker">
             @if (old('cur_position'))
               <input type="hidden" name="cur_position[st]" value="{{ old('cur_position')['st'] }}">
@@ -208,13 +206,12 @@
         </div>
         <div class="form-group form-inline">
           <label for="cur_company">
-            <span class="color-red">*</span>
             所在公司：
           </label>
           <input type="text" name="cur_company" class="form-control normal" value="{{ empty(old('cur_company')) ? $resume['cur_company'] : old('cur_company') }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
-          <label for="cur_salary"><span class="color-red">*</span>目前月薪：</label>
+          <label for="cur_salary">目前月薪：</label>
           <div class="input-group">
             <input type="text" name="cur_salary" class="form-control small append" value="{{ empty(old('cur_salary')) ? $resume['cur_salary'] : old('cur_salary') }}" autocomplete="off" data-type="int">
             <div class="input-group-append">
@@ -234,7 +231,7 @@
           <h5>职业发展意向</h5>
         </div>
         <div class="form-group form-inline">
-          <label for="exp_industry"><span>*</span>期望行业：</label>
+          <label for="exp_industry">期望行业：</label>
           <div class="input-group" data-toggle="industrypicker">
             @if (old('exp_industry'))
               <input type="hidden" name="exp_industry[st]" value="{{ old('exp_industry')['st'] }}">
@@ -284,7 +281,7 @@
           </div>
         </div>
         <div class="form-group form-inline">
-          <label for="exp_work_nature"><span class="color-red">*</span>工作性质：</label>
+          <label for="exp_work_nature">工作性质：</label>
           <select name="exp_work_nature" class="form-control normal">
             <option value="" hidden>请选择</option>
             @foreach (App\Models\Job::natureArr as $key => $nature)
@@ -407,7 +404,6 @@
               </div>
               <div class="form-group form-inline">
                 <label for="work_experience[{{ $index }}][company_nature]">
-                  <span class="color-red">*</span>
                   公司性质：
                 </label>
                 <select name="work_experience[{{ $index }}][company_nature]" class="form-control normal">
@@ -425,7 +421,6 @@
               </div>
               <div class="form-group form-inline">
                 <label for="work_experience[{{ $index }}][company_scale]">
-                  <span class="color-red">*</span>
                   公司规模：
                 </label>
                 <select name="work_experience[{{ $index }}][company_scale]" class="form-control normal">
@@ -443,7 +438,6 @@
               </div>
               <div class="form-group form-inline">
                 <label for="work_experience[{{ $index }}][company_investment]">
-                  <span class="color-red">*</span>
                   融资阶段：
                 </label>
                 <select name="work_experience[{{ $index }}][company_investment]" class="form-control normal">
@@ -460,7 +454,7 @@
                 </select>
               </div>
               <div class="form-group form-inline">
-                <label for="work_experience[{{ $index }}][company_industry]"><span>*</span>所属行业：</label>
+                <label for="work_experience[{{ $index }}][company_industry]">所属行业：</label>
                 <div class="input-group" data-toggle="industrypicker">
                   <input type="hidden" name="work_experience[{{ $index }}][company_industry][st]" value="{{ $work_experience['company_industry']['st'] }}">
                   <input type="hidden" name="work_experience[{{ $index }}][company_industry][nd]" value="{{ $work_experience['company_industry']['nd'] }}">
@@ -602,21 +596,18 @@
               <div class="color-red float-right cursor-pointer mr-4" onclick="dropProject({{ $index }})">X</div>
               <div class="form-group form-inline">
                 <label for="project_experience[{{ $index }}][name]">
-                  <span class="color-red">*</span>
                   项目名称：
                 </label>
                 <input type="text" name="project_experience[{{ $index }}][name]" value="{{ $project_experience['name'] }}" class="form-control normal" placeholder="请填写" autocomplete="off">
               </div>
               <div class="form-group form-inline">
                 <label for="project_experience[{{ $index }}][role]">
-                  <span class="color-red">*</span>
                   担任角色：
                 </label>
                 <input type="text" name="project_experience[{{ $index }}][role]" value="{{ $project_experience['role'] }}" class="form-control normal" placeholder="请填写" autocomplete="off">
               </div>
               <div class="form-group form-inline">
                 <label for="project_experience[{{ $index }}][start_at]">
-                  <span class="color-red">*</span>
                   项目时间：
                 </label>
                 <div class="input-group date datetimepicker">
@@ -732,7 +723,6 @@
               </div>
               <div class="form-group form-inline">
                 <label for="education_experience[{{ $index }}][start_at]">
-                  <span class="color-red">*</span>
                   在校时间：
                 </label>
                 <div class="input-group date datetimepicker">

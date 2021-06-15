@@ -42,7 +42,7 @@ class DraftsController extends Controller
         }
         $data['type'] = json_encode($data['type']);
         $data['location'] = json_encode($data['location']);
-        $data['channel'] = json_encode(array_keys($data['channel']));
+        $data['channel'] = $request->has('channel') ? json_encode(array_keys($data['channel'])) : '[]';
         $value = [
             'data' => json_encode($data),
             'type' => 'job'
@@ -90,6 +90,6 @@ class DraftsController extends Controller
     public function destroy(Draft $draft)
     {
         $draft->delete();
-        return redirect()->route('jobs.list');
+        return back();
     }
 }

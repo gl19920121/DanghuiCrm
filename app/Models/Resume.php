@@ -50,6 +50,16 @@ class Resume extends Model
         '5' => ['text' => '一个月以上']
     ];
 
+    protected $casts = [
+        'location' => 'array',
+        'cur_industry' => 'array',
+        'cur_position' => 'array',
+        'exp_industry' => 'array',
+        'exp_position' => 'array',
+        'exp_location' => 'array',
+        'source' => 'array'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'upload_uid')->where('upload_uid', Auth::user()->id);
@@ -119,9 +129,74 @@ class Resume extends Model
         return $status;
     }
 
+    public function getLocationDefaultAttribute()
+    {
+        return ['province' => '', 'city' => '', 'district' => ''];
+    }
+
     public function getLocationAttribute()
     {
-        return json_decode($this->attributes['location']);
+        return !empty($this->attributes['location']) ? json_decode($this->attributes['location'], true) : $this->location_default;
+    }
+
+    public function getLocationShowAttribute()
+    {
+        return !empty($this->attributes['location']) ? $this->location['city'] : '其他';
+    }
+
+    public function getExpLocationShowAttribute()
+    {
+        return isset($this->exp_location['city']) ? $this->exp_location['city'] : '其他';
+    }
+
+    public function getEducationShowAttribute()
+    {
+        return !empty($this->education) ? self::educationArr[$this->education]['text'] : '其他';
+    }
+
+    public function getExpWorkNatureShowAttribute()
+    {
+        return !empty($this->exp_work_nature) ? self::natureArr[$this->exp_work_nature]['text'] : '其他';
+    }
+
+    public function getCurPositionShowAttribute()
+    {
+        return isset($this->cur_position['rd']) ? $this->cur_position['rd'] : '其他';
+    }
+
+    public function getExpPositionShowAttribute()
+    {
+        return isset($this->exp_position['rd']) ? $this->exp_position['rd'] : '其他';
+    }
+
+    public function getCurIndustryShowAttribute()
+    {
+        return isset($this->cur_industry['th']) ? $this->cur_industry['th'] : '其他';
+    }
+
+    public function getExpIndustryShowAttribute()
+    {
+        return isset($this->exp_industry['th']) ? $this->exp_industry['th'] : '其他';
+    }
+
+    public function getCurPositionAttribute()
+    {
+        return !empty($this->cur_position) ? $this->cur_position : ['st' => '', 'nd' => '', 'rd' => ''];
+    }
+
+    public function getExpPositionAttribute()
+    {
+        return !empty($this->exp_position) ? $this->exp_position : ['st' => '', 'nd' => '', 'rd' => ''];
+    }
+
+    public function getCurIndustryAttribute()
+    {
+        return !empty($this->cur_industry) ? $this->cur_industry : ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''];
+    }
+
+    public function getExpIndustryAttribute()
+    {
+        return !empty($this->exp_industry) ? $this->exp_industry : ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''];
     }
 
     public function getWorkYearsArrAttribute()
@@ -129,7 +204,7 @@ class Resume extends Model
         $workYearsArr = self::workYearsArr;
 
         foreach ($workYearsArr as $key => $value) {
-            if ($key === $this->attributes['work_years_flag']) {
+            if ($key === $this->work_years_flag) {
                 $workYearsArr[$key]['checked'] = 'checked';
             } else {
                 $workYearsArr[$key]['checked'] = '';
@@ -196,58 +271,6 @@ class Resume extends Model
         return $educationArr;
     }
 
-    public function getEducationShowAttribute()
-    {
-        $education = self::educationArr[$this->attributes['education']]['text'];
-        return $education;
-    }
-
-    public function getCurIndustryAttribute()
-    {
-        return json_decode($this->attributes['cur_industry']);
-    }
-
-    public function getCurIndustryShowAttribute()
-    {
-        return $this->cur_industry->th;
-    }
-
-    public function getCurPositionAttribute()
-    {
-        return json_decode($this->attributes['cur_position']);
-    }
-
-    public function getCurPositionShowAttribute()
-    {
-        return $this->cur_position->rd;
-    }
-
-    public function getExpIndustryAttribute()
-    {
-        return json_decode($this->attributes['exp_industry']);
-    }
-
-    public function getExpIndustryShowAttribute()
-    {
-        return $this->exp_industry->th;
-    }
-
-    public function getExpPositionAttribute()
-    {
-        return json_decode($this->attributes['exp_position']);
-    }
-
-    public function getExpPositionShowAttribute()
-    {
-        return $this->exp_position->rd;
-    }
-
-    public function getExpWorkNatureShowAttribute()
-    {
-        $exp_work_nature = self::natureArr[$this->attributes['exp_work_nature']]['text'];
-        return $exp_work_nature;
-    }
-
     public function getExpWorkNatureArrAttribute()
     {
         $natureArr = self::natureArr;
@@ -263,11 +286,6 @@ class Resume extends Model
         return $natureArr;
     }
 
-    public function getExpLocationAttribute()
-    {
-        return json_decode($this->attributes['exp_location']);
-    }
-
     public function getJobhunterStatusShowAttribute()
     {
         if (isset(self::jobhunterStatusArr[$this->attributes['jobhunter_status']])) {
@@ -277,11 +295,6 @@ class Resume extends Model
         }
 
         return $jobhunterStatus;
-    }
-
-    public function getSourceAttribute()
-    {
-        return json_decode($this->attributes['source'], true);
     }
 
     public function getSourceArrAttribute()

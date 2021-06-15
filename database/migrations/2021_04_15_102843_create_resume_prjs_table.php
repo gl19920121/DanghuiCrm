@@ -15,7 +15,7 @@ class CreateResumePrjsTable extends Migration
     {
         Schema::create('resume_prjs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->comment('项目名称');
+            $table->string('name')->nullable()->comment('项目名称');
             $table->string('role')->nullable()->comment('担任角色');
             $table->date('start_at')->nullable()->comment('开始时间');
             $table->date('end_at')->nullable()->comment('结束时间');

@@ -43,9 +43,9 @@
             所在城市：
           </label>
           <div data-toggle="distpicker">
-            <select class="form-control" name="location[province]" data-province="{{ $resume->location->province }}"></select>
-            <select class="form-control" name="location[city]"  data-city="{{ $resume->location->city }}"></select>
-            <select class="form-control" name="location[district]"  data-district="{{ $resume->location->district }}"></select>
+            <select class="form-control" name="location[province]" data-province="{{ $resume->location['province'] }}"></select>
+            <select class="form-control" name="location[city]"  data-city="{{ $resume->location['city'] }}"></select>
+            <select class="form-control" name="location[district]"  data-district="{{ $resume->location['district'] }}"></select>
           </div>
         </div>
         <div class="form-group form-inline">
@@ -64,7 +64,7 @@
               <div class="input-group-text">年</div>
             </div>
           </div>
-          @foreach ($resume->workYearsArr as $key => $workYears)
+          @foreach ($resume->work_years_arr as $key => $workYears)
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
               <input type="checkbox" id="work_years_{{ $key }}" class="custom-control-input" onchange="setWorkYears($(this))" {{ $workYears['checked'] }}>
               <label class="custom-control-label" for="work_years_{{ $key }}">{{ $workYears['text'] }}</label>
@@ -126,10 +126,10 @@
         <div class="form-group form-inline">
           <label for="cur_industry"><span>*</span>所在行业：</label>
           <div class="input-group" data-toggle="industrypicker">
-            <input type="hidden" name="cur_industry[st]" value="{{ $resume->cur_industry->st }}">
-            <input type="hidden" name="cur_industry[nd]" value="{{ $resume->cur_industry->nd }}">
-            <input type="hidden" name="cur_industry[rd]" value="{{ $resume->cur_industry->rd }}">
-            <input type="hidden" name="cur_industry[th]" value="{{ $resume->cur_industry->th }}">
+            <input type="hidden" name="cur_industry[st]" value="{{ $resume->cur_industry['st'] }}">
+            <input type="hidden" name="cur_industry[nd]" value="{{ $resume->cur_industry['nd'] }}">
+            <input type="hidden" name="cur_industry[rd]" value="{{ $resume->cur_industry['rd'] }}">
+            <input type="hidden" name="cur_industry[th]" value="{{ $resume->cur_industry['th'] }}">
             <input type="text" class="form-control normal append" value="{{ $resume->cur_industry_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
@@ -144,9 +144,9 @@
         <div class="form-group form-inline">
           <label for="cur_position"><span>*</span>所任职位：</label>
           <div class="input-group" data-toggle="jobtypepicker">
-            <input type="hidden" name="cur_position[st]" value="{{ $resume->cur_position->st }}">
-            <input type="hidden" name="cur_position[nd]" value="{{ $resume->cur_position->nd }}">
-            <input type="hidden" name="cur_position[rd]" value="{{ $resume->cur_position->rd }}">
+            <input type="hidden" name="cur_position[st]" value="{{ $resume->cur_position['st'] }}">
+            <input type="hidden" name="cur_position[nd]" value="{{ $resume->cur_position['nd'] }}">
+            <input type="hidden" name="cur_position[rd]" value="{{ $resume->cur_position['rd'] }}">
             <input type="text" class="form-control normal append" value="{{ $resume->cur_position_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
@@ -188,10 +188,10 @@
         <div class="form-group form-inline">
           <label for="exp_industry"><span>*</span>期望行业：</label>
           <div class="input-group" data-toggle="industrypicker">
-            <input type="hidden" name="exp_industry[st]" value="{{ $resume->exp_industry->st }}">
-            <input type="hidden" name="exp_industry[nd]" value="{{ $resume->exp_industry->nd }}">
-            <input type="hidden" name="exp_industry[rd]" value="{{ $resume->exp_industry->rd }}">
-            <input type="hidden" name="exp_industry[th]" value="{{ $resume->exp_industry->th }}">
+            <input type="hidden" name="exp_industry[st]" value="{{ $resume->exp_industry['st'] }}">
+            <input type="hidden" name="exp_industry[nd]" value="{{ $resume->exp_industry['nd'] }}">
+            <input type="hidden" name="exp_industry[rd]" value="{{ $resume->exp_industry['rd'] }}">
+            <input type="hidden" name="exp_industry[th]" value="{{ $resume->exp_industry['th'] }}">
             <input type="text" class="form-control normal append" value="{{ $resume->exp_industry_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
@@ -206,9 +206,9 @@
         <div class="form-group form-inline">
           <label for="exp_position"><span>*</span>期望职位：</label>
           <div class="input-group" data-toggle="jobtypepicker">
-            <input type="hidden" name="exp_position[st]" value="{{ $resume->exp_position->st }}">
-            <input type="hidden" name="exp_position[nd]" value="{{ $resume->exp_position->nd }}">
-            <input type="hidden" name="exp_position[rd]" value="{{ $resume->exp_position->rd }}">
+            <input type="hidden" name="exp_position[st]" value="{{ $resume->exp_position['st'] }}">
+            <input type="hidden" name="exp_position[nd]" value="{{ $resume->exp_position['nd'] }}">
+            <input type="hidden" name="exp_position[rd]" value="{{ $resume->exp_position['rd'] }}">
             <input type="text" class="form-control normal append" value="{{ $resume->exp_position_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
@@ -235,9 +235,9 @@
             期望城市：
           </label>
           <div data-toggle="distpicker">
-            <select class="form-control" name="exp_location[province]" data-province="{{ $resume->exp_location->province }}"></select>
-            <select class="form-control" name="exp_location[city]"  data-city="{{ $resume->exp_location->city }}"></select>
-            <select class="form-control" name="exp_location[district]"  data-district="{{ $resume->exp_location->district }}"></select>
+            <select class="form-control" name="exp_location[province]" data-province="{{ $resume->exp_location['province'] }}"></select>
+            <select class="form-control" name="exp_location[city]"  data-city="{{ $resume->exp_location['city'] }}"></select>
+            <select class="form-control" name="exp_location[district]"  data-district="{{ $resume->exp_location['district'] }}"></select>
           </div>
         </div>
         <div class="form-group form-inline">
