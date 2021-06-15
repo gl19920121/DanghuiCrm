@@ -641,16 +641,11 @@ class ResumesController extends Controller
 
         // 格式化db字段
         $data = $request->toArray();
+        // return dd($data);
         unset($data['attachment']);
         $data['upload_uid'] = Auth::user()->id;
         $data['attachment_path'] = $filePath;
-        $data['location'] = json_encode($data['location']);
-        $data['cur_industry'] = json_encode($data['cur_industry']);
-        $data['cur_position'] = json_encode($data['cur_position']);
-        $data['exp_industry'] = json_encode($data['exp_industry']);
-        $data['exp_position'] = json_encode($data['exp_position']);
-        $data['exp_location'] = json_encode($data['exp_location']);
-        $data['source'] = json_encode(array_keys($data['source']));
+        $data['source'] = array_keys($data['source']);
 
         $work = $data['work_experience'];
         $project = $data['project_experience'];
@@ -668,17 +663,14 @@ class ResumesController extends Controller
             $work[$key]['company_industry'] = json_encode($value['company_industry']);
             $work[$key]['job_type'] = json_encode($value['job_type']);
             $work[$key]['is_not_end'] = (isset($value['is_not_end']) && $value['is_not_end'] === 'on') ? 1 : 0;
-            unset($work[$key]['is_end']);
         }
         foreach ($project as $key => $value) {
             $project[$key]['resume_id'] = $resume->id;
             $project[$key]['is_not_end'] = (isset($value['is_not_end']) && $value['is_not_end'] === 'on') ? 1 : 0;
-            unset($project[$key]['is_end']);
         }
         foreach ($education as $key => $value) {
             $education[$key]['resume_id'] = $resume->id;
             $education[$key]['is_not_end'] = (isset($value['is_not_end']) && $value['is_not_end'] === 'on') ? 1 : 0;
-            unset($education[$key]['is_end']);
         }
         // array_walk($project, function(&$v, $k, $p) {
         //     $v = array_merge($v, $p);
@@ -720,31 +712,32 @@ class ResumesController extends Controller
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if ($key === 'source') {
-                    $data[$key] = json_encode(array_keys($value));
+                    $data[$key] = array_keys($value);
                 } else {
-                    $data[$key] = json_encode($value);
+                    $data[$key] = $value;
                 }
             }
         }
 
-        // 格式化db字段
-        // $data['location'] = json_encode($data['location']);
-        // $data['cur_industry'] = json_encode($data['cur_industry']);
-        // $data['cur_position'] = json_encode($data['cur_position']);
-        // $data['exp_industry'] = json_encode($data['exp_industry']);
-        // $data['exp_position'] = json_encode($data['exp_position']);
-        // $data['exp_location'] = json_encode($data['exp_location']);
-        // $data['source'] = json_encode($data['source']);
-
-        // $work = $data['work_experience'];
-        // $project = $data['project_experience'];
-        // $education = $data['education_experience'];
+        $work = $data['work_experience'];
+        $project = $data['project_experience'];
+        $education = $data['education_experience'];
 
         unset($data['work_experience']);
         unset($data['project_experience']);
         unset($data['education_experience']);
 
+        // return dd($data);
         $resume->update($data);
+
+        // return dd($work);
+        // $resume->resumeWorks()->update($work);
+
+        // foreach ($work as $key => $value) {
+        //     return dd($value);
+        //     $resumeWork = ResumeWork::find($value->id);
+        //     $resumeWork->update($value);
+        // }
 
         return back();
     }

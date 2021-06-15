@@ -800,7 +800,7 @@
             <option hidden value="">请选择</option>
             @foreach (App\Models\Resume::jobhunterStatusArr as $key => $jobhunterStatus)
               <option value="{{ $key }}"
-              @if (old('jobhunter_status') == $key)
+              @if (old('jobhunter_status') === $key)
                 selected
               @endif
               >

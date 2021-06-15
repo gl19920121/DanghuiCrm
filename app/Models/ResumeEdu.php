@@ -8,6 +8,38 @@ class ResumeEdu extends Model
 {
     protected $fillable = [];
     protected $guarded = [];
+    protected $casts = [
+        'is_not_end' => 'boolean'
+    ];
+
+    private $default = [
+        'major' => '其他',
+        'duration' => '其他',
+    ];
+
+    public function getMajorDefaultAttribute()
+    {
+        return $this->default['major'];
+    }
+
+    public function getDurationDefaultAttribute()
+    {
+        return $this->default['duration'];
+    }
+
+
+
+    public function getMajorShowAttribute()
+    {
+        return !empty($this->major) ? $this->major : $this->major_default;
+    }
+
+    public function getDurationShowAttribute()
+    {
+        return !empty($this->duration) ? $this->duration : $this->duration_default;
+    }
+
+
 
     public function getStartAtShowAttribute()
     {
@@ -21,6 +53,10 @@ class ResumeEdu extends Model
 
     public function getDurationAttribute()
     {
+        if (empty($this->start_at) || (empty($this->end_at) || $this->is_not_end === 0)) {
+            return $this->duration_default;
+        }
+
         if ($this->is_not_end === 1) {
             $duration = sprintf('%s-至今', $this->start_at_show);
         } else {

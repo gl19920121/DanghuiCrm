@@ -60,7 +60,7 @@
                   {{ $resume->cur_position_show }}
                 </div>
                 <div class="col col-auto">
-                  {{ $resume->cur_company }}
+                  {{ $resume->cur_company_show }}
                 </div>
               </div>
               <div class="row">
@@ -74,11 +74,11 @@
                 </div>
                 <div class="col col-auto">
                   <img style="margin-bottom: 3px;"  class="img-responsive center-block" src="{{ URL::asset('images/icon_wechat.png') }}">
-                  {{ $resume->wechat }}
+                  {{ $resume->wechat_show }}
                 </div>
                 <div class="col col-auto">
                   <img style="margin-bottom: 5px;"  class="img-responsive center-block" src="{{ URL::asset('images/icon_qq.png') }}">
-                  {{ $resume->qq }}
+                  {{ $resume->qq_show }}
                 </div>
               </div>
 
@@ -176,7 +176,7 @@
             <div class="col">
               <p class="font-size-m">
                 <span class="color-gray">目前薪资：</span>
-                {{ $resume->cur_salary_show }}
+                {{ $resume->cur_salary_show_short }}
               </p>
             </div>
             <div class="col">
@@ -200,118 +200,122 @@
             <div class="col">
               <p class="font-size-m">
                 <span class="color-gray">勿推企业：</span>
-                {{ $resume->blacklist }}
+                {{ $resume->blacklist_show }}
               </p>
             </div>
           </div>
 
           <hr class="divider">
 
-          <div class="row row-cols-2">
-            <div class="col-12">
-              <h5 id="resumeWork">工作经历</h5>
+          @if ($resume->resumeWorks->count() > 0)
+            <div class="row row-cols-2">
+              <div class="col-12">
+                <h5 id="resumeWork">工作经历</h5>
+              </div>
+              @foreach ($resume->resumeWorks as $index => $work)
+                <div class="col-12">
+                  <p class="bg-gray p-2">
+                    <span>{{ $work->company_name }}</span>
+                    <span class="color-gray font-size-s">（工作时间：{{ $work->duration }}，{{ $work->long }}）</span>
+                  </p>
+                </div>
+                <div class="col col-auto">
+                  <button class="btn btn-light">{{ $work->company_industry_show }}</button>
+                </div>
+                <div class="col col-auto">
+                  <button class="btn btn-light">{{ $work->company_scale_show }}</button>
+                </div>
+                <div class="col col-auto">
+                  <button class="btn btn-light">{{ $work->company_investment_show }}</button>
+                </div>
+                <div class="col col-12 mt-3 mb-3">
+                  {{ $work->job_type_show }}
+                </div>
+                <div class="col">
+                  <p class="font-size-m">
+                    <span class="color-gray">下属人数：</span>
+                    {{ $work->subordinates }}
+                  </p>
+                </div>
+                <div class="col">
+                  <p class="font-size-m">
+                    <span class="color-gray">职位类别：</span>
+                    {{ $work->job_type_show }}
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="font-size-m">
+                    <span class="color-gray">薪资：</span>
+                    {{ $work->salary_show }}
+                  </p>
+                </div>
+                <div class="col">
+                  <p class="font-size-m">
+                    <span class="color-gray">工作描述：</span>
+                    {{ $work->work_desc }}
+                  </p>
+                </div>
+              @endforeach
             </div>
-            @foreach ($resume->resumeWorks as $index => $work)
-            <div class="col-12">
-              <p class="bg-gray p-2">
-                <span>{{ $work->company_name }}</span>
-                <span class="color-gray font-size-s">（工作时间：{{ $work->duration }}，{{ $work->long }}）</span>
-              </p>
-            </div>
-            <div class="col col-auto">
-              <button class="btn btn-light">{{ $work->company_industry_show }}</button>
-            </div>
-            <div class="col col-auto">
-              <button class="btn btn-light">{{ $work->company_scale_show }}</button>
-            </div>
-            <div class="col col-auto">
-              <button class="btn btn-light">{{ $work->company_investment_show }}</button>
-            </div>
-            <div class="col col-12 mt-3 mb-3">
-              {{ $work->job_type->nd }}
-            </div>
-            <div class="col">
-              <p class="font-size-m">
-                <span class="color-gray">下属人数：</span>
-                {{ $work->subordinates }}
-              </p>
-            </div>
-            <div class="col">
-              <p class="font-size-m">
-                <span class="color-gray">职位类别：</span>
-                {{ $work->job_type->rd }}
-              </p>
-            </div>
-            <div class="col-12">
-              <p class="font-size-m">
-                <span class="color-gray">薪资：</span>
-                {{ $work->salary_show }}
-              </p>
-            </div>
-            <div class="col">
-              <p class="font-size-m">
-                <span class="color-gray">工作描述：</span>
-                {{ $work->work_desc }}
-              </p>
-            </div>
-            @endforeach
-          </div>
+          @endif
 
-          <hr class="divider">
+          @if ($resume->resumePrjs->count() > 0)
+            <hr class="divider">
+            <div class="row row-cols-1">
+              <div class="col-12">
+                <h5 id="resumeProject">项目经历</h5>
+              </div>
+              @foreach ($resume->resumePrjs as $index => $project)
+                <div class="col-12">
+                  <p class="bg-gray p-2">
+                    <span>{{ $project->name_show }}</span>
+                    <span class="color-gray font-size-s">（项目时间：{{ $project->duration }}，{{ $project->long }}）</span>
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="font-size-m">
+                    <span class="color-gray">担任角色：</span>
+                    {{ $project->role_show }}
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="font-size-m">
+                    <span class="color-gray">项目内容：</span>
+                    {{ $project->body_show }}
+                  </p>
+                </div>
+              @endforeach
+            </div>
+          @endif
 
-          <div class="row row-cols-1">
-            <div class="col-12">
-              <h5 id="resumeProject">项目经历</h5>
+          @if ($resume->resumeEdus->count() > 0)
+            <hr class="divider">
+            <div class="row row-cols-1">
+              <div class="col-12">
+                <h5 id="resumeEduction">教育经历</h5>
+              </div>
+              @foreach ($resume->resumeEdus as $index => $eduction)
+                <div class="col">
+                  <p class="font-size-m">
+                    <span class="color-gray">毕业院校：</span>
+                    {{ $eduction->school_name }}（{{ $eduction->duration }}）
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="font-size-m">
+                    <span class="color-gray">学历：</span>
+                    {{ $eduction->school_level_show }}
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="font-size-m">
+                    <span class="color-gray">所学专业：</span>
+                    {{ $eduction->major_show }}
+                  </p>
+                </div>
+              @endforeach
             </div>
-            @foreach ($resume->resumePrjs as $index => $project)
-            <div class="col-12">
-              <p class="bg-gray p-2">
-                <span>{{ $project->name }}</span>
-                <span class="color-gray font-size-s">（项目时间：{{ $project->duration }}，{{ $project->long }}）</span>
-              </p>
-            </div>
-            <div class="col-12">
-              <p class="font-size-m">
-                <span class="color-gray">担任角色：</span>
-                {{ $project->role }}
-              </p>
-            </div>
-            <div class="col-12">
-              <p class="font-size-m">
-                <span class="color-gray">项目内容：</span>
-                {{ $project->body }}
-              </p>
-            </div>
-            @endforeach
-          </div>
-
-          <hr class="divider">
-
-          <div class="row row-cols-1">
-            <div class="col-12">
-              <h5 id="resumeEduction">教育经历</h5>
-            </div>
-            @foreach ($resume->resumeEdus as $index => $eduction)
-            <div class="col">
-              <p class="font-size-m">
-                <span class="color-gray">毕业院校：</span>
-                {{ $eduction->school_name }}（{{ $eduction->duration }}）
-              </p>
-            </div>
-            <div class="col-12">
-              <p class="font-size-m">
-                <span class="color-gray">学历：</span>
-                {{ $eduction->school_level_show }}
-              </p>
-            </div>
-            <div class="col-12">
-              <p class="font-size-m">
-                <span class="color-gray">所学专业：</span>
-                {{ $eduction->major }}
-              </p>
-            </div>
-            @endforeach
-          </div>
+          @endif
 
           <hr class="divider">
 
@@ -322,13 +326,13 @@
             <div class="col">
               <p class="font-size-m">
                 <span class="color-gray">社交主页：</span>
-                {{ $resume->social_home }}
+                {{ $resume->social_home_show }}
               </p>
             </div>
             <div class="col-12">
               <p class="font-size-m">
                 <span class="color-gray">个人优势：</span>
-                {{ $resume->personal_advantage }}
+                {{ $resume->personal_advantage_show }}
               </p>
             </div>
           </div>

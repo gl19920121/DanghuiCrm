@@ -249,7 +249,7 @@ class WordController extends Controller
         $table->addCell(5000, $cellVCentered)->addText('期望薪资', $styleFoun, $cellHCentered);
         $table->addCell(5000, $cellVCentered)->addText($resume->exp_salary_show, $styleFouns, $cellHCentered);
         $table->addCell(5000, $cellVCentered)->addText('目前薪资', $styleFoun, $cellHCentered);
-        $table->addCell(5000, $cellVCentered)->addText($resume->cur_salary_show, $styleFouns, $cellHCentered);
+        $table->addCell(5000, $cellVCentered)->addText($resume->cur_salary_show_short, $styleFouns, $cellHCentered);
 
         $table->addRow(500);
         $table->addCell(null, $cellRowContinue);

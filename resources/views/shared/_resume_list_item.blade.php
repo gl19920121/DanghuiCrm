@@ -13,7 +13,7 @@
     </div>
     <div class="col">
       <p class="color-red">
-        {{ $resume->name }}<span>|</span>{{ $resume->sex }}<span>|</span>{{ sprintf('%s岁', $resume->age) }}<span>|</span>{{ $resume->location->city }}<span>|</span>{{ $resume->education_show }}<span>|</span>{{ $resume->work_years_show_list }}
+        {{ $resume->name }}<span>|</span>{{ $resume->sex }}<span>|</span>{{ sprintf('%s岁', $resume->age) }}<span>|</span>{{ $resume->location_show }}<span>|</span>{{ $resume->education_show }}<span>|</span>{{ $resume->work_years_show_list }}
       </p>
       @foreach ($resume->resumeEdus as $index => $resumeEdu)
         @if ($index === 0)

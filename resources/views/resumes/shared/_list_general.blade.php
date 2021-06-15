@@ -30,7 +30,7 @@
             <td>{{ $resume->location_show }}</td>
             <td>{{ $resume->education_show }}</td>
             <td>{{ $resume->work_years_show }}</td>
-            <td>{{ $resume->cur_company }}</td>
+            <td>{{ $resume->cur_company_show }}</td>
             <td>{{ $resume->cur_position_show }}</td>
             <td>{{ $resume->cur_salary_show_long }}</td>
             <td>{{ $resume->updated_at }}</td>

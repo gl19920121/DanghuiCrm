@@ -9,41 +9,99 @@ class ResumeWork extends Model
 {
     protected $fillable = [];
     protected $guarded = [];
+    protected $casts = [
+        'is_not_end' => 'boolean'
+    ];
+
+    private $arrFormat = [
+        'company_industry' => ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''],
+        'job_type' => ['st' => '', 'nd' => '', 'rd' => ''],
+    ];
+
+    private $default = [
+        'company_nature' => '其他',
+        'company_scale' => '其他',
+        'company_investment' => '其他',
+        'company_industry' => '其他',
+        'job_type' => '其他',
+        'subordinates' => '无',
+    ];
+
+    public function getCompanyNatureDefaultAttribute()
+    {
+        return $this->default['company_nature'];
+    }
+
+    public function getCompanyScaleDefaultAttribute()
+    {
+        return $this->default['company_scale'];
+    }
+
+    public function getCompanyInvestmentDefaultAttribute()
+    {
+        return $this->default['company_investment'];
+    }
+
+    public function getCompanyIndustryDefaultAttribute()
+    {
+        return $this->default['company_industry'];
+    }
+
+    public function getJobTypeDefaultAttribute()
+    {
+        return $this->default['job_type'];
+    }
+
+    public function getSubordinatesDefaultAttribute()
+    {
+        return $this->default['subordinates'];
+    }
+
+
 
     public function getCompanyIndustryAttribute()
     {
-        return json_decode($this->attributes['company_industry']);
-    }
-
-    public function getCompanyIndustryShowAttribute()
-    {
-        return $this->company_industry->th;
-    }
-
-    public function getCompanyInvestmentShowAttribute()
-    {
-        return !empty($this->company_investment) ? Company::investmentArr[$this->company_investment]['text'] : '其他';
-    }
-
-    public function getCompanyScaleShowAttribute()
-    {
-        return !empty($this->company_scale) ? Company::scaleArr[$this->company_scale]['text'] : '其他';
-    }
-
-    public function getCompanyNatureShowAttribute()
-    {
-        return Company::natureArr[$this->company_nature]['text'];
+        return !empty($this->attributes['company_industry']) ? json_decode($this->attributes['company_industry'], true) : $this->arrFormat['company_industry'];
     }
 
     public function getJobTypeAttribute()
     {
-        return json_decode($this->attributes['job_type']);
+        return !empty($this->attributes['job_type']) ? json_decode($this->attributes['job_type'], true) : $this->arrFormat['job_type'];
+    }
+
+
+
+    public function getCompanyNatureShowAttribute()
+    {
+        return !empty($this->company_nature) ? Company::natureArr[$this->company_nature]['text'] : $this->company_nature_default;
+    }
+
+    public function getCompanyScaleShowAttribute()
+    {
+        return !empty($this->company_scale) ? Company::scaleArr[$this->company_scale]['text'] : $this->company_scale_default;
+    }
+
+    public function getCompanyInvestmentShowAttribute()
+    {
+        return !empty($this->company_investment) ? Company::investmentArr[$this->company_investment]['text'] : $this->company_investment_default;
+    }
+
+    public function getCompanyIndustryShowAttribute()
+    {
+        return !empty($this->company_industry['th']) ? $this->company_industry['th'] : $this->company_industry_default;
     }
 
     public function getJobTypeShowAttribute()
     {
-        return $this->job_type->rd;
+        return !empty($this->job_type['rd']) ? $this->job_type['rd'] : $this->job_type_default;
     }
+
+    public function getSubordinatesAttribute()
+    {
+        return !empty($this->subordinates) ? $this->subordinates : $this->subordinates_default;
+    }
+
+
 
     public function getDurationAttribute()
     {
@@ -83,10 +141,5 @@ class ResumeWork extends Model
     public function getSalaryShowAttribute()
     {
         return sprintf('%dK.%d薪', $this->salary, $this->salary_count);
-    }
-
-    public function getSubordinatesAttribute()
-    {
-        return empty($this->subordinates) ? '无' : $this->subordinates;
     }
 }

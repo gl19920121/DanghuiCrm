@@ -9,6 +9,16 @@ class Resume extends Model
 {
     protected $fillable = [];
     protected $guarded = [];
+    protected $casts = [
+        'location' => 'array',
+        'cur_industry' => 'array',
+        'cur_position' => 'array',
+        'exp_industry' => 'array',
+        'exp_position' => 'array',
+        'exp_location' => 'array',
+        'source' => 'array',
+        'is_not_end' => 'boolean',
+    ];
 
     public const workYearsArr = [
         '1' => ['text' => '学生在读'],
@@ -50,15 +60,7 @@ class Resume extends Model
         '5' => ['text' => '一个月以上']
     ];
 
-    protected $casts = [
-        'location' => 'array',
-        'cur_industry' => 'array',
-        'cur_position' => 'array',
-        'exp_industry' => 'array',
-        'exp_position' => 'array',
-        'exp_location' => 'array',
-        'source' => 'array'
-    ];
+
 
     public function user()
     {
@@ -129,75 +131,234 @@ class Resume extends Model
         return $status;
     }
 
+    private $arrFormat = [
+        'location' => ['province' => '', 'city' => '', 'district' => ''],
+        'exp_location' => ['province' => '', 'city' => '', 'district' => ''],
+        'cur_position' => ['st' => '', 'nd' => '', 'rd' => ''],
+        'cur_industry' => ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''],
+        'exp_industry' => ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''],
+    ];
+
+    private $default = [
+        'location' => '其他',
+        'exp_location' => '其他',
+        'cur_position' => '其他',
+        'exp_position' => '其他',
+        'cur_industry' => '其他',
+        'exp_industry' => '其他',
+        'wechat' => '无',
+        'qq' => '无',
+        'blacklist' => '无',
+        'education' => '其他',
+        'cur_company' => '无',
+        'exp_work_nature' => '其他',
+        'cur_salary' => 0,
+        'cur_salary_count' => 12,
+        'jobhunter_status' => '其他',
+        'social_home' => '无',
+        'personal_advantage' => '无',
+    ];
+
     public function getLocationDefaultAttribute()
     {
-        return ['province' => '', 'city' => '', 'district' => ''];
+        return $this->default['location'];
     }
+
+    public function getExpLocationDefaultAttribute()
+    {
+        return $this->default['exp_location'];
+    }
+
+    public function getCurPositionDefaultAttribute()
+    {
+        return $this->default['cur_position'];
+    }
+
+    public function getExpPositionDefaultAttribute()
+    {
+        return $this->default['exp_position'];
+    }
+
+    public function getCurIndustryDefaultAttribute()
+    {
+        return $this->default['cur_industry'];
+    }
+
+    public function getExpIndustryDefaultAttribute()
+    {
+        return $this->default['exp_industry'];
+    }
+
+    public function getWechatDefaultAttribute()
+    {
+        return $this->default['wechat'];
+    }
+
+    public function getQqDefaultAttribute()
+    {
+        return $this->default['qq'];
+    }
+
+    public function getBlacklistDefaultAttribute()
+    {
+        return $this->default['blacklist'];
+    }
+
+    public function getEducationDefaultAttribute()
+    {
+        return $this->default['education'];
+    }
+
+    public function getCurCompanyDefaultAttribute()
+    {
+        return $this->default['cur_company'];
+    }
+
+    public function getExpWorkNatureDefaultAttribute()
+    {
+        return $this->default['exp_work_nature'];
+    }
+
+    public function getCurSalaryDefaultAttribute()
+    {
+        return $this->default['cur_salary'];
+    }
+
+    public function getCurSalaryCountDefaultAttribute()
+    {
+        return $this->default['cur_salary_count'];
+    }
+
+    public function getJobhunterStatusDefaultAttribute()
+    {
+        return $this->default['jobhunter_status'];
+    }
+
+    public function getSocialHomeDefaultAttribute()
+    {
+        return $this->default['social_home'];
+    }
+
+    public function getPersonalAdvantageDefaultAttribute()
+    {
+        return $this->default['personal_advantage'];
+    }
+
+
 
     public function getLocationAttribute()
     {
-        return !empty($this->attributes['location']) ? json_decode($this->attributes['location'], true) : $this->location_default;
+        return !empty($this->attributes['location']) ? json_decode($this->attributes['location'], true) : $this->arrFormat['location'];
     }
 
-    public function getLocationShowAttribute()
+    public function getExpLocationAttribute()
     {
-        return !empty($this->attributes['location']) ? $this->location['city'] : '其他';
-    }
-
-    public function getExpLocationShowAttribute()
-    {
-        return isset($this->exp_location['city']) ? $this->exp_location['city'] : '其他';
-    }
-
-    public function getEducationShowAttribute()
-    {
-        return !empty($this->education) ? self::educationArr[$this->education]['text'] : '其他';
-    }
-
-    public function getExpWorkNatureShowAttribute()
-    {
-        return !empty($this->exp_work_nature) ? self::natureArr[$this->exp_work_nature]['text'] : '其他';
-    }
-
-    public function getCurPositionShowAttribute()
-    {
-        return isset($this->cur_position['rd']) ? $this->cur_position['rd'] : '其他';
-    }
-
-    public function getExpPositionShowAttribute()
-    {
-        return isset($this->exp_position['rd']) ? $this->exp_position['rd'] : '其他';
-    }
-
-    public function getCurIndustryShowAttribute()
-    {
-        return isset($this->cur_industry['th']) ? $this->cur_industry['th'] : '其他';
-    }
-
-    public function getExpIndustryShowAttribute()
-    {
-        return isset($this->exp_industry['th']) ? $this->exp_industry['th'] : '其他';
+        return !empty($this->attributes['exp_location']) ? json_decode($this->attributes['exp_location'], true) : $this->arrFormat['exp_location'];
     }
 
     public function getCurPositionAttribute()
     {
-        return !empty($this->cur_position) ? $this->cur_position : ['st' => '', 'nd' => '', 'rd' => ''];
+        return !empty($this->attributes['cur_position']) ? json_decode($this->attributes['cur_position'], true) : $this->arrFormat['cur_position'];
     }
 
     public function getExpPositionAttribute()
     {
-        return !empty($this->exp_position) ? $this->exp_position : ['st' => '', 'nd' => '', 'rd' => ''];
+        return !empty($this->attributes['exp_position']) ? json_decode($this->attributes['exp_position'], true) : $this->arrFormat['exp_position'];
     }
 
     public function getCurIndustryAttribute()
     {
-        return !empty($this->cur_industry) ? $this->cur_industry : ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''];
+        return !empty($this->attributes['cur_industry']) ? json_decode($this->attributes['cur_industry'], true) : $this->arrFormat['cur_industry'];
     }
 
     public function getExpIndustryAttribute()
     {
-        return !empty($this->exp_industry) ? $this->exp_industry : ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''];
+        return !empty($this->attributes['exp_industry']) ? json_decode($this->attributes['exp_industry'], true) : $this->arrFormat['exp_industry'];
     }
+
+
+
+    public function getLocationShowAttribute()
+    {
+        return !empty($this->location['city']) ? $this->location['city'] : $this->location_default;
+    }
+
+    public function getExpLocationShowAttribute()
+    {
+        return !empty($this->exp_location['city']) ? $this->exp_location['city'] : $this->exp_location_default;
+    }
+
+    public function getCurPositionShowAttribute()
+    {
+        return !empty($this->cur_position['rd']) ? $this->cur_position['rd'] : $this->cur_position_default;
+    }
+
+    public function getExpPositionShowAttribute()
+    {
+        return !empty($this->exp_position['rd']) ? $this->exp_position['rd'] : $this->exp_position_default;
+    }
+
+    public function getCurIndustryShowAttribute()
+    {
+        return !empty($this->cur_industry['th']) ? $this->cur_industry['th'] : $this->cur_industry_default;
+    }
+
+    public function getExpIndustryShowAttribute()
+    {
+        return !empty($this->exp_industry['th']) ? $this->exp_industry['th'] : $this->exp_industry_default;
+    }
+
+    public function getEducationShowAttribute()
+    {
+        return !empty($this->education) ? self::educationArr[$this->education]['text'] : $this->education_default;
+    }
+
+    public function getExpWorkNatureShowAttribute()
+    {
+        return !empty($this->exp_work_nature) ? self::natureArr[$this->exp_work_nature]['text'] : $this->exp_work_nature_default;
+    }
+
+    public function getWechatShowAttribute()
+    {
+        return !empty($this->wechat) ? $this->wechat : $this->wechat_default;
+    }
+
+    public function getQqShowAttribute()
+    {
+        return !empty($this->qq) ? $this->qq : $this->qq_default;
+    }
+
+    public function getBlacklistShowAttribute()
+    {
+        return !empty($this->blacklist) ? $this->blacklist : $this->blacklist_default;
+    }
+
+    public function getCurCompanyShowAttribute()
+    {
+        return !empty($this->cur_company) ? $this->cur_company : $this->cur_company_default;
+    }
+
+    public function getCurSalaryShowAttribute()
+    {
+        return !empty($this->cur_salary) ? $this->cur_salary : $this->cur_salary_default;
+    }
+
+    public function getCurSalaryCountShowAttribute()
+    {
+        return !empty($this->cur_salary_count) ? $this->cur_salary_count : $this->cur_salary_count_default;
+    }
+
+    public function getSocialHomeShowAttribute()
+    {
+        return !empty($this->social_home) ? $this->social_home : $this->social_home_default;
+    }
+
+    public function getPersonalAdvantageShowAttribute()
+    {
+        return !empty($this->personal_advantage) ? $this->personal_advantage : $this->personal_advantage_default;
+    }
+
+
 
     public function getWorkYearsArrAttribute()
     {
@@ -212,6 +373,62 @@ class Resume extends Model
         }
 
         return $workYearsArr;
+    }
+
+    public function getEducationArrAttribute()
+    {
+        $educationArr = self::educationArr;
+
+        foreach ($educationArr as $key => $value) {
+            if ($key === $this->attributes['education']) {
+                $educationArr[$key]['selected'] = 'selected';
+            } else {
+                $educationArr[$key]['selected'] = '';
+            }
+        }
+
+        return $educationArr;
+    }
+
+    public function getExpWorkNatureArrAttribute()
+    {
+        $natureArr = self::natureArr;
+
+        foreach ($natureArr as $key => $value) {
+            if ($key === $this->exp_work_nature) {
+                $natureArr[$key]['selected'] = 'selected';
+            } else {
+                $natureArr[$key]['selected'] = '';
+            }
+        }
+
+        return $natureArr;
+    }
+
+    public function getSourceArrAttribute()
+    {
+        $sourceArr = self::sourceArr;
+
+        foreach ($sourceArr as $key => $value) {
+            if (in_array($key, $this->source)) {
+                $sourceArr[$key]['checked'] = 'checked';
+            } else {
+                $sourceArr[$key]['checked'] = '';
+            }
+        }
+
+        return $sourceArr;
+    }
+
+    public function getJobhunterStatusShowAttribute()
+    {
+        if (isset(self::jobhunterStatusArr[$this->attributes['jobhunter_status']])) {
+            $jobhunterStatus = self::jobhunterStatusArr[$this->attributes['jobhunter_status']]['text'];
+        } else {
+            $jobhunterStatus = $this->jobhunter_status_default;
+        }
+
+        return $jobhunterStatus;
     }
 
     public function getWorkYearsShowAttribute()
@@ -256,62 +473,6 @@ class Resume extends Model
         return $workYears;
     }
 
-    public function getEducationArrAttribute()
-    {
-        $educationArr = self::educationArr;
-
-        foreach ($educationArr as $key => $value) {
-            if ($key === $this->attributes['education']) {
-                $educationArr[$key]['selected'] = 'selected';
-            } else {
-                $educationArr[$key]['selected'] = '';
-            }
-        }
-
-        return $educationArr;
-    }
-
-    public function getExpWorkNatureArrAttribute()
-    {
-        $natureArr = self::natureArr;
-
-        foreach ($natureArr as $key => $value) {
-            if ($key === $this->exp_work_nature) {
-                $natureArr[$key]['selected'] = 'selected';
-            } else {
-                $natureArr[$key]['selected'] = '';
-            }
-        }
-
-        return $natureArr;
-    }
-
-    public function getJobhunterStatusShowAttribute()
-    {
-        if (isset(self::jobhunterStatusArr[$this->attributes['jobhunter_status']])) {
-            $jobhunterStatus = self::jobhunterStatusArr[$this->attributes['jobhunter_status']]['text'];
-        } else {
-            $jobhunterStatus = '-';
-        }
-
-        return $jobhunterStatus;
-    }
-
-    public function getSourceArrAttribute()
-    {
-        $sourceArr = self::sourceArr;
-
-        foreach ($sourceArr as $key => $value) {
-            if (in_array($key, $this->source)) {
-                $sourceArr[$key]['checked'] = 'checked';
-            } else {
-                $sourceArr[$key]['checked'] = '';
-            }
-        }
-
-        return $sourceArr;
-    }
-
     public function getSourceShowAttribute()
     {
         $source = $this->source;
@@ -337,13 +498,13 @@ class Resume extends Model
         return $expSalary;
     }
 
-    public function getCurSalaryShowAttribute()
+    public function getCurSalaryShowShortAttribute()
     {
-        return sprintf('%dK.%d薪', $this->cur_salary, $this->cur_salary_count);
+        return sprintf('%dK.%d薪', $this->cur_salary_show, $this->cur_salary_count_show);
     }
 
     public function getCurSalaryShowLongAttribute()
     {
-        return sprintf('%dK * %d月', $this->cur_salary, $this->cur_salary_count);
+        return sprintf('%dK * %d月', $this->cur_salary_show, $this->cur_salary_count_show);
     }
 }

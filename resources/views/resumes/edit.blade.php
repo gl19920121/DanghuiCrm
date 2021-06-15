@@ -24,10 +24,22 @@
             <span class="color-red">*</span>
             性别：
           </label>
-          <select name="sex" class="form-control normal" value="{{ $resume->sex }}>
+          <select name="sex" class="form-control normal">
             <option hidden value="">请选择</option>
-            <option>男</option>
-            <option>女</option>
+            <option
+            @if ($resume->sex === '男')
+              selected
+            @endif
+            >
+              男
+            </option>
+            <option
+            @if ($resume->sex === '女')
+              selected
+            @endif
+            >
+              女
+            </option>
           </select>
         </div>
         <div class="form-group form-inline">
@@ -334,10 +346,10 @@
         <div class="form-group form-inline">
           <label for="work_experience[0][company_industry]"><span>*</span>所属行业：</label>
           <div class="input-group" data-toggle="industrypicker">
-            <input type="hidden" name="work_experience[0][company_industry][st]" value="{{ $resume->resumeWorks[0]->company_industry->st }}">
-            <input type="hidden" name="work_experience[0][company_industry][nd]" value="{{ $resume->resumeWorks[0]->company_industry->nd }}">
-            <input type="hidden" name="work_experience[0][company_industry][rd]" value="{{ $resume->resumeWorks[0]->company_industry->rd }}">
-            <input type="hidden" name="work_experience[0][company_industry][th]" value="{{ $resume->resumeWorks[0]->company_industry->th }}">
+            <input type="hidden" name="work_experience[0][company_industry][st]" value="{{ $resume->resumeWorks[0]->company_industry['st'] }}">
+            <input type="hidden" name="work_experience[0][company_industry][nd]" value="{{ $resume->resumeWorks[0]->company_industry['nd'] }}">
+            <input type="hidden" name="work_experience[0][company_industry][rd]" value="{{ $resume->resumeWorks[0]->company_industry['rd'] }}">
+            <input type="hidden" name="work_experience[0][company_industry][th]" value="{{ $resume->resumeWorks[0]->company_industry['th'] }}">
             <input type="text" class="form-control normal append" value="{{ $resume->resumeWorks[0]->company_industry_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
               <span class="input-group-text" id="basic-addon2">
@@ -355,9 +367,9 @@
             职位名称：
           </label>
           <div class="input-group" data-toggle="jobtypepicker">
-            <input type="hidden" name="work_experience[0][job_type][st]" value="{{ $resume->resumeWorks[0]->job_type->st }}">
-            <input type="hidden" name="work_experience[0][job_type][nd]" value="{{ $resume->resumeWorks[0]->job_type->nd }}">
-            <input type="hidden" name="work_experience[0][job_type][rd]" value="{{ $resume->resumeWorks[0]->job_type->rd }}">
+            <input type="hidden" name="work_experience[0][job_type][st]" value="{{ $resume->resumeWorks[0]->job_type['st'] }}">
+            <input type="hidden" name="work_experience[0][job_type][nd]" value="{{ $resume->resumeWorks[0]->job_type['nd'] }}">
+            <input type="hidden" name="work_experience[0][job_type][rd]" value="{{ $resume->resumeWorks[0]->job_type['rd'] }}">
             <input type="text" class="form-control normal append" value="{{ $resume->resumeWorks[0]->job_type_show }}" placeholder="请选择" autocomplete="off">
             <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
               <span class="input-group-text" id="basic-addon2">
