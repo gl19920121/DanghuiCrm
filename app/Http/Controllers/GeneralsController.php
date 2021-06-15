@@ -61,9 +61,9 @@ class GeneralsController extends Controller
 
         $statistics = [
             'message' => 0,
-            'resume_check' => 0,
-            'resume_download' => 0,
-            'resume_upload' => 0,
+            'resume_check' => Auth::user()->seenResumes()->sum('times'),
+            'resume_download' => Auth::user()->downloadResumes()->sum('times'),
+            'resume_upload' => Auth::user()->uploadResumes()->sum('times'),
             'job_doing' => $jobs->total(),
             'job_apply' => $newJobs->total(),
             'job_commission' => $newResumes->total(),

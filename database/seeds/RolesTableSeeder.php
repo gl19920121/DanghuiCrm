@@ -13,6 +13,7 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         $admin = Role::create([
+            'id' => 1,
             'name' => '管理员',
             'slug' => 'admin',
             'level' => 0,
@@ -21,6 +22,7 @@ class RolesTableSeeder extends Seeder
         ]);
 
         $rpo = Role::create([
+            'id' => 2,
             'name' => 'RPO总监',
             'slug' => 'rpo',
             'level' => 1,
@@ -29,9 +31,11 @@ class RolesTableSeeder extends Seeder
         ]);
 
         $deliver = Role::create([
+            'id' => 3,
             'name' => '交付专员',
             'slug' => 'deliver',
             'level' => 2,
+            'parent_id' => 2,
             'permissions' => []
         ]);
     }

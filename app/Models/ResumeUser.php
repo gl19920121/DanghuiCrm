@@ -17,19 +17,19 @@ class ResumeUser extends Model
         $data = [
             'resume_id' => $resumeId,
             'user_id' => $userId,
-            'type' => $type
+            'type' => $type,
+            'times' => 1
         ];
 
         if (empty($resumeUser)) {
             ResumeUser::create($data);
         } else {
-            if ($type === 'seen') {
+            if ($type === 'seen' || $type === 'upload' || $type === 'download') {
                 $resumeUser->updated_at = new DateTime();
+                $resumeUser->increment('times');
                 $resumeUser->save();
             } elseif ($type === 'collect') {
                 $resumeUser->delete();
-            } elseif ($type === 'upload' || $type === 'download') {
-                ResumeUser::create($data);
             }
         }
     }

@@ -17,7 +17,8 @@ class CreateResumeUserTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('resume_id')->comment('简历id');
             $table->unsignedInteger('user_id')->comment('用户id');
-            $table->enum('type', ['seen', 'collect'])->comment('操作行为');
+            $table->enum('type', ['seen', 'collect', 'download', 'upload', 'repeat', 'accept'])->comment('操作行为');
+            $table->integer('times')->nullable()->comment('操作次数');
             $table->timestamps();
 
             $table->unique(['resume_id', 'user_id', 'type']);
