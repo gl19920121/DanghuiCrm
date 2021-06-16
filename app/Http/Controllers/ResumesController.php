@@ -45,6 +45,7 @@ class ResumesController extends Controller
             'job_cpy_size' => '',
             'job_industry' => '',
             'job_position' => '',
+            'job_salary' => '',
             'start_date' => '',
             'end_date' => '',
             'job_content' => ''
@@ -120,6 +121,7 @@ class ResumesController extends Controller
 
     private function handleResumeData($result)
     {
+        // return dd($result);
         $cur_salary_count = '';
         if (!empty($result['work_salary']) && preg_match('/\d+/', $result['work_salary'], $arr)) {
            $year_salary = (int)$arr[0];
