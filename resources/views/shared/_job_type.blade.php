@@ -50,6 +50,7 @@
   {
     if (Object.keys(values).length > 0) {
       inputShow.val(values.rd);
+      inputShow.removeClass('border-danger');
       inputSt.val(values.st);
       inputNd.val(values.nd);
       inputRd.val(values.rd);

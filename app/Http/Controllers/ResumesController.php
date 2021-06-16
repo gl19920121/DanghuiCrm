@@ -95,9 +95,18 @@ class ResumesController extends Controller
         return $num;
     }
 
-    private function getDate($data)
+    private function getDate($data = null)
     {
-        $datetime = new DateTime(strtotime($data));
+        if ($data === null) {
+            return date('Y/m/d', time());
+        }
+
+        $timestamp = strtotime($data);
+        if(strtotime(date('m-d-Y H:i:s',$timestamp)) !== $timestamp) {
+            return '';
+        }
+        $datetime = new DateTime($timestamp);
+
         return $datetime->format('Y/m/d');
     }
 
@@ -263,33 +272,10 @@ class ResumesController extends Controller
 
     public function manual(Request $request)
     {
-        // return dd($request->all());
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
 
-        if ($request->has('resume')) {
-        // if (count($request->all()) > 0) {
-            // $resume = json_decode(base64_decode($request->resume), true);
-            // $resume = $request->all();
-            $resume = $request->resume;
-
-            // $result = [];
-            // $this->handleResData($result);
-            // $resume = $this->handleResumeData($result);
-        } else {
-            $result = [];
-            $this->handleResData($result);
-            $resume = $this->handleResumeData($result);
-        }
-
-        return view('resumes.create_form', compact('jobs', 'resume'));
-    }
-
-    public function form(Request $request)
-    {
-        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
-
-        if ($request->has('resume')) {
-            $resume = $request->resume;
+        if ($request->has('is_auto') && session()->has('resume')) {
+            $resume = session()->get('resume');
         } else {
             $result = [];
             $this->handleResData($result);
@@ -317,7 +303,6 @@ class ResumesController extends Controller
         $api = new APIHelper();
         // $res = $api->resumesdk($filePath);
         $res = $api->resumesdkTest($filePath);
-        // return dd($res);
 
         if ($res['status']['code'] !== 200) {
             session()->flash('danger', '简历解析失败');
@@ -328,13 +313,8 @@ class ResumesController extends Controller
         $this->handleResData($result);
         $resume = $this->handleResumeData($result);
 
-        // $result = [];
-        // $this->handleResData($result);
-        // $resume = $this->handleResumeData($result);
-
-        // return view('resumes.create_form', compact('jobs', 'resume'));
-        // return redirect()->route('resumes.create.manual', ['resume' => base64_encode(json_encode(['test' => 1]))]);
-        return redirect()->route('resumes.create.manual', ['resume' => $resume]);
+        session()->put('resume', $resume);
+        return redirect()->route('resumes.create.manual', ['is_auto' => 1]);
     }
 
     public function edit(Resume $resume)
@@ -511,8 +491,6 @@ class ResumesController extends Controller
 
         // $data = $request->toArray();
         // return dd($data);
-        // $request->headers->set('Accept', 'application/json' );
-        // return dd($request);
         // 数据校验 请正确输入
         $mssages = [
             'name.required' => '请填写 姓名',
@@ -697,7 +675,12 @@ class ResumesController extends Controller
             $work[$key]['resume_id'] = $resume->id;
             $work[$key]['company_industry'] = json_encode($value['company_industry']);
             $work[$key]['job_type'] = json_encode($value['job_type']);
-            $work[$key]['is_not_end'] = (isset($value['is_not_end']) && $value['is_not_end'] === 'on') ? 1 : 0;
+            if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
+                $work[$key]['is_not_end'] = true;
+                $work[$key]['end_at'] = $this->getDate();
+            } else {
+                $work[$key]['is_not_end'] = false;
+            }
         }
         foreach ($project as $key => $value) {
             $project[$key]['resume_id'] = $resume->id;

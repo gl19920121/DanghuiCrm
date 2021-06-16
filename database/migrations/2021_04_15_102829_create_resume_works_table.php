@@ -27,7 +27,7 @@ class CreateResumeWorksTable extends Migration
             $table->date('start_at')->comment('入职时间');
             $table->date('end_at')->nullable()->comment('离职时间');
             $table->integer('is_not_end')->nullable()->default(0)->comment('是否结束');
-            $table->string('work_desc')->comment('工作描述');
+            $table->text('work_desc')->comment('工作描述');
             $table->integer('resume_id')->comment('所属简历ID')->unsigned();
             $table->timestamps();
             $table->foreign('resume_id')->references('id')->on('resumes')->onUpdate('cascade')->onDelete('cascade'); // 外键约束

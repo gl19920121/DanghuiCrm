@@ -10,6 +10,8 @@ class ResumeWork extends Model
     protected $fillable = [];
     protected $guarded = [];
     protected $casts = [
+        'company_industry' => 'array',
+        'job_type' => 'array',
         'is_not_end' => 'boolean'
     ];
 

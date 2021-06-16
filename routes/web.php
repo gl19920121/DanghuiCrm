@@ -29,8 +29,6 @@ Route::resource('users', 'UsersController'); //账户相关
 Route::post('/resumes/{resume}/status', 'ResumesController@status')->name('resumes.status');
 
 Route::get('/resumes/create/manual', 'ResumesController@manual')->name('resumes.create.manual');
-Route::post('/resumes/create/form', 'ResumesController@form')->name('resumes.create.form');
-// Route::get('/resumes/create/auto', 'ResumesController@auto')->name('resumes.create.auto');
 Route::post('/resumes/create/auto', 'ResumesController@auto')->name('resumes.create.auto');
 
 Route::post('/resumes/{resume}/operation', 'ResumesController@operation')->name('resumes.operation');

@@ -22,10 +22,6 @@
           </div>
           <div class="col col-auto">
             <a href="{{ route('resumes.create.manual') }}" class="btn btn-light ml-2">手动添加</a>
-            <form hidden method="POST" action="{{ route('resumes.create.manual') }}">
-              {{ csrf_field() }}
-              <button type="submit" class="btn btn-light ml-2">手动添加</button>
-            </form>
           </div>
         </div>
       </div>
