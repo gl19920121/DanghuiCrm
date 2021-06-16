@@ -52,6 +52,31 @@ class APIHelper
         return $data;
     }
 
+    public function resumesdkTest($filePath)
+    {
+        $url = "http://www.resumesdk.com/api/parse";          // 将127.0.0.1替换为部署服务的ip
+        $uid = 2106160;
+        $pwd = 'PeGc4y';
+
+        $fname = storage_path('resume/'.$filePath);       // 替换为你的本地文件名
+        // $fileData = file_get_contents($fname);
+        $fileData = Storage::disk('resume')->get($filePath);
+        // die(dd($fileData));
+        $base_cont = base64_encode($fileData);
+
+        $data = array(
+            'file_cont' => $base_cont,      // 经base64编码过的文件内容
+            'file_name' => $fname,          // 文件名
+            'uid' => $uid,
+            'pwd' => $pwd,
+        );
+
+        $data = json_encode($data, JSON_UNESCAPED_UNICODE);     // 需php5.4及以上才支持JSON_UNESCAPED_UNICODE
+        $result = $this->http($url, $data);
+        $res_js = json_decode($result, TRUE);
+        return $res_js;
+    }
+
     public function resumesdk($filePath)
     {
         $url = "http://resumesdk.market.alicloudapi.com/ResumeParser";          // 将127.0.0.1替换为部署服务的ip
@@ -76,12 +101,16 @@ class APIHelper
         return $res_js;
     }
 
-    private function http($url, $data, $appcode)
+    private function http($url, $data, $appcode = '')
     {
         $process = curl_init($url);
 
         $headers = array();
-        array_push($headers, "Authorization:APPCODE " . $appcode);
+
+        if (!empty($appcode)) {
+            array_push($headers, "Authorization:APPCODE " . $appcode);
+        }
+
         array_push($headers, "Content-Type".":"."application/json; charset=UTF-8");
         curl_setopt($process, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($process, CURLOPT_HTTPHEADER, $headers);

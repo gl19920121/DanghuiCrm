@@ -13,6 +13,7 @@ use App\Http\Services\APIHelper;
 use Auth;
 use DateTime;
 use Illuminate\Support\Facades\Storage;
+// use App\Http\Requests\StoreResumePost;
 
 class ResumesController extends Controller
 {
@@ -262,6 +263,29 @@ class ResumesController extends Controller
 
     public function manual(Request $request)
     {
+        // return dd($request->all());
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+
+        if ($request->has('resume')) {
+        // if (count($request->all()) > 0) {
+            // $resume = json_decode(base64_decode($request->resume), true);
+            // $resume = $request->all();
+            $resume = $request->resume;
+
+            // $result = [];
+            // $this->handleResData($result);
+            // $resume = $this->handleResumeData($result);
+        } else {
+            $result = [];
+            $this->handleResData($result);
+            $resume = $this->handleResumeData($result);
+        }
+
+        return view('resumes.create_form', compact('jobs', 'resume'));
+    }
+
+    public function form(Request $request)
+    {
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
 
         if ($request->has('resume')) {
@@ -271,7 +295,6 @@ class ResumesController extends Controller
             $this->handleResData($result);
             $resume = $this->handleResumeData($result);
         }
-        // return dd($resume);
 
         return view('resumes.create_form', compact('jobs', 'resume'));
     }
@@ -292,7 +315,9 @@ class ResumesController extends Controller
         unset($file);
 
         $api = new APIHelper();
-        $res = $api->resumesdk($filePath);
+        // $res = $api->resumesdk($filePath);
+        $res = $api->resumesdkTest($filePath);
+        // return dd($res);
 
         if ($res['status']['code'] !== 200) {
             session()->flash('danger', '简历解析失败');
@@ -300,10 +325,15 @@ class ResumesController extends Controller
         }
 
         $result = $res['result'];
-        // return dd($result);
         $this->handleResData($result);
         $resume = $this->handleResumeData($result);
 
+        // $result = [];
+        // $this->handleResData($result);
+        // $resume = $this->handleResumeData($result);
+
+        // return view('resumes.create_form', compact('jobs', 'resume'));
+        // return redirect()->route('resumes.create.manual', ['resume' => base64_encode(json_encode(['test' => 1]))]);
         return redirect()->route('resumes.create.manual', ['resume' => $resume]);
     }
 
@@ -478,8 +508,11 @@ class ResumesController extends Controller
      */
     public function store(Request $request)
     {
+
         // $data = $request->toArray();
         // return dd($data);
+        // $request->headers->set('Accept', 'application/json' );
+        // return dd($request);
         // 数据校验 请正确输入
         $mssages = [
             'name.required' => '请填写 姓名',
@@ -711,35 +744,32 @@ class ResumesController extends Controller
             $data['attachment_path'] = $filePath;
         }
 
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                if ($key === 'source') {
-                    $data[$key] = array_keys($value);
-                } else {
-                    $data[$key] = $value;
-                }
-            }
-        }
-
-        $work = $data['work_experience'];
-        $project = $data['project_experience'];
-        $education = $data['education_experience'];
-
+        // foreach ($data as $key => $value) {
+        //     if (is_array($value)) {
+        //         if ($key === 'source') {
+        //             $data[$key] = array_keys($value);
+        //         } else {
+        //             $data[$key] = $value;
+        //         }
+        //     }
+        // }
+        $data['source'] = array_keys($data['source']);
+        $work_experience = $data['work_experience'];
+        $project_experience = $data['project_experience'];
+        $education_experience = $data['education_experience'];
         unset($data['work_experience']);
         unset($data['project_experience']);
         unset($data['education_experience']);
 
-        // return dd($data);
-        $resume->update($data);
+        // $works = [];
+        // foreach ($work_experience as $index => $work) {
+        //     $works[] = new ResumeWork([
 
-        // return dd($work);
-        // $resume->resumeWorks()->update($work);
-
-        // foreach ($work as $key => $value) {
-        //     return dd($value);
-        //     $resumeWork = ResumeWork::find($value->id);
-        //     $resumeWork->update($value);
+        //     ]);
         // }
+
+        // $resume->resumeWorks()->saveMany($works);
+        $resume->update($data);
 
         return back();
     }

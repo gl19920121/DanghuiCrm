@@ -965,7 +965,6 @@
         '</div>' +
         '<div class="form-group form-inline">' +
           '<label for="work_experience[' + worksCount + '][company_nature]">' +
-            '<span class="color-red">*</span>' +
             '公司性质：' +
           '</label>' +
           '<select name="work_experience[' + worksCount + '][company_nature]" class="form-control normal">' +
@@ -977,7 +976,6 @@
         '</div>' +
         '<div class="form-group form-inline">' +
           '<label for="work_experience[' + worksCount + '][company_scale]">' +
-            '<span class="color-red">*</span>' +
             '公司规模：' +
           '</label>' +
           '<select name="work_experience[' + worksCount + '][company_scale]" class="form-control normal">' +
@@ -988,11 +986,10 @@
           '</select>' +
         '</div>' +
         '<div class="form-group form-inline">' +
-          '<label for="work_experience[{{ $index }}][company_investment]">' +
-            '<span class="color-red">*</span>' +
+          '<label for="work_experience[' + worksCount + '][company_investment]">' +
             '融资阶段：' +
           '</label>' +
-          '<select name="work_experience[{{ $index }}][company_investment]" class="form-control normal">' +
+          '<select name="work_experience[' + worksCount + '][company_investment]" class="form-control normal">' +
             '<option hidden value="">请选择</option>' +
             @foreach (App\Models\Company::investmentArr as $key => $investment)
               '<option value="{{ $key }}">{{ $investment['text'] }}</option>' +
@@ -1000,7 +997,7 @@
           '</select>' +
         '</div>' +
         '<div class="form-group form-inline">' +
-          '<label for="work_experience[' + worksCount + '][company_industry]"><span>*</span>所属行业：</label>' +
+          '<label for="work_experience[' + worksCount + '][company_industry]">所属行业：</label>' +
           '<div class="input-group" data-toggle="industrypicker">' +
             '<input type="hidden" name="work_experience[' + worksCount + '][company_industry][st]">' +
             '<input type="hidden" name="work_experience[' + worksCount + '][company_industry][nd]">' +
@@ -1117,21 +1114,18 @@
       '<div class="color-red float-right cursor-pointer mr-4" onclick="dropProject(' + projectsCount + ')">X</div>' +
       '<div class="form-group form-inline">' +
         '<label for="project_experience[' + projectsCount + '][name]">' +
-          '<span class="color-red">*</span>' +
           '项目名称：' +
         '</label>' +
         '<input type="text" name="project_experience[' + projectsCount + '][name]" class="form-control normal" placeholder="请填写" autocomplete="off">' +
       '</div>' +
       '<div class="form-group form-inline">' +
         '<label for="project_experience[' + projectsCount + '][role]">' +
-          '<span class="color-red">*</span>' +
           '担任角色：' +
         '</label>' +
         '<input type="text" name="project_experience[' + projectsCount + '][role]" class="form-control normal" placeholder="请填写" autocomplete="off">' +
       '</div>' +
       '<div class="form-group form-inline">' +
         '<label for="project_experience[' + projectsCount + '][start_at]">' +
-          '<span class="color-red">*</span>' +
           '项目时间：' +
         '</label>' +
         '<div class="input-group date datetimepicker">' +
@@ -1215,7 +1209,6 @@
       '</div>' +
       '<div class="form-group form-inline">' +
         '<label for="education_experience[' + educationsCount + '][start_at]">' +
-          '<span class="color-red">*</span>' +
           '在校时间：' +
         '</label>' +
         '<div class="input-group date datetimepicker">' +
