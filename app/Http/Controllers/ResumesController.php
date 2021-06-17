@@ -310,6 +310,7 @@ class ResumesController extends Controller
         }
 
         $result = $res['result'];
+        // return dd($result);
         $this->handleResData($result);
         $resume = $this->handleResumeData($result);
 
@@ -684,11 +685,21 @@ class ResumesController extends Controller
         }
         foreach ($project as $key => $value) {
             $project[$key]['resume_id'] = $resume->id;
-            $project[$key]['is_not_end'] = (isset($value['is_not_end']) && $value['is_not_end'] === 'on') ? 1 : 0;
+            if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
+                $project[$key]['is_not_end'] = true;
+                $project[$key]['end_at'] = $this->getDate();
+            } else {
+                $project[$key]['is_not_end'] = false;
+            }
         }
         foreach ($education as $key => $value) {
             $education[$key]['resume_id'] = $resume->id;
-            $education[$key]['is_not_end'] = (isset($value['is_not_end']) && $value['is_not_end'] === 'on') ? 1 : 0;
+            if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
+                $education[$key]['is_not_end'] = true;
+                $education[$key]['end_at'] = $this->getDate();
+            } else {
+                $education[$key]['is_not_end'] = false;
+            }
         }
         // array_walk($project, function(&$v, $k, $p) {
         //     $v = array_merge($v, $p);
