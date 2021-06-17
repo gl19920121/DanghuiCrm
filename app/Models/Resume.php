@@ -18,6 +18,7 @@ class Resume extends Model
         'exp_location' => 'array',
         'source' => 'array',
         'is_not_end' => 'boolean',
+        // 'exp_salary_min' => 'float',
     ];
 
     public const workYearsArr = [
@@ -490,7 +491,7 @@ class Resume extends Model
     public function getExpSalaryShowAttribute()
     {
         if ($this->exp_salary_flag === 0) {
-            $expSalary = sprintf('%dK-%dK.%d薪', $this->exp_salary_min, $this->exp_salary_max, $this->exp_salary_count);
+            $expSalary = sprintf('%sK-%sK.%d薪', $this->exp_salary_min, $this->exp_salary_max, $this->exp_salary_count);
         } else {
             $expSalary = '面议';
         }
@@ -500,11 +501,11 @@ class Resume extends Model
 
     public function getCurSalaryShowShortAttribute()
     {
-        return sprintf('%dK.%d薪', $this->cur_salary_show, $this->cur_salary_count_show);
+        return sprintf('%sK.%d薪', $this->cur_salary_show, $this->cur_salary_count_show);
     }
 
     public function getCurSalaryShowLongAttribute()
     {
-        return sprintf('%dK * %d月', $this->cur_salary_show, $this->cur_salary_count_show);
+        return sprintf('%sK * %d月', $this->cur_salary_show, $this->cur_salary_count_show);
     }
 }

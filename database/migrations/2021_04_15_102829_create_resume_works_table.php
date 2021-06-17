@@ -20,7 +20,7 @@ class CreateResumeWorksTable extends Migration
             $table->integer('company_scale')->nullable()->comment('规模');
             $table->enum('company_investment', ['angel', 'round_a', 'round_b', 'round_c', 'round_d_and_above', 'fuk', 'strategic', 'undisclosed', 'not_needed', 'other'])->nullable()->comment('融资阶段');
             $table->json('company_industry')->nullable()->comment('所属行业');
-            $table->integer('salary')->comment('月薪');
+            $table->float('salary', 8, 1)->comment('月薪');
             $table->integer('salary_count')->comment('月薪');
             $table->json('job_type')->comment('职位名称');
             $table->integer('subordinates')->nullable()->comment('下属人数');

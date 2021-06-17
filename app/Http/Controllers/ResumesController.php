@@ -92,7 +92,7 @@ class ResumesController extends Controller
            $num = (int)$arr[0];
         }
 
-        return $num;
+        return (int)$num;
     }
 
     private function getDate($data = null)
@@ -199,7 +199,7 @@ class ResumesController extends Controller
                 'rd' => $result['work_position']
             ],
             'cur_company' => $result['work_company'],
-            'cur_salary' => $result['work_salary_min'],
+            'cur_salary' => (int)$result['work_salary_min'] / 1000,
             'cur_salary_count' => $cur_salary_count,
             'exp_industry' => [
                 'st' => $result['expect_industry'],
@@ -213,8 +213,8 @@ class ResumesController extends Controller
                 'rd' => $result['expect_job']
             ],
             'exp_work_nature' => $exp_work_nature,
-            'exp_salary_min' => $exp_salary_min,
-            'exp_salary_max' => $exp_salary_max,
+            'exp_salary_min' => (int)$exp_salary_min / 1000,
+            'exp_salary_max' => (int)$exp_salary_max / 1000,
             'work_experience' => [],
             'project_experience' => [],
             'education_experience' => []
@@ -236,7 +236,7 @@ class ResumesController extends Controller
                     'nd' => $work_experience['job_position'],
                     'rd' => $work_experience['job_position']
                 ],
-                'salary' => $this->getNumber($work_experience['job_salary']),
+                'salary' => $this->getNumber($work_experience['job_salary']) / 1000,
                 'start_at' => $this->getDate($work_experience['start_date']),
                 'end_at' => $this->getDate($work_experience['end_date']),
                 'is_not_end' => strstr($work_experience['end_date'], '至今') === false ? '' : 'on',
@@ -660,6 +660,11 @@ class ResumesController extends Controller
         $data['upload_uid'] = Auth::user()->id;
         $data['attachment_path'] = $filePath;
         $data['source'] = array_keys($data['source']);
+        if ((int)$data['exp_salary_flag'] === 1) {
+            $data['exp_salary_min'] = NULL;
+            $data['exp_salary_max'] = NULL;
+            $data['exp_salary_count'] = NULL;
+        }
 
         $work = $data['work_experience'];
         $project = $data['project_experience'];

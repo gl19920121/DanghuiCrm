@@ -142,6 +142,6 @@ class ResumeWork extends Model
 
     public function getSalaryShowAttribute()
     {
-        return sprintf('%dK.%d薪', $this->salary, $this->salary_count);
+        return sprintf('%sK.%d薪', $this->salary, $this->salary_count);
     }
 }

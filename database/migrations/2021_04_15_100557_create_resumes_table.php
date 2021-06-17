@@ -31,15 +31,15 @@ class CreateResumesTable extends Migration
                 $table->json('cur_industry')->nullable()->comment('所在行业');
                 $table->json('cur_position')->nullable()->comment('所任职位');
                 $table->string('cur_company')->nullable()->comment('所在公司');
-                $table->integer('cur_salary')->nullable()->comment('目前月薪');
+                $table->float('cur_salary', 8, 1)->nullable()->comment('目前月薪');
                 $table->integer('cur_salary_count')->nullable()->comment('目前月薪');
                 $table->json('exp_industry')->nullable()->comment('期望行业');
                 $table->json('exp_position')->comment('期望职位');
                 $table->enum('exp_work_nature', ['full', 'part', 'all'])->nullable()->comment('工作性质');
                 $table->json('exp_location')->comment('期望城市');
                 $table->integer('exp_salary_flag')->comment('期望薪资标识');
-                $table->integer('exp_salary_min')->nullable()->comment('期望薪资');
-                $table->integer('exp_salary_max')->nullable()->comment('期望薪资');
+                $table->float('exp_salary_min', 8, 1)->nullable()->comment('期望薪资');
+                $table->float('exp_salary_max', 8, 1)->nullable()->comment('期望薪资');
                 $table->integer('exp_salary_count')->nullable()->comment('期望薪资');
                 $table->integer('jobhunter_status')->nullable()->comment('求职者状态');
                 $table->string('social_home')->nullable()->comment('社交主页');
