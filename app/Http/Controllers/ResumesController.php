@@ -129,6 +129,14 @@ class ResumesController extends Controller
         return $education;
     }
 
+    private function handleSalary($data)
+    {
+        $data = $this->getNumber($data);
+        $salary = sprintf('%.1f', (int)$data / 1000);
+        $salary = floatval($salary);
+        return $salary;
+    }
+
     private function handleResumeData($result)
     {
         // return dd($result);
@@ -165,21 +173,12 @@ class ResumesController extends Controller
             $exp_work_nature = 'part';
         }
 
-        $exp_salary_min = '';
-        $exp_salary_max = '';
-        if (!empty($result['expect_salary_min']) && preg_match('/\d+/', $result['expect_salary_min'], $arr)) {
-           $exp_salary_min = (int)$arr[0];
-        }
-        if (!empty($result['expect_salary_max']) && preg_match('/\d+/', $result['expect_salary_max'], $arr)) {
-           $exp_salary_max = (int)$arr[0];
-        }
-
         $resume = [
             'name' => $result['name'],
             'sex' => $result['gender'],
             'age' => $result['age'],
             'location' => $location,
-            'work_years' => $result['work_year'],
+            'work_years' => intval($result['work_year']),
             'work_years_flag' => 0,
             'education' => $education,
             'major' => $result['major'],
@@ -199,7 +198,7 @@ class ResumesController extends Controller
                 'rd' => $result['work_position']
             ],
             'cur_company' => $result['work_company'],
-            'cur_salary' => (int)$result['work_salary_min'] / 1000,
+            'cur_salary' => $this->handleSalary($result['work_salary_min']),
             'cur_salary_count' => $cur_salary_count,
             'exp_industry' => [
                 'st' => $result['expect_industry'],
@@ -213,8 +212,8 @@ class ResumesController extends Controller
                 'rd' => $result['expect_job']
             ],
             'exp_work_nature' => $exp_work_nature,
-            'exp_salary_min' => (int)$exp_salary_min / 1000,
-            'exp_salary_max' => (int)$exp_salary_max / 1000,
+            'exp_salary_min' => $this->handleSalary($result['expect_salary_min']),
+            'exp_salary_max' => $this->handleSalary($result['expect_salary_max']),
             'work_experience' => [],
             'project_experience' => [],
             'education_experience' => []
@@ -236,7 +235,7 @@ class ResumesController extends Controller
                     'nd' => $work_experience['job_position'],
                     'rd' => $work_experience['job_position']
                 ],
-                'salary' => $this->getNumber($work_experience['job_salary']) / 1000,
+                'salary' => $this->handleSalary($work_experience['job_salary']),
                 'start_at' => $this->getDate($work_experience['start_date']),
                 'end_at' => $this->getDate($work_experience['end_date']),
                 'is_not_end' => strstr($work_experience['end_date'], '至今') === false ? '' : 'on',
