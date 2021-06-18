@@ -10,7 +10,7 @@
     @endif
         <div class="form-group form-inline">
             <label for="name"><span>*</span>公司名称：</label>
-            <input type="text" name="name" class="form-control middle" value="{{ isset($oldData['company']) ? $oldData['company']->name : '' }}" placeholder="请填写企业全称">
+            <input type="text" name="name" class="form-control middle" value="{{ isset($oldData['company']) ? $oldData['company']['name'] : '' }}" placeholder="请填写企业全称">
         </div>
         <div class="form-group form-inline">
             <label for="nickname"><span>*</span>对外显示名称：</label>

@@ -40,19 +40,19 @@
 								</div>
 								<div class="row mt-4 justify-content-start bottom text-center">
 									<div class="col-auto">
-                    <div class="tip-item">
+                    <div class="tip-item" onclick="changeTab('tabNavJobs')">
                       <h4>{{ $statistics['job_doing'] }}</h4>
                       <b>运作职位</b>
                     </div>
 									</div>
 									<div class="col-auto">
-                    <div class="tip-item">
-  										<h4 class="color-red">{{ $statistics['job_apply'] }}</h4>
-  										<b>新增应聘</b>
+                    <div class="tip-item" onclick="changeTab('tabNavNewJobs')">
+                      <h4 class="color-red">{{ $statistics['job_apply'] }}</h4>
+                      <b class="color-n">新增应聘</b>
                     </div>
 									</div>
 									<div class="col-auto">
-                    <div class="tip-item">
+                    <div class="tip-item" onclick="changeTab('tabNavCommission')">
   										<h4 class="color-red">{{ $statistics['job_commission'] }}</h4>
   										<b>新增委托</b>
                     </div>
@@ -75,19 +75,19 @@
             <div class="my-nav-tabs">
               <ul class="nav nav-tabs mr-4" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link @if(empty($tab) || $tab === 'jobs') active @endif" data-toggle="tab" href="#tabJobs" role="tab" aria-controls="tabJobs"
+                  <a id="tabNavJobs" class="nav-link @if(empty($tab) || $tab === 'jobs') active @endif" data-toggle="tab" href="#tabJobs" role="tab" aria-controls="tabJobs"
                         aria-selected="true">
-                    <h6>发布职位</h6>
+                    <h6>运作职位</h6>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link @if($tab === 'newJobs') active @endif" data-toggle="tab" href="#tabNewJobs" role="tab" aria-controls="tabNewJobs"
+                  <a id="tabNavNewJobs" class="nav-link @if($tab === 'newJobs') active @endif" data-toggle="tab" href="#tabNewJobs" role="tab" aria-controls="tabNewJobs"
                       aria-selected="false">
                     <h6>新增应聘</h6>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link @if($tab === 'newResumes') active @endif" data-toggle="tab" href="#tabCommission" role="tab" aria-controls="tabCommission"
+                  <a id="tabNavCommission" class="nav-link @if($tab === 'newResumes') active @endif" data-toggle="tab" href="#tabCommission" role="tab" aria-controls="tabCommission"
                       aria-selected="false">
                     <h6>新增委托</h6>
                   </a>
@@ -403,4 +403,11 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+  function changeTab(navId)
+  {
+    $('#'+navId).click();
+  }
+</script>
 @stop

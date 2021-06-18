@@ -3,7 +3,7 @@
 
   <div class="job-list-body">
 
-    @if (count($jobs) > 0)
+    @if (count($drafts) > 0)
       <div class="default-list">
         <form class="text-center" method="GET" action="{{ route('drafts.list') }}">
           {{ csrf_field() }}
@@ -31,22 +31,16 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($jobs as $job)
-              <tr onclick="window.location = '{{ route('jobs.create', ['draft_id' => $job->id, 'job_data' => $job->data]) }}';">
+            @foreach ($drafts as $draft)
+              <tr onclick="window.location = '{{ route('jobs.create', ['draft_id' => $draft->id]) }}';">
                 <td>
-                  <span class="color-red">{{ $job->name }}</span>
+                  <span class="color-red">{{ $draft->name }}</span>
                 </td>
+                <td>{{ $draft->company_name }}</td>
+                <td>{{ $draft->channel }}</td>
+                <td>{{ $draft->updated_at }}</td>
                 <td>
-                  @if (isset($job->company->name))
-                    {{ $job->company->name }}
-                  @else
-                    -
-                  @endif
-                </td>
-                <td>{{ $job->channel }}</td>
-                <td>{{ $job->updated_at }}</td>
-                <td>
-                  <form method="POST" action="{{ route('drafts.destroy', $job) }}">
+                  <form method="POST" action="{{ route('drafts.destroy', $draft) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button class="btn btn-danger" type="submit">删除</button>
@@ -59,7 +53,7 @@
 
         <div class="row justify-content-end">
           <div class="col-auto">
-            {{ $jobs->appends($appends)->onEachSide(5)->links('vendor.pagination.bootstrap-4') }}
+            {{ $drafts->appends($appends)->onEachSide(5)->links('vendor.pagination.bootstrap-4') }}
           </div>
         </div>
       </div>

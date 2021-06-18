@@ -5,7 +5,7 @@
   <div class="my-nav-tabs-top">
     <ul class="nav nav-tabs text-center" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link @if($appends['tab'] === 'ing') active @endif" id="ing-tab" data-toggle="link" href="{{ route('jobs.list', ['tab' => 'ing']) }}" role="tab" aria-controls="ing" aria-selected="true">
+        <a class="nav-link @if($appends['tab'] === 'doing') active @endif" id="ing-tab" data-toggle="link" href="{{ route('jobs.list', ['tab' => 'doing']) }}" role="tab" aria-controls="ing" aria-selected="true">
           进行中职位
         </a>
       </li>

@@ -16,10 +16,14 @@
                 </div>
                 <div class="form-group form-inline">
                     <label for="company"><span class="color-red">*</span>公司名称：</label>
-                    <select name="company_id" class="form-control normal" value="{{  old('company_id')}}" onchange="companySelect()">
+                    <select name="company_id" class="form-control normal" onchange="companySelect()">
                         <option value="" hidden>请填写</option>
                         @foreach ($companys as $index => $company)
-                            <option value="{{ $company->id }}" @if(isset($oldData['company']->id) && $company->id === $oldData['company']->id) selected="selected" @endif data-item="{{ json_encode($company) }}">{{ $company->name }}</option>
+                            <option value="{{ $company->id }}"
+                              @if ((isset($oldData['company']['id']) && $oldData['company']['id'] == $company->id) || old('company_id') == $company->id)
+                                selected
+                              @endif
+                            data-item="{{ json_encode($company) }}">{{ $company->name }}</option>
                         @endforeach
                     </select>
                     <div>
@@ -99,12 +103,42 @@
                 <div class="form-group form-inline">
                     <label for="type"><span class="color-red">*</span>职位类别：</label>
                     <div class="input-group" data-toggle="jobtypepicker">
-
-                      <input type="hidden" name="type[st]" value="{{ isset($oldData['type']['st']) ? $oldData['type']['st'] : '' }}">
-                      <input type="hidden" name="type[nd]" value="{{ isset($oldData['type']['nd']) ? $oldData['type']['nd'] : '' }}">
-                      <input type="hidden" name="type[rd]" value="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : '' }}">
-
-                      <input type="text" class="form-control normal append" id="jobType" value="{{ isset($oldData['type']['rd']) ? $oldData['type']['rd'] : '' }}" placeholder="请选择" autocomplete="off">
+                      <input type="hidden" name="type[st]"
+                      @if (isset($oldData['type']['st']))
+                        value="{{ $oldData['type']['st'] }}"
+                      @else
+                        @if (isset(old('type')['st']))
+                          value="{{ old('type')['st'] }}"
+                        @endif
+                      @endif
+                      >
+                      <input type="hidden" name="type[nd]"
+                      @if (isset($oldData['type']['nd']))
+                        value="{{ $oldData['type']['nd'] }}"
+                      @else
+                        @if (isset(old('type')['nd']))
+                          value="{{ old('type')['nd'] }}"
+                        @endif
+                      @endif
+                      >
+                      <input type="hidden" name="type[rd]"
+                      @if (isset($oldData['type']['rd']))
+                        value="{{ $oldData['type']['rd'] }}"
+                      @else
+                        @if (isset(old('type')['rd']))
+                          value="{{ old('type')['rd'] }}"
+                        @endif
+                      @endif
+                      >
+                      <input type="text" class="form-control normal append" id="jobType" placeholder="请选择" autocomplete="off"
+                      @if (isset($oldData['type']['rd']))
+                        value="{{ $oldData['type']['rd'] }}"
+                      @else
+                        @if (isset(old('type')['rd']))
+                          value="{{ old('type')['rd'] }}"
+                        @endif
+                      @endif
+                      >
                       <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
                         <span class="input-group-text" id="basic-addon2">
                           <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -122,10 +156,16 @@
                 </div>
                 <div class="form-group form-inline">
                     <label for="nature"><span class="color-red">*</span>工作性质：</label>
-                    <select name="nature" class="form-control normal" value="{{  old('nature')}}">
+                    <select name="nature" class="form-control normal">
                         <option value="" hidden>请选择</option>
                         @foreach (App\Models\Job::natureArr as $key => $nature)
-                            <option value="{{ $key }}" @if(isset($oldData['nature']) && $key === $oldData['nature']) selected="selected" @endif>{{ $nature['text'] }}</option>
+                            <option value="{{ $key }}"
+                            @if ((isset($oldData['nature']) && $key === $oldData['nature']) || old('nature') == $key)
+                              selected
+                            @endif
+                            >
+                              {{ $nature['text'] }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -235,7 +275,7 @@
                         <div class="custom-control custom-checkbox custom-control-inline">
                             <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]"
                               @if (isset($oldData['channel']))
-                                @if (in_array($key, json_decode($oldData['channel'], true)))
+                                @if (in_array($key, $oldData['channel']))
                                   checked
                                 @endif
                               @elseif (!empty($channel['checked']))

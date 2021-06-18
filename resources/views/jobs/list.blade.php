@@ -1,45 +1,41 @@
 @extends('jobs.layouts.list')
 @section('list')
-
   <div class="job-list-body">
-
-    @if (count($jobs) > 0)
-      <div class="default-list">
-        <form name="search" class="text-center" method="GET" action="{{ route('jobs.list') }}">
-          {{ csrf_field() }}
-          <input type="hidden" name="tab" value="{{ $appends['tab'] }}">
-          <div class="row align-items-center mb-4">
-            <div class="col-auto">
-              <div class="form-inline">
-                  <label for="name">职位名称：</label>
-                  <input type="text" name="name" class="form-control normal" value="{{ $appends['name'] }}" placeholder="请填写职位名称" />
-              </div>
+    <div class="default-list">
+      <form name="search" class="text-center" method="GET" action="{{ route('jobs.list') }}">
+        <input type="hidden" name="tab" value="{{ $appends['tab'] }}">
+        <div class="row align-items-center mb-4">
+          <div class="col-auto">
+            <div class="form-inline">
+                <label for="name">职位名称：</label>
+                <input type="text" name="name" class="form-control normal" value="{{ $appends['name'] }}" placeholder="请填写职位名称" />
             </div>
-            <div class="col-auto">
-              <div class="form-inline">
-                  <select name="urgency_level" class="form-control normal" value="{{ old('urgency_level') }}">
-                      <option value="">紧急程度</option>
-                      @foreach(App\Models\Job::urgencyLevelArr as $key => $urgencyLevel)
-                          <option value="{{ $key }}" @if($appends['urgencyLevel'] === (string)$key) selected @endif>{{ $urgencyLevel['text'] }}</option>
-                      @endforeach
-                  </select>
-              </div>
-            </div>
-            <div class="col-auto">
-              <div class="form-inline">
-                  <select name="channel" class="form-control normal" value="{{ old('channel') }}">
-                      <option value="">发布渠道</option>
-                      @foreach(App\Models\Job::channelArr as $key => $channel)
-                          <option value="{{ $key }}" @if($appends['channel'] === $key) selected @endif>{{ $channel['text'] }}</option>
-                      @endforeach
-                  </select>
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-danger">搜索</button>
           </div>
-        </form>
+          <div class="col-auto">
+            <div class="form-inline">
+                <select name="urgency_level" class="form-control normal" value="{{ old('urgency_level') }}">
+                    <option value="">紧急程度</option>
+                    @foreach(App\Models\Job::urgencyLevelArr as $key => $urgencyLevel)
+                        <option value="{{ $key }}" @if($appends['urgencyLevel'] === (string)$key) selected @endif>{{ $urgencyLevel['text'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-inline">
+                <select name="channel" class="form-control normal" value="{{ old('channel') }}">
+                    <option value="">发布渠道</option>
+                    @foreach(App\Models\Job::channelArr as $key => $channel)
+                        <option value="{{ $key }}" @if($appends['channel'] === $key) selected @endif>{{ $channel['text'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+          </div>
 
+          <button type="submit" class="btn btn-danger">搜索</button>
+        </div>
+      </form>
+      @if (count($jobs) > 0)
         <table class="table table-striped default-table">
           <thead>
             <tr>
@@ -77,14 +73,14 @@
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <a class="dropdown-item" href="#" onclick="$('form[name=search1]').submit()">刷新</a>
                       <a class="dropdown-item" href="{{ route('jobs.edit', $job) }}">修改</a>
-                      @if ($appends['tab'] === 'ing')
+                      @if ($appends['tab'] === 'doing')
                         <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'pause']) }}">
                           {{ csrf_field() }}
                           <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">暂停</button>
                         </form>
                       @endif
                       @if ($appends['tab'] === 'pause' || $appends['tab'] === 'end')
-                        <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'ing']) }}">
+                        <form method="POST" action="{{ route('jobs.status', [$job->id, 'status' => 'doing']) }}">
                           {{ csrf_field() }}
                           <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="job">恢复</button>
                         </form>
@@ -113,17 +109,15 @@
             {{ $jobs->appends($appends)->links('vendor.pagination.bootstrap-4') }}
           </div>
         </div>
-      </div>
-
-    @else
-      <div class="empty row">
-        <div class="col text-center m-auto">
-          <img src="{{ URL::asset('images/empty.png') }}">
-          <p>您还没有运作的职位</p>
+      @else
+        <div class="empty row">
+          <div class="col text-center m-auto">
+            <img src="{{ URL::asset('images/empty.png') }}">
+            <p>您还没有运作的职位</p>
+          </div>
         </div>
-      </div>
-    @endif
-
+      @endif
+    </div>
   </div>
 
   @include('shared._confirm')

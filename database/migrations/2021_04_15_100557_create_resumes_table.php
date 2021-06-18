@@ -53,7 +53,7 @@ class CreateResumesTable extends Migration
                 $table->integer('job_id')->nullable()->comment('职位id')->unsigned();
                 $table->integer('is_collect')->default(0)->comment('收藏状态');
                 $table->timestamps();
-                $table->integer('status')->default(1)->comment('状态');
+                $table->integer('status')->default(1)->comment('状态：-2->审核中，-1->待定，0->淘汰（删除），1->待处理，2->电话沟通，3->推荐简历，4->面试，5->OFFER，6->入职，7->过保，8->结束');
                 $table->foreign('job_id')->references('id')->on('jobs')->onUpdate('cascade')->onDelete('set null'); // 外键约束
             });
         }

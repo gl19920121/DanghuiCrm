@@ -34,6 +34,14 @@ a.a-gray:hover {
   color: #B5B5B6;
 }
 
+a.a-red {
+  color: #D83856;
+}
+
+a.a-red:hover {
+  color: #D83856;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -411,6 +419,7 @@ a.a-gray:hover {
 
 .main-bg .home .message .bottom .col-auto .tip-item {
   width: 168px;
+  cursor: pointer;
 }
 
 .main-bg .home .message .bottom .col-auto:first-child {
@@ -1507,6 +1516,14 @@ a.a-gray:hover {
   color: #B5B5B6;
 }
 
+a.a-red {
+  color: #D83856;
+}
+
+a.a-red:hover {
+  color: #D83856;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -1884,6 +1901,7 @@ a.a-gray:hover {
 
 .main-bg .home .message .bottom .col-auto .tip-item {
   width: 168px;
+  cursor: pointer;
 }
 
 .main-bg .home .message .bottom .col-auto:first-child {
@@ -3364,6 +3382,14 @@ a.a-gray:hover {
   color: #B5B5B6;
 }
 
+a.a-red {
+  color: #D83856;
+}
+
+a.a-red:hover {
+  color: #D83856;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -3741,6 +3767,7 @@ a.a-gray:hover {
 
 .main-bg .home .message .bottom .col-auto .tip-item {
   width: 168px;
+  cursor: pointer;
 }
 
 .main-bg .home .message .bottom .col-auto:first-child {

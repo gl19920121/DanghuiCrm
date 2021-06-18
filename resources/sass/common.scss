@@ -68,6 +68,14 @@ a.a-gray {
   }
 }
 
+a.a-red {
+  color: $color-red;
+
+  &:hover {
+    color: $color-red;
+  }
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -443,6 +451,7 @@ a.a-gray {
 
             .tip-item {
               width: 168px;
+              cursor: pointer;
             }
 
             &:first-child {

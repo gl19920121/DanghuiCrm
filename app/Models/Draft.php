@@ -7,30 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class Draft extends Model
 {
     protected $fillable = [];
-
     protected $guarded = [];
-
-    public function getDataAttribute()
-    {
-        return json_decode($this->attributes['data']);
-    }
+    protected $casts = [
+        'data' => 'array'
+    ];
 
     public function getNameAttribute()
     {
-        $data = json_decode($this->attributes['data']);
-        return empty($data->name) ? '-' : $data->name;
+        return !empty($this->data['name']) ? $this->data['name'] : '-';
     }
 
-    public function getCompanyAttribute()
+    public function getCompanyNameAttribute()
     {
-        $data = json_decode($this->attributes['data']);
-        return empty($data->company) ? '-' : $data->company;
+        return isset($this->data['company']['name']) ? $this->data['company']['name'] : '-';
     }
 
     public function getChannelAttribute()
     {
-        $data = json_decode($this->attributes['data']);
-        $channel = json_decode($data->channel);
+        $channel = $this->data['channel'];
 
         foreach ($channel as $index => $value) {
             $channel[$index] = Job::channelArr[$value]['text'];

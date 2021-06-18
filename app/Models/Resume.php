@@ -108,6 +108,99 @@ class Resume extends Model
         return $this->hasMany(ResumeEdu::class);
     }
 
+    public function scopeStatus($query, $status)
+    {
+        $scope;
+
+        if (is_numeric($status)) {
+            $scope = $query->where('status', $status);
+        } else {
+            $tab = str_replace('resume_', '', $status);
+            switch ($tab) {
+                case 'untreated':
+                    $scope = $query->whereIn('status', [-1, 1]);
+                    break;
+                case 'talking':
+                    $scope = $query->where('status', 2);
+                    break;
+                case 'push_resume':
+                    $scope = $query->where('status', 3);
+                    break;
+                case 'interview':
+                    $scope = $query->where('status', 4);
+                    break;
+                case 'offer':
+                    $scope = $query->where('status', 5);
+                    break;
+                case 'onboarding':
+                    $scope = $query->where('status', 6);
+                    break;
+                case 'over_probation':
+                    $scope = $query->where('status', 7);
+                    break;
+                case 'out':
+                    $scope = $query->where('status', 0);
+                    break;
+
+                default:
+                    $scope = $query->whereIn('status', [-1, 1]);
+                    break;
+            }
+        }
+
+        return $scope;
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->whereNotIn('status', [-2, 0, 8]);
+    }
+
+    public function scopeUntreated()
+    {
+        return $query->whereIn('status', [-1, 1]);
+    }
+
+    public function scopeOut($query)
+    {
+        return $query->where('status', 0);
+    }
+
+    public function scopeNew($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    public function scopeTalking($query)
+    {
+        return $query->where('status', 2);
+    }
+
+    public function scopePushResume($query)
+    {
+        return $query->where('status', 3);
+    }
+
+    public function scopeInterview($query)
+    {
+        return $query->where('status', 4);
+    }
+
+    public function scopeOffer($query)
+    {
+        return $query->where('status', 5);
+    }
+
+    public function scopeOnboarding($query)
+    {
+        return $query->where('status', 6);
+    }
+
+    public function scopeOverProbation($query)
+    {
+        return $query->where('status', 7);
+    }
+
     public function getNoAttribute()
     {
         return sprintf('RE%s', str_pad($this->attributes['id'], 8, "0", STR_PAD_LEFT));

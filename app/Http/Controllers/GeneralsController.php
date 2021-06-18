@@ -24,21 +24,23 @@ class GeneralsController extends Controller
 
     public function show(Request $request)
     {
-        $jobs = Job::where('status', '=', 1)
-            ->where('execute_uid', '=', Auth::user()->id)
-            ->withCount('resumes')
+        $jobs = Job::doing()->executeUser(Auth::user()->id)
+            ->withCount(['resumes' => function ($query) {
+                $query->active();
+            }])
             ->paginate($this->pageSize, ['*'], 'jpage');
-        $newJobs = Job::where('status', '=', 1)
-            ->where('execute_uid', '=', Auth::user()->id)
+        $newJobs = Job::doing()->executeUser(Auth::user()->id)
             ->whereHas('resumes', function ($query) {
-                $query->where('status', '=', 1);
+                $query->new();
             })
-            ->withCount('resumes')
+            ->withCount(['resumes' => function ($query) {
+                $query->new();
+            }])
             ->paginate($this->pageSize, ['*'], 'njpage');
-        $newResumes = Resume::where('status', '=', 1)
+        $newResumes = Resume::new()
             ->whereHas('job', function ($query) {
-                $query->where('status', '=', 1);
-                $query->where('execute_uid', '=', Auth::user()->id);
+                $query->doing();
+                $query->executeUser(Auth::user()->id);
             })
             ->with([
                 'job' => function($query) {
@@ -67,12 +69,12 @@ class GeneralsController extends Controller
             'job_doing' => $jobs->total(),
             'job_apply' => $newJobs->total(),
             'job_commission' => $newResumes->total(),
-            'schedule_talking' => Resume::where('status', '=', 2)->count(),
-            'schedule_push_resume' => Resume::where('status', '=', 3)->count(),
-            'schedule_interview' => Resume::where('status', '=', 4)->count(),
-            'schedule_offer' => Resume::where('status', '=', 5)->count(),
-            'schedule_onboarding' => Resume::where('status', '=', 6)->count(),
-            'schedule_over_probation' => Resume::where('status', '=', 7)->count()
+            'schedule_talking' => Resume::Talking()->count(),
+            'schedule_push_resume' => Resume::PushResume()->count(),
+            'schedule_interview' => Resume::Interview()->count(),
+            'schedule_offer' => Resume::Offer()->count(),
+            'schedule_onboarding' => Resume::Onboarding()->count(),
+            'schedule_over_probation' => Resume::OverProbation()->count()
         ];
 
         return view('home')->with('statistics', $statistics)

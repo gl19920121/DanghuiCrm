@@ -52,6 +52,8 @@ class Job extends Model
         'channel' => 'array'
     ];
 
+
+
     public function releaseUser()
     {
         return $this->belongsTo(User::class, 'release_uid');
@@ -72,6 +74,28 @@ class Job extends Model
         return $this->belongsTo(Company::class);
     }
 
+
+
+    public function scopeDoing($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    public function scopePause($query)
+    {
+        return $query->where('status', 2);
+    }
+
+    public function scopeEnd($query)
+    {
+        return $query->where('status', 0);
+    }
+
+    public function scopeExecuteUser($query, $uid)
+    {
+        return $query->where('execute_uid', $uid);
+    }
+
     public function scopeStatus($query, $status)
     {
         $scope;
@@ -79,14 +103,18 @@ class Job extends Model
         if (is_numeric($status)) {
             $scope = $query->where('status', $status);
         } else {
-            switch ($status) {
-                case 'job_doing':
+            $tab = str_replace('job_', '', $status);
+            switch ($tab) {
+                case 'doing':
                     $scope = $query->where('status', 1);
                     break;
-                case 'job_end':
-                    $scope = $query->where('status', 3);
+                case 'pause':
+                    $scope = $query->where('status', 2);
                     break;
-                case 'job_need_check':
+                case 'end':
+                    $scope = $query->where('status', 0);
+                    break;
+                case 'need_check':
                     $scope = $query->where('status', -1);
                     break;
 
@@ -111,12 +139,21 @@ class Job extends Model
         }
     }
 
+    public function scopeSearchByUrgencyLevel($query, $level)
+    {
+        if (is_numeric($level)) {
+            return $query->where('urgency_level', $level);
+        }
+    }
+
     public function scopeSearchByChannel($query, $channel)
     {
         if (!empty($channel)) {
             return $query->whereJsonContains('channel', $channel);
         }
     }
+
+
 
     public function setStatusAttribute($value)
     {
@@ -129,7 +166,7 @@ class Job extends Model
                 $status = 2;
                 break;
             case 'end':
-                $status = 3;
+                $status = 0;
                 break;
             default:
                 $status = 1;
@@ -152,7 +189,7 @@ class Job extends Model
             case 2:
                 $status = '已暂停';
                 break;
-            case 3:
+            case 0:
                 $status = '已结束';
                 break;
 

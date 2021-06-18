@@ -13,7 +13,7 @@ use App\Http\Services\APIHelper;
 use Auth;
 use DateTime;
 use Illuminate\Support\Facades\Storage;
-// use App\Http\Requests\StoreResumePost;
+use Illuminate\Support\Facades\DB;
 
 class ResumesController extends Controller
 {
@@ -178,7 +178,7 @@ class ResumesController extends Controller
             'sex' => $result['gender'],
             'age' => $result['age'],
             'location' => $location,
-            'work_years' => intval($result['work_year']),
+            'work_years' => !empty($result['work_year']) ? intval($result['work_year']) : '',
             'work_years_flag' => 0,
             'education' => $education,
             'major' => $result['major'],
@@ -309,7 +309,6 @@ class ResumesController extends Controller
         }
 
         $result = $res['result'];
-        // return dd($result);
         $this->handleResData($result);
         $resume = $this->handleResumeData($result);
 
@@ -442,7 +441,7 @@ class ResumesController extends Controller
     {
         $resumes = Resume::
             where('status', '!=', 0)
-            ->has('user')
+            // ->has('user')
             ->whereRaw('date(created_at) >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)')
             ->with(['resumeEdus' => function($query) {
                 $query->orderBy('end_at', 'desc');
@@ -488,9 +487,6 @@ class ResumesController extends Controller
      */
     public function store(Request $request)
     {
-
-        // $data = $request->toArray();
-        // return dd($data);
         // 数据校验 请正确输入
         $mssages = [
             'name.required' => '请填写 姓名',
@@ -673,48 +669,49 @@ class ResumesController extends Controller
         unset($data['project_experience']);
         unset($data['education_experience']);
 
-        // db insert
-        $resume = Resume::create($data);
+        DB::beginTransaction();
+        try {
+            // db insert
+            $resume = Resume::create($data);
 
-        foreach ($work as $key => $value) {
-            $work[$key]['resume_id'] = $resume->id;
-            $work[$key]['company_industry'] = json_encode($value['company_industry']);
-            $work[$key]['job_type'] = json_encode($value['job_type']);
-            if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
-                $work[$key]['is_not_end'] = true;
-                $work[$key]['end_at'] = $this->getDate();
-            } else {
-                $work[$key]['is_not_end'] = false;
+            foreach ($work as $key => $value) {
+                $work[$key]['resume_id'] = $resume->id;
+                $work[$key]['company_industry'] = json_encode($value['company_industry']);
+                $work[$key]['job_type'] = json_encode($value['job_type']);
+                if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
+                    $work[$key]['is_not_end'] = true;
+                    $work[$key]['end_at'] = $this->getDate();
+                } else {
+                    $work[$key]['is_not_end'] = false;
+                }
             }
-        }
-        foreach ($project as $key => $value) {
-            $project[$key]['resume_id'] = $resume->id;
-            if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
-                $project[$key]['is_not_end'] = true;
-                $project[$key]['end_at'] = $this->getDate();
-            } else {
-                $project[$key]['is_not_end'] = false;
+            foreach ($project as $key => $value) {
+                $project[$key]['resume_id'] = $resume->id;
+                if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
+                    $project[$key]['is_not_end'] = true;
+                    $project[$key]['end_at'] = $this->getDate();
+                } else {
+                    $project[$key]['is_not_end'] = false;
+                }
             }
-        }
-        foreach ($education as $key => $value) {
-            $education[$key]['resume_id'] = $resume->id;
-            if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
-                $education[$key]['is_not_end'] = true;
-                $education[$key]['end_at'] = $this->getDate();
-            } else {
-                $education[$key]['is_not_end'] = false;
+            foreach ($education as $key => $value) {
+                $education[$key]['resume_id'] = $resume->id;
+                if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
+                    $education[$key]['is_not_end'] = true;
+                    $education[$key]['end_at'] = $this->getDate();
+                } else {
+                    $education[$key]['is_not_end'] = false;
+                }
             }
-        }
-        // array_walk($project, function(&$v, $k, $p) {
-        //     $v = array_merge($v, $p);
-        // }, ['resume_id' => $resume->id]);
-        // array_walk($education, function(&$v, $k, $p) {
-        //     $v = array_merge($v, $p);
-        // }, ['resume_id' => $resume->id]);
 
-        $resumeWork = ResumeWork::insert($work);
-        $resumePrj = ResumePrj::insert($project);
-        $resumeEdu = ResumeEdu::insert($education);
+            $resumeWork = ResumeWork::insert($work);
+            $resumePrj = ResumePrj::insert($project);
+            $resumeEdu = ResumeEdu::insert($education);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
 
         ResumeUser::store($resume->id, Auth::user()->id, 'upload');
 
@@ -726,7 +723,7 @@ class ResumesController extends Controller
     {
         $data = $request->toArray();
 
-        if (isset($request->attachment)) {
+        if ($request->has('attachment')) {
             // 简历文件存储
             $filePath = NULL;
             $file = $request->file('attachment');
@@ -741,32 +738,22 @@ class ResumesController extends Controller
             unset($data['attachment']);
             $data['attachment_path'] = $filePath;
         }
+        if ($request->has('source')) {
+            $data['source'] = array_keys($data['source']);
+        }
+        if ($request->has('work_experience')) {
+            $work_experience = $data['work_experience'];
+            unset($data['work_experience']);
+        }
+        if ($request->has('project_experience')) {
+            $project_experience = $data['project_experience'];
+            unset($data['project_experience']);
+        }
+        if ($request->has('education_experience')) {
+            $education_experience = $data['education_experience'];
+            unset($data['education_experience']);
+        }
 
-        // foreach ($data as $key => $value) {
-        //     if (is_array($value)) {
-        //         if ($key === 'source') {
-        //             $data[$key] = array_keys($value);
-        //         } else {
-        //             $data[$key] = $value;
-        //         }
-        //     }
-        // }
-        $data['source'] = array_keys($data['source']);
-        $work_experience = $data['work_experience'];
-        $project_experience = $data['project_experience'];
-        $education_experience = $data['education_experience'];
-        unset($data['work_experience']);
-        unset($data['project_experience']);
-        unset($data['education_experience']);
-
-        // $works = [];
-        // foreach ($work_experience as $index => $work) {
-        //     $works[] = new ResumeWork([
-
-        //     ]);
-        // }
-
-        // $resume->resumeWorks()->saveMany($works);
         $resume->update($data);
 
         return back();

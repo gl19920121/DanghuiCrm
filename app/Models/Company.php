@@ -49,6 +49,11 @@ class Company extends Model
         return $this->hasMany(Job::class);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
     public function getNatureShowAttribute()
     {
         return self::natureArr[$this->attributes['nature']]['text'];
