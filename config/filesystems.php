@@ -64,17 +64,31 @@ return [
             'url' => env('AWS_URL'),
         ],
 
-        'resume' => [
+        'user_avatar' => [
             'driver' => 'local',
-            'root' => storage_path('app/resume'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/public/user/avatar'),
+            'url' => env('APP_URL').'/storage/user/avatar',
             'visibility' => 'public',
         ],
 
-        'company' => [
+        'resume_append' => [
             'driver' => 'local',
-            'root' => storage_path('app/company'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/resume/append'),
+            'url' => env('APP_URL').'/storage/resume/append',
+            'visibility' => 'private',
+        ],
+
+        'resume_avatar' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/resume/avatar'),
+            'url' => env('APP_URL').'/storage/resume/avatar',
+            'visibility' => 'public',
+        ],
+
+        'company_logo' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/company/logo'),
+            'url' => env('APP_URL').'/storage/company/logo',
             'visibility' => 'public',
         ],
 

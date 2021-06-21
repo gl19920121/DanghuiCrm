@@ -135,6 +135,57 @@ $(function () {
       this.value = this.value.replace(/\D/g, '');
     });
   });
+
+  function logoSelect() {
+    var fileselect = $('[data-toggle="filechoose"][data-type="logo"]');
+    var inputFile = fileselect.children('input[type="file"]');
+    var inputText = fileselect.children('input[type="text"]');
+    var imgLogo = fileselect.children('img');
+    inputText.css('cursor', 'pointer');
+    inputFile.change(function () {
+      var file = $(this).get(0).files[0];
+      inputText.val(file.name);
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = function (ev) {
+        imgLogo.attr("src", ev.target.result);
+        imgLogo.removeAttr("hidden");
+      };
+    });
+    inputText.click(function () {
+      inputFile.click();
+    });
+  }
+
+  function avatarSelect() {
+    var fileselect = $('[data-toggle="filechoose"][data-type="avatar"]');
+    var inputFile = fileselect.children('input[type="file"]');
+    var imgLogo = fileselect.children('img');
+    imgLogo.css('cursor', 'pointer');
+    imgLogo.css('width', '150px');
+    imgLogo.css('height', '150px');
+    inputFile.change(function () {
+      var file = $(this).get(0).files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = function (ev) {
+        imgLogo.attr("src", ev.target.result);
+        imgLogo.removeAttr("hidden");
+      };
+    });
+    imgLogo.click(function () {
+      inputFile.click();
+    });
+  }
+
+  function appInit() {
+    logoSelect();
+    avatarSelect();
+  }
+
+  appInit();
 });
 
 /***/ }),

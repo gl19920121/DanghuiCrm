@@ -12,6 +12,16 @@
           <h5>个人基本信息</h5>
         </div>
         <div class="form-group form-inline">
+          <label for="avatar">
+            <span>*</span>
+            头像：
+          </label>
+          <div data-toggle="filechoose" data-type="avatar">
+            <img src="{{ URL::asset('images/resume_avatar_default_man.png') }}" class="form-control rounded-circle">
+            <input hidden type="file" multiple="true" accept="image/png, image/jpeg" name="avatar" class="form-control middle">
+          </div>
+        </div>
+        <div class="form-group form-inline">
           <label for="name">
             <span class="color-red">*</span>
             姓名：

@@ -131,6 +131,9 @@ class ResumesController extends Controller
 
     private function handleSalary($data)
     {
+        if (empty($data)) {
+            return '';
+        }
         $data = $this->getNumber($data);
         $salary = sprintf('%.1f', (int)$data / 1000);
         $salary = floatval($salary);
@@ -139,7 +142,6 @@ class ResumesController extends Controller
 
     private function handleResumeData($result)
     {
-        // return dd($result);
         $cur_salary_count = '';
         if (!empty($result['work_salary']) && preg_match('/\d+/', $result['work_salary'], $arr)) {
            $year_salary = (int)$arr[0];
@@ -266,7 +268,7 @@ class ResumesController extends Controller
             ];
         }
 
-        return $resume;
+        return new Resume($resume);
     }
 
     public function manual(Request $request)
@@ -275,6 +277,7 @@ class ResumesController extends Controller
 
         if ($request->has('is_auto') && session()->has('resume')) {
             $resume = session()->get('resume');
+            // return dd($resume);
         } else {
             $result = [];
             $this->handleResData($result);
@@ -295,7 +298,7 @@ class ResumesController extends Controller
                 session()->flash('danger', '简历上传失败');
                 return redirect()->back()->withInput();
             }
-            $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
+            $filePath = Storage::disk('resume_append')->putFile(date('Y-m-d').'/'.$request->user()->id, $file);
         }
         unset($file);
 
@@ -644,7 +647,7 @@ class ResumesController extends Controller
                 session()->flash('danger', '简历上传失败');
                 return redirect()->back()->withInput();
             }
-            $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
+            $filePath = Storage::disk('resume_append')->putFile(date('Y-m-d').'/'.$request->user()->id, $file);
         }
         unset($file);
 
@@ -732,7 +735,7 @@ class ResumesController extends Controller
                     session()->flash('danger', '简历上传失败');
                     return redirect()->back()->withInput();
                 }
-                $filePath = $file->store(date('Y-m-d').'/'.$request->user()->id, 'resume');
+                $filePath = Storage::disk('resume_append')->putFile(date('Y-m-d').'/'.$request->user()->id, $file);
             }
             unset($file);
             unset($data['attachment']);
@@ -788,17 +791,17 @@ class ResumesController extends Controller
      */
     public function destroy(Resume $resume)
     {
-        if(Storage::disk('resume')->exists($resume->attachment_path)) {
-            $delResult = Storage::disk('resume')->delete($resume->attachment_path);
+        if(Storage::disk('resume_append')->exists($resume->attachment_path)) {
+            $delResult = Storage::disk('resume_append')->delete($resume->attachment_path);
             if($delResult === false) {
                 session()->flash('danger', '删除失败');
-                return;
+                return back();
             }
         }
 
         Resume::destroy($resume->id);
         session()->flash('success', '删除成功');
-        return redirect()->route('resumes.list');
+        return back();
     }
 
     private function mb_str_split($str) {

@@ -58,9 +58,9 @@ class APIHelper
         $uid = 2106160;
         $pwd = 'PeGc4y';
 
-        $fname = storage_path('resume/'.$filePath);       // 替换为你的本地文件名
+        $fname = storage_path('resume/append/'.$filePath);       // 替换为你的本地文件名
         // $fileData = file_get_contents($fname);
-        $fileData = Storage::disk('resume')->get($filePath);
+        $fileData = Storage::disk('resume_append')->get($filePath);
         // die(dd($fileData));
         $base_cont = base64_encode($fileData);
 
@@ -82,9 +82,9 @@ class APIHelper
         $url = "http://resumesdk.market.alicloudapi.com/ResumeParser";          // 将127.0.0.1替换为部署服务的ip
         $appcode = "4f30b199481849a5bcbc489bf2f6fede";
 
-        $fname = storage_path('resume/'.$filePath);       // 替换为你的本地文件名
+        $fname = storage_path('resume/append/'.$filePath);       // 替换为你的本地文件名
         // $fileData = file_get_contents($fname);
-        $fileData = Storage::disk('resume')->get($filePath);
+        $fileData = Storage::disk('resume_append')->get($filePath);
         // die(dd($fileData));
         $base_cont = base64_encode($fileData);
 

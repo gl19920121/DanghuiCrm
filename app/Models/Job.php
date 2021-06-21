@@ -8,6 +8,11 @@ class Job extends Model
 {
     protected $fillable = [];
     protected $guarded = [];
+    protected $casts = [
+        'type' => 'array',
+        'location' => 'array',
+        'channel' => 'array'
+    ];
 
     public const natureArr = [
         'full' => ['text' => '全职', 'selected' => 'selected'],
@@ -44,12 +49,6 @@ class Job extends Model
         'applets' => ['text' => '小程序'],
         'website' => ['text' => '官网'],
         'other_platform' => ['text' => '其他', 'has_remark' => true]
-    ];
-
-    protected $casts = [
-        'type' => 'array',
-        'location' => 'array',
-        'channel' => 'array'
     ];
 
 

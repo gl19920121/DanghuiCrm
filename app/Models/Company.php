@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Company extends Model
 {
     protected $fillable = [];
     protected $guarded = [];
+    protected $casts = [
+        'industry' => 'array',
+        'location' => 'array'
+    ];
 
     public const natureArr = [
         'foreign' => ['text' => '外商独资/外企办事处', 'selected' => 'selected'],
@@ -64,20 +69,33 @@ class Company extends Model
         return self::scaleArr[$this->attributes['scale']]['text'];
     }
 
+    public function getInvestmentShowAttribute()
+    {
+        return self::investmentArr[$this->attributes['investment']]['text'];
+    }
+
+    public function getLocationAttribute()
+    {
+        return json_decode($this->attributes['location'], true);
+    }
+
+    public function getIndustryAttribute()
+    {
+        return json_decode($this->attributes['industry'], true);
+    }
+
     public function getLocationShowAttribute()
     {
-        // return implode('-', json_decode($this->attributes['location'], true));
-        $location = json_decode($this->attributes['location'], true);
-        return sprintf('%s-%s-%s', $location['province'], $location['city'], $location['district']);
+        return sprintf('%s-%s-%s', $this->location['province'], $this->location['city'], $this->location['district']);
     }
 
     public function getIndustryShowAttribute()
     {
-        return json_decode($this->attributes['industry'], true)['th'];
+        return $this->industry['th'];
     }
 
-    public function getInvestmentShowAttribute()
+    public function getLogoUrlAttribute()
     {
-        return self::investmentArr[$this->attributes['investment']]['text'];
+        return asset(Storage::disk('company_logo')->url($this->attributes['logo']));
     }
 }

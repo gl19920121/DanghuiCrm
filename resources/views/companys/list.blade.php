@@ -34,10 +34,10 @@
             @foreach($companys as $company)
               <tr>
                 <td class="color-red">{{ $company->name }}</td>
-                <td>{{ $company->locationShow }}</td>
-                <td>{{ $company->industryShow }}</td>
-                <td>{{ $company->scaleShow }}</td>
-                <td>{{ $company->natureShow }}</td>
+                <td>{{ $company->location_show }}</td>
+                <td>{{ $company->industry_show }}</td>
+                <td>{{ $company->scale_show }}</td>
+                <td>{{ $company->nature_show }}</td>
                 <td class="color-red">{{ $company->jobs_count }}</td>
                 <td>{{ $company->updated_at }}</td>
                 <td>
@@ -47,8 +47,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <a class="dropdown-item" href="#">刷新</a>
-                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#companyEditModal" data-item="{{ json_encode($company) }}" onclick="{{ session(['company_id' => $company->id]) }}">修改</a>
-                      <!-- route('companys.edit', $company) -->
+                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#companyEditModal" data-item="{{ ($company) }}" onclick="@php $curCompany = $company @endphp">修改</a>
                       <form method="POST" action="{{ route('companys.destroy', $company) }}">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}

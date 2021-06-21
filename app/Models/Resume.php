@@ -601,4 +601,9 @@ class Resume extends Model
     {
         return sprintf('%sK * %d月', $this->cur_salary_show, $this->cur_salary_count_show);
     }
+
+    public function getAvatarUrlAttribute()
+    {
+        return asset(Storage::disk('resume_avatar')->url($this->attributes['avatar']));
+    }
 }

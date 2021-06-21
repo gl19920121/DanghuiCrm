@@ -43,4 +43,64 @@ $(function () {
         })
     })
 
+    function logoSelect()
+    {
+        let fileselect = $('[data-toggle="filechoose"][data-type="logo"]');
+        let inputFile = fileselect.children('input[type="file"]');
+        let inputText = fileselect.children('input[type="text"]');
+        let imgLogo = fileselect.children('img');
+
+        inputText.css('cursor', 'pointer');
+
+        inputFile.change(function () {
+            let file = $(this).get(0).files[0];
+            inputText.val(file.name);
+
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (ev) {
+                imgLogo.attr("src", ev.target.result);
+                imgLogo.removeAttr("hidden");
+          }
+        })
+
+        inputText.click(function () {
+            inputFile.click();
+        })
+    }
+
+    function avatarSelect()
+    {
+        let fileselect = $('[data-toggle="filechoose"][data-type="avatar"]');
+        let inputFile = fileselect.children('input[type="file"]');
+        let imgLogo = fileselect.children('img');
+
+        imgLogo.css('cursor', 'pointer');
+        imgLogo.css('width', '150px');
+        imgLogo.css('height', '150px');
+
+        inputFile.change(function () {
+            let file = $(this).get(0).files[0];
+
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (ev) {
+                imgLogo.attr("src", ev.target.result);
+                imgLogo.removeAttr("hidden");
+          }
+        })
+
+        imgLogo.click(function () {
+            inputFile.click();
+        })
+    }
+
+    function appInit()
+    {
+        logoSelect();
+        avatarSelect();
+    }
+
+    appInit();
+
 });
