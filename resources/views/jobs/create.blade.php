@@ -106,37 +106,29 @@
                       <input type="hidden" name="type[st]"
                       @if (isset($oldData['type']['st']))
                         value="{{ $oldData['type']['st'] }}"
-                      @else
-                        @if (isset(old('type')['st']))
-                          value="{{ old('type')['st'] }}"
-                        @endif
+                      @elseif (isset(old('type')['st']))
+                        value="{{ old('type')['st'] }}"
                       @endif
                       >
                       <input type="hidden" name="type[nd]"
                       @if (isset($oldData['type']['nd']))
                         value="{{ $oldData['type']['nd'] }}"
-                      @else
-                        @if (isset(old('type')['nd']))
-                          value="{{ old('type')['nd'] }}"
-                        @endif
+                      @elseif (isset(old('type')['nd']))
+                        value="{{ old('type')['nd'] }}"
                       @endif
                       >
                       <input type="hidden" name="type[rd]"
                       @if (isset($oldData['type']['rd']))
                         value="{{ $oldData['type']['rd'] }}"
-                      @else
-                        @if (isset(old('type')['rd']))
-                          value="{{ old('type')['rd'] }}"
-                        @endif
+                      @elseif (isset(old('type')['rd']))
+                        value="{{ old('type')['rd'] }}"
                       @endif
                       >
                       <input type="text" class="form-control normal append" id="jobType" placeholder="请选择" autocomplete="off"
                       @if (isset($oldData['type']['rd']))
                         value="{{ $oldData['type']['rd'] }}"
-                      @else
-                        @if (isset(old('type')['rd']))
-                          value="{{ old('type')['rd'] }}"
-                        @endif
+                      @elseif (isset(old('type')['rd']))
+                        value="{{ old('type')['rd'] }}"
                       @endif
                       >
                       <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
@@ -162,8 +154,7 @@
                             <option value="{{ $key }}"
                             @if ((isset($oldData['nature']) && $key === $oldData['nature']) || old('nature') == $key)
                               selected
-                            @endif
-                            >
+                            @endif>
                               {{ $nature['text'] }}
                             </option>
                         @endforeach
@@ -172,9 +163,33 @@
                 <div class="form-group form-inline">
                     <label for="location"><span class="color-red">*</span>工作城市：</label>
                     <div data-toggle="distpicker">
-                      <select class="form-control" name="location[province]" data-province="{{ isset($oldData['location']['province']) ? $oldData['location']['province'] : '---- 选择省 ----' }}"></select>
-                      <select class="form-control" name="location[city]"  data-city="{{ isset($oldData['location']['city']) ? $oldData['location']['city'] : '---- 选择市 ----' }}"></select>
-                      <select class="form-control" name="location[district]"  data-district="{{ isset($oldData['location']['district']) ? $oldData['location']['district'] : '---- 选择区 ----' }}"></select>
+                      <select class="form-control" name="location[province]"
+                      @if (isset($oldData['location']['province']))
+                        data-province="{{ $oldData['location']['province'] }}"
+                      @elseif (isset(old('location')['province']))
+                        data-province="{{ old('location')['province'] }}"
+                      @else
+                        data-province="---- 选择省 ----"
+                      @endif
+                      ></select>
+                      <select class="form-control" name="location[city]"
+                      @if (isset($oldData['location']['city']))
+                        data-city="{{ $oldData['location']['city'] }}"
+                      @elseif (isset(old('location')['city']))
+                        data-city="{{ old('location')['city'] }}"
+                      @else
+                        data-city="---- 选择市 ----"
+                      @endif
+                      ></select>
+                      <select class="form-control" name="location[district]"
+                      @if (isset($oldData['location']['district']))
+                        data-district="{{ $oldData['location']['district'] }}"
+                      @elseif (isset(old('location')['district']))
+                        data-district="{{ old('location')['district'] }}"
+                      @else
+                        data-district="---- 选择区 ----"
+                      @endif
+                      ></select>
                     </div>
                 </div>
                 <div class="form-group form-inline">
@@ -197,7 +212,12 @@
                     <label for="welfare"><span class="color-red">*</span>福利待遇：</label>
                     <select name="welfare" class="form-control normal" value="{{ old('welfare') }}">
                         @foreach(App\Models\Job::welfareArr as $key => $welfare)
-                            <option value="{{ $key }}" @if(isset($oldData['welfare']) && $key === $oldData['welfare']) selected="selected" @endif>{{ $welfare['text'] }}</option>
+                            <option value="{{ $key }}"
+                            @if ((isset($oldData['welfare']) && $key === $oldData['welfare']) || old('welfare') == $key)
+                              selected
+                            @endif>
+                              {{ $welfare['text'] }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -228,7 +248,12 @@
                     <label for="education"><span class="color-red">*</span>学历要求：</label>
                     <select name="education" class="form-control normal" value="{{ old('education') }}">
                         @foreach(App\Models\Job::educationArr as $key => $education)
-                            <option value="{{ $key }}" @if(isset($oldData['education']) && $key === $oldData['education']) selected="selected" @endif>{{ $education['text'] }}</option>
+                            <option value="{{ $key }}"
+                            @if ((isset($oldData['education']) && $key === $oldData['education']) || old('education') == $key)
+                              selected
+                            @endif>
+                              {{ $education['text'] }}
+                            </option>
                         @endforeach
                     </select>
                     <label class="ml-2">及以上</label>
@@ -237,7 +262,12 @@
                     <label for="experience"><span class="color-red">*</span>经验要求：</label>
                     <select name="experience" class="form-control normal" value="{{ old('experience') }}">
                         @foreach(App\Models\Job::experienceArr as $key => $experience)
-                            <option value="{{ $key }}" @if(isset($oldData['experience']) && $key === $oldData['experience']) selected="selected" @endif>{{ $experience['text'] }}</option>
+                            <option value="{{ $key }}"
+                            @if ((isset($oldData['experience']) && $key === $oldData['experience']) || old('experience') == $key)
+                              selected
+                            @endif>
+                              {{ $experience['text'] }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -257,14 +287,13 @@
                     @foreach (App\Models\Job::urgencyLevelArr as $key => $urgencyLevel)
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}"
-                              @if (isset($oldData['urgency_level']))
-                                @if ($key == $oldData['urgency_level'])
-                                  checked
-                                @endif
+                              @if (isset($oldData['urgency_level']) && $key == $oldData['urgency_level'])
+                                checked
+                              @elseif (old('urgency_level') == $key)
+                                checked
                               @elseif (!empty($urgencyLevel['checked']))
                                 checked
-                              @endif
-                            >
+                              @endif>
                             <label class="custom-control-label" for="urgency_level_{{ $key }}">{{ $urgencyLevel['text'] }}</label>
                         </div>
                     @endforeach
@@ -274,21 +303,20 @@
                     @foreach (App\Models\Job::channelArr as $key => $channel)
                         <div class="custom-control custom-checkbox custom-control-inline">
                             <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]"
-                              @if (isset($oldData['channel']))
-                                @if (in_array($key, $oldData['channel']))
-                                  checked
-                                @endif
+                              @if (isset($oldData['channel']) && in_array($key, $oldData['channel']))
+                                checked
+                              @elseif (isset(old('channel')[$key]))
+                                checked
                               @elseif (!empty($channel['checked']))
                                 checked
                               @endif
                               @if (isset($channel['has_remark']) && $channel['has_remark'])
                                 onclick='setRemark()'
-                              @endif
-                            >
+                              @endif>
                             <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['text'] }}</label>
                         </div>
                     @endforeach
-                    <input style="visibility: hidden;" type="text" name="channel_remark" class="form-control" id="channelRemark" placeholder="请选择招聘平台">
+                    <input style="visibility: hidden;" type="text" name="channel_remark" class="form-control" id="channelRemark" placeholder="请选择招聘平台" value="{{ isset($oldData['channel_remark']) ? $oldData['channel_remark'] : old('channel_remark') }}">
                 </div>
                 <div class="form-group form-inline">
                   <label for="deadline"><span class="color-red">*</span>截止日期：</label>
@@ -296,7 +324,6 @@
                     <input type="text" name="deadline" class="form-control normal append" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请选择" autocomplete="off">
                     <div class="input-group-append">
                       <span class="input-group-text">
-                      <!-- <span class="glyphicon glyphicon-calendar"></span> -->
                         <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                           <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2H0z"/>
                           <path fill-rule="evenodd" d="M0 3h16v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm6.5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
