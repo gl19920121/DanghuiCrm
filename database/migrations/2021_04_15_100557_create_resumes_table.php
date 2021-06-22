@@ -16,6 +16,7 @@ class CreateResumesTable extends Migration
         if (!Schema::hasTable('resumes')) {
             Schema::create('resumes', function (Blueprint $table) {
                 $table->increments('id');
+                $table->string('avatar')->nullable()->comment('头像');
                 $table->string('name')->comment('姓名');
                 $table->enum('sex', ['男', '女', '其他'])->comment('性别');
                 $table->integer('age')->comment('年龄');

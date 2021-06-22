@@ -4,7 +4,7 @@
       <div class="resume-list-detail-item">
         <div class="row">
           <div class="col col-2 text-center">
-            <img src="{{ URL::asset('images/avatar_default.png') }}">
+            <img class="resume-avatar rounded-circle" src="{{ $resume->avatar_url }}">
           </div>
           <div class="col">
             <div class="row color-dark apart">

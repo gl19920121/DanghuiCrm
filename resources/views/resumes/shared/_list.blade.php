@@ -39,7 +39,7 @@
         </div>
         <div class="row">
           <div class="col col-auto">
-            <img src="{{ URL::asset('images/avatar_default.png') }}">
+            <img class="resume-avatar rounded-circle" src="{{ $resume->avatar_url }}">
           </div>
           <div class="col">
             <div class="row apart">

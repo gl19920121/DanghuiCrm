@@ -1487,6 +1487,11 @@ ul.nav-sec-left > li ul.sub > li.active a {
   border-color: #C9CACA;
 }
 
+.resume-avatar {
+  width: 150px;
+  height: 150px;
+}
+
 .resume-create {
   margin-top: 25px;
   padding-left: 39px;

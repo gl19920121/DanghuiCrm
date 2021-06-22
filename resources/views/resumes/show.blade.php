@@ -25,7 +25,7 @@
             <div class="col col-2">
               <div class="row row-cols-1 text-center">
                 <div class="col align-self-start">
-                  <img src="{{ URL::asset('images/resume_default_avatar.png') }}">
+                  <img class="resume-avatar rounded-circle" src="{{ $resume->avatar_url }}">
                 </div>
                 <div class="col align-self-end">
                   <button class="btn btn-danger">推荐职位</button>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 
 class Resume extends Model
@@ -604,6 +605,14 @@ class Resume extends Model
 
     public function getAvatarUrlAttribute()
     {
-        return asset(Storage::disk('resume_avatar')->url($this->attributes['avatar']));
+        $url = 'images/resume_avatar_default_man.png';
+
+        if (!empty($this->avatar)) {
+            $url = Storage::disk('resume_avatar')->url($this->attributes['avatar']);
+        } elseif ($this->sex === '女') {
+            $url = 'images/resume_avatar_default_female.png';
+        }
+
+        return asset($url);
     }
 }

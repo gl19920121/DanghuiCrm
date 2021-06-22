@@ -305,6 +305,7 @@ class ResumesController extends Controller
         $api = new APIHelper();
         // $res = $api->resumesdk($filePath);
         $res = $api->resumesdkTest($filePath);
+        // return dd($res);
 
         if ($res['status']['code'] !== 200) {
             session()->flash('danger', '简历解析失败');
@@ -557,6 +558,7 @@ class ResumesController extends Controller
             'education_experience.*.end_at.required_without' => '请填写 毕业时间',
         ];
         $this->validate($request, [
+            'avatar' => 'nullable|mimes:jpeg,jpg,png',
             'name' => 'required',
             'sex' => 'required',
             'age' => 'required|numeric',
@@ -639,6 +641,17 @@ class ResumesController extends Controller
             'source_remarks' => 'nullable|string|max:255'
         ], $mssages);
 
+        $avatarPath = NULL;
+        $avatar = $request->file('avatar');
+        if($request->hasFile('avatar')) {
+            if (!$avatar->isValid()) {
+                session()->flash('danger', '头像上传失败');
+                return redirect()->back()->withInput();
+            }
+            $avatarPath = Storage::disk('resume_avatar')->putFile(date('Y-m-d').'/'.$request->user()->id, $avatar);
+        }
+        unset($avatar);
+
         // 简历文件存储
         $filePath = NULL;
         $file = $request->file('attachment');
@@ -652,11 +665,10 @@ class ResumesController extends Controller
         unset($file);
 
         // 格式化db字段
-        $data = $request->toArray();
-        // return dd($data);
-        unset($data['attachment']);
+        $data = $request->except(['attachment', 'work_experience', 'project_experience', 'education_experience']);
         $data['upload_uid'] = Auth::user()->id;
         $data['attachment_path'] = $filePath;
+        $data['avatar'] = $avatarPath;
         $data['source'] = array_keys($data['source']);
         if ((int)$data['exp_salary_flag'] === 1) {
             $data['exp_salary_min'] = NULL;
@@ -664,13 +676,9 @@ class ResumesController extends Controller
             $data['exp_salary_count'] = NULL;
         }
 
-        $work = $data['work_experience'];
-        $project = $data['project_experience'];
-        $education = $data['education_experience'];
-
-        unset($data['work_experience']);
-        unset($data['project_experience']);
-        unset($data['education_experience']);
+        $work = $request->input('work_experience');
+        $project = $request->input('project_experience');
+        $education = $request->input('education_experience');
 
         DB::beginTransaction();
         try {
