@@ -1,9 +1,8 @@
 <div class="job-list-body">
 
-  @if (count($jobs) > 0)
-    <div class="default-list">
-      <label class="color-gray">共有<span class="color-red">{{ $jobs->total() }}</span>个待审核职位</label>
-
+  <div class="default-list">
+    <label class="color-gray">共有<span class="color-red">{{ $jobs->total() }}</span>个待审核职位</label>
+    @if (count($jobs) > 0)
       <table class="table default-table">
         <thead>
           <tr>
@@ -51,16 +50,16 @@
           {{ $jobs->appends($appends)->links('vendor.pagination.bootstrap-4') }}
         </div>
       </div>
-    </div>
 
-  @else
-    <div class="empty row">
-      <div class="col text-center m-auto">
-        <img src="{{ URL::asset('images/empty.png') }}">
-        <p>您还没有运作的职位</p>
+    @else
+      <div class="empty row">
+        <div class="col text-center m-auto">
+          <img src="{{ URL::asset('images/empty.png') }}">
+          <p>暂无</p>
+        </div>
       </div>
-    </div>
-  @endif
+    @endif
+  </div>
 
 </div>
 

@@ -16,6 +16,8 @@ Route::get('/word/export/job/{job}','WordController@exportJob')->name('word.expo
 Route::get('/pdf/export/job/{job}','PdfController@exportJob')->name('pdf.export.job');
 Route::get('/word/export/resume/{resume}','WordController@exportResume')->name('word.export.resume');
 Route::get('/pdf/export/resume/{resume}','PdfController@exportResume')->name('pdf.export.resume');
+Route::get('/excel/export/user/job/{user}','ExcelController@exportUserJob')->name('excel.export.user.job');
+Route::get('/word/export/user/resume/{user}','WordController@exportUserResume')->name('word.export.user.resume');
 
 Route::get('/', 'SessionsController@index')->name('index');
 Route::get('login', 'SessionsController@create')->name('login'); //登录页面
@@ -38,7 +40,6 @@ Route::get('/resumes/current', 'ResumesController@current')->name('resumes.curre
 Route::resource('resumes', 'ResumesController'); //简历相关
 
 Route::get('/jobs/list', 'JobsController@list')->name('jobs.list'); //职位列表
-Route::post('/jobs/exported', 'JobsController@exportedResume')->name('jobs.exported');
 Route::post('/jobs/{job}/status', 'JobsController@status')->name('jobs.status');
 Route::resource('jobs', 'JobsController'); //职位相关
 

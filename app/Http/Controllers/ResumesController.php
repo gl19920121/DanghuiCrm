@@ -734,6 +734,19 @@ class ResumesController extends Controller
     {
         $data = $request->toArray();
 
+        if ($request->has('avatar')) {
+            $avatarPath = NULL;
+            $avatar = $request->file('avatar');
+            if($request->hasFile('avatar')) {
+                if (!$avatar->isValid()) {
+                    session()->flash('danger', '头像上传失败');
+                    return redirect()->back()->withInput();
+                }
+                $avatarPath = Storage::disk('resume_avatar')->putFile(date('Y-m-d').'/'.$request->user()->id, $avatar);
+            }
+            unset($avatar);
+            $data['avatar'] = $avatarPath;
+        }
         if ($request->has('attachment')) {
             // 简历文件存储
             $filePath = NULL;

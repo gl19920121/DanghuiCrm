@@ -62,7 +62,7 @@
       <div class="empty row">
         <div class="col text-center m-auto">
           <img src="{{ URL::asset('images/empty.png') }}">
-          <p>您还没有草稿</p>
+          <p>暂无</p>
         </div>
       </div>
     @endif

@@ -1,34 +1,35 @@
 <div class="job-list-body">
 
-  @if (count($jobs) > 0)
-    <div class="default-list">
-      <form name="search" class="text-center" method="GET" action="{{ route('management.job.list') }}">
-        {{ csrf_field() }}
-        <input type="hidden" name="tab" value="{{ $appends['tab'] }}">
-        <div class="row align-items-center mb-4">
-          <div class="col-auto">
-            <div class="form-inline">
-                <label for="job_name">职位名称：</label>
-                <input type="text" name="job_name" class="form-control normal" value="{{ $appends['job_name'] }}" placeholder="请填写职位名称" />
-            </div>
-          </div>
-          <div class="col-auto">
-            <div class="form-inline">
-                <select name="job_channel" class="form-control normal">
-                    <option value="">发布渠道</option>
-                    @foreach(App\Models\Job::channelArr as $key => $channel)
-                        <option value="{{ $key }}" @if($appends['job_channel'] === $key) selected @endif>{{ $channel['text'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-danger">搜索</button>
-          @if ($appends['tab'] === 'job_doing')
-            <label class="color-gray ml-3 mt-auto">共有<span class="color-red">{{ $jobs->total() }}</span>个发布中的职位</label>
-          @endif
-        </div>
-      </form>
 
+  <div class="default-list">
+    <form name="search" class="text-center" method="GET" action="{{ route('management.job.list') }}">
+      {{ csrf_field() }}
+      <input type="hidden" name="tab" value="{{ $appends['tab'] }}">
+      <div class="row align-items-center mb-4">
+        <div class="col-auto">
+          <div class="form-inline">
+              <label for="job_name">职位名称：</label>
+              <input type="text" name="job_name" class="form-control normal" value="{{ $appends['job_name'] }}" placeholder="请填写职位名称" />
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="form-inline">
+              <select name="job_channel" class="form-control normal">
+                  <option value="">发布渠道</option>
+                  @foreach(App\Models\Job::channelArr as $key => $channel)
+                      <option value="{{ $key }}" @if($appends['job_channel'] === $key) selected @endif>{{ $channel['text'] }}</option>
+                  @endforeach
+              </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-danger">搜索</button>
+        @if ($appends['tab'] === 'job_doing')
+          <label class="color-gray ml-3 mt-auto">共有<span class="color-red">{{ $jobs->total() }}</span>个发布中的职位</label>
+        @endif
+      </div>
+    </form>
+
+    @if (count($jobs) > 0)
       <table class="table default-table">
         <thead>
           <tr>
@@ -85,17 +86,16 @@
           {{ $jobs->appends($appends)->links('vendor.pagination.bootstrap-4') }}
         </div>
       </div>
-    </div>
 
-  @else
-    <div class="empty row">
-      <div class="col text-center m-auto">
-        <img src="{{ URL::asset('images/empty.png') }}">
-        <p>您还没有运作的职位</p>
+    @else
+      <div class="empty row">
+        <div class="col text-center m-auto">
+          <img src="{{ URL::asset('images/empty.png') }}">
+          <p>暂无</p>
+        </div>
       </div>
-    </div>
-  @endif
-
+    @endif
+  </div>
 </div>
 
 @include('shared._confirm')

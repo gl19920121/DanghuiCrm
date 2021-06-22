@@ -7,7 +7,10 @@ use PhpOffice\PhpWord\PhpWord;
 use App\Models\Job;
 use App\Models\Resume;
 use App\Models\ResumeUser;
+use App\Models\User;
+// use Illuminate\Support\Facades\Storage;
 use Auth;
+use ZipArchive;
 
 class WordController extends Controller
 {
@@ -90,7 +93,7 @@ class WordController extends Controller
         $table->addCell(5000, $cellVCentered)->addText('工作性质', $styleFoun, $cellHCentered);
         $table->addCell(5000, $cellVCentered)->addText($job->natureShow, $styleFouns, $cellHCentered);
         $table->addCell(5000, $cellVCentered)->addText('工作城市', $styleFoun, $cellHCentered);
-        $table->addCell(5000, $cellVCentered)->addText($job->location->city, $styleFouns, $cellHCentered);
+        $table->addCell(5000, $cellVCentered)->addText($job->location['city'], $styleFouns, $cellHCentered);
 
         //第六行
         $table->addRow(500);
@@ -154,15 +157,63 @@ class WordController extends Controller
         $writer->save($fileName);
         $files = base_path() . "/public/$fileName";
         $name = basename($files);
-        return response()->download($files, $name, $headers = ['Content-Type'=>'application/zip;charset=utf-8']);
+        return response()->download($files, $name, $headers = ['Content-Type'=>'application/zip;charset=utf-8'])->deleteFileAfterSend(true);
     }
 
     public function exportResume(Resume $resume)
+    {
+        $fileName;
+        $phpword = $this->createResume($resume, $fileName);
+        $this->downloadResume($phpword, $fileName);
+    }
+
+    public function exportUserResume(User $user)
+    {
+        $fnameZip = "$user->name-简历统计.zip";
+        $zip = new ZipArchive();
+        if ($zip->open($fnameZip, ZIPARCHIVE::CREATE) !== TRUE) {
+            return;
+        }
+
+        $fileNames = [];
+        foreach ($user->uploadResumes as $index => $resume) {
+            $fileName; $filePath;
+            $phpword = $this->createResume($resume, $fileName);
+
+            $this->saveResume($phpword, $fileName);
+
+            if (file_exists($fileName)) {
+                $zip->addFile($fileName);
+            }
+
+            $fileNames[] = $fileName;
+        }
+
+        $zip->close();
+        if (!file_exists($fnameZip)){
+            return;
+        }
+
+        foreach ($fileNames as $fileName) {
+            if (file_exists($fileName)) {
+                unlink($fileName);
+            }
+        }
+
+        $files = base_path() . "/public/$fnameZip";
+        $name = basename($files);
+        return response()->download($files, $name, $headers = ['Content-Type'=>'application/zip;charset=utf-8'])->deleteFileAfterSend(true);
+    }
+
+    private function createResume($resume, &$fileName)
     {
         ResumeUser::store($resume->id, Auth::user()->id, 'download');
 
         $phpword = new PHPWord(); //实例化phpword类
         $section = $phpword->addSection(); //整体页面
+        $header = $section->createHeader();
+
+        // $header->addWatermark(base_path().'/public/images/bg_1.jpg');
 
         $fontStyle2 = array('align' => 'center');
         $phpword->addTitleStyle(1, ['bold' => true, 'color' => '000', 'size' => 17, 'name' => '宋体'], $fontStyle2); //title样式
@@ -205,7 +256,7 @@ class WordController extends Controller
         $table->addCell(5000, $cellVCentered)->addText("性别", $styleFoun, $cellHCentered);
         $table->addCell(5000, $cellVCentered)->addText($resume->sex, $styleFouns,$cellHCentered);
         $table->addCell(5000, $cellVCentered)->addText("所在城市", $styleFoun, $cellHCentered);
-        $table->addCell(5000, $cellVCentered)->addText($resume->location->city, $styleFouns,$cellHCentered);
+        $table->addCell(5000, $cellVCentered)->addText($resume->location['city'], $styleFouns,$cellHCentered);
 
         $table->addRow(500);
         $table->addCell(null, $cellRowContinue);
@@ -242,7 +293,7 @@ class WordController extends Controller
         $table->addCell(5000, $cellVCentered)->addText('期望职位', $styleFoun, $cellHCentered);
         $table->addCell(5000, $cellVCentered)->addText($resume->exp_position_show, $styleFouns, $cellHCentered);
         $table->addCell(5000, $cellVCentered)->addText('期望城市', $styleFoun, $cellHCentered);
-        $table->addCell(5000, $cellVCentered)->addText($resume->exp_location->city, $styleFouns, $cellHCentered);
+        $table->addCell(5000, $cellVCentered)->addText($resume->exp_location['city'], $styleFouns, $cellHCentered);
 
         $table->addRow(500);
         $table->addCell(null, $cellRowContinue);
@@ -282,14 +333,14 @@ class WordController extends Controller
             $table->addRow(500);
             $table->addCell(null, $cellRowContinue);
             $table->addCell(5000, $cellVCentered)->addText('所任职位', $styleFoun, $cellHCentered);
-            $table->addCell(5000, $cellVCentered)->addText($work->job_type->nd, $styleFouns, $cellHCentered);
+            $table->addCell(5000, $cellVCentered)->addText($work->job_type['nd'], $styleFouns, $cellHCentered);
             $table->addCell(5000, $cellVCentered)->addText('下属人数', $styleFoun, $cellHCentered);
             $table->addCell(5000, $cellVCentered)->addText($work->subordinates, $styleFouns, $cellHCentered);
 
             $table->addRow(500);
             $table->addCell(null, $cellRowContinue);
             $table->addCell(5000, $cellVCentered)->addText('职位类别', $styleFoun, $cellHCentered);
-            $table->addCell(5000, $cellVCentered)->addText($work->job_type->rd, $styleFouns, $cellHCentered);
+            $table->addCell(5000, $cellVCentered)->addText($work->job_type['rd'], $styleFouns, $cellHCentered);
             $table->addCell(5000, $cellVCentered)->addText('薪资', $styleFoun, $cellHCentered);
             $table->addCell(5000, $cellVCentered)->addText($work->salary_show, $styleFouns, $cellHCentered);
 
@@ -350,12 +401,25 @@ class WordController extends Controller
         $table->addCell(5000, $cellVCentered)->addText('个人优势', $styleFoun, $cellHCentered);
         $table->addCell(5000, $cellVCentered)->addText($resume->personal_advantage, $styleFouns, $cellHCentered);
 
-        // 保存文件
         $fileName = "$resume->name.docx";
+        return $phpword;
+    }
+
+    private function saveResume($phpword, $fileName)
+    {
         $writer = \PhpOffice\PhpWord\IOFactory::createWriter($phpword, 'Word2007');
         $writer->save($fileName);
-        $files = base_path() . "/public/$fileName";
-        $name = basename($files);
-        return response()->download($files, $name, $headers = ['Content-Type'=>'application/zip;charset=utf-8']);
+    }
+
+    private function downloadResume($phpword, $fileName)
+    {
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
+        $writer = \PhpOffice\PhpWord\IOFactory::createWriter($phpword, 'Word2007');
+        $writer->save("php://output");
     }
 }

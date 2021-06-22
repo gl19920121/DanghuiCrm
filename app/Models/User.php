@@ -56,8 +56,8 @@ class User extends Authenticatable
 
     public function uploadResumes()
     {
-        // return $this->hasMany(Resume::class, 'upload_uid');
-        return $this->belongsToMany(Resume::class)->wherePivot('type', 'upload')->withTimestamps();
+        return $this->hasMany(Resume::class, 'upload_uid');
+        // return $this->belongsToMany(Resume::class)->wherePivot('type', 'upload')->withTimestamps();
     }
 
     public function seenResumes()
