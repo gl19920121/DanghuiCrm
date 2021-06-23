@@ -4,7 +4,9 @@ $(function () {
         $(this).datetimepicker({
             locale: 'zh-CN',
             debug: false,
-            format: 'L',
+            // format: 'L',
+            viewMode: 'months',
+            format: 'YYYY/MM',
             tooltips: {
                 today: 'Go to today',
                 clear: 'Clear selection',

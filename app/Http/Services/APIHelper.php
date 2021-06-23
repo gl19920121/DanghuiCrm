@@ -69,7 +69,7 @@ class APIHelper
             'file_name' => $fname,          // 文件名
             'uid' => $uid,
             'pwd' => $pwd,
-            // 'need_avatar' => 1,
+            'need_avatar' => 1,
         );
 
         $data = json_encode($data, JSON_UNESCAPED_UNICODE);     // 需php5.4及以上才支持JSON_UNESCAPED_UNICODE

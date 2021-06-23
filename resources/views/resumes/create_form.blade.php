@@ -14,7 +14,15 @@
         <div class="form-group form-inline">
           <label for="avatar">头像：</label>
           <div data-toggle="filechoose" data-type="avatar">
-            <img src="{{ URL::asset('images/resume_avatar_default_man.png') }}" class="rounded-circle">
+            @if (!empty($resume['avatar']))
+              <img src="{{ $resume['avatar'] }}" class="rounded-circle">
+            @else
+              @if ($resume['sex'] === '女')
+                <img src="{{ URL::asset('images/resume_avatar_default_female.png') }}" class="rounded-circle">
+              @else
+                <img src="{{ URL::asset('images/resume_avatar_default_man.png') }}" class="rounded-circle">
+              @endif
+            @endif
             <input hidden type="file" multiple="true" accept="image/png, image/jpeg" name="avatar" class="form-control middle">
           </div>
         </div>
@@ -355,7 +363,7 @@
           </div>
           <label class="ml-1 mr-1">*</label>
           <div class="input-group">
-            <input type="text" name="exp_salary_count" class="form-control must small append @if($errors->has('exp_salary_count')) border-danger @endif" value="{{ old('exp_salary_count') }}" autocomplete="off" data-type="int"
+            <input type="text" name="exp_salary_count" class="form-control must small append @if($errors->has('exp_salary_count')) border-danger @endif" value="{{ empty(old('exp_salary_count')) ? $resume['exp_salary_count'] : old('exp_salary_count') }}" autocomplete="off" data-type="int"
             @if (old('exp_salary_flag') != 0)
               disabled
             @endif

@@ -65,7 +65,7 @@ class GeneralsController extends Controller
             'message' => 0,
             'resume_check' => Auth::user()->seenResumes()->sum('times'),
             'resume_download' => Auth::user()->downloadResumes()->sum('times'),
-            'resume_upload' => Auth::user()->uploadResumes()->sum('times'),
+            'resume_upload' => Auth::user()->uploadResumes()->count(),
             'job_doing' => $jobs->total(),
             'job_apply' => $newJobs->total(),
             'job_commission' => $newResumes->total(),
