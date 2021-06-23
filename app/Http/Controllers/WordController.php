@@ -172,7 +172,7 @@ class WordController extends Controller
         $fnameZip = "$user->name-简历统计.zip";
         $zip = new ZipArchive();
         if ($zip->open($fnameZip, ZIPARCHIVE::CREATE) !== TRUE) {
-            return;
+            return back();
         }
 
         $fileNames = [];
@@ -191,7 +191,7 @@ class WordController extends Controller
 
         $zip->close();
         if (!file_exists($fnameZip)){
-            return;
+            return back();
         }
 
         foreach ($fileNames as $fileName) {
@@ -201,8 +201,8 @@ class WordController extends Controller
         }
 
         $files = base_path() . "/public/$fnameZip";
-        $name = basename($files);
-        return response()->download($files, $name, $headers = ['Content-Type'=>'application/zip;charset=utf-8'])->deleteFileAfterSend(true);
+        // $name = basename($files);
+        return response()->download($files, $fnameZip, $headers = ['Content-Type'=>'application/zip;charset=utf-8'])->deleteFileAfterSend(true);
     }
 
     private function createResume($resume, &$fileName)
