@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Services\FormateHelper;
 
 class ResumeEdu extends Model
 {
@@ -27,6 +28,18 @@ class ResumeEdu extends Model
     public function setEndAtAttribute($value)
     {
         $this->attributes['end_at'] = FormateHelper::date($value, 'year');
+    }
+
+
+
+    public function getStartAtAttribute()
+    {
+        return isset($this->attributes['start_at']) ? FormateHelper::date($this->attributes['start_at']) : '';
+    }
+
+    public function getEndAtAttribute()
+    {
+        return isset($this->attributes['end_at']) ? FormateHelper::date($this->attributes['end_at']) : '';
     }
 
 

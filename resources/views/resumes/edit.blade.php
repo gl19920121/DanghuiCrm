@@ -304,27 +304,13 @@
         <div class="form-title text-left">
           <h5>工作经历</h5>
         </div>
-        @php ($work_experience_default = [
-          'company_name' => '',
-          'company_nature' => '',
-          'company_scale' => '',
-          'company_investment' => '',
-          'company_industry' => ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''],
-          'job_type' => ['st' => '', 'nd' => '', 'rd' => ''],
-          'salary' => '',
-          'salary_count' => '',
-          'subordinates' => '',
-          'start_at' => '',
-          'end_at' => '',
-          'is_not_end' => '',
-          'work_desc' => ''
-        ])
         @if (count($resume->resumeWorks) > 0)
           @php ($work_experiences = $resume->resumeWorks)
         @else
-          @php ($work_experiences = [$work_experience_default])
+          @php ($work_experiences = [new App\Models\ResumeWork()])
         @endif
         @foreach ($work_experiences as $index => $work_experience)
+          <input type="hidden" name="work_experience[{{ $index }}][id]" value="{{ $work_experience->id }}">
           <div class="form-group form-inline">
             <label for="work_experience[{{ $index }}][company_name]">
               <span class="color-red">*</span>
@@ -373,7 +359,7 @@
               <input type="hidden" name="work_experience[{{ $index }}][company_industry][nd]" value="{{ $work_experience->company_industry['nd'] }}">
               <input type="hidden" name="work_experience[{{ $index }}][company_industry][rd]" value="{{ $work_experience->company_industry['rd'] }}">
               <input type="hidden" name="work_experience[{{ $index }}][company_industry][th]" value="{{ $work_experience->company_industry['th'] }}">
-              <input type="text" class="form-control normal append" value="{{ $work_experience->company_industry_show }}" placeholder="请选择" autocomplete="off">
+              <input type="text" class="form-control normal append" value="{{ $work_experience->company_industry['th'] }}" placeholder="请选择" autocomplete="off">
               <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
                 <span class="input-group-text" id="basic-addon2">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -393,7 +379,7 @@
               <input type="hidden" name="work_experience[{{ $index }}][job_type][st]" value="{{ $work_experience->job_type['st'] }}">
               <input type="hidden" name="work_experience[{{ $index }}][job_type][nd]" value="{{ $work_experience->job_type['nd'] }}">
               <input type="hidden" name="work_experience[{{ $index }}][job_type][rd]" value="{{ $work_experience->job_type['rd'] }}">
-              <input type="text" class="form-control normal append" value="{{ $work_experience->job_type_show }}" placeholder="请选择" autocomplete="off">
+              <input type="text" class="form-control normal append" value="{{ $work_experience->job_type['rd'] }}" placeholder="请选择" autocomplete="off">
               <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
                 <span class="input-group-text" id="basic-addon2">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -404,6 +390,22 @@
               </div>
             </div>
           </div>
+          <div class="form-group form-inline">
+                <label for="work_experience[{{ $index }}][salary]"><span class="color-red">*</span>月薪：</label>
+                <div class="input-group">
+                  <input type="text" name="work_experience[{{ $index }}][salary]" value="{{ $work_experience->salary }}" class="form-control must small append" autocomplete="off" data-type="int">
+                  <div class="input-group-append">
+                    <div class="input-group-text">K</div>
+                  </div>
+                </div>
+                <label class="ml-1 mr-1">*</label>
+                <div class="input-group">
+                  <input type="text" name="work_experience[{{ $index }}][salary_count]" value="{{ $work_experience->salary_count }}" class="form-control must small append" autocomplete="off" data-type="int">
+                  <div class="input-group-append">
+                    <div class="input-group-text">月</div>
+                  </div>
+                  </div>
+              </div>
           <div class="form-group form-inline">
             <label for="work_experience[{{ $index }}][subordinates]">下属人数：</label>
             <input type="text" name="work_experience[{{ $index }}][subordinates]" class="form-control normal" value="{{ $work_experience->subordinates }}" placeholder="请填写" autocomplete="off" data-type="int">
@@ -458,20 +460,13 @@
         <div class="form-title text-left">
           <h5>项目经历</h5>
         </div>
-        @php ($project_experience_default = [
-          'name' => '',
-          'role' => '',
-          'start_at' => '',
-          'end_at' => '',
-          'is_not_end' => '',
-          'body' => ''
-        ])
         @if (count($resume->resumePrjs) > 0)
           @php ($project_experiences = $resume->resumePrjs)
         @else
-          @php ($project_experiences = [$project_experience_default])
+          @php ($project_experiences = [new App\Models\ResumePrj()])
         @endif
         @foreach ($project_experiences as $index => $project_experience)
+          <input type="hidden" name="project_experience[{{ $index }}][id]" value="{{ $project_experience->id }}">
           <div class="form-group form-inline">
             <label for="project_experience[{{ $index }}][name]">
               项目名称：
@@ -535,20 +530,13 @@
         <div class="form-title text-left">
           <h5>教育经历</h5>
         </div>
-        @php ($education_experience_default = [
-          'school_name' => '',
-          'school_level' => '',
-          'major' => '',
-          'start_at' => '',
-          'end_at' => '',
-          'is_not_end' => ''
-        ])
         @if (count($resume->resumeEdus) > 0)
           @php ($education_experiences = $resume->resumeEdus)
         @else
-          @php ($education_experiences = [$education_experience_default])
+          @php ($education_experiences = [new App\Models\ResumeEdu()])
         @endif
         @foreach ($education_experiences as $index => $education_experience)
+          <input type="hidden" name="education_experience[{{ $index }}][id]" value="{{ $education_experience->id }}">
           <div class="form-group form-inline">
             <label for="education_experience[{{ $index }}][school_name]">
               <span class="color-red">*</span>

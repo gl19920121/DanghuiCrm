@@ -44,6 +44,16 @@ class ResumeWork extends Model
 
 
 
+    public function getStartAtAttribute()
+    {
+        return FormateHelper::date($this->attributes['start_at']);
+    }
+
+    public function getEndAtAttribute()
+    {
+        return FormateHelper::date($this->attributes['end_at']);
+    }
+
     public function getCompanyNatureDefaultAttribute()
     {
         return $this->default['company_nature'];
@@ -86,6 +96,11 @@ class ResumeWork extends Model
         return !empty($this->attributes['job_type']) ? json_decode($this->attributes['job_type'], true) : $this->arrFormat['job_type'];
     }
 
+    public function getSubordinatesAttribute()
+    {
+        return !empty($this->attributes['subordinates']) ? $this->attributes['subordinates'] : $this->subordinates_default;
+    }
+
 
 
     public function getCompanyNatureShowAttribute()
@@ -111,11 +126,6 @@ class ResumeWork extends Model
     public function getJobTypeShowAttribute()
     {
         return !empty($this->job_type['rd']) ? $this->job_type['rd'] : $this->job_type_default;
-    }
-
-    public function getSubordinatesAttribute()
-    {
-        return !empty($this->subordinates) ? $this->subordinates : $this->subordinates_default;
     }
 
 

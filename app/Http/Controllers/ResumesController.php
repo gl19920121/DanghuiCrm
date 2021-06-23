@@ -88,6 +88,61 @@ class ResumesController extends Controller
         return view('resumes.create');
     }
 
+    public function edit(Resume $resume)
+    {
+        $jobs = Job::active()->executeUser(Auth::user()->id)->get();
+        return view('resumes.edit', compact('resume', 'jobs'));
+    }
+
+    public function list(Request $request)
+    {
+        $parms = $request->all();
+        $showDetail = isset($request->show_detail) ? (int)$request->show_detail : 0;
+        $hideGet = isset($request->hide_get) ? $request->hide_get : 0;
+        $hideSeen = isset($request->hide_seen) ? $request->hide_seen : 0;
+        $isShow = empty($request->all()) ? false : true;
+        $jobId = $request->job_id;
+
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->limit(6)->get();
+
+        if (!$isShow) {
+            $resumes = [];
+            $tab = isset($request->tab) ? $request->tab : '';
+        } else {
+            $resumes = self::getBaseSearch($request, $jobId);
+            if (!empty($request->school)) {
+                $resumes = $resumes->whereHas('resumeEdus', function ($query) use($request) {
+                    $query->where('school_name', 'like', '%'.$request->school.'%');
+                });
+            }
+            if ($request->hide_get === 'on') {
+                $resumes->whereDoesntHave('users', function ($query) {
+                    $query->where('type', 'collect');
+                });
+            }
+            if ($request->hide_seen === 'on') {
+                $resumes->whereDoesntHave('users', function ($query) {
+                    $query->where('type', 'seen');
+                });
+            }
+
+            $resumes = $resumes->with(['resumeEdus' => function($query) {
+                $query->where('is_not_end', 0)->orderBy('end_at', 'desc');
+            }])->paginate($this->pageSize);
+
+            $tab = isset($request->tab) ? $request->tab : 'detail';
+        }
+
+        return view('resumes.list', compact('resumes', 'jobs', 'parms', 'tab', 'showDetail', 'hideGet', 'hideSeen'));
+    }
+
+    public function show(Resume $resume)
+    {
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+        ResumeUser::store($resume->id, Auth::user()->id, 'seen');
+        return view('resumes.show', compact('resume', 'jobs'));
+    }
+
     public function manual(Request $request)
     {
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
@@ -137,55 +192,6 @@ class ResumesController extends Controller
 
         session()->put('resume', $resume);
         return redirect()->route('resumes.create.manual', ['is_auto' => 1]);
-    }
-
-    public function edit(Resume $resume)
-    {
-        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
-        return view('resumes.edit', compact('resume', 'jobs'));
-    }
-
-    public function list(Request $request)
-    {
-        // return dd($request->job_id);
-        $parms = $request->all();
-        $showDetail = isset($request->show_detail) ? (int)$request->show_detail : 0;
-        $hideGet = isset($request->hide_get) ? $request->hide_get : 0;
-        $hideSeen = isset($request->hide_seen) ? $request->hide_seen : 0;
-        $isShow = empty($request->all()) ? false : true;
-        $jobId = $request->job_id;
-
-        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->limit(6)->get();
-
-        if (!$isShow) {
-            $resumes = [];
-            $tab = isset($request->tab) ? $request->tab : '';
-        } else {
-            $resumes = self::getBaseSearch($request, $jobId);
-            if (!empty($request->school)) {
-                $resumes = $resumes->whereHas('resumeEdus', function ($query) use($request) {
-                    $query->where('school_name', 'like', '%'.$request->school.'%');
-                });
-            }
-            if ($request->hide_get === 'on') {
-                $resumes->whereDoesntHave('users', function ($query) {
-                    $query->where('type', 'collect');
-                });
-            }
-            if ($request->hide_seen === 'on') {
-                $resumes->whereDoesntHave('users', function ($query) {
-                    $query->where('type', 'seen');
-                });
-            }
-
-            $resumes = $resumes->with(['resumeEdus' => function($query) {
-                $query->where('is_not_end', 0)->orderBy('end_at', 'desc');
-            }])->paginate($this->pageSize);
-
-            $tab = isset($request->tab) ? $request->tab : 'detail';
-        }
-
-        return view('resumes.list', compact('resumes', 'jobs', 'parms', 'tab', 'showDetail', 'hideGet', 'hideSeen'));
     }
 
     public function mine(Request $request)
@@ -295,12 +301,7 @@ class ResumesController extends Controller
         return view('resumes.current', compact('resumes', 'jobs', 'tab', 'hideGet', 'hideSeen'));
     }
 
-    public function show(Resume $resume)
-    {
-        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
-        ResumeUser::store($resume->id, Auth::user()->id, 'seen');
-        return view('resumes.show', compact('resume', 'jobs'));
-    }
+
 
     /**
      * [store 创建简历 POST]
@@ -558,7 +559,7 @@ class ResumesController extends Controller
 
     public function update(Resume $resume, Request $request)
     {
-        $data = $request->toArray();
+        $data = $request->except('_token', '_method', 'attachment', 'work_experience', 'project_experience', 'education_experience');
 
         if ($request->has('avatar')) {
             $avatarPath = NULL;
@@ -585,26 +586,146 @@ class ResumesController extends Controller
                 $filePath = Storage::disk('resume_append')->putFile(date('Y-m-d').'/'.$request->user()->id, $file);
             }
             unset($file);
-            unset($data['attachment']);
             $data['attachment_path'] = $filePath;
         }
         if ($request->has('source')) {
-            $data['source'] = array_keys($data['source']);
+            $data['source'] = array_keys($request->input('source'));
         }
+
+        // $resume->update($data);
+        $workUpdate = []; $workCreate = [];
+        $projectUpdate = []; $projectCreate = [];
+        $educationUpdate = []; $educationCreate = [];
+
         if ($request->has('work_experience')) {
-            $work_experience = $data['work_experience'];
-            unset($data['work_experience']);
+            $workExperiences = $request->input('work_experience');
+            foreach ($workExperiences as $index => $workExperience) {
+                if (isset($workExperience['id'])) {
+                    $resumeWork = ResumeWork::find($workExperience['id']);
+                    if ($resumeWork) {
+                        // $resumeWork->update($workExperience);
+                        $workUpdate[] = ['model' => $resumeWork, 'value' => $workExperience];
+                    }
+                } else {
+                    $message = [
+                        'work_experience.*.company_name.required' => '请填写 公司名称',
+                        'work_experience.*.company_nature.required' => '请选择 公司性质',
+                        'work_experience.*.company_scale.required' => '请选择 公司规模',
+                        'work_experience.*.company_investment.required' => '请选择 融资阶段',
+                        'work_experience.*.company_industry.st.required' => '请选择 所属行业',
+                        'work_experience.*.company_industry.nd.required' => '请选择 所属行业',
+                        'work_experience.*.company_industry.rd.required' => '请选择 所属行业',
+                        'work_experience.*.company_industry.th.required' => '请选择 所属行业',
+                        'work_experience.*.job_type.st.required' => '请选择 职位名称',
+                        'work_experience.*.job_type.nd.required' => '请选择 职位名称',
+                        'work_experience.*.job_type.rd.required' => '请选择 职位名称',
+                        'work_experience.*.salary.required' => '请填写 月薪',
+                        'work_experience.*.salary_count.required' => '请填写 月薪',
+                        'work_experience.*.subordinates.numeric' => '请正确填写 下属人数',
+                        'work_experience.*.start_at.required' => '请填写 入职时间',
+                        'work_experience.*.end_at.required_without' => '请填写 离职时间',
+                        'work_experience.*.work_desc.required' => '请填写 工作描述',
+                    ];
+                    $this->validate($request, [
+                        'work_experience' => 'required|array',
+                        'work_experience.*.company_name' => 'required',
+                        'work_experience.*.job_type.st' => 'required',
+                        'work_experience.*.job_type.nd' => 'required',
+                        'work_experience.*.job_type.rd' => 'required',
+                        'work_experience.*.salary' => 'required',
+                        'work_experience.*.salary_count' => 'required',
+                        'work_experience.*.subordinates' => 'nullable|numeric',
+                        'work_experience.*.start_at' => 'required|date_format:Y/m',
+                        'work_experience.*.end_at' => 'required_without:work_experience.*.is_not_end|date_format:Y/m',
+                        'work_experience.*.is_not_end' => 'filled',
+                        'work_experience.*.work_desc' => 'required',
+                    ], $message);
+
+                    $workExperience['resume_id'] = $resume->id;
+                    // ResumeWork::create($workExperience);
+                    $workCreate[] = $workExperience;
+                }
+            }
         }
         if ($request->has('project_experience')) {
-            $project_experience = $data['project_experience'];
-            unset($data['project_experience']);
+            $projectExperiences = $request->input('project_experience');
+            foreach ($projectExperiences as $index => $projectExperience) {
+                if (isset($projectExperience['id'])) {
+                    $resumePrj = ResumePrj::find($projectExperience['id']);
+                    if ($resumePrj) {
+                        // $resumePrj->update($projectExperience);
+                        $projectUpdate[] = ['model' => $resumePrj, 'value' => $projectExperience];
+                    }
+                } else {
+                    $message = [
+                        // 'project_experience.*.name.required' => '请填写 项目名称',
+                        // 'project_experience.*.role.required' => '请填写 担任角色',
+                        // 'project_experience.*.start_at.required' => '请填写 项目开始时间',
+                        // 'project_experience.*.end_at.required_without' => '请填写 项目结束时间',
+                    ];
+                    $this->validate($request, [
+                        'project_experience' => 'nullable|array',
+                        'project_experience.*.start_at' => 'nullable|date_format:Y/m',
+                        'project_experience.*.end_at' => 'nullable|date_format:Y/m',
+                        'project_experience.*.is_not_end' => 'filled',
+                    ], $message);
+
+                    $projectExperience['resume_id'] = $resume->id;
+                    // ResumePrj::create($projectExperience);
+                    $projectCreate[] = $projectExperience;
+                }
+            }
         }
         if ($request->has('education_experience')) {
-            $education_experience = $data['education_experience'];
-            unset($data['education_experience']);
+            $educationExperiences = $request->input('education_experience');
+            foreach ($educationExperiences as $index => $educationExperience) {
+                if (isset($educationExperience['id'])) {
+                    $resumeEdu = ResumeEdu::find($educationExperience['id']);
+                    if ($resumeEdu) {
+                        // $resumeEdu->update($educationExperience);
+                        $educationUpdate[] = ['model' => $resumeEdu, 'value' => $educationExperience];
+                    }
+                } else {
+                    $message = [
+                        'education_experience.*.school_name.required' => '请填写 毕业院校',
+                        'education_experience.*.school_level.required' => '请选择 最高学历',
+                        'education_experience.*.end_at.required_without' => '请填写 毕业时间',
+                    ];
+                    $this->validate($request, [
+                        'education_experience' => 'required|array',
+                        'education_experience.*.school_name' => 'required',
+                        'education_experience.*.school_level' => 'required',
+                        'education_experience.*.start_at' => 'nullable|date_format:Y/m',
+                        'education_experience.*.end_at' => 'nullable|date_format:Y/m',
+                        'education_experience.*.is_not_end' => 'filled',
+                    ], $message);
+
+                    $educationExperience['resume_id'] = $resume->id;
+                    // ResumeEdu::create($educationExperience);
+                    $educationCreate[] = $educationExperience;
+                }
+            }
         }
 
         $resume->update($data);
+        foreach ($workUpdate as $item) {
+            $item['model']->update($item['value']);
+        }
+        foreach ($projectUpdate as $item) {
+            $item['model']->update($item['value']);
+        }
+        foreach ($educationUpdate as $item) {
+            $item['model']->update($item['value']);
+        }
+        foreach ($workCreate as $value) {
+            ResumeWork::create($value);
+        }
+        foreach ($projectCreate as $value) {
+            ResumePrj::create($value);
+        }
+        foreach ($educationCreate as $value) {
+            ResumeEdu::create($value);
+        }
 
         return back();
     }

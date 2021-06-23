@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Services\FormateHelper;
 use DateTime;
 
 class ResumePrj extends Model
@@ -34,6 +35,16 @@ class ResumePrj extends Model
     }
 
 
+
+    public function getStartAtAttribute()
+    {
+        return isset($this->attributes['start_at']) ? FormateHelper::date($this->attributes['start_at']) : '';
+    }
+
+    public function getEndAtAttribute()
+    {
+        return isset($this->attributes['end_at']) ? FormateHelper::date($this->attributes['end_at']) : '';
+    }
 
     public function getNameDefaultAttribute()
     {

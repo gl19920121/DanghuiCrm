@@ -75,6 +75,10 @@ class Job extends Model
 
 
 
+    public function scopeActive($query)
+    {
+        return $query->whereIn('status', [1, 2]);
+    }
     public function scopeDoing($query)
     {
         return $query->where('status', 1);
