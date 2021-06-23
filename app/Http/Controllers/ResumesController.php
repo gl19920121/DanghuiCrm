@@ -10,6 +10,7 @@ use App\Models\ResumeEdu;
 use App\Models\Job;
 use App\Models\ResumeUser;
 use App\Http\Services\APIHelper;
+use App\Http\Services\FormateHelper;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -431,23 +432,23 @@ class ResumesController extends Controller
             'work_experience.*.salary' => 'required',
             'work_experience.*.salary_count' => 'required',
             'work_experience.*.subordinates' => 'nullable|numeric',
-            'work_experience.*.start_at' => 'required',
-            'work_experience.*.end_at' => 'required_without:work_experience.*.is_not_end',
+            'work_experience.*.start_at' => 'required|date_format:Y/m',
+            'work_experience.*.end_at' => 'required_without:work_experience.*.is_not_end|date_format:Y/m',
             'work_experience.*.is_not_end' => 'filled',
             'work_experience.*.work_desc' => 'required',
             'project_experience' => 'nullable|array',
             'project_experience.*.name' => 'nullable',
             'project_experience.*.role' => 'nullable',
-            'project_experience.*.start_at' => 'nullable|date',
-            'project_experience.*.end_at' => 'nullable|date',
+            'project_experience.*.start_at' => 'nullable|date_format:Y/m',
+            'project_experience.*.end_at' => 'nullable|date_format:Y/m',
             'project_experience.*.is_not_end' => 'filled',
             'project_experience.*.body' => 'nullable',
             'education_experience' => 'required|array',
             'education_experience.*.school_name' => 'required',
             'education_experience.*.school_level' => 'required',
             'education_experience.*.major' => 'nullable',
-            'education_experience.*.start_at' => 'nullable|date',
-            'education_experience.*.end_at' => 'nullable|date',
+            'education_experience.*.start_at' => 'nullable|date_format:Y/m',
+            'education_experience.*.end_at' => 'nullable|date_format:Y/m',
             'education_experience.*.is_not_end' => 'filled',
             'social_home' => 'nullable',
             'personal_advantage' => 'nullable',
@@ -507,29 +508,35 @@ class ResumesController extends Controller
                 $work[$key]['resume_id'] = $resume->id;
                 $work[$key]['company_industry'] = json_encode($value['company_industry']);
                 $work[$key]['job_type'] = json_encode($value['job_type']);
+                $work[$key]['start_at'] = FormateHelper::date($value['start_at'], 'year');
                 if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
                     $work[$key]['is_not_end'] = true;
-                    $work[$key]['end_at'] = $this->getDate();
+                    $work[$key]['end_at'] = FormateHelper::date(null, 'year');
                 } else {
                     $work[$key]['is_not_end'] = false;
+                    $work[$key]['end_at'] = FormateHelper::date($value['end_at'], 'year');
                 }
             }
             foreach ($project as $key => $value) {
                 $project[$key]['resume_id'] = $resume->id;
+                $project[$key]['start_at'] = FormateHelper::date($value['start_at'], 'year');
                 if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
                     $project[$key]['is_not_end'] = true;
-                    $project[$key]['end_at'] = $this->getDate();
+                    $project[$key]['end_at'] = FormateHelper::date(null, 'year');
                 } else {
                     $project[$key]['is_not_end'] = false;
+                    $project[$key]['end_at'] = FormateHelper::date($value['end_at'], 'year');
                 }
             }
             foreach ($education as $key => $value) {
                 $education[$key]['resume_id'] = $resume->id;
+                $education[$key]['start_at'] = FormateHelper::date($value['start_at'], 'year');
                 if (isset($value['is_not_end']) && $value['is_not_end'] === 'on') {
                     $education[$key]['is_not_end'] = true;
-                    $education[$key]['end_at'] = $this->getDate();
+                    $education[$key]['end_at'] = FormateHelper::date(null, 'year');
                 } else {
                     $education[$key]['is_not_end'] = false;
+                    $education[$key]['end_at'] = FormateHelper::date($value['end_at'], 'year');
                 }
             }
 
@@ -537,12 +544,13 @@ class ResumesController extends Controller
             $resumePrj = ResumePrj::insert($project);
             $resumeEdu = ResumeEdu::insert($education);
 
+            ResumeUser::store($resume->id, Auth::user()->id, 'upload');
+
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
+            // dd($exception);
         }
-
-        ResumeUser::store($resume->id, Auth::user()->id, 'upload');
 
         // 返回
         return redirect()->route('resumes.list');

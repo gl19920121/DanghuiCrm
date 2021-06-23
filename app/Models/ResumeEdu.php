@@ -17,6 +17,20 @@ class ResumeEdu extends Model
         'duration' => '其他',
     ];
 
+
+
+    public function setStartAtAttribute($value)
+    {
+        $this->attributes['start_at'] = FormateHelper::date($value, 'year');
+    }
+
+    public function setEndAtAttribute($value)
+    {
+        $this->attributes['end_at'] = FormateHelper::date($value, 'year');
+    }
+
+
+
     public function getMajorDefaultAttribute()
     {
         return $this->default['major'];

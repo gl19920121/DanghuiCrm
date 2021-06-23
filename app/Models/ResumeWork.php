@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
+use App\Http\Services\FormateHelper;
 
 class ResumeWork extends Model
 {
@@ -28,6 +29,20 @@ class ResumeWork extends Model
         'job_type' => '其他',
         'subordinates' => '无',
     ];
+
+
+
+    public function setStartAtAttribute($value)
+    {
+        $this->attributes['start_at'] = FormateHelper::date($value, 'year');
+    }
+
+    public function setEndAtAttribute($value)
+    {
+        $this->attributes['end_at'] = FormateHelper::date($value, 'year');
+    }
+
+
 
     public function getCompanyNatureDefaultAttribute()
     {
