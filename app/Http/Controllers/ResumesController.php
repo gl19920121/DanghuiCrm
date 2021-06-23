@@ -765,8 +765,10 @@ class ResumesController extends Controller
            $salary = (int)$result['work_salary_min'];
            $cur_salary_count = floor($year_salary / $salary);
         } else {
-            $cur_salary_count = 12;
+            $cur_salary_count = !empty($resume['name']) ? 12 : '';
         }
+
+        $exp_salary_count = !empty($resume['name']) ? 12 : '';
 
         $living_address_norm = explode('-', $result['living_address_norm']);
         if (count($living_address_norm) >= 3) {
