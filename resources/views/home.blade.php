@@ -6,7 +6,7 @@
 		<div class="col">
 			<div class="banner">
 				<div class="row">
-					<div class="col col-3 m-auto">
+					<div class="col col-3 mt-auto">
 						<img src="{{ URL::asset('images/nav_left.png') }}">
 					</div>
 					<div class="col m-auto">
