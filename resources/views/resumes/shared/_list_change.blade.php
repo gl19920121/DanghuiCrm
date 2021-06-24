@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="col col-auto">
-        <span class="color-silvery-gray mr-3">共<span class="color-red">{{ count($resumes) > 0 ? $resumes->total() : 0 }}</span>位人选</span>
+        <span class="color-silvery-gray mr-3">共<span class="color-red ml-1 mr-1">{{ count($resumes) > 0 ? $resumes->total() : 0 }}</span>位人选</span>
         @if ($tab === 'detail')
           <a href="#resumeList" onclick="changeTab('general')"><img class="mr-3" src="{{ URL::asset('images/icon_general.png') }}"></a>
           <a href="#resumeList" onclick="changeTab('detail')"><img src="{{ URL::asset('images/icon_detail_checked.png') }}"></a>
@@ -52,20 +52,6 @@
   {
     $('input[name="tab"]').val(tab);
     submitResumeSearchForm();
-  }
-
-  function toggleDetail(e)
-  {
-    if ($('#resumeSearchDetail').is(":hidden")) {
-      $('input[name="show_detail"]').val('1');
-      $('#resumeSearchDetail').show('fast');
-      e.text('收起');
-    } else {
-      $('input[name="show_detail"]').val('0');
-      $('#resumeSearchDetail').hide();
-      e.text('展开更多条件');
-    }
-    // $('#resumeSearchDetail').toggle();
   }
 
   function hideGet(e)

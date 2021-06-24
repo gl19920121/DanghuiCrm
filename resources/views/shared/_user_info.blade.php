@@ -17,7 +17,7 @@
                         <span class="color-gray">头像：</span>
                       </div>
                       <div class="col col-auto">
-                        <img src="{{ URL::asset('images/avatar_default.png') }}">
+                        <img class="rounded-circle avatar-user" src="{{ $user->avatar_url }}">
                       </div>
                     </div>
                     <div class="row">

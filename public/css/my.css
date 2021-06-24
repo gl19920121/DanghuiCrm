@@ -19,10 +19,18 @@ li {
 }
 
 a {
-  color: #fff;
+  color: #3E3A39;
 }
 
 a:hover {
+  color: #3E3A39;
+}
+
+a.a-white {
+  color: #fff;
+}
+
+a.a-white:hover {
   color: #fff;
 }
 
@@ -40,6 +48,16 @@ a.a-red {
 
 a.a-red:hover {
   color: #D83856;
+}
+
+img.avatar-user {
+  width: 80px;
+  height: 80px;
+}
+
+img.avatar-resume {
+  width: 150px;
+  height: 150px;
 }
 
 .cursor-pointer {
@@ -1501,10 +1519,18 @@ li {
 }
 
 a {
-  color: #fff;
+  color: #3E3A39;
 }
 
 a:hover {
+  color: #3E3A39;
+}
+
+a.a-white {
+  color: #fff;
+}
+
+a.a-white:hover {
   color: #fff;
 }
 
@@ -1522,6 +1548,16 @@ a.a-red {
 
 a.a-red:hover {
   color: #D83856;
+}
+
+img.avatar-user {
+  width: 80px;
+  height: 80px;
+}
+
+img.avatar-resume {
+  width: 150px;
+  height: 150px;
 }
 
 .cursor-pointer {
@@ -3175,8 +3211,19 @@ ul.nav-sec-left > li ul.sub > li.active a {
   padding-bottom: 113px;
 }
 
+.resume-search .resume-search-form .btn-search {
+  width: 105px;
+  height: 100%;
+  background-color: #D83856;
+  color: white;
+}
+
+.resume-search .resume-search-form .btn-secondary {
+  width: 81px;
+  height: 37px;
+}
+
 .resume-search .resume-search-form .form-control {
-  width: 380px;
   line-height: 30px;
   border-radius: 5px;
 }
@@ -3192,8 +3239,12 @@ ul.nav-sec-left > li ul.sub > li.active a {
   border-bottom-left-radius: 0;
 }
 
+.resume-search .resume-search-form .large {
+  width: 379px;
+}
+
 .resume-search .resume-search-form .normal {
-  width: 160px;
+  width: 123px;
 }
 
 .resume-search .resume-search-form .small {
@@ -3234,7 +3285,6 @@ ul.nav-sec-left > li ul.sub > li.active a {
 
 .resume-search .resume-search-form .resume-search-body {
   padding-top: 31px;
-  padding-bottom: 31px;
   padding-left: 93px;
   padding-right: 93px;
   background-color: white;
@@ -3372,10 +3422,18 @@ li {
 }
 
 a {
-  color: #fff;
+  color: #3E3A39;
 }
 
 a:hover {
+  color: #3E3A39;
+}
+
+a.a-white {
+  color: #fff;
+}
+
+a.a-white:hover {
   color: #fff;
 }
 
@@ -3393,6 +3451,16 @@ a.a-red {
 
 a.a-red:hover {
   color: #D83856;
+}
+
+img.avatar-user {
+  width: 80px;
+  height: 80px;
+}
+
+img.avatar-resume {
+  width: 150px;
+  height: 150px;
 }
 
 .cursor-pointer {

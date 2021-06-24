@@ -8,6 +8,7 @@ use App\Models\ResumeWork;
 use App\Models\ResumePrj;
 use App\Models\ResumeEdu;
 use App\Models\Job;
+use App\Models\User;
 use App\Models\ResumeUser;
 use App\Http\Services\APIHelper;
 use App\Http\Services\FormateHelper;
@@ -139,8 +140,9 @@ class ResumesController extends Controller
     public function show(Resume $resume)
     {
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
+        $users = User::active()->get();
         ResumeUser::store($resume->id, Auth::user()->id, 'seen');
-        return view('resumes.show', compact('resume', 'jobs'));
+        return view('resumes.show', compact('resume', 'jobs', 'users'));
     }
 
     public function manual(Request $request)
@@ -237,6 +239,16 @@ class ResumesController extends Controller
                         $query->whereRaw('date(updated_at) <= "' . $request->end_at . '"');
                     }
                 });
+            case 'accept':
+                $resumes->whereHas('usersAccept', function ($query) use ($request) {
+                    if (!empty($request->start_at)) {
+                        $query->whereRaw('date(resume_user.updated_at) >= "' . $request->start_at . '"');
+                    }
+                    if (!empty($request->end_at)) {
+                        $query->whereRaw('date(resume_user.updated_at) <= "' . $request->end_at . '"');
+                    }
+                });
+                break;
 
             default:
                 break;
@@ -259,7 +271,7 @@ class ResumesController extends Controller
             'commission' => Resume::where('status', '!=', 0)->has('job')->count(),
             'collect' => Resume::has('usersCollect')->count(),
             'seenmy' => Resume::has('user')->count(),
-            'relay' => Resume::has('usersRelay')->count()
+            'accept' => Resume::has('usersAccept')->count()
         ];
         $parms = $request->all();
 
@@ -733,8 +745,11 @@ class ResumesController extends Controller
     public function operation(Resume $resume, Request $request)
     {
         $resumeId = $resume->id;
-        $userId = Auth::user()->id;
         $type = $request->type;
+        if ($type === 'relay' && $request->has('uid')) {
+            ResumeUser::store($resumeId, $request->input('uid'), 'accept');
+        }
+        $userId = Auth::user()->id;
 
         ResumeUser::store($resumeId, $userId, $type);
 

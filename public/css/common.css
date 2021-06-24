@@ -19,10 +19,18 @@ li {
 }
 
 a {
-  color: #fff;
+  color: #3E3A39;
 }
 
 a:hover {
+  color: #3E3A39;
+}
+
+a.a-white {
+  color: #fff;
+}
+
+a.a-white:hover {
   color: #fff;
 }
 
@@ -40,6 +48,16 @@ a.a-red {
 
 a.a-red:hover {
   color: #D83856;
+}
+
+img.avatar-user {
+  width: 80px;
+  height: 80px;
+}
+
+img.avatar-resume {
+  width: 150px;
+  height: 150px;
 }
 
 .cursor-pointer {

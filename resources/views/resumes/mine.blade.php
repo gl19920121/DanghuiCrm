@@ -32,8 +32,8 @@
                             <li hidden @if($tab === 'seenmy') class="active" @endif>
                                 <a href="{{ route('resumes.mine', ['tab' => 'seenmy']) }}">看过我的人（{{ $countInfo['seenmy'] }}）</a>
                             </li>
-                            <li hidden @if($tab === 'relay') class="active" @endif>
-                                <a href="{{ route('resumes.mine', ['tab' => 'relay']) }}">转发的简历（{{ $countInfo['relay'] }}）</a>
+                            <li @if($tab === 'accept') class="active" @endif>
+                                <a href="{{ route('resumes.mine', ['tab' => 'accept']) }}">转发的简历（{{ $countInfo['accept'] }}）</a>
                             </li>
                         </ul>
                     </li>

@@ -76,10 +76,16 @@ $(function () {
         let fileselect = $('[data-toggle="filechoose"][data-type="avatar"]');
         let inputFile = fileselect.children('input[type="file"]');
         let imgLogo = fileselect.children('img');
+        let imgSize = fileselect.data('size');
 
         imgLogo.css('cursor', 'pointer');
-        imgLogo.css('width', '150px');
-        imgLogo.css('height', '150px');
+        if (imgSize == 'normal') {
+          imgLogo.css('width', '150px');
+          imgLogo.css('height', '150px');
+        } else if ('small') {
+          imgLogo.css('width', '80px');
+          imgLogo.css('height', '80px');
+        }
 
         inputFile.change(function () {
             let file = $(this).get(0).files[0];

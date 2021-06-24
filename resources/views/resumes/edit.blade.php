@@ -14,7 +14,7 @@
         </div>
         <div class="form-group form-inline">
           <label for="avatar">头像：</label>
-          <div data-toggle="filechoose" data-type="avatar">
+          <div data-toggle="filechoose" data-type="avatar" data-size="normal">
             <img src="{{ $resume->avatar_url }}" class="rounded-circle">
             <input hidden type="file" multiple="true" accept="image/png, image/jpeg" name="avatar" class="form-control middle">
           </div>
@@ -413,7 +413,7 @@
           <div class="form-group form-inline">
             <label for="work_experience[{{ $index }}][start_at]"><span class="color-red">*</span>在职时间：</label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="work_experience[{{ $index }}][start_at]" class="form-control mini append" value="{{ $work_experience->start_at }}" placeholder="入职时间" autocomplete="off">
+              <input type="text" name="work_experience[{{ $index }}][start_at]" class="form-control mini append" value="{{ $work_experience->start_at_month }}" placeholder="入职时间" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text">
                   <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -425,7 +425,7 @@
             </div>
             <label class="ml-1 mr-1">——</label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="work_experience[{{ $index }}][end_at]" class="form-control mini append" value="{{ $work_experience->end_at }}" placeholder="离职时间" autocomplete="off"
+              <input type="text" name="work_experience[{{ $index }}][end_at]" class="form-control mini append" value="{{ $work_experience->end_at_month }}" placeholder="离职时间" autocomplete="off"
               @if ($work_experience->is_not_end)
                 disabled
               @endif
@@ -484,7 +484,7 @@
               项目时间：
             </label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="project_experience[{{ $index }}][start_at]" class="form-control mini append" value="{{ $project_experience->start_at }}"  placeholder="开始时间" autocomplete="off">
+              <input type="text" name="project_experience[{{ $index }}][start_at]" class="form-control mini append" value="{{ $project_experience->start_at_month }}"  placeholder="开始时间" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text">
                   <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -496,7 +496,7 @@
             </div>
             <label class="ml-1 mr-1">——</label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="project_experience[{{ $index }}][end_at]" class="form-control mini append" value="{{ $project_experience->end_at }}" placeholder="结束时间" autocomplete="off"
+              <input type="text" name="project_experience[{{ $index }}][end_at]" class="form-control mini append" value="{{ $project_experience->end_at_month }}" placeholder="结束时间" autocomplete="off"
               @if ($project_experience->is_not_end)
                 disabled
               @endif
@@ -573,7 +573,7 @@
               在校时间：
             </label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="education_experience[{{ $index }}][start_at]" class="form-control mini append" value="{{ $education_experience->start_at }}" placeholder="入学时间" autocomplete="off">
+              <input type="text" name="education_experience[{{ $index }}][start_at]" class="form-control mini append" value="{{ $education_experience->start_at_month }}" placeholder="入学时间" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text">
                   <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -585,7 +585,7 @@
             </div>
             <label class="ml-1 mr-1">——</label>
             <div class="input-group date datetimepicker">
-              <input type="text" name="education_experience[{{ $index }}][end_at]" class="form-control mini append" value="{{ $education_experience->end_at }}" placeholder="毕业时间" autocomplete="off"
+              <input type="text" name="education_experience[{{ $index }}][end_at]" class="form-control mini append" value="{{ $education_experience->end_at_month }}" placeholder="毕业时间" autocomplete="off"
               @if ($education_experience->is_not_end)
                 disabled
               @endif
@@ -780,5 +780,29 @@
   $('input[name="attachment"]').change(function() {
     $('#inputAppend').val($(this).val());
   });
+
+  $.fn.extend({
+        txtaAutoHeight: function () {
+            return this.each(function () {
+                var $this = $(this);
+                if (!$this.attr('initAttrH')) {
+                    $this.attr('initAttrH', $this.outerHeight());
+                }
+                setAutoHeight(this).on('input', function () {
+                    setAutoHeight(this);
+                });
+            });
+            function setAutoHeight(elem) {
+                var $obj = $(elem);
+                var height = elem.scrollHeight;
+                if (height > 300) {
+                    height = 300;
+                }
+                return $obj.css({ height: $obj.attr('initAttrH'), 'overflow-y': 'auto' }).height(height);
+            }
+        }
+    });
+
+  $('textarea').txtaAutoHeight();
 </script>
 @stop

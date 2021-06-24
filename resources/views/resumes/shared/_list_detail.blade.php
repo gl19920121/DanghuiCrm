@@ -69,6 +69,7 @@
             <button class="btn btn-light">求职者状态：{{ $resume->jobhunter_status_show }}</button>
           </div>
           <div class="col col-auto">
+            <a class="btn btn-danger mr-2" href="{{ route('resumes.show', $resume) }}">查看简历</a>
             <div class="btn-group" role="group">
               <button id="addToMyJob" type="button" class="btn dropdown-toggle btn-dropdown btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 加入我的职位

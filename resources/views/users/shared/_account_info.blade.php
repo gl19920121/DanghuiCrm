@@ -1,8 +1,19 @@
-<form method="POST" class="text-center" action="{{ route('users.update', $user) }}">
+<form method="POST" class="text-center" action="{{ route('users.update', $user) }}" enctype="multipart/form-data">
   {{ csrf_field() }}
   {{ method_field('PATCH') }}
   <div class="form-title text-left">
       <h5>编辑个人信息</h5>
+  </div>
+  <div class="form-group form-inline">
+    <label for="avatar">头像：</label>
+    <div data-toggle="filechoose" data-type="avatar" data-size="small">
+      @if (!empty($user->avatar))
+        <img src="{{ $user->avatar_url }}" class="rounded-circle">
+      @else
+        <img src="{{ URL::asset('images/avatar_default.png') }}" class="rounded-circle">
+      @endif
+      <input hidden type="file" multiple="true" accept="image/png, image/jpeg" name="avatar" class="form-control">
+    </div>
   </div>
   <div class="form-group form-inline">
       <label for="nickname"><span class="color-red">*</span>名称：</label>

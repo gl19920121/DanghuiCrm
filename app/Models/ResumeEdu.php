@@ -32,12 +32,12 @@ class ResumeEdu extends Model
 
 
 
-    public function getStartAtAttribute()
+    public function getStartAtMonthAttribute()
     {
         return isset($this->attributes['start_at']) ? FormateHelper::date($this->attributes['start_at']) : '';
     }
 
-    public function getEndAtAttribute()
+    public function getEndAtMonthAttribute()
     {
         return isset($this->attributes['end_at']) ? FormateHelper::date($this->attributes['end_at']) : '';
     }

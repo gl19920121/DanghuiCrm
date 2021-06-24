@@ -253,12 +253,12 @@
 			<div class="general text-center">
         <div class="row avatar">
           <div class="col">
-            <img src="{{ URL::asset('images/avatar_default.png') }}"">
+            <img class="avatar-user rounded-circle" src="{{ Auth::user()->avatar_url }}">
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <h3>{{ Auth::user()->name }}</h3>
+            <h3><a href="{{ route('users.show', Auth::user()->id) }}">{{ Auth::user()->name }}</a></h3>
           </div>
         </div>
         <div class="row">

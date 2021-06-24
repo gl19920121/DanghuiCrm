@@ -135,8 +135,23 @@
                     </a>
                   </form>
                 </div>
-                <div hidden class="col col-auto">
-                  <form method="POST" action="{{ route('resumes.update', [$resume, 'status' => 2]) }}">
+                <div class="col col-auto">
+                  <form id="relayForm" method="POST" action="{{ route('resumes.operation', [$resume, 'type' => 'relay']) }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="uid">
+                    <div class="btn-group" role="group">
+                      <a id="btnGroupForward" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img style="margin-bottom: 4px;" src="{{ URL::asset('images/icon_forward.png') }}">
+                        转发
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="btnGroupForward">
+                        @foreach ($users as $user)
+                          <a href="javascript:void(0)" onclick="relay('{{ $user->id }}')" class="dropdown-item">{{ $user->name }}</a>
+                        @endforeach
+                      </div>
+                    </div>
+                  </form>
+                  <form hidden method="POST" action="{{ route('resumes.update', [$resume, 'status' => 2]) }}">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
                     <a href="#" class="color-n mr-3">
@@ -443,6 +458,12 @@
         $('body').remove('canvas');
       }, 0);
     });
+  }
+
+  function relay(uid)
+  {
+    $('input[name="uid"][type="hidden"]').val(uid);
+    $('form#relayForm').submit();
   }
 </script>
 @stop

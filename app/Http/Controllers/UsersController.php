@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -92,19 +93,23 @@ class UsersController extends Controller
     public function update(User $user, Request $request)
     {
         $this->authorize('update', $user);
-        // $this->validate($request, [
-        //     'account' => 'required|max:50',
-        //     'password' => 'required|min:10|max:16',
-        //     'name' => 'required|string|max:255'
-        // ]);
 
-        $data = $request->toArray();
-        // foreach ($data as $key => $value) {
-        //     if (isset($user->$key)) {
-        //         $user->$key = $value;
-        //     }
-        // }
-        // $user->save();
+        $data = $request->except(['account', 'password']);
+
+        if ($request->has('avatar')) {
+            $avatarPath = NULL;
+            $avatar = $request->file('avatar');
+            if($request->hasFile('avatar')) {
+                if (!$avatar->isValid()) {
+                    session()->flash('danger', '头像上传失败');
+                    return redirect()->back()->withInput();
+                }
+                $avatarPath = Storage::disk('user_avatar')->putFile(date('Y-m-d').'/'.$request->user()->id, $avatar);
+            }
+            unset($avatar);
+            $data['avatar'] = $avatarPath;
+        }
+
         $user->update($data);
 
         session()->flash('success', '修改成功');

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -70,6 +71,17 @@ class User extends Authenticatable
         return $this->belongsToMany(Resume::class)->wherePivot('type', 'download')->withTimestamps();
     }
 
+    public function getAvatarUrlAttribute()
+    {
+        $url = 'images/avatar_default.png';
+
+        if (!empty($this->avatar)) {
+            $url = Storage::disk('user_avatar')->url($this->attributes['avatar']);
+        }
+
+        return asset($url);
+    }
+
     public function getBranchAttribute()
     {
         $rids = $this->roles->pluck('id');
@@ -80,6 +92,11 @@ class User extends Authenticatable
         }
 
         return $udis;
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1)->where('is_admin', '!=', true);
     }
 
     public function scopeBranch($query, $uids)

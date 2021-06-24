@@ -36,6 +36,10 @@
   padding-right: 39px;
   padding-bottom: 113px;
 
+  textarea {
+    //height: 300px;
+  }
+
   .addItem {
     width: 710px;
     height: 45px;
@@ -243,8 +247,18 @@
   padding-bottom: 113px;
 
   .resume-search-form {
+    .btn-search {
+      width: 105px;
+      height: 100%;
+      background-color: $color-red;
+      color: white;
+    }
+    .btn-secondary {
+      width: 81px;
+      height: 37px;
+    }
     .form-control {
-      width: 380px;
+      //width: 380px;
       line-height: 30px;
       border-radius: 5px;
 
@@ -264,8 +278,12 @@
       }
     }
 
+    .large {
+      width: 379px;
+    }
+
     .normal {
-      width: 160px;
+      width: 123px;
     }
 
     .small {
@@ -306,7 +324,7 @@
 
     .resume-search-body {
       padding-top: 31px;
-      padding-bottom: 31px;
+      //padding-bottom: 31px;
       padding-left: 93px;
       padding-right: 93px;
       background-color: white;
@@ -359,7 +377,8 @@
 .resume-list-detail {
 
   .resume-list-detail-item {
-    padding: 38px 92px;;
+    padding: 38px 92px;
+    //cursor: pointer;
 
     &:nth-child(2n) {
       background-color: $color-ashy;
