@@ -78,9 +78,9 @@
               <select class="form-control must @if($errors->has('location.city')) border-danger @endif" name="location[city]" data-city="{{ old('location')['city'] }}"></select>
               <select class="form-control" name="location[district]" data-district="{{ old('location')['district'] }}"></select>
             @else
-              <select class="form-control must @if($errors->has('location.province')) border-danger @endif" name="location[province]" data-province="---- 选择省 ----"></select>
-              <select class="form-control must @if($errors->has('location.city')) border-danger @endif" name="location[city]"  data-city="---- 选择市 ----"></select>
-              <select class="form-control" name="location[district]"  data-district="---- 选择区 ----"></select>
+              <select class="form-control must @if($errors->has('location.province')) border-danger @endif" name="location[province]" data-province="{{ $resume['location']['province'] }}"></select>
+              <select class="form-control must @if($errors->has('location.city')) border-danger @endif" name="location[city]"  data-city="{{ $resume['location']['city'] }}"></select>
+              <select class="form-control" name="location[district]"  data-district="{{ $resume['location']['district'] }}"></select>
             @endif
           </div>
         </div>

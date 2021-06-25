@@ -151,9 +151,7 @@ class ResumesController extends Controller
 
         if ($request->has('is_auto') && session()->has('resume')) {
             $resume = session()->get('resume');
-            // return dd($resume);
-            //'2019.09'
-            // dd(Carbon::createFromFormat('Y-m-d', '2019-09')->toDateTimeString());
+            // dd($resume);
         } else {
             $result = [];
             $this->handleResData($result);
@@ -181,7 +179,7 @@ class ResumesController extends Controller
         $api = new APIHelper();
         // $res = $api->resumesdk($filePath);
         $res = $api->resumesdkTest($filePath);
-        // return dd($res);
+        // dd($res);
 
         if ($res['status']['code'] !== 200) {
             session()->flash('danger', '简历解析失败');
@@ -904,6 +902,7 @@ class ResumesController extends Controller
 
     private function handleResumeData($result)
     {
+        // dd($result);
         $cur_salary_count = '';
         if (!empty($result['work_salary']) && preg_match('/\d+/', $result['work_salary'], $arr)) {
            $year_salary = (int)$arr[0];
@@ -1049,7 +1048,7 @@ class ResumesController extends Controller
             $hasAll = true;
             $allLikes = $this->formatLikeKey($request->all);
         }
-        // return dd($allLikes);
+        // dd($allLikes);
 
         return Resume::
             where(function ($query) use($request) {

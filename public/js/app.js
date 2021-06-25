@@ -12120,7 +12120,10 @@ module.exports = {
 
         if ($__default['default'].isPlainObject(districts)) {
           $__default['default'].each(districts, function (i, name) {
-            var selected = name === value || i === String(value);
+            var selected = name === value || i === String(value)
+            || name.indexOf(value) != -1
+            || ( value.length >= 3 && name.indexOf(value.slice(0, value.length-1)) != -1 )
+            ;
 
             if (selected) {
               matched = true;
