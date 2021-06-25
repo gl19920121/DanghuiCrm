@@ -84,16 +84,6 @@ a.a-red {
   }
 }
 
-img.avatar-user {
-  width: 80px;
-  height: 80px;
-}
-
-img.avatar-resume {
-  width: 150px;
-  height: 150px;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -487,7 +477,8 @@ img.avatar-resume {
 
     .list {
       width: 100%;
-      min-height: 441px;
+      //min-height: 441px;
+      min-height: 758px;
       background-color: white;
       margin-top: 25px;
 
@@ -553,8 +544,6 @@ img.avatar-resume {
         }
       }
       .content {
-        margin-top: 26px;
-
         h3 {
           color: $color-blue;
         }
@@ -563,7 +552,8 @@ img.avatar-resume {
         }
         .col {
           border-left: 1px solid $color-border-gray;
-          &:first-child {
+          margin-top: 26px;
+          &:nth-child(3n+1) {
             border-left: none;
           }
         }

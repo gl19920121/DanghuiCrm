@@ -15,12 +15,12 @@
           <label for="avatar">头像：</label>
           <div data-toggle="filechoose" data-type="avatar" data-size="normal">
             @if (!empty($resume['avatar']))
-              <img src="{{ $resume['avatar'] }}" class="rounded-circle">
+              <img src="{{ $resume['avatar'] }}" class="rounded-circle resume-avatar">
             @else
               @if ($resume['sex'] === '女')
-                <img src="{{ URL::asset('images/resume_avatar_default_female.png') }}" class="rounded-circle">
+                <img src="{{ URL::asset('images/resume_avatar_default_female.png') }}" class="rounded-circle resume-avatar">
               @else
-                <img src="{{ URL::asset('images/resume_avatar_default_man.png') }}" class="rounded-circle">
+                <img src="{{ URL::asset('images/resume_avatar_default_man.png') }}" class="rounded-circle resume-avatar">
               @endif
             @endif
             <input hidden type="file" multiple="true" accept="image/png, image/jpeg" name="avatar" class="form-control middle">

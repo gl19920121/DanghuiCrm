@@ -54,7 +54,7 @@
             @foreach($jobs as $job)
               <tr>
                 <td>
-                  <a class="color-red" href="#">查看</a>
+                  <a class="color-red" href="javascript:void(0)" data-container="body" data-toggle="popover" data-placement="bottom" data-content="" title="{{ sprintf('应聘：%s    电话沟通：%s    推荐简历：%s    面试：%s    offer：%s    入职：%s    过保：%s    淘汰：%s', $job->resumes_count, $job->resumes_talking_count, $job->resumes_push_resume_count, $job->resumes_interview_count, $job->resumes_offer_count, $job->resumes_onboarding_count, $job->resumes_over_probation_count, $job->resumes_out_count) }}">查看</a>
                 </td>
                 <td>
                   <a class="color-red" href="{{ route('jobs.show', $job) }}">{{ $job->name }}</a>
@@ -63,7 +63,7 @@
                 <td>{{ $job->urgencyLevelShow }}</td>
                 <td>{{ $job->channelShow }}</td>
                 <td>{{ $job->statusShow }}</td>
-                <td class="color-red">{{ $job->resumes->count() }}</td>
+                <td class="color-red">{{ $job->resumes_count }}</td>
                 <td>{{ $job->updated_at }}</td>
                 <td>
                   <div class="btn-group" role="group">

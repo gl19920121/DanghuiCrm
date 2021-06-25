@@ -17,7 +17,7 @@
                         <span class="color-gray">头像：</span>
                       </div>
                       <div class="col col-auto">
-                        <img class="rounded-circle avatar-user" src="{{ $user->avatar_url }}">
+                        <img class="rounded-circle user-avatar" src="{{ $user->avatar_url }}">
                       </div>
                     </div>
                     <div class="row">

@@ -8,9 +8,9 @@
     <label for="avatar">头像：</label>
     <div data-toggle="filechoose" data-type="avatar" data-size="small">
       @if (!empty($user->avatar))
-        <img src="{{ $user->avatar_url }}" class="rounded-circle">
+        <img src="{{ $user->avatar_url }}" class="user-avatar rounded-circle">
       @else
-        <img src="{{ URL::asset('images/avatar_default.png') }}" class="rounded-circle">
+        <img src="{{ URL::asset('images/avatar_default.png') }}" class="user-avatar rounded-circle">
       @endif
       <input hidden type="file" multiple="true" accept="image/png, image/jpeg" name="avatar" class="form-control">
     </div>
@@ -29,7 +29,7 @@
   </div>
   <div class="form-group form-inline">
       <label for="introduce"><span class="color-red">*</span>介绍：</label>
-      <textarea name="introduce" class="form-control normal" placeholder="请输入你的专业优势">{{ $user->introduce }}</textarea>
+      <textarea name="introduce" class="form-control normal">{{ $user->introduce }}</textarea>
   </div>
   <button type="submit" class="btn btn-danger btn-form-submit">保存</button>
   <a href="{{ route('users.show', $user) }}" class="btn btn-light btn-form-submit">取消</a>

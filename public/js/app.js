@@ -74752,10 +74752,21 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/user/app.scss":
+/*!**************************************!*\
+  !*** ./resources/sass/user/app.scss ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!******************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/less/app.less ./resources/sass/app.scss ./resources/sass/common.scss ./resources/sass/resume/app.scss ./resources/sass/management/app.scss ***!
-  \******************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/less/app.less ./resources/sass/app.scss ./resources/sass/common.scss ./resources/sass/resume/app.scss ./resources/sass/user/app.scss ./resources/sass/management/app.scss ***!
+  \*************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -74764,6 +74775,7 @@ __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/less/app.less */"./re
 __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/app.scss */"./resources/sass/app.scss");
 __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/common.scss */"./resources/sass/common.scss");
 __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/resume/app.scss */"./resources/sass/resume/app.scss");
+__webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/user/app.scss */"./resources/sass/user/app.scss");
 module.exports = __webpack_require__(/*! /home/wwwroot/DanghuiCrm/resources/sass/management/app.scss */"./resources/sass/management/app.scss");
 
 

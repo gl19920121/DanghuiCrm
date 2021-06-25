@@ -55,6 +55,29 @@ class JobsController extends Controller
             ->withCount(['resumes' => function ($query) {
                 $query->active();
             }])
+            ->withCount([
+                'resumes as resumes_talking_count' => function ($query) {
+                    $query->status('talking');
+                },
+                'resumes as resumes_push_resume_count' => function ($query) {
+                    $query->status('push_resume');
+                },
+                'resumes as resumes_interview_count' => function ($query) {
+                    $query->status('interview');
+                },
+                'resumes as resumes_offer_count' => function ($query) {
+                    $query->status('offer');
+                },
+                'resumes as resumes_onboarding_count' => function ($query) {
+                    $query->status('onboarding');
+                },
+                'resumes as resumes_over_probation_count' => function ($query) {
+                    $query->status('over_probation');
+                },
+                'resumes as resumes_out_count' => function ($query) {
+                    $query->status('out');
+                },
+            ])
             ->searchByName($request->input('name', ''))
             ->searchByUrgencyLevel($request->input('urgency_level', ''))
             ->searchByChannel($request->input('channel', ''))

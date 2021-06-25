@@ -18,6 +18,7 @@ mix
   .less('resources/less/app.less', 'public/css/less.css')
   .sass('resources/sass/common.scss', 'public/css/common.css')
   .sass('resources/sass/resume/app.scss', 'public/css/resume.css')
+  .sass('resources/sass/user/app.scss', 'public/css/user.css')
   .sass('resources/sass/management/app.scss', 'public/css/management.css')
 ;
 
@@ -29,5 +30,6 @@ mix.styles([
 mix.styles([
     'public/css/common.css',
     'public/css/resume.css',
+    'public/css/user.css',
     'public/css/management.css'
 ], 'public/css/my.css');

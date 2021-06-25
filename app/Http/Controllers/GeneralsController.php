@@ -63,18 +63,21 @@ class GeneralsController extends Controller
 
         $statistics = [
             'message' => 0,
+            'mine' => Resume::active()->has('user')->count(),
             'resume_check' => Auth::user()->seenResumes()->sum('times'),
             'resume_download' => Auth::user()->downloadResumes()->sum('times'),
             'resume_upload' => Auth::user()->uploadResumes()->count(),
             'job_doing' => $jobs->total(),
             'job_apply' => $newJobs->total(),
             'job_commission' => $newResumes->total(),
+            'resume' => Auth::user()->executeJobResumes()->count(),
             'schedule_talking' => Resume::Talking()->count(),
             'schedule_push_resume' => Resume::PushResume()->count(),
             'schedule_interview' => Resume::Interview()->count(),
             'schedule_offer' => Resume::Offer()->count(),
             'schedule_onboarding' => Resume::Onboarding()->count(),
-            'schedule_over_probation' => Resume::OverProbation()->count()
+            'schedule_over_probation' => Resume::OverProbation()->count(),
+            'schedule_out' => Resume::Out()->count()
         ];
 
         return view('home')->with('statistics', $statistics)

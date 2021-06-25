@@ -57,7 +57,13 @@
   										<b>新增委托</b>
                     </div>
 									</div>
-									<div class="col-auto">
+                  <div class="col-auto">
+                    <div class="tip-item" onclick="javascript:window.location.href='{{ route('resumes.mine') }}'">
+                      <h4 class="color-red">{{ $statistics['mine'] }}</h4>
+                      <b>我的人才</b>
+                    </div>
+                  </div>
+									<div hidden class="col-auto">
                     <div class="tip-item">
   										<h4>{{ $statistics['message'] }}</h4>
   										<b>新增留言</b>
@@ -253,7 +259,9 @@
 			<div class="general text-center">
         <div class="row avatar">
           <div class="col">
-            <img class="avatar-user rounded-circle" src="{{ Auth::user()->avatar_url }}">
+            <a href="{{ route('users.show', Auth::user()->id) }}">
+              <img class="user-avatar rounded-circle" src="{{ Auth::user()->avatar_url }}">
+            </a>
           </div>
         </div>
         <div class="row">
@@ -356,7 +364,13 @@
                   </div>
                 </div>
               </div>
-              <div class="row content mt-4 justify-content-start bottom text-center">
+              <div class="row row-cols-3 content mt-4 justify-content-start bottom text-center">
+                <div class="col">
+                  <div class="item-content">
+                    <h3>{{ $statistics['resume'] }}</h3>
+                    <p>应聘</p>
+                  </div>
+                </div>
                 <div class="col">
                   <div class="item-content">
                     <h3>{{ $statistics['schedule_talking'] }}</h3>
@@ -366,33 +380,37 @@
                 <div class="col">
                   <div class="item-content">
                     <h3>{{ $statistics['schedule_push_resume'] }}</h3>
-                    <p>推荐成功</p>
+                    <p>推荐简历</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
                     <h3>{{ $statistics['schedule_interview'] }}</h3>
-                    <p>进企面试</p>
+                    <p>面试</p>
                   </div>
                 </div>
-              </div>
-              <div class="row content mt-4 justify-content-start bottom text-center">
                 <div class="col">
                   <div class="item-content">
                     <h3>{{ $statistics['schedule_offer'] }}</h3>
-                    <p>面试通过</p>
+                    <p>offer</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
                     <h3>{{ $statistics['schedule_onboarding'] }}</h3>
-                    <p>成功入职</p>
+                    <p>入职</p>
                   </div>
                 </div>
                 <div class="col">
                   <div class="item-content">
                     <h3>{{ $statistics['schedule_over_probation'] }}</h3>
-                    <p>入职过保</p>
+                    <p>过保</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item-content">
+                    <h3>{{ $statistics['schedule_out'] }}</h3>
+                    <p>淘汰</p>
                   </div>
                 </div>
               </div>

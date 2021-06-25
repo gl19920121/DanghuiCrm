@@ -239,6 +239,7 @@ class ResumesController extends Controller
                         $query->whereRaw('date(updated_at) <= "' . $request->end_at . '"');
                     }
                 });
+                break;
             case 'accept':
                 $resumes->whereHas('usersAccept', function ($query) use ($request) {
                     if (!empty($request->start_at)) {
@@ -265,7 +266,7 @@ class ResumesController extends Controller
         $resumes = $resumes->paginate($this->pageSize);
 
         $countInfo = [
-            'all' => Resume::where('status', '!=', 0)->has('user')->count(),
+            'all' => Resume::active()->has('user')->count(),
             'seen' => Resume::has('usersSeen')->count(),
             'apply' => Resume::where('status', '!=', 0)->has('job')->count(),
             'commission' => Resume::where('status', '!=', 0)->has('job')->count(),

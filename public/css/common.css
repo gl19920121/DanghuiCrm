@@ -50,16 +50,6 @@ a.a-red:hover {
   color: #D83856;
 }
 
-img.avatar-user {
-  width: 80px;
-  height: 80px;
-}
-
-img.avatar-resume {
-  width: 150px;
-  height: 150px;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -452,7 +442,7 @@ img.avatar-resume {
 
 .main-bg .home .list {
   width: 100%;
-  min-height: 441px;
+  min-height: 758px;
   background-color: white;
   margin-top: 25px;
 }
@@ -525,10 +515,6 @@ img.avatar-resume {
   margin-right: 10px;
 }
 
-.main-bg .home .general .content {
-  margin-top: 26px;
-}
-
 .main-bg .home .general .content h3 {
   color: #2EA7E0;
 }
@@ -539,9 +525,10 @@ img.avatar-resume {
 
 .main-bg .home .general .content .col {
   border-left: 1px solid #C9CACA;
+  margin-top: 26px;
 }
 
-.main-bg .home .general .content .col:first-child {
+.main-bg .home .general .content .col:nth-child(3n+1) {
   border-left: none;
 }
 
