@@ -255,7 +255,7 @@
     }
     .btn-secondary {
       width: 81px;
-      height: 37px;
+      height: 100%;
     }
     .form-control {
       //width: 380px;
@@ -295,7 +295,7 @@
     }
 
     .resume-search-header {
-      max-height: 245px;
+      min-height: 245px;
       padding-top: 55px;
       padding-bottom: 26px;
       padding-left: 93px;

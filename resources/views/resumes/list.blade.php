@@ -57,21 +57,35 @@
               </div>
               <div class="col-12">
                 <div class="form-group form-inline">
-                  <label>发布中的职位：</label>
-                  <form id="curJobs" method="GET" action="{{ route('resumes.list') }}">
-                    <input type="hidden" name="job_id">
-                    @foreach ($jobs as $job)
-                      <div class="cur-jobs font-size-m mr-4" onclick="searchByCurJob('{{ $job }}', '{{ $job->company->name }}')">
-                        <p class="text-truncate m-1" title="{{ sprintf('%s | %s | %s', $job->company->name, $job->location_show, $job->salary_show) }}">
-                          <span>{{ $job->name }}</span>
-                          <span class="color-silvery-gray text-truncate">（{{ $job->company->name }} | </span>
-                          <span class="color-silvery-gray text-truncate">{{ $job->location_show }} | </span>
-                          <span class="color-silvery-gray text-truncate">{{ $job->salary_show }}）</span>
-                        </p>
-                      </div>
-                      <input type="hidden" data-jobid="{{ $job }}">
-                    @endforeach
-                  </form>
+                  <div class="row no-gutters">
+                    <div class="col col-auto">
+                      <label>发布中的职位：</label>
+                    </div>
+                    <div class="col">
+                      @if (count($jobs) > 0)
+                        <form id="curJobs" method="GET" action="{{ route('resumes.list') }}">
+                          <input type="hidden" name="job_id">
+                          <div class="row row-cols-2">
+                            @foreach ($jobs as $job)
+                              <div class="col col-auto mb-3">
+                                <div class="cur-jobs font-size-m mr-4 p-1" onclick="searchByCurJob('{{ $job }}', '{{ $job->company->name }}')">
+                                  <p class="text-truncate m-1" title="{{ sprintf('%s | %s | %s', $job->company->name, $job->location_show, $job->salary_show) }}">
+                                    <span>{{ $job->name }}</span>
+                                    <span class="color-silvery-gray text-truncate">（{{ $job->company->name }} | </span>
+                                    <span class="color-silvery-gray text-truncate">{{ $job->location_show }} | </span>
+                                    <span class="color-silvery-gray text-truncate">{{ $job->salary_show }}）</span>
+                                  </p>
+                                </div>
+                                <input type="hidden" data-jobid="{{ $job }}">
+                              </div>
+                            @endforeach
+                          </div>
+                        </form>
+                      @else
+                        <label>暂无</label>
+                      @endif
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

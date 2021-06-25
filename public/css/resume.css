@@ -1720,7 +1720,7 @@ ul.nav-sec-left > li ul.sub > li.active a {
 
 .resume-search .resume-search-form .btn-secondary {
   width: 81px;
-  height: 37px;
+  height: 100%;
 }
 
 .resume-search .resume-search-form .form-control {
@@ -1756,7 +1756,7 @@ ul.nav-sec-left > li ul.sub > li.active a {
 }
 
 .resume-search .resume-search-form .resume-search-header {
-  max-height: 245px;
+  min-height: 245px;
   padding-top: 55px;
   padding-bottom: 26px;
   padding-left: 93px;
