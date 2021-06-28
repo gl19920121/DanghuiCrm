@@ -8,6 +8,7 @@ use App\Models\Resume;
 use App\Models\Draft;
 use App\Models\Company;
 use App\Http\Requests\StoreJobPost;
+use App\Http\Requests\UpdateJobPost;
 use Auth;
 
 class JobsController extends Controller
@@ -121,9 +122,9 @@ class JobsController extends Controller
 
     public function store(StoreJobPost $request)
     {
-        $validated = $request->validated();
-
-        $data = $validated->except('draft_id');
+        // $validated = $request->validated();
+        // $data = $validated->except('draft_id');
+        $data = $request->except('draft_id');
 
         $data['release_uid'] = Auth::user()->id;
         if (isset($request->execute_uid)) {
@@ -143,68 +144,17 @@ class JobsController extends Controller
         return redirect()->route('jobs.list');
     }
 
-    public function update(Job $job, Request $request)
+    public function update(Job $job, UpdateJobPost $request)
     {
-        $mssages = [
-            'company_id.required' => '请填写 公司名称',
-            'quota.numeric' => '请正确输入 招聘人数',
-            'name.required' => '请填写 职位名称',
-            'type.st.required' => '请选择 职位类别',
-            'type.nd.required' => '请选择 职位类别',
-            'type.rd.required' => '请选择 职位类别',
-            'nature.required' => '请选择 工作性质',
-            'location.province.required' => '请选择 工作城市',
-            'location.city.required' => '请选择 工作城市',
-            'location.district.required' => '请选择 工作城市',
-            'salary_min.required' => '请填写 税前月薪',
-            'salary_min.numeric' => '请正确填写 税前月薪',
-            'salary_max.required' => '请填写 税前月薪',
-            'salary_max.numeric' => '请正确填写 税前月薪',
-            'welfare.required' => '请选择 福利待遇',
-            'age_min.required' => '请选择 年龄范围',
-            'age_min.numeric' => '请选择 年龄范围',
-            'age_max.required' => '请选择 年龄范围',
-            'age_max.numeric' => '请选择 年龄范围',
-            'education.required' => '请填写 学历要求',
-            'experience.required' => '请填写 经验要求',
-            'duty.required' => '请填写 工作职责',
-            'requirement.required' => '请填写 任职要求',
-            'urgency_level.required' => '请选择 紧急程度',
-            'channel.required' => '请选择 渠道',
-            'deadline.required' => '请填写 截止日期',
-        ];
+        $data = $request->except('_token', '_method');
 
-        $this->validate($request, [
-            'company_id' => 'required',
-            'quota' => 'nullable|numeric',
-            'name' => 'required|string',
-            'type' => 'required',
-            'nature' => 'required|in:' . implode(",", array_keys(Job::natureArr)),
-            'location' => 'required',
-            'salary_min' => 'required|numeric',
-            'salary_max' => 'required|numeric',
-            'welfare' => 'required|in:' . implode(",", array_keys(Job::welfareArr)),
-            'sparkle' => 'nullable|string',
-            'age_min' => 'required|numeric',
-            'age_max' => 'required|numeric',
-            'education' => 'required|in:' . implode(",", array_keys(Job::educationArr)),
-            'experience' => 'required|in:' . implode(",", array_keys(Job::experienceArr)),
-            'duty' => 'required|string',
-            'requirement' => 'required|string',
-            'urgency_level' => 'required|in:' . implode(",", array_keys(Job::urgencyLevelArr)),
-            'channel' => 'required',
-            'channel_remark' => 'nullable|string',
-            'deadline' => 'required|date'
-        ], $mssages);
+        if ($request->has('channel')) {
+            $data['channel'] = array_keys($data['channel']);
+        }
 
-        $data = $request->toArray();
-        // $data['type'] = json_encode($data['type']);
-        // $data['location'] = json_encode($data['location']);
-        // $data['channel'] = json_encode(array_keys($data['channel']));
-        $data['channel'] = array_keys($data['channel']);
         $job->update($data);
 
-        return redirect()->route('jobs.list');
+        return redirect()->route('jobs.show', $job);
     }
 
     public function destroy(Job $job)

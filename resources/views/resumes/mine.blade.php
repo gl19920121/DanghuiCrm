@@ -7,7 +7,7 @@
             <div class="mine-nav bg-gray">
                 <ul class="nav-sec-left">
                     <li>
-                        <a href="#">我的人才库</a>
+                        <a href="javascript:void(0)">我的人才库</a>
                         <ul class="sub">
                             <li @if($tab === 'all' || empty($tab)) class="active" @endif>
                                 <a href="{{ route('resumes.mine', ['tab' => 'all']) }}">我的人才库（{{ $countInfo['all'] }}）</a>
@@ -15,7 +15,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">人才来源</a>
+                        <a href="javascript:void(0)">人才来源</a>
                         <ul class="sub">
                             <li @if($tab === 'seen') class="active" @endif>
                                 <a href="{{ route('resumes.mine', ['tab' => 'seen']) }}">浏览的简历（{{ $countInfo['seen'] }}）</a>

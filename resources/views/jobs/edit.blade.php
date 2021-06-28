@@ -236,13 +236,15 @@
                 <div class="form-group form-inline">
                     <label for="deadline"><span>*</span>截止日期：</label>
                     <div class="input-group date datetimepicker">
-                      <input type="text" name="deadline" class="form-control normal" value="{{  $job->deadline }}" placeholder="请选择" autocomplete="off">
-                      <span class="input-group-text">
-                        <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2H0z"/>
-                          <path fill-rule="evenodd" d="M0 3h16v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm6.5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                        </svg>
-                      </span>
+                      <input type="text" name="deadline" class="form-control normal append" value="{{  $job->deadline }}" placeholder="请选择" autocomplete="off">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2H0z"/>
+                            <path fill-rule="evenodd" d="M0 3h16v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm6.5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                          </svg>
+                        </span>
+                      </div>
                     </div>
                 </div>
 
@@ -255,7 +257,9 @@
 @include('shared._industry')
 @include('shared._job_type')
 @include('shared._errors')
+
 <script type="text/javascript">
+
   function companySelect()
   {
     var data = $('select option:selected').attr('data-item');
@@ -268,7 +272,7 @@
 
     $('#companyNickname').addClass('text-truncate').attr('title', company.nickname).text(company.nickname);
 
-    var location = JSON.parse(company.location);
+    var location = company.location;
     var locationShow = location.province + '-' + location.city + '-' + location.district;
     $('#companyLocation').addClass('text-truncate').attr('title', locationShow).text(locationShow);
 
@@ -280,7 +284,7 @@
     var scaleShow = scaleArr[company.scale].text;
     $('#companyScale').addClass('text-truncate').attr('title', scaleShow).text(scaleShow);
 
-    var industry = JSON.parse(company.industry);
+    var industry = company.industry;
     var industryShow = industry.th;
     $('#companyIndustry').addClass('text-truncate').attr('title', industryShow).text(industryShow);
 
@@ -303,5 +307,7 @@
 
   companySelect();
   setRemark();
+
 </script>
+
 @stop

@@ -113,53 +113,10 @@
         <a href="{{ route('word.export.job', $job) }}" class="dropdown-item">Word</a>
         <a href="{{ route('pdf.export.job', $job) }}" class="dropdown-item">PDF</a>
         <a href="{{ route('excel.export.job', $job) }}" class="dropdown-item">Excel</a>
-        <a href="#" class="dropdown-item" onclick="takeScreenshot()">JPG</a>
+        <a href="javascript:void(0)" class="dropdown-item" onclick="takeScreenshot('capture', 'canvasContainer', 'jpg', '{{ $job->name }}')">JPG</a>
       </div>
     </div>
   </div>
 </div>
 
 <div hidden id="canvasContainer"></div>
-
-<script type="text/javascript">
-
-  function _fixType(type)
-  {
-    type = type.toLowerCase().replace(/jpg/i, 'jpeg');
-    let r = type.match(/png|jpeg|bmp|gif/)[0];
-    return 'image/' + r;
-  }
-
-  function fileDownload(downloadUrl){
-    let aLink = document.createElement('a');
-    aLink.style.display = 'none';
-    aLink.href = downloadUrl;
-    aLink.download = "{{ $job->name }}.png";
-    // 触发点击-然后移除
-    document.body.appendChild(aLink);
-    aLink.click();
-    document.body.removeChild(aLink);
-  }
-
-  function takeScreenshot()
-  {
-    window.pageYoffset = 0;
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-
-    html2canvas(document.querySelector("#capture")).then(canvas => {
-      document.querySelector("#canvasContainer").appendChild(canvas);
-      //延迟执行确保万无一失，玄学
-      setTimeout(() => {
-        var type = 'png';
-        var oCanvas = document.querySelector("#canvasContainer").getElementsByTagName("canvas")[0];
-        var imgData = oCanvas.toDataURL(type);//canvas转换为图片
-        // 加工image data，替换mime type，方便以后唤起浏览器下载
-        imgData = imgData.replace(_fixType(type), 'image/octet-stream');
-        fileDownload(imgData);
-        $('body').remove('canvas');
-      }, 0);
-    });
-  }
-
-</script>

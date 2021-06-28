@@ -73,7 +73,7 @@
             工作年限：
           </label>
           <div class="input-group">
-            <input type="hidden" name="work_years_flag" value="0">
+            <input type="hidden" name="work_years_flag" value="{{ $resume->work_years_flag }}">
             <input type="text" name="work_years" class="form-control small append" value="{{ $resume->work_years }}" autocomplete="off" data-type="int"
               @if ($resume->work_years_flag !== 0)
                 disabled
@@ -258,7 +258,7 @@
         </div>
         <div class="form-group form-inline">
           <label for="exp_salary"><span class="color-red">*</span>期望薪资：</label>
-          <input type="hidden" name="exp_salary_flag" value="0">
+          <input type="hidden" name="exp_salary_flag" value="{{ $resume->exp_salary_flag }}">
           <div class="input-group">
             <input type="text" name="exp_salary_min" class="form-control small append" value="{{ $resume->exp_salary_min }}" autocomplete="off" data-type="int"
               @if ($resume->exp_salary_flag === 1)

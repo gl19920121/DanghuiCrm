@@ -98,9 +98,44 @@ $(function () {
     $(this).datetimepicker({
       locale: 'zh-CN',
       debug: false,
+      format: 'YYYY-MM-DD',
+      tooltips: {
+        today: 'Go to today',
+        clear: 'Clear selection',
+        close: 'Close the picker',
+        selectMonth: '选择月份',
+        prevMonth: 'Previous Month',
+        nextMonth: 'Next Month',
+        selectYear: '选择年份',
+        prevYear: 'Previous Year',
+        nextYear: 'Next Year',
+        selectDecade: '选择年代',
+        prevDecade: 'Previous Decade',
+        nextDecade: 'Next Decade',
+        prevCentury: 'Previous Century',
+        nextCentury: 'Next Century',
+        pickHour: 'Pick Hour',
+        incrementHour: 'Increment Hour',
+        decrementHour: 'Decrement Hour',
+        pickMinute: 'Pick Minute',
+        incrementMinute: 'Increment Minute',
+        decrementMinute: 'Decrement Minute',
+        pickSecond: 'Pick Second',
+        incrementSecond: 'Increment Second',
+        decrementSecond: 'Decrement Second',
+        togglePeriod: 'Toggle Period',
+        selectTime: '选择时间',
+        selectDate: '选择日期'
+      }
+    });
+  });
+  $('body').on('mouseenter', ".datemonthpicker", function () {
+    $(this).datetimepicker({
+      locale: 'zh-CN',
+      debug: false,
       // format: 'L',
       viewMode: 'months',
-      format: 'YYYY/MM',
+      format: 'YYYY-MM',
       tooltips: {
         today: 'Go to today',
         clear: 'Clear selection',
@@ -137,6 +172,43 @@ $(function () {
       this.value = this.value.replace(/\D/g, '');
     });
   });
+
+  function _fixType(type) {
+    type = type.toLowerCase().replace(/jpg/i, 'jpeg');
+    var r = type.match(/png|jpeg|bmp|gif/)[0];
+    return 'image/' + r;
+  }
+
+  function fileDownload(downloadUrl, imgType, fileName) {
+    var aLink = document.createElement('a');
+    aLink.style.display = 'none';
+    aLink.href = downloadUrl;
+    aLink.download = fileName + '.' + imgType; // 触发点击-然后移除
+
+    document.body.appendChild(aLink);
+    aLink.click();
+    document.body.removeChild(aLink);
+  }
+
+  takeScreenshot = function takeScreenshot(domId, canvasId, imgType, fileName) {
+    window.pageYoffset = 0;
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    html2canvas(document.querySelector("#" + domId)).then(function (canvas) {
+      document.querySelector("#" + canvasId).appendChild(canvas); //延迟执行确保万无一失，玄学
+
+      setTimeout(function () {
+        var type = imgType;
+        var oCanvas = document.querySelector("#" + canvasId).getElementsByTagName("canvas")[0];
+        var imgData = oCanvas.toDataURL(type); //canvas转换为图片
+        // 加工image data，替换mime type，方便以后唤起浏览器下载
+
+        imgData = imgData.replace(_fixType(type), 'image/octet-stream');
+        fileDownload(imgData, type, fileName);
+        $('body').remove('canvas');
+      }, 0);
+    });
+  };
 
   function logoSelect() {
     var fileselect = $('[data-toggle="filechoose"][data-type="logo"]');

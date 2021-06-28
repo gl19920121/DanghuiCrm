@@ -96,12 +96,12 @@ class ResumeWork extends Model
         return !empty($this->attributes['job_type']) ? json_decode($this->attributes['job_type'], true) : $this->arrFormat['job_type'];
     }
 
-    public function getSubordinatesAttribute()
+
+
+    public function getSubordinatesShowAttribute()
     {
         return !empty($this->attributes['subordinates']) ? $this->attributes['subordinates'] : $this->subordinates_default;
     }
-
-
 
     public function getCompanyNatureShowAttribute()
     {

@@ -540,7 +540,7 @@
               </div>
               <div class="form-group form-inline">
                 <label for="work_experience[{{ $index }}][start_at]"><span class="color-red">*</span>在职时间：</label>
-                <div class="input-group date datetimepicker">
+                <div class="input-group date datemonthpicker">
                   <input type="text" name="work_experience[{{ $index }}][start_at]" value="{{ $work_experience['start_at'] }}" class="form-control must mini append @if($errors->has("work_experience.$index.start_at")) border-danger @endif" placeholder="入职时间" autocomplete="off">
                   <div class="input-group-append">
                     <span class="input-group-text">
@@ -552,7 +552,7 @@
                   </div>
                 </div>
                 <label class="ml-1 mr-1">——</label>
-                <div class="input-group date datetimepicker">
+                <div class="input-group date datemonthpicker">
                   <input type="text" name="work_experience[{{ $index }}][end_at]" value="{{ $work_experience['end_at'] }}" class="form-control must mini append @if($errors->has("work_experience.$index.end_at")) border-danger @endif" placeholder="离职时间" autocomplete="off"
                   @if ($work_experience['is_not_end'] === 'on')
                     disabled
@@ -637,7 +637,7 @@
                 <label for="project_experience[{{ $index }}][start_at]">
                   项目时间：
                 </label>
-                <div class="input-group date datetimepicker">
+                <div class="input-group date datemonthpicker">
                   <input type="text" name="project_experience[{{ $index }}][start_at]" value="{{ $project_experience['start_at'] }}" class="form-control mini append" placeholder="开始时间" autocomplete="off">
                   <div class="input-group-append">
                     <span class="input-group-text">
@@ -649,7 +649,7 @@
                   </div>
                 </div>
                 <label class="ml-1 mr-1">——</label>
-                <div class="input-group date datetimepicker">
+                <div class="input-group date datemonthpicker">
                   <input type="text" name="project_experience[{{ $index }}][end_at]" value="{{ $project_experience['end_at'] }}" class="form-control mini append" placeholder="结束时间" autocomplete="off"
                   @if ($project_experience['is_not_end'] === 'on')
                     disabled
@@ -752,7 +752,7 @@
                 <label for="education_experience[{{ $index }}][start_at]">
                   在校时间：
                 </label>
-                <div class="input-group date datetimepicker">
+                <div class="input-group date datemonthpicker">
                   <input type="text" name="education_experience[{{ $index }}][start_at]" value="{{ $education_experience['start_at'] }}" class="form-control mini append" placeholder="入学时间" autocomplete="off">
                   <div class="input-group-append">
                     <span class="input-group-text">
@@ -764,7 +764,7 @@
                   </div>
                 </div>
                 <label class="ml-1 mr-1">——</label>
-                <div class="input-group date datetimepicker">
+                <div class="input-group date datemonthpicker">
                   <input type="text" name="education_experience[{{ $index }}][end_at]" value="{{ $education_experience['end_at'] }}" class="form-control mini append" placeholder="毕业时间" autocomplete="off"
                   @if ($education_experience['is_not_end'] == 'on')
                     disabled
@@ -1083,7 +1083,7 @@
         '</div>' +
         '<div class="form-group form-inline">' +
           '<label for="work_experience[' + worksCount + '][start_at]"><span class="color-red">*</span>在职时间：</label>' +
-          '<div class="input-group date datetimepicker">' +
+          '<div class="input-group date datemonthpicker">' +
             '<input type="text" name="work_experience[' + worksCount + '][start_at]" class="form-control mini append" placeholder="入职时间" autocomplete="off">' +
             '<div class="input-group-append">' +
               '<span class="input-group-text">' +
@@ -1095,7 +1095,7 @@
             '</div>' +
           '</div>' +
           '<label class="ml-1 mr-1">——</label>' +
-          '<div class="input-group date datetimepicker">' +
+          '<div class="input-group date datemonthpicker">' +
             '<input type="text" name="work_experience[' + worksCount + '][end_at]" class="form-control mini append" placeholder="离职时间" autocomplete="off">' +
             '<div class="input-group-append">' +
               '<span class="input-group-text">' +
@@ -1155,7 +1155,7 @@
         '<label for="project_experience[' + projectsCount + '][start_at]">' +
           '项目时间：' +
         '</label>' +
-        '<div class="input-group date datetimepicker">' +
+        '<div class="input-group date datemonthpicker">' +
           '<input type="text" name="project_experience[' + projectsCount + '][start_at]" class="form-control mini append" placeholder="开始时间" autocomplete="off">' +
           '<div class="input-group-append">' +
             '<span class="input-group-text">' +
@@ -1167,7 +1167,7 @@
           '</div>' +
         '</div>' +
         '<label class="ml-1 mr-1">——</label>' +
-        '<div class="input-group date datetimepicker">' +
+        '<div class="input-group date datemonthpicker">' +
           '<input type="text" name="project_experience[' + projectsCount + '][end_at]" class="form-control mini append" placeholder="结束时间" autocomplete="off">' +
           '<div class="input-group-append">' +
             '<span class="input-group-text">' +
@@ -1238,7 +1238,7 @@
         '<label for="education_experience[' + educationsCount + '][start_at]">' +
           '在校时间：' +
         '</label>' +
-        '<div class="input-group date datetimepicker">' +
+        '<div class="input-group date datemonthpicker">' +
           '<input type="text" name="education_experience[' + educationsCount + '][start_at]" class="form-control mini append" placeholder="入学时间" autocomplete="off">' +
           '<div class="input-group-append">' +
             '<span class="input-group-text">' +
@@ -1250,7 +1250,7 @@
           '</div>' +
         '</div>' +
         '<label class="ml-1 mr-1">——</label>' +
-        '<div class="input-group date datetimepicker">' +
+        '<div class="input-group date datemonthpicker">' +
           '<input type="text" name="education_experience[' + educationsCount + '][end_at]" class="form-control mini append" placeholder="毕业时间" autocomplete="off">' +
           '<div class="input-group-append">' +
             '<span class="input-group-text">' +

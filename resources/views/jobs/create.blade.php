@@ -332,8 +332,8 @@
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-danger btn-form-submit" onclick="this.form.action='{{ route('jobs.store') }}'">发布职位</button>
-                <button type="submit" class="btn btn-light btn-form-submit" onclick="this.form.action='{{ route('drafts.store') }}'">保存草稿</button>
+                <button type="submit" formaction="{{ route('jobs.store') }}" class="btn btn-danger btn-form-submit">发布职位</button>
+                <button type="submit" formaction="{{ route('drafts.store') }}" class="btn btn-light btn-form-submit">保存草稿</button>
             </form>
         </div>
     </div>
@@ -342,7 +342,9 @@
 @include('shared._industry')
 @include('shared._job_type')
 @include('shared._errors')
+
 <script type="text/javascript">
+
   function companySelect()
   {
     var data = $('select option:selected').attr('data-item');
@@ -355,7 +357,7 @@
 
     $('#companyNickname').addClass('text-truncate').attr('title', company.nickname).text(company.nickname);
 
-    var location = JSON.parse(company.location);
+    var location = company.location;
     var locationShow = location.province + '-' + location.city + '-' + location.district;
     $('#companyLocation').addClass('text-truncate').attr('title', locationShow).text(locationShow);
 
@@ -367,7 +369,7 @@
     var scaleShow = scaleArr[company.scale].text;
     $('#companyScale').addClass('text-truncate').attr('title', scaleShow).text(scaleShow);
 
-    var industry = JSON.parse(company.industry);
+    var industry = company.industry;
     var industryShow = industry.th;
     $('#companyIndustry').addClass('text-truncate').attr('title', industryShow).text(industryShow);
 
@@ -390,5 +392,7 @@
 
   companySelect();
   setRemark();
+
 </script>
+
 @stop

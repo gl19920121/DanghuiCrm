@@ -8,9 +8,9 @@ class FormateHelper
 
     public static function Date($data = null, $type = 'month')
     {
-        $formate = 'Y/m';
+        $formate = 'Y-m';
         if ($type === 'year') {
-            $formate = 'Y/m/d';
+            $formate = 'Y-m-d';
         }
 
         if (empty($data)) {
@@ -21,11 +21,11 @@ class FormateHelper
             return false;
         }
 
-        $data = str_replace('.', '/', $data);
-        $data = str_replace('-', '/', $data);
-        $dataArr = explode('/', $data);
+        $data = str_replace('.', '-', $data);
+        $data = str_replace('/', '-', $data);
+        $dataArr = explode('-', $data);
         if (count($dataArr) < 3) {
-            $data .= '/01';
+            $data .= '-01';
         }
 
         $timestamp = strtotime($data);
