@@ -64,9 +64,9 @@
             <p class="color-light-gray">{{ $resume->updated_at }}</p>
           </div>
           <div class="col">
-            <button class="btn btn-light">期望城市：{{ $resume->exp_location_show }}</button>
-            <button class="btn btn-light">期望职位：{{ $resume->exp_position_show }}</button>
-            <button class="btn btn-light">求职者状态：{{ $resume->jobhunter_status_show }}</button>
+            <a href="javasrcipt:void(0)" class="btn btn-light">期望城市：{{ $resume->exp_location_show }}</a>
+            <a href="javasrcipt:void(0)" class="btn btn-light">期望职位：{{ $resume->exp_position_show }}</a>
+            <a href="javasrcipt:void(0)" class="btn btn-light">求职者状态：{{ $resume->jobhunter_status_show }}</a>
           </div>
           <div class="col col-auto">
             <a class="btn btn-danger mr-2" href="{{ route('resumes.show', $resume) }}">查看简历</a>

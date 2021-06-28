@@ -391,7 +391,7 @@
         </div>
       </div>
 
-      <div class="nav-ap bg-white">
+      <nav id="resumeShowNavRight" class="nav-ap bg-white">
         <ul>
           <li>简历信息</a></li>
           <li>
@@ -413,7 +413,7 @@
             <a href="#resumeExport">导出简历</a>
           </li>
         </ul>
-      </div>
+      </nav>
     </div>
   </div>
 </div>
@@ -465,5 +465,39 @@
     $('input[name="uid"][type="hidden"]').val(uid);
     $('form#relayForm').submit();
   }
+
+  $(window).scroll(function (event) {
+    let winPos = $(window).scrollTop();
+    let jobExpPos = $('#jobExp').offset().top;
+    let resumeWorkPos = $('#resumeWork').offset().top;
+    let resumeProjectPos = $('#resumeProject').offset().top;
+    let resumeEductionPos = $('#resumeEduction').offset().top;
+    let appendInfoPos = $('#appendInfo').offset().top;
+    let resumeExportPos = $('#resumeExport').offset().top;
+    let navRight = $('#resumeShowNavRight').find('ul');
+    let offset = -100;
+
+    if ((winPos - jobExpPos) >= offset && (winPos - resumeWorkPos) < offset) {
+      navRight.find('li').removeClass('active');
+      navRight.find('li').eq(1).addClass('active');
+    } else if ((winPos - resumeWorkPos) >= offset && (winPos - resumeProjectPos) < offset) {
+      navRight.find('li').removeClass('active');
+      navRight.find('li').eq(2).addClass('active');
+    } else if ((winPos - resumeProjectPos) >= offset && (winPos - resumeEductionPos) < offset) {
+      navRight.find('li').removeClass('active');
+      navRight.find('li').eq(3).addClass('active');
+    } else if ((winPos - resumeEductionPos) >= offset && (winPos - appendInfoPos) < offset) {
+      navRight.find('li').removeClass('active');
+      navRight.find('li').eq(4).addClass('active');
+    } else if ((winPos - appendInfoPos) >= offset && (winPos - resumeExportPos) < offset) {
+      navRight.find('li').removeClass('active');
+      navRight.find('li').eq(5).addClass('active');
+    } else if ((winPos - resumeExportPos) >= offset) {
+      navRight.find('li').removeClass('active');
+      navRight.find('li').eq(6).addClass('active');
+    } else {
+      navRight.find('li').removeClass('active');
+    }
+  });
 </script>
 @stop
