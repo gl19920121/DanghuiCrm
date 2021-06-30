@@ -173,13 +173,13 @@ $(function () {
     });
   });
 
-  function _fixType(type) {
+  _fixType = function _fixType(type) {
     type = type.toLowerCase().replace(/jpg/i, 'jpeg');
     var r = type.match(/png|jpeg|bmp|gif/)[0];
     return 'image/' + r;
-  }
+  };
 
-  function fileDownload(downloadUrl, imgType, fileName) {
+  fileDownload = function fileDownload(downloadUrl, imgType, fileName) {
     var aLink = document.createElement('a');
     aLink.style.display = 'none';
     aLink.href = downloadUrl;
@@ -188,7 +188,7 @@ $(function () {
     document.body.appendChild(aLink);
     aLink.click();
     document.body.removeChild(aLink);
-  }
+  };
 
   takeScreenshot = function takeScreenshot(domId, canvasId, imgType, fileName) {
     window.pageYoffset = 0;

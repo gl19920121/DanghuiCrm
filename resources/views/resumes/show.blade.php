@@ -1,10 +1,10 @@
 @extends('layouts.default')
 @section('title', '简历预览')
 @section('content')
-<div id="capture" class="resume-show">
+<div class="resume-show">
   <div class="row">
     <div class="col col-10">
-      <div class="resume-show-body">
+      <div id="capture" class="resume-show-body">
 
         <div class="body-title" data-html2canvas-ignore="true">
           <div class="row justify-content-between">
@@ -373,7 +373,7 @@
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                   <a href="{{ route('word.export.resume', $resume) }}" class="dropdown-item">Word</a>
                   <!-- <a href="{{ route('pdf.export.resume', $resume) }}" class="dropdown-item">PDF</a> -->
-                  <a href="javascript:void(0)" class="dropdown-item" onclick="takeScreenshot('capture', 'canvasContainer', 'jpg', '{{ $resume->name }}')">JPG</a>
+                  <a href="javascript:void(0)" class="dropdown-item" onclick="resumeScreenshot('capture', 'canvasContainer', 'jpg', '{{ $resume->name }}')">JPG</a>
                 </div>
               </div>
             </div>
@@ -433,6 +433,46 @@
 <div hidden id="canvasContainer"></div>
 
 <script type="text/javascript">
+
+  function resumeScreenshot (domId, canvasId, imgType, fileName)
+  {
+    window.pageYoffset = 0;
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    html2canvas(document.getElementById(domId), {
+      // scale: 2,
+    }).then(canvas => {
+      document.querySelector("#" + canvasId).appendChild(canvas);
+
+      setTimeout(() => {
+        var type = imgType;
+        var oCanvas = document.querySelector("#" + canvasId).getElementsByTagName("canvas")[0];
+
+        var imgWatermark = new Image();
+        imgWatermark.src = "{{ URL::asset('images/watermark.png') }}";
+        imgWatermark.onload = function () {
+          var ctx = oCanvas.getContext('2d');
+          ctx.drawImage(imgWatermark, 0, 0, 1067, 2011);
+          // ctx.save();
+
+          var imgLogo = new Image();
+          imgLogo.src = "{{ URL::asset('images/logo-red.png') }}";
+          imgLogo.onload = function () {
+            // var ctx = oCanvas.getContext('2d');
+            ctx.drawImage(imgLogo, 886, 200, 56, 19);
+            ctx.save();
+
+            let imgData = oCanvas.toDataURL(type);//canvas转换为图片
+            // 加工image data，替换mime type，方便以后唤起浏览器下载
+            imgData = imgData.replace(_fixType(type), 'image/octet-stream');
+            fileDownload(imgData, type, fileName);
+            $('body').remove('canvas');
+          }
+        }
+      }, 0);
+    });
+  }
 
   function relay(uid)
   {

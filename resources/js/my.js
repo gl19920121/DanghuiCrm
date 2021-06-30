@@ -81,14 +81,14 @@ $(function () {
         })
     })
 
-    function _fixType(type)
+    _fixType = function (type)
     {
       type = type.toLowerCase().replace(/jpg/i, 'jpeg');
       let r = type.match(/png|jpeg|bmp|gif/)[0];
       return 'image/' + r;
     }
 
-    function fileDownload(downloadUrl, imgType, fileName)
+    fileDownload = function (downloadUrl, imgType, fileName)
     {
       let aLink = document.createElement('a');
       aLink.style.display = 'none';
@@ -111,8 +111,7 @@ $(function () {
         //延迟执行确保万无一失，玄学
         setTimeout(() => {
           let type = imgType;
-          // let oCanvas = document.querySelector("#" + canvasId).getElementsByTagName("canvas")[0];
-          let oCanvas = '<p>123123</p>';
+          let oCanvas = document.querySelector("#" + canvasId).getElementsByTagName("canvas")[0];
           let imgData = oCanvas.toDataURL(type);//canvas转换为图片
           // 加工image data，替换mime type，方便以后唤起浏览器下载
           imgData = imgData.replace(_fixType(type), 'image/octet-stream');
