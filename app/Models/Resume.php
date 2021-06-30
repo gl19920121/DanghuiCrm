@@ -257,6 +257,7 @@ class Resume extends Model
         'jobhunter_status' => '其他',
         'social_home' => '无',
         'personal_advantage' => '无',
+        'remark' => '无',
     ];
 
     public function getLocationDefaultAttribute()
@@ -342,6 +343,11 @@ class Resume extends Model
     public function getPersonalAdvantageDefaultAttribute()
     {
         return $this->default['personal_advantage'];
+    }
+
+    public function getRemarkDefaultAttribute()
+    {
+        return $this->default['remark'];
     }
 
 
@@ -456,6 +462,11 @@ class Resume extends Model
     public function getPersonalAdvantageShowAttribute()
     {
         return !empty($this->personal_advantage) ? $this->personal_advantage : $this->personal_advantage_default;
+    }
+
+    public function getRemarkShowAttribute()
+    {
+        return !empty($this->remark) ? $this->remark : $this->remark_default;
     }
 
 

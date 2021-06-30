@@ -617,6 +617,17 @@ class ResumesController extends Controller
         return back();
     }
 
+    public function addToJob(Resume $resume, Request $request)
+    {
+        if ($request->has('job_id') && $request->has('status')) {
+            $resume->job_id = $request->job_id;
+            $resume->status = $request->status;
+            $resume->save();
+        }
+
+        return back();
+    }
+
     /**
      * [destroy 删除简历 POST]
      * @author dante 2021-04-19

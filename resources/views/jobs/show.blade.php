@@ -41,13 +41,13 @@
         </div>
       </div>
       <div class="col-auto">
-        <div class="btn-group" role="group">
-          <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div hidden class="btn-group" role="group">
+          <button type="button" class="btn btn-info dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             简历导入
           </button>
-          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <div class="dropdown-menu">
             @foreach ($availableResumes as $resume)
-              <form method="POST" action="{{ route('resumes.update', [$resume, 'job_id' => $job->id]) }}">
+              <form method="POST" action="{{ route('resumes.add.job', [$resume, 'job_id' => $job->id]) }}">
                 {{ csrf_field() }}
                 {{ method_field('PATCH') }}
                 <button class="dropdown-item" type="submit" data-toggle="modal" data-target="#confirmModal">{{ $resume->name }}</button>

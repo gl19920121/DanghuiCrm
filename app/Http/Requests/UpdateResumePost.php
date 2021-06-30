@@ -24,6 +24,7 @@ class UpdateResumePost extends FormRequest
     public function messages()
     {
         return [
+            'avatar.mimes' => '请上传 JPGE/PNG格式的图片且不超过2M',
             'name.required' => '请填写 姓名',
             'sex.required' => '请选择 性别',
             'age.required' => '请填写 年龄',

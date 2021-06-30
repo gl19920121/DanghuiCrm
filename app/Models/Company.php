@@ -61,12 +61,20 @@ class Company extends Model
 
     public function getNatureShowAttribute()
     {
-        return self::natureArr[$this->attributes['nature']]['text'];
+        if (isset(self::natureArr[$this->attributes['nature']])) {
+            return self::natureArr[$this->attributes['nature']]['text'];
+        } else {
+            return '无';
+        }
     }
 
     public function getScaleShowAttribute()
     {
-        return self::scaleArr[$this->attributes['scale']]['text'];
+        if (isset(self::scaleArr[$this->attributes['scale']])) {
+            return self::scaleArr[$this->attributes['scale']]['text'];
+        } else {
+            return '无';
+        }
     }
 
     public function getInvestmentShowAttribute()
@@ -86,16 +94,28 @@ class Company extends Model
 
     public function getLocationShowAttribute()
     {
-        return sprintf('%s-%s-%s', $this->location['province'], $this->location['city'], $this->location['district']);
+        $location = $this->location['province'];
+        if (!empty($this->location['city'])) {
+            $location .= sprintf('-%s', $this->location['city']);
+        }
+        if (!empty($this->location['district'])) {
+            $location .= sprintf('-%s', $this->location['district']);
+        }
+        return $location;
+        // return sprintf('%s-%s-%s', $this->location['province'], $this->location['city'], $this->location['district']);
     }
 
     public function getIndustryShowAttribute()
     {
-        return $this->industry['th'];
+        return empty($this->industry['th']) ? '无' : $this->industry['th'];
     }
 
-    public function getLogoUrlAttribute()
+    public function getLogoAttribute()
     {
-        return asset(Storage::disk('company_logo')->url($this->attributes['logo']));
+        if (empty($this->attributes['logo'])) {
+            return null;
+        } else {
+            return asset(Storage::disk('company_logo')->url($this->attributes['logo']));
+        }
     }
 }

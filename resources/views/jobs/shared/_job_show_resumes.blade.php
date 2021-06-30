@@ -29,7 +29,7 @@
         <td>{{ $resume->education_show }}</td>
         <td>{{ $resume->cur_company }}</td>
         <td>{{ $resume->cur_position_show }}</td>
-        <td>{{ $resume->cur_salary }}K</td>
+        <td>{{ $resume->cur_salary_show }}K</td>
         <td>{{ $resume->created_at }}</td>
         <td>
           <div class="btn-group" role="group">

@@ -6,7 +6,7 @@
     <div class="col col-10">
       <div class="resume-show-body">
 
-        <div class="body-title">
+        <div class="body-title" data-html2canvas-ignore="true">
           <div class="row justify-content-between">
             <div class="col col-auto align-self-end ml-4">
               <div class="trapezoid text-center">
@@ -27,7 +27,7 @@
                 <div class="col align-self-start">
                   <img class="resume-avatar rounded-circle" src="{{ $resume->avatar_url }}">
                 </div>
-                <div class="col align-self-end">
+                <div class="col align-self-end" data-html2canvas-ignore="true">
                   <button class="btn btn-danger">推荐职位</button>
                 </div>
               </div>
@@ -82,7 +82,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row" data-html2canvas-ignore="true">
                 <div class="col col-12 align-self-end">
                   <div class="row">
                     <div class="col col-auto">
@@ -119,7 +119,7 @@
                 </div>
               </div>
             </div>
-            <div class="col col-auto align-self-end">
+            <div class="col col-auto align-self-end" data-html2canvas-ignore="true">
               <div class="row">
                 <div class="col col-auto">
                   <form id="collect_form" method="POST" action="{{ route('resumes.operation', [$resume, 'type' => 'collect']) }}">
@@ -166,9 +166,39 @@
 
           <hr class="divider">
 
-          <div class="row row-cols-2">
+          <div class="row row-cols-4">
             <div class="col-12">
               <h5 id="jobExp">职业期望</h5>
+            </div>
+            <div class="col">
+              <p class="font-size-m">
+                <span class="color-gray">所在行业：</span>
+                {{ $resume->cur_industry_show }}
+              </p>
+            </div>
+            <div class="col">
+              <p class="font-size-m">
+                <span class="color-gray">所任职位：</span>
+                {{ $resume->cur_position_show }}
+              </p>
+            </div>
+            <div class="col">
+              <p class="font-size-m">
+                <span class="color-gray">所在公司：</span>
+                {{ $resume->cur_company_show }}
+              </p>
+            </div>
+            <div class="col">
+              <p class="font-size-m">
+                <span class="color-gray">目前薪资：</span>
+                {{ $resume->cur_salary_show_short }}
+              </p>
+            </div>
+            <div class="col">
+              <p class="font-size-m">
+                <span class="color-gray">期望行业：</span>
+                {{ $resume->exp_industry_show }}
+              </p>
             </div>
             <div class="col">
               <p class="font-size-m">
@@ -189,24 +219,6 @@
               </p>
             </div>
             <div class="col">
-              <p class="font-size-m">
-                <span class="color-gray">目前薪资：</span>
-                {{ $resume->cur_salary_show_short }}
-              </p>
-            </div>
-            <div class="col">
-              <p class="font-size-m">
-                <span class="color-gray">期望行业：</span>
-                {{ $resume->exp_industry_show }}
-              </p>
-            </div>
-            <div class="col">
-              <p class="font-size-m">
-                <span class="color-gray">所在行业：</span>
-                {{ $resume->cur_industry_show }}
-              </p>
-            </div>
-            <div class="col-12">
               <p class="font-size-m">
                 <span class="color-gray">工作性质：</span>
                 {{ $resume->exp_work_nature_show }}
@@ -352,7 +364,7 @@
             </div>
           </div>
 
-          <div class="row">
+          <div class="row" data-html2canvas-ignore="true">
             <div class="col text-center">
               <div id="resumeExport" class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -376,7 +388,7 @@
       </div>
     </div>
 
-    <div class="col">
+    <div class="col" data-html2canvas-ignore="true">
       <div class="nav-remarks">
         <div class="nav-remarks-title">
           <div class="row align-items-center">
@@ -387,7 +399,7 @@
         </div>
 
         <div class="nav-remarks-contant bg-white">
-          <p>{{ $resume->remark }}</p>
+          <p>{{ $resume->remark_show }}</p>
         </div>
       </div>
 

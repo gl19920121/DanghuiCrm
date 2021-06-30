@@ -9,11 +9,11 @@
             <input type="text" name="name" value="{{ $curCompany->name }}" class="form-control middle" placeholder="请填写企业全称">
         </div>
         <div class="form-group form-inline">
-            <label for="nickname"><span>*</span>对外显示名称：</label>
+            <label for="nickname">对外显示名称：</label>
             <input type="text" name="nickname" class="form-control middle" value="{{ $curCompany->nickname }}" placeholder="展示给求职者" autocomplete="off">
         </div>
         <div class="form-group form-inline">
-            <label for="industry"><span>*</span>所属行业：</label>
+            <label for="industry">所属行业：</label>
             <div class="input-group" data-toggle="industrypicker">
 
               <input type="hidden" name="industry[st]" value="{{ $curCompany->industry['st'] }}">
@@ -41,12 +41,13 @@
             </div>
         </div>
         <div class="form-group form-inline">
-            <label for="address"><span>*</span>公司详细地址：</label>
+            <label for="address">公司详细地址：</label>
             <input type="text" name="address" class="form-control middle" value="{{ $curCompany->address }}" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
-            <label for="nature"><span>*</span>企业性质：</label>
+            <label for="nature">企业性质：</label>
             <select name="nature" class="form-control middle">
+              <option hidden value="">请选择</option>
                 @foreach (App\Models\Company::natureArr as $key => $nature)
                     <option value="{{ $key }}"
                     @if ($curCompany->nature == $key)
@@ -58,11 +59,12 @@
             </select>
         </div>
         <div class="form-group form-inline">
-            <label for="scale"><span>*</span>企业规模：</label>
+            <label for="scale">企业规模：</label>
             <select name="scale" class="form-control middle">
+              <option hidden value="">请选择</option>
                 @foreach (App\Models\Company::scaleArr as $key => $scale)
                     <option value="{{ $key }}"
-                    @if ($curCompany->scale == $key)
+                    @if ($curCompany->scale === $key)
                       selected
                     @endif>
                       {{ $scale['text'] }}
@@ -71,8 +73,9 @@
             </select>
         </div>
         <div class="form-group form-inline">
-            <label for="investment"><span>*</span>融资阶段：</label>
+            <label for="investment">融资阶段：</label>
             <select name="investment" class="form-control middle">
+              <option hidden value="">请选择</option>
                 @foreach (App\Models\Company::investmentArr as $key => $investment)
                     <option value="{{ $key }}"
                     @if ($curCompany->investment == $key)
@@ -84,13 +87,9 @@
             </select>
         </div>
         <div class="form-group form-inline">
-          <label for="logo"><span>*</span>公司LOGO：</label>
+          <label for="logo">公司LOGO：</label>
           <div data-toggle="filechoose" data-type="logo">
-            @if (!empty($curCompany->logo))
-              <img class="form-control" src="{{ $curCompany->logo_url }}">
-            @else
-              <img hidden class="form-control">
-            @endif
+            <img hidden id="companyLogo" class="form-control">
             <input hidden type="file" multiple="true" accept="image/png, image/jpeg" name="logo" class="form-control middle">
             <input type="text" class="form-control" id="inputLogo" placeholder="请选择图片" readonly>
           </div>
@@ -106,3 +105,46 @@
   </div>
 </div>
 @endif
+
+<script type="text/javascript">
+  $('#companyEditModal').on('show.bs.modal', function (e) {
+    var btnThis = $(e.relatedTarget);
+    var data = btnThis.attr('data-item');
+    if (typeof(data) == 'undefined') {
+      return;
+    }
+
+    var company = JSON.parse(data);
+    $('input[name=name]').val(company.name);
+    $('input[name=nickname]').val(company.nickname);
+    var industry = company.industry;
+    var industryShow = industry.th;
+    $('input[name="industry[st]"]').val(industry.st);
+    $('input[name="industry[nd]"]').val(industry.nd);
+    $('input[name="industry[rd]"]').val(industry.rd);
+    $('input[name="industry[th]"]').val(industry.th);
+    $('#industry').val(industryShow);
+    var location = company.location;
+    $('select[name="location[province]"]').val(location.province);
+    $('select[name="location[province]"]').trigger("change");
+    $('select[name="location[city]"]').val(location.city);
+    $('select[name="location[city]"]').trigger("change");
+    $('select[name="location[district]"]').val(location.district);
+    $('select[name="location[district]"]').trigger("change");
+    $('input[name=address]').val(company.address);
+    $('select[name=nature]').val(company.nature);
+    $('select[name=scale]').val(company.scale);
+    $('select[name=investment]').val(company.investment);
+    $('textarea[name=introduction]').text(company.introduction);
+    if (company.logo != null) {
+      $('#companyLogo').attr('src', company.logo).removeAttr('hidden');
+    }
+  });
+  function setLogo()
+  {
+    $('input[name="logo"]').click();
+  }
+  $('input[name="logo"]').change(function() {
+    $('#inputLogo').val($(this).val());
+  });
+</script>

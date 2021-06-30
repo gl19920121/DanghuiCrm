@@ -64,7 +64,7 @@
   }
 
   $('button').click(function() {
-    if ($(this).attr('id') != 'btnGroupDrop1' && $(this).attr('id') != 'addToMyJob') {
+    if ($(this).attr('id') != 'btnGroupDrop1' && $(this).attr('id') != 'addToMyJob' && $(this).hasClass('dropdown-item') != true) {
       submitResumeSearchForm();
     }
   })

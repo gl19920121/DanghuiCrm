@@ -23,7 +23,7 @@
                               @if ((isset($oldData['company']['id']) && $oldData['company']['id'] == $company->id) || old('company_id') == $company->id)
                                 selected
                               @endif
-                            data-item="{{ json_encode($company) }}">{{ $company->name }}</option>
+                            data-item="{{ ($company) }}">{{ $company->name }}</option>
                         @endforeach
                     </select>
                     <div>
@@ -338,10 +338,12 @@
         </div>
     </div>
 </div>
+
 @include('companys.shared._company_create')
 @include('shared._industry')
 @include('shared._job_type')
 @include('shared._errors')
+@include('shared._messages')
 
 <script type="text/javascript">
 
@@ -355,29 +357,46 @@
     var company = JSON.parse(data);
     $('#companyPre').show('fast');
 
-    $('#companyNickname').addClass('text-truncate').attr('title', company.nickname).text(company.nickname);
+    var nickname = company.nickname == null ? company.name : company.nickname;
+    $('#companyNickname').addClass('text-truncate').attr('title', nickname).text(nickname);
 
     var location = company.location;
-    var locationShow = location.province + '-' + location.city + '-' + location.district;
+    var locationShow = location.province;
+    if (location.city !== null) {
+      locationShow = locationShow + '-' + location.city;
+    }
+    if (location.district !== null) {
+      locationShow = locationShow + '-' + location.district;
+    }
     $('#companyLocation').addClass('text-truncate').attr('title', locationShow).text(locationShow);
 
     var natureArr = JSON.parse('{!! json_encode(App\Models\Company::natureArr) !!}');
-    var natureShow = natureArr[company.nature].text;
+    console.log(natureArr.length);
+    if (natureArr.hasOwnProperty(company.nature)) {
+      var natureShow = natureArr[company.nature].text;
+    } else {
+      var natureShow = '无';
+    }
     $('#companyNature').addClass('text-truncate').attr('title', natureShow).text(natureShow);
 
     var scaleArr = JSON.parse('{!! json_encode(App\Models\Company::scaleArr) !!}');
-    var scaleShow = scaleArr[company.scale].text;
+    if (scaleArr.hasOwnProperty(company.scale)) {
+      var scaleShow = scaleArr[company.scale].text;
+    } else {
+      var scaleShow = '无';
+    }
     $('#companyScale').addClass('text-truncate').attr('title', scaleShow).text(scaleShow);
 
     var industry = company.industry;
-    var industryShow = industry.th;
+    if (industry.th == null) {
+      var industryShow = '无';
+    } else {
+      var industryShow = industry.th;
+    }
     $('#companyIndustry').addClass('text-truncate').attr('title', industryShow).text(industryShow);
 
-    if (company.introduction != null) {
-      $('#companyIntroduction').attr('title', company.introduction).text('介绍：'+company.introduction);
-    } else {
-      $('#companyIntroduction').empty();
-    }
+    var introduction = company.introduction == null ? '无' : company.introduction;
+    $('#companyIntroduction').attr('title', introduction).text('介绍：'+introduction);
   }
 
   function setRemark()

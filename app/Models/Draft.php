@@ -29,7 +29,7 @@ class Draft extends Model
         foreach ($channel as $index => $value) {
             $channel[$index] = Job::channelArr[$value]['text'];
             if (isset(Job::channelArr[$value]['has_remark']) && Job::channelArr[$value]['has_remark']) {
-                $channel[$index] .= sprintf('（%s）', $data->channel_remark);
+                $channel[$index] .= sprintf('（%s）', $this->data['channel_remark']);
             }
         }
 

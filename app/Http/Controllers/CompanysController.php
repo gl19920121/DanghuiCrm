@@ -56,29 +56,32 @@ class CompanysController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
-            'nickname' => 'required',
-            'industry.st' => 'required',
-            'industry.nd' => 'required',
-            'industry.rd' => 'required',
-            'industry.th' => 'required',
+            'nickname' => 'nullable',
+            'industry.st' => 'nullable',
+            'industry.nd' => 'nullable',
+            'industry.rd' => 'nullable',
+            'industry.th' => 'nullable',
             'location.province' => 'required',
-            'location.city' => 'required',
-            'location.district' => 'required',
-            'address' => 'required',
-            'nature' => 'required',
-            'scale' => 'required',
-            'investment' => 'required',
-            'logo' => 'required|mimes:jpeg,jpg,png|max:300',
+            'location.city' => 'nullable',
+            'location.district' => 'nullable',
+            'address' => 'nullable',
+            'nature' => 'nullable',
+            'scale' => 'nullable',
+            'investment' => 'nullable',
+            'logo' => 'nullable|mimes:jpeg,jpg,png|max:300',
             'introduction' => 'nullable'
         ], $mssages);
 
-        $file = $request->file('logo');
-        if(!$request->hasFile('logo') || !$file->isValid()) {
-            session()->flash('danger', 'LOGO上传失败');
-            return redirect()->back()->withInput();
+        $filePath = null;
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            if (!$file->isValid()) {
+                session()->flash('danger', 'LOGO上传失败');
+                return redirect()->back()->withInput();
+            }
+            $filePath = Storage::disk('company_logo')->putFile(date('Y-m-d').'/'.$request->user()->id, $file);
+            unset($file);
         }
-        $filePath = Storage::disk('company_logo')->putFile(date('Y-m-d').'/'.$request->user()->id, $file);
-        unset($file);
 
         $data = $request->all();
         $data['logo'] = $filePath;
