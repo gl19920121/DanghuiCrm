@@ -16,8 +16,8 @@
           <div class="form-inline">
               <select name="job_channel" class="form-control normal">
                   <option value="">发布渠道</option>
-                  @foreach(App\Models\Job::channelArr as $key => $channel)
-                      <option value="{{ $key }}" @if($appends['job_channel'] === $key) selected @endif>{{ $channel['text'] }}</option>
+                  @foreach (trans('db.channel') as $key => $channel)
+                      <option value="{{ $key }}" @if($appends['job_channel'] === $key) selected @endif>{{ $channel }}</option>
                   @endforeach
               </select>
           </div>

@@ -15,8 +15,8 @@
             <div class="form-inline">
                 <select name="urgency_level" class="form-control normal" value="{{ old('urgency_level') }}">
                     <option value="">紧急程度</option>
-                    @foreach(App\Models\Job::urgencyLevelArr as $key => $urgencyLevel)
-                        <option value="{{ $key }}" @if($appends['urgencyLevel'] === (string)$key) selected @endif>{{ $urgencyLevel['text'] }}</option>
+                    @foreach (trans('db.job.urgency_level') as $key => $urgencyLevel)
+                        <option value="{{ $key }}" @if($appends['urgencyLevel'] === (string)$key) selected @endif>{{ $urgencyLevel }}</option>
                     @endforeach
                 </select>
             </div>
@@ -25,8 +25,8 @@
             <div class="form-inline">
                 <select name="channel" class="form-control normal" value="{{ old('channel') }}">
                     <option value="">发布渠道</option>
-                    @foreach(App\Models\Job::channelArr as $key => $channel)
-                        <option value="{{ $key }}" @if($appends['channel'] === $key) selected @endif>{{ $channel['text'] }}</option>
+                    @foreach (trans('db.channel') as $key => $channel)
+                        <option value="{{ $key }}" @if($appends['channel'] === $key) selected @endif>{{ $channel }}</option>
                     @endforeach
                 </select>
             </div>

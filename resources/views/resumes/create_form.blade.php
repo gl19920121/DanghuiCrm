@@ -100,14 +100,13 @@
               <div class="input-group-text">年</div>
             </div>
           </div>
-          @foreach (App\Models\Resume::workYearsArr as $key => $workYears)
+          @foreach (trans('db.resume.work_years') as $key => $workYears)
             <div class="custom-control custom-checkbox custom-control-inline ml-3">
               <input type="checkbox" id="work_years_{{ $key }}" class="custom-control-input" onclick="setWorkYears($(this))"
               @if (old('work_years_flag') == $key)
                 checked
-              @endif
-              >
-              <label class="custom-control-label" for="work_years_{{ $key }}">{{ $workYears['text'] }}</label>
+              @endif>
+              <label class="custom-control-label" for="work_years_{{ $key }}">{{ $workYears }}</label>
             </div>
           @endforeach
         </div>
@@ -118,7 +117,7 @@
           </label>
           <select name="education" class="form-control must normal @if($errors->has('education')) border-danger @endif" value="{{ old('education') }}">
             <option hidden value="">请选择</option>
-            @foreach (App\Models\Resume::educationArr as $key => $education)
+            @foreach (trans('db.education') as $key => $education)
               <option value="{{ $key }}"
               @if (old('education') === $key)
                 selected
@@ -126,7 +125,7 @@
                 selected
               @endif
               >
-                {{ $education['text'] }}
+                {{ $education }}
               </option>
             @endforeach
           </select>
@@ -307,7 +306,7 @@
           <label for="exp_work_nature">工作性质：</label>
           <select name="exp_work_nature" class="form-control normal">
             <option value="" hidden>请选择</option>
-            @foreach (App\Models\Job::natureArr as $key => $nature)
+            @foreach (trans('db.job.nature') as $key => $nature)
               <option value="{{ $key }}"
               @if (old('exp_work_nature') === $key)
                 selected
@@ -315,7 +314,7 @@
                 selected
               @endif
               >
-                {{ $nature['text'] }}
+                {{ $nature }}
               </option>
             @endforeach
           </select>
@@ -431,13 +430,12 @@
                 </label>
                 <select name="work_experience[{{ $index }}][company_nature]" class="form-control normal">
                   <option hidden value="">请选择</option>
-                  @foreach (App\Models\Company::natureArr as $key => $nature)
+                  @foreach (trans('db.company.nature') as $key => $nature)
                     <option value="{{ $key }}"
                     @if ($work_experience['company_nature'] === $key)
                       selected
-                    @endif
-                    >
-                      {{ $nature['text'] }}
+                    @endif>
+                      {{ $nature }}
                     </option>
                   @endforeach
                 </select>
@@ -448,13 +446,12 @@
                 </label>
                 <select name="work_experience[{{ $index }}][company_scale]" class="form-control normal">
                   <option hidden value="">请选择</option>
-                  @foreach (App\Models\Company::scaleArr as $key => $scale)
+                  @foreach (trans('db.company.scale') as $key => $scale)
                     <option value="{{ $key }}"
                     @if ($work_experience['company_scale'] === $key)
                       selected
-                    @endif
-                    >
-                      {{ $scale['text'] }}
+                    @endif>
+                      {{ $scale }}
                     </option>
                   @endforeach
                 </select>
@@ -465,13 +462,12 @@
                 </label>
                 <select name="work_experience[{{ $index }}][company_investment]" class="form-control normal">
                   <option hidden value="">请选择</option>
-                  @foreach (App\Models\Company::investmentArr as $key => $investment)
+                  @foreach (trans('db.company.investment') as $key => $investment)
                     <option value="{{ $key }}"
                     @if ($work_experience['company_investment'] == $key)
                       selected
-                    @endif
-                    >
-                      {{ $investment['text'] }}
+                    @endif>
+                      {{ $investment }}
                     </option>
                   @endforeach
                 </select>
@@ -731,13 +727,13 @@
                 </label>
                 <select name="education_experience[{{ $index }}][school_level]" class="form-control must normal @if($errors->has("education_experience.$index.school_level")) border-danger @endif">
                   <option hidden value="">请选择</option>
-                  @foreach (App\Models\Resume::educationArr as $key => $education)
+                  @foreach (trans('db.education') as $key => $education)
                     <option value="{{ $key }}"
                     @if ($education_experience['school_level'] == $key)
                       selected
                     @endif
                     >
-                      {{ $education['text'] }}
+                      {{ $education }}
                     </option>
                   @endforeach
                 </select>
@@ -825,13 +821,12 @@
           </label>
           <select name="jobhunter_status" class="form-control normal">
             <option hidden value="">请选择</option>
-            @foreach (App\Models\Resume::jobhunterStatusArr as $key => $jobhunterStatus)
+            @foreach (trans('db.resume.jobhunter_status') as $key => $jobhunterStatus)
               <option value="{{ $key }}"
               @if (old('jobhunter_status') === $key)
                 selected
-              @endif
-              >
-                {{ $jobhunterStatus['text'] }}
+              @endif>
+                {{ $jobhunterStatus }}
               </option>
             @endforeach
           </select>
@@ -857,11 +852,11 @@
             <span class="color-red">*</span>
             渠道选择：
           </label>
-          @foreach (App\Models\Job::channelArr as $key => $channel)
+          @foreach (trans('db.channel') as $key => $channel)
             <div class="custom-control custom-checkbox custom-control-inline">
                 <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="source[{{ $key }}]"
                   @if (empty(old('source')))
-                    @if (!empty($channel['checked']))
+                    @if (in_array($key, trans('db.resume.channel_default')))
                       checked
                     @endif
                   @else
@@ -869,12 +864,10 @@
                       checked
                     @endif
                   @endif
-
-                  @if (isset($channel['has_remark']) && $channel['has_remark'])
+                  @if (in_array($key, trans('db.channel_remark')))
                     onclick='setRemark()'
-                  @endif
-                >
-                <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['text'] }}</label>
+                  @endif>
+                <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel }}</label>
             </div>
           @endforeach
           <input type="text" name="source_remarks" value="{{ old('source_remarks') }}" class="form-control" id="channelRemark" placeholder="请选择招聘平台"
@@ -937,7 +930,7 @@
   function setWorkYears(e)
   {
     let flag = 0;
-    @foreach (App\Models\Resume::workYearsArr as $key => $workYears)
+    @foreach (trans('db.resume.work_years') as $key => $workYears)
       if (e.attr('id') == 'work_years_{{ $key }}') {
         flag = {{ $key }};
       } else {
@@ -996,8 +989,8 @@
           '</label>' +
           '<select name="work_experience[' + worksCount + '][company_nature]" class="form-control normal">' +
             '<option hidden value="">请选择</option>' +
-            @foreach (App\Models\Company::natureArr as $key => $nature)
-              '<option value="{{ $key }}">{{ $nature['text'] }}</option>' +
+            @foreach (trans('db.company.nature') as $key => $nature)
+              '<option value="{{ $key }}">{{ $nature }}</option>' +
             @endforeach
           '</select>' +
         '</div>' +
@@ -1007,8 +1000,8 @@
           '</label>' +
           '<select name="work_experience[' + worksCount + '][company_scale]" class="form-control normal">' +
             '<option hidden value="">请选择</option>' +
-            @foreach (App\Models\Company::scaleArr as $key => $scale)
-              '<option value="{{ $key }}">{{ $scale['text'] }}</option>' +
+            @foreach (trans('db.company.scale') as $key => $scale)
+              '<option value="{{ $key }}">{{ $scale }}</option>' +
             @endforeach
           '</select>' +
         '</div>' +
@@ -1018,8 +1011,8 @@
           '</label>' +
           '<select name="work_experience[' + worksCount + '][company_investment]" class="form-control normal">' +
             '<option hidden value="">请选择</option>' +
-            @foreach (App\Models\Company::investmentArr as $key => $investment)
-              '<option value="{{ $key }}">{{ $investment['text'] }}</option>' +
+            @foreach (trans('db.company.investment') as $key => $investment)
+              '<option value="{{ $key }}">{{ $investment }}</option>' +
             @endforeach
           '</select>' +
         '</div>' +
@@ -1223,8 +1216,8 @@
         '</label>' +
         '<select name="education_experience[' + educationsCount + '][school_level]" class="form-control normal">' +
           '<option hidden value="">请选择</option>' +
-          @foreach (App\Models\Resume::educationArr as $key => $education)
-            '<option value="{{ $key }}">{{ $education['text'] }}</option>' +
+          @foreach (trans('db.education') as $key => $education)
+            '<option value="{{ $key }}">{{ $education }}</option>' +
           @endforeach
         '</select>' +
       '</div>' +

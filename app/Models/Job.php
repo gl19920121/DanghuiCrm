@@ -7,48 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
     protected $fillable = [];
+
     protected $guarded = [];
+
     protected $casts = [
         'type' => 'array',
         'location' => 'array',
         'channel' => 'array'
-    ];
-
-    public const natureArr = [
-        'full' => ['text' => '全职', 'selected' => 'selected'],
-        'part' => ['text' => '兼职'],
-        'all' => ['text' => '全职/兼职']
-    ];
-    public const welfareArr = [
-        'social_insurance' => ['text' => '社会保险', 'selected' => 'selected'],
-        'five_social_insurance_and_one_housing_fund' => ['text' => '五险一金'],
-        'four_social_insurance_and_one_housing_fund' => ['text' => '四险一金']
-    ];
-    public const educationArr = [
-        'unlimited' => ['text' => '不限', 'selected' => 'selected'],
-        'high_schoo' => ['text' => '高中'],
-        'junior' => ['text' => '专科'],
-        'undergraduate' => ['text' => '本科'],
-        'master' => ['text' => '硕士'],
-        'doctor' => ['text' => '博士']
-    ];
-    public const experienceArr = [
-        'unlimited' => ['text' => '经验不限'],
-        'school' => ['text' => '学生在读'],
-        'fresh_graduates' => ['text' => '应届毕业生'],
-        'primary' => ['text' => '1-3'],
-        'middle' => ['text' => '3-5'],
-        'high' => ['text' => '5-10'],
-        'expert' => ['text' => '10年以上']
-    ];
-    public const urgencyLevelArr = [
-        '0' => ['text' => '标准', 'checked' => 'checked'],
-        '1' => ['text' => '急聘']
-    ];
-    public const channelArr = [
-        'applets' => ['text' => '小程序'],
-        'website' => ['text' => '官网'],
-        'other_platform' => ['text' => '其他', 'has_remark' => true]
     ];
 
 
@@ -249,8 +214,8 @@ class Job extends Model
         $channel = $this->channel;
 
         foreach ($channel as $index => $value) {
-            $channel[$index] = $this->channelArr[$value]['text'];
-            if (isset($this->channelArr[$value]['has_remark']) && $this->channelArr[$value]['has_remark']) {
+            $channel[$index] = trans('db.channel')[$value];
+            if (in_array($value, trans('db.channel_remark')) && !empty($this->attributes['channel_remark'])) {
                 $channel[$index] .= sprintf('（%s）', $this->attributes['channel_remark']);
             }
         }
@@ -258,123 +223,28 @@ class Job extends Model
         return implode('/', $channel);
     }
 
-    public function getChannelArrAttribute()
-    {
-        $channelArr = self::channelArr;
-
-        foreach ($channelArr as $key => $value) {
-            if (in_array($key, $this->channel)) {
-                $channelArr[$key]['checked'] = 'checked';
-            } else {
-                $channelArr[$key]['checked'] = '';
-            }
-        }
-
-        return $channelArr;
-    }
-
     public function getNatureShowAttribute()
     {
-        $nature = self::natureArr[$this->attributes['nature']]['text'];
-        return $nature;
-    }
-
-    public function getNatureArrAttribute()
-    {
-        $natureArr = self::natureArr;
-
-        foreach ($natureArr as $key => $value) {
-            if ($key === $this->attributes['nature']) {
-                $natureArr[$key]['selected'] = 'selected';
-            } else {
-                $natureArr[$key]['selected'] = '';
-            }
-        }
-
-        return $natureArr;
+        return trans('db.job.nature')[$this->attributes['nature']];
     }
 
     public function getWelfareShowAttribute()
     {
-        $welfare = self::welfareArr[$this->attributes['welfare']]['text'];
-        return $welfare;
-    }
-
-    public function getWelfareArrAttribute()
-    {
-        $welfareArr = self::welfareArr;
-
-        foreach ($welfareArr as $key => $value) {
-            if ($key === $this->attributes['welfare']) {
-                $welfareArr[$key]['selected'] = 'selected';
-            } else {
-                $welfareArr[$key]['selected'] = '';
-            }
-        }
-
-        return $welfareArr;
+        return trans('db.welfare')[$this->attributes['welfare']];
     }
 
     public function getEducationShowAttribute()
     {
-        $education = self::educationArr[$this->attributes['education']]['text'];
-        return $education;
-    }
-
-    public function getEducationArrAttribute()
-    {
-        $educationArr = self::educationArr;
-
-        foreach ($educationArr as $key => $value) {
-            if ($key === $this->attributes['education']) {
-                $educationArr[$key]['selected'] = 'selected';
-            } else {
-                $educationArr[$key]['selected'] = '';
-            }
-        }
-
-        return $educationArr;
+        return trans('db.education')[$this->attributes['education']];
     }
 
     public function getExperienceShowAttribute()
     {
-        $experience = self::experienceArr[$this->attributes['experience']]['text'];
-        return $experience;
-    }
-
-    public function getExperienceArrAttribute()
-    {
-        $experienceArr = self::experienceArr;
-
-        foreach ($experienceArr as $key => $value) {
-            if ($key === $this->attributes['experience']) {
-                $experienceArr[$key]['selected'] = 'selected';
-            } else {
-                $experienceArr[$key]['selected'] = '';
-            }
-        }
-
-        return $experienceArr;
+        return trans('db.experience')[$this->attributes['experience']];
     }
 
     public function getUrgencyLevelShowAttribute()
     {
-        $urgencyLevel = self::urgencyLevelArr[$this->attributes['urgency_level']]['text'];
-        return $urgencyLevel;
-    }
-
-    public function getUrgencyLevelArrAttribute()
-    {
-        $urgencyLevelArr = self::urgencyLevelArr;
-
-        foreach ($urgencyLevelArr as $key => $value) {
-            if ($key === $this->attributes['urgency_level']) {
-                $urgencyLevelArr[$key]['checked'] = 'checked';
-            } else {
-                $urgencyLevelArr[$key]['checked'] = '';
-            }
-        }
-
-        return $urgencyLevelArr;
+        return trans('db.job.urgency_level')[$this->attributes['urgency_level']];
     }
 }

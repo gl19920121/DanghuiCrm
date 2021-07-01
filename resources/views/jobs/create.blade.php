@@ -15,8 +15,8 @@
                     <h5>企业基本信息</h5>
                 </div>
                 <div class="form-group form-inline">
-                    <label for="company"><span class="color-red">*</span>公司名称：</label>
-                    <select name="company_id" class="form-control normal" onchange="companySelect()">
+                    <label for="company_id"><span class="color-red">*</span>公司名称：</label>
+                    <select name="company_id" class="form-control normal must @if($errors->has('company_id')) border-danger @endif" onchange="companySelect()">
                         <option value="" hidden>请填写</option>
                         @foreach ($companys as $index => $company)
                             <option value="{{ $company->id }}"
@@ -91,14 +91,14 @@
                 </div>
                 <div class="form-group form-inline">
                     <label for="quota">招聘人数：</label>
-                    <input type="text" name="quota" class="form-control normal" value="{{ isset($oldData['quota']) ? $oldData['quota'] : old('quota') }}" placeholder="请填写" autocomplete="off" data-type="int">
+                    <input type="text" name="quota" class="form-control normal @if($errors->has('quota')) border-danger @endif" value="{{ isset($oldData['quota']) ? $oldData['quota'] : old('quota') }}" placeholder="请填写" autocomplete="off">
                 </div>
                 <div class="form-title text-left">
                     <h5>职业基本信息</h5>
                 </div>
                 <div class="form-group form-inline">
                     <label for="name"><span class="color-red">*</span>职位名称：</label>
-                    <input type="text" name="name" class="form-control normal" value="{{ isset($oldData['name']) ? $oldData['name'] : old('name') }}" placeholder="请输入职位名称">
+                    <input type="text" name="name" class="form-control normal must @if($errors->has('name')) border-danger @endif" value="{{ isset($oldData['name']) ? $oldData['name'] : old('name') }}" placeholder="请输入职位名称">
                 </div>
                 <div class="form-group form-inline">
                     <label for="type"><span class="color-red">*</span>职位类别：</label>
@@ -124,7 +124,11 @@
                         value="{{ old('type')['rd'] }}"
                       @endif
                       >
-                      <input type="text" class="form-control normal append" id="jobType" placeholder="请选择" autocomplete="off"
+                      <input type="text" class="form-control normal append jobshow must
+                      @if ($errors->has('type.st') || $errors->has('type.nd') || $errors->has('type.rd'))
+                        border-danger
+                      @endif
+                      " id="jobType" placeholder="请选择" autocomplete="off"
                       @if (isset($oldData['type']['rd']))
                         value="{{ $oldData['type']['rd'] }}"
                       @elseif (isset(old('type')['rd']))
@@ -132,7 +136,7 @@
                       @endif
                       >
                       <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
-                        <span class="input-group-text" id="basic-addon2">
+                        <span class="input-group-text">
                           <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
                             <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
@@ -148,14 +152,14 @@
                 </div>
                 <div class="form-group form-inline">
                     <label for="nature"><span class="color-red">*</span>工作性质：</label>
-                    <select name="nature" class="form-control normal">
+                    <select name="nature" class="form-control normal must @if ($errors->has('nature')) border-danger @endif">
                         <option value="" hidden>请选择</option>
-                        @foreach (App\Models\Job::natureArr as $key => $nature)
+                        @foreach (trans('db.job.nature') as $key => $nature)
                             <option value="{{ $key }}"
                             @if ((isset($oldData['nature']) && $key === $oldData['nature']) || old('nature') == $key)
                               selected
                             @endif>
-                              {{ $nature['text'] }}
+                              {{ $nature }}
                             </option>
                         @endforeach
                     </select>
@@ -163,7 +167,7 @@
                 <div class="form-group form-inline">
                     <label for="location"><span class="color-red">*</span>工作城市：</label>
                     <div data-toggle="distpicker">
-                      <select class="form-control" name="location[province]"
+                      <select class="form-control must @if ($errors->has('location.province')) border-danger @endif" name="location[province]"
                       @if (isset($oldData['location']['province']))
                         data-province="{{ $oldData['location']['province'] }}"
                       @elseif (isset(old('location')['province']))
@@ -172,7 +176,7 @@
                         data-province="---- 选择省 ----"
                       @endif
                       ></select>
-                      <select class="form-control" name="location[city]"
+                      <select class="form-control must @if ($errors->has('location.city')) border-danger @endif" name="location[city]"
                       @if (isset($oldData['location']['city']))
                         data-city="{{ $oldData['location']['city'] }}"
                       @elseif (isset(old('location')['city']))
@@ -181,7 +185,7 @@
                         data-city="---- 选择市 ----"
                       @endif
                       ></select>
-                      <select class="form-control" name="location[district]"
+                      <select class="form-control must @if ($errors->has('location.district')) border-danger @endif" name="location[district]"
                       @if (isset($oldData['location']['district']))
                         data-district="{{ $oldData['location']['district'] }}"
                       @elseif (isset(old('location')['district']))
@@ -195,14 +199,14 @@
                 <div class="form-group form-inline">
                     <label for="salary"><span class="color-red">*</span>税前月薪：</label>
                     <div class="input-group">
-                        <input type="text" name="salary_min" class="form-control small append" value="{{ isset($oldData['salary_min']) ? $oldData['salary_min'] : old('salary_min') }}" autocomplete="off" data-type="int">
+                        <input type="text" name="salary_min" class="form-control small append must @if ($errors->has('salary_min')) border-danger @endif" value="{{ isset($oldData['salary_min']) ? $oldData['salary_min'] : old('salary_min') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">K</div>
                         </div>
                     </div>
                     <label class="ml-1 mr-1">-</label>
                     <div class="input-group">
-                        <input type="text" name="salary_max" class="form-control small append" value="{{ isset($oldData['salary_max']) ? $oldData['salary_max'] : old('salary_max') }}" autocomplete="off" data-type="int">
+                        <input type="text" name="salary_max" class="form-control small append must @if ($errors->has('salary_max')) border-danger @endif" value="{{ isset($oldData['salary_max']) ? $oldData['salary_max'] : old('salary_max') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">K</div>
                         </div>
@@ -210,13 +214,13 @@
                 </div>
                 <div class="form-group form-inline">
                     <label for="welfare"><span class="color-red">*</span>福利待遇：</label>
-                    <select name="welfare" class="form-control normal" value="{{ old('welfare') }}">
-                        @foreach(App\Models\Job::welfareArr as $key => $welfare)
+                    <select name="welfare" class="form-control normal must @if ($errors->has('welfare')) border-danger @endif" value="{{ old('welfare') }}">
+                        @foreach (trans('db.welfare') as $key => $welfare)
                             <option value="{{ $key }}"
                             @if ((isset($oldData['welfare']) && $key === $oldData['welfare']) || old('welfare') == $key)
                               selected
                             @endif>
-                              {{ $welfare['text'] }}
+                              {{ $welfare }}
                             </option>
                         @endforeach
                     </select>
@@ -231,14 +235,14 @@
                 <div class="form-group form-inline">
                     <label for="age"><span class="color-red">*</span>年龄范围：</label>
                     <div class="input-group">
-                        <input type="text" name="age_min" class="form-control small append" value="{{ isset($oldData['age_min']) ? $oldData['age_min'] : old('age_min') }}" autocomplete="off" data-type="int">
+                        <input type="text" name="age_min" class="form-control small append must @if ($errors->has('age_min')) border-danger @endif" value="{{ isset($oldData['age_min']) ? $oldData['age_min'] : old('age_min') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">岁</div>
                         </div>
                     </div>
                     <label class="ml-1 mr-1">-</label>
                     <div class="input-group">
-                        <input type="text" name="age_max" class="form-control small append" value="{{ isset($oldData['age_max']) ? $oldData['age_max'] : old('age_max') }}" autocomplete="off" data-type="int">
+                        <input type="text" name="age_max" class="form-control small append must @if ($errors->has('age_max')) border-danger @endif" value="{{ isset($oldData['age_max']) ? $oldData['age_max'] : old('age_max') }}" autocomplete="off" data-type="int">
                         <div class="input-group-append">
                             <div class="input-group-text">岁</div>
                         </div>
@@ -246,13 +250,13 @@
                 </div>
                 <div class="form-group form-inline">
                     <label for="education"><span class="color-red">*</span>学历要求：</label>
-                    <select name="education" class="form-control normal" value="{{ old('education') }}">
-                        @foreach(App\Models\Job::educationArr as $key => $education)
+                    <select name="education" class="form-control normal must @if ($errors->has('education')) border-danger @endif">
+                        @foreach (trans('db.education') as $key => $education)
                             <option value="{{ $key }}"
                             @if ((isset($oldData['education']) && $key === $oldData['education']) || old('education') == $key)
                               selected
                             @endif>
-                              {{ $education['text'] }}
+                              {{ $education }}
                             </option>
                         @endforeach
                     </select>
@@ -260,31 +264,31 @@
                 </div>
                 <div class="form-group form-inline">
                     <label for="experience"><span class="color-red">*</span>经验要求：</label>
-                    <select name="experience" class="form-control normal" value="{{ old('experience') }}">
-                        @foreach(App\Models\Job::experienceArr as $key => $experience)
+                    <select name="experience" class="form-control normal must @if ($errors->has('experience')) border-danger @endif">
+                        @foreach (trans('db.experience') as $key => $experience)
                             <option value="{{ $key }}"
                             @if ((isset($oldData['experience']) && $key === $oldData['experience']) || old('experience') == $key)
                               selected
                             @endif>
-                              {{ $experience['text'] }}
+                              {{ $experience }}
                             </option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group form-inline">
                     <label for="duty"><span class="color-red">*</span>工作职责：</label>
-                    <textarea name="duty" class="form-control normal">{{ isset($oldData['duty']) ? $oldData['duty'] : old('duty') }}</textarea>
+                    <textarea name="duty" class="form-control normal must @if ($errors->has('duty')) border-danger @endif">{{ isset($oldData['duty']) ? $oldData['duty'] : old('duty') }}</textarea>
                 </div>
                 <div class="form-group form-inline">
                     <label for="requirement"><span class="color-red">*</span>任职要求：</label>
-                    <textarea name="requirement" class="form-control normal">{{ isset($oldData['requirement']) ? $oldData['requirement'] : old('requirement') }}</textarea>
+                    <textarea name="requirement" class="form-control normal must @if ($errors->has('requirement')) border-danger @endif">{{ isset($oldData['requirement']) ? $oldData['requirement'] : old('requirement') }}</textarea>
                 </div>
                 <div class="form-title text-left">
                     <h5>发布设置</h5>
                 </div>
                 <div class="form-group form-inline">
                     <label for="urgency_level"><span class="color-red">*</span>紧急程度：</label>
-                    @foreach (App\Models\Job::urgencyLevelArr as $key => $urgencyLevel)
+                    @foreach (trans('db.job.urgency_level') as $key => $urgencyLevel)
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}"
                               @if (isset($oldData['urgency_level']) && $key == $oldData['urgency_level'])
@@ -294,26 +298,26 @@
                               @elseif (!empty($urgencyLevel['checked']))
                                 checked
                               @endif>
-                            <label class="custom-control-label" for="urgency_level_{{ $key }}">{{ $urgencyLevel['text'] }}</label>
+                            <label class="custom-control-label" for="urgency_level_{{ $key }}">{{ $urgencyLevel }}</label>
                         </div>
                     @endforeach
                 </div>
                 <div class="form-group form-inline">
                     <label for="channel"><span class="color-red">*</span>渠道选择：</label>
-                    @foreach (App\Models\Job::channelArr as $key => $channel)
+                    @foreach (trans('db.channel') as $key => $channel)
                         <div class="custom-control custom-checkbox custom-control-inline">
                             <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]"
                               @if (isset($oldData['channel']) && in_array($key, $oldData['channel']))
                                 checked
                               @elseif (isset(old('channel')[$key]))
                                 checked
-                              @elseif (!empty($channel['checked']))
+                              @elseif (in_array($key, trans('db.job.channel_default')))
                                 checked
                               @endif
-                              @if (isset($channel['has_remark']) && $channel['has_remark'])
+                              @if (in_array($key, trans('db.channel_remark')))
                                 onclick='setRemark()'
                               @endif>
-                            <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['text'] }}</label>
+                            <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel }}</label>
                         </div>
                     @endforeach
                     <input style="visibility: hidden;" type="text" name="channel_remark" class="form-control" id="channelRemark" placeholder="请选择招聘平台" value="{{ isset($oldData['channel_remark']) ? $oldData['channel_remark'] : old('channel_remark') }}">
@@ -321,7 +325,7 @@
                 <div class="form-group form-inline">
                   <label for="deadline"><span class="color-red">*</span>截止日期：</label>
                   <div class="input-group date datetimepicker">
-                    <input type="text" name="deadline" class="form-control normal append" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请选择" autocomplete="off">
+                    <input type="text" name="deadline" class="form-control normal append must @if ($errors->has('deadline')) border-danger @endif" value="{{ isset($oldData['deadline']) ? $oldData['deadline'] : old('deadline') }}" placeholder="请选择" autocomplete="off">
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <svg class="bi bi-calendar3-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -370,8 +374,7 @@
     }
     $('#companyLocation').addClass('text-truncate').attr('title', locationShow).text(locationShow);
 
-    var natureArr = JSON.parse('{!! json_encode(App\Models\Company::natureArr) !!}');
-    console.log(natureArr.length);
+    var natureArr = JSON.parse('{!! json_encode(trans("db.company.nature")) !!}');
     if (natureArr.hasOwnProperty(company.nature)) {
       var natureShow = natureArr[company.nature].text;
     } else {
@@ -379,7 +382,7 @@
     }
     $('#companyNature').addClass('text-truncate').attr('title', natureShow).text(natureShow);
 
-    var scaleArr = JSON.parse('{!! json_encode(App\Models\Company::scaleArr) !!}');
+    var scaleArr = JSON.parse('{!! json_encode(trans("db.company.scale")) !!}');
     if (scaleArr.hasOwnProperty(company.scale)) {
       var scaleShow = scaleArr[company.scale].text;
     } else {
@@ -408,6 +411,37 @@
       $('#channelRemark').css('visibility', 'hidden');
     }
   }
+
+  $('.form-control').change(function () {
+
+    @if (count($errors) > 0)
+      if ($(this).val() === '' && $(this).hasClass('must')) {
+        $(this).addClass('border-danger');
+      } else {
+        $(this).removeClass('border-danger');
+      }
+    @endif
+
+    if ($(this).hasClass('jobshow')) {
+      let rd = $(this).prev('input[type="hidden"]');
+      let nd = rd.prev('input[type="hidden"]');
+      let st = nd.prev('input[type="hidden"]');
+      rd.val($(this).val());
+      nd.val($(this).val());
+      st.val($(this).val());
+    }
+
+    if ($(this).hasClass('industryshow')) {
+      let th = $(this).prev('input[type="hidden"]');
+      let rd = th.prev('input[type="hidden"]');
+      let nd = rd.prev('input[type="hidden"]');
+      let st = nd.prev('input[type="hidden"]');
+      th.val($(this).val());
+      rd.val($(this).val());
+      nd.val($(this).val());
+      st.val($(this).val());
+    }
+  })
 
   companySelect();
   setRemark();

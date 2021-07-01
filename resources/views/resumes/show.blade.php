@@ -457,7 +457,7 @@
           // ctx.save();
 
           var imgLogo = new Image();
-          imgLogo.src = "{{ URL::asset('images/logo-red.png') }}";
+          imgLogo.src = "{{ URL::asset('images/tlogo.png') }}";
           imgLogo.onload = function () {
             // var ctx = oCanvas.getContext('2d');
             ctx.drawImage(imgLogo, 886, 200, 56, 19);

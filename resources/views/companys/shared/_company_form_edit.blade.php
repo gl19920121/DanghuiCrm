@@ -48,12 +48,12 @@
             <label for="nature">企业性质：</label>
             <select name="nature" class="form-control middle">
               <option hidden value="">请选择</option>
-                @foreach (App\Models\Company::natureArr as $key => $nature)
+                @foreach (trans('db.company.nature') as $key => $nature)
                     <option value="{{ $key }}"
                     @if ($curCompany->nature == $key)
                       selected
                     @endif>
-                      {{ $nature['text'] }}
+                      {{ $nature }}
                     </option>
                 @endforeach
             </select>
@@ -62,12 +62,12 @@
             <label for="scale">企业规模：</label>
             <select name="scale" class="form-control middle">
               <option hidden value="">请选择</option>
-                @foreach (App\Models\Company::scaleArr as $key => $scale)
+                @foreach (trans('db.company.scale') as $key => $scale)
                     <option value="{{ $key }}"
                     @if ($curCompany->scale === $key)
                       selected
                     @endif>
-                      {{ $scale['text'] }}
+                      {{ $scale }}
                     </option>
                 @endforeach
             </select>
@@ -76,12 +76,12 @@
             <label for="investment">融资阶段：</label>
             <select name="investment" class="form-control middle">
               <option hidden value="">请选择</option>
-                @foreach (App\Models\Company::investmentArr as $key => $investment)
+                @foreach (trans('db.company.investment') as $key => $investment)
                     <option value="{{ $key }}"
                     @if ($curCompany->investment == $key)
                       selected
                     @endif>
-                      {{ $investment['text'] }}
+                      {{ $investment }}
                     </option>
                 @endforeach
             </select>

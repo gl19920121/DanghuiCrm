@@ -213,7 +213,7 @@ class WordController extends Controller
         $section = $phpword->addSection(); //整体页面
         $header = $section->createHeader();
 
-        // $header->addWatermark(base_path().'/public/images/bg_1.jpg');
+        $header->addWatermark(base_path().'/public/images/watermark.png');
 
         $fontStyle2 = array('align' => 'center');
         $phpword->addTitleStyle(1, ['bold' => true, 'color' => '000', 'size' => 17, 'name' => '宋体'], $fontStyle2); //title样式

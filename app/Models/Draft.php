@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Draft extends Model
 {
     protected $fillable = [];
+
     protected $guarded = [];
+
     protected $casts = [
         'data' => 'array'
     ];
@@ -27,8 +29,8 @@ class Draft extends Model
         $channel = $this->data['channel'];
 
         foreach ($channel as $index => $value) {
-            $channel[$index] = Job::channelArr[$value]['text'];
-            if (isset(Job::channelArr[$value]['has_remark']) && Job::channelArr[$value]['has_remark']) {
+            $channel[$index] = trans('db.channel')[$value];
+            if (in_array($value, trans('db.channel_remark')) && !empty($this->data['channel_remark'])) {
                 $channel[$index] .= sprintf('（%s）', $this->data['channel_remark']);
             }
         }

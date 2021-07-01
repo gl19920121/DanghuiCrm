@@ -28,6 +28,7 @@ class StoreJobPost extends FormRequest
         return [
             'company_id.required' => '请填写 公司名称',
             'quota.numeric' => '请正确输入 招聘人数',
+            'quota.max' => '请正确输入 招聘人数',
             'name.required' => '请填写 职位名称',
             'type.st.required' => '请选择 职位类别',
             'type.nd.required' => '请选择 职位类别',
@@ -63,40 +64,48 @@ class StoreJobPost extends FormRequest
     public function rules()
     {
         return [
-            'company_id' => 'required',
-            'quota' => 'nullable|numeric',
-            'name' => 'required|string',
-            'type.st' => 'required',
-            'type.nd' => 'required',
-            'type.rd' => 'required',
+            'company_id' => ['required'],
+            'quota' => [
+                'nullable',
+                'max:11',
+                function($attribute, $value, $fail) {
+                    if (!is_numeric($value) && $value !== '若干') {
+                        return $fail('请正确输入 招聘人数');
+                    }
+                },
+            ],
+            'name' => ['required', 'max:255'],
+            'type.st' => ['required'],
+            'type.nd' => ['required'],
+            'type.rd' => ['required'],
             'nature' => [
-                'required', Rule::in(array_keys(Job::natureArr))
+                'required', Rule::in(array_keys(trans('db.job.nature')))
             ],
-            'location.province' => 'required',
-            'location.city' => 'required',
-            'location.district' => 'required',
-            'salary_min' => 'required|numeric',
-            'salary_max' => 'required|numeric',
+            'location.province' => ['required'],
+            'location.city' => ['required'],
+            'location.district' => ['required'],
+            'salary_min' => ['required', 'numeric', 'max:11'],
+            'salary_max' => ['required', 'numeric', 'max:11'],
             'welfare' => [
-                'required', Rule::in(array_keys(Job::welfareArr))
+                'required', Rule::in(array_keys(trans('db.welfare')))
             ],
-            'sparkle' => 'nullable|string',
-            'age_min' => 'required|numeric',
-            'age_max' => 'required|numeric',
+            'sparkle' => ['nullable', 'string', 'max:255'],
+            'age_min' => ['required', 'numeric', 'max:11'],
+            'age_max' => ['required', 'numeric', 'max:11'],
             'education' => [
-                'required', Rule::in(array_keys(Job::educationArr))
+                'required', Rule::in(array_keys(trans('db.education')))
             ],
             'experience' => [
-                'required', Rule::in(array_keys(Job::experienceArr))
+                'required', Rule::in(array_keys(trans('db.experience')))
             ],
-            'duty' => 'required|string',
-            'requirement' => 'required|string',
+            'duty' => ['required', 'string', 'max:255'],
+            'requirement' => ['required', 'string', 'max:255'],
             'urgency_level' => [
-                'required', Rule::in(array_keys(Job::urgencyLevelArr))
+                'required', Rule::in(array_keys(trans('db.job.urgency_level')))
             ],
-            'channel' => 'required',
-            'channel_remark' => 'nullable|string',
-            'deadline' => 'required|date'
+            'channel' => ['required'],
+            'channel_remark' => ['nullable', 'string', 'max:255'],
+            'deadline' => ['required', 'date']
         ];
     }
 }

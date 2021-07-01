@@ -9,7 +9,9 @@ use Auth;
 class Resume extends Model
 {
     protected $fillable = [];
+
     protected $guarded = [];
+
     protected $casts = [
         'location' => 'array',
         'cur_industry' => 'array',
@@ -20,46 +22,6 @@ class Resume extends Model
         'source' => 'array',
         'is_not_end' => 'boolean',
         // 'exp_salary_min' => 'float',
-    ];
-
-    public const workYearsArr = [
-        '1' => ['text' => '学生在读'],
-        '2' => ['text' => '应届毕业生']
-    ];
-
-    public const educationArr = [
-        'high_schoo' => ['text' => '高中'],
-        'junior' => ['text' => '专科'],
-        'undergraduate' => ['text' => '本科'],
-        'master' => ['text' => '硕士'],
-        'doctor' => ['text' => '博士']
-    ];
-
-    public const natureArr = [
-        'full' => ['text' => '全职'],
-        'part' => ['text' => '兼职'],
-        'all' => ['text' => '全职/兼职']
-    ];
-
-    public const jobhunterStatusArr = [
-        '0' => ['text' => '在职-暂不考虑'],
-        '1' => ['text' => '在职-考虑机会'],
-        '2' => ['text' => '在职-月内到岗'],
-        '3' => ['text' => '离职-随时到岗']
-    ];
-
-    public const sourceArr = [
-        'applets' => ['text' => '小程序', 'checked' => 'checked'],
-        'website' => ['text' => '官网', 'checked' => 'checked'],
-        'other_platform' => ['text' => '其他', 'has_remark' => true]
-    ];
-
-    public const updateDateArr = [
-        '1' => ['text' => '最近三天'],
-        '2' => ['text' => '最近一周'],
-        '3' => ['text' => '最近两周'],
-        '4' => ['text' => '最近一个月'],
-        '5' => ['text' => '一个月以上']
     ];
 
 
@@ -416,12 +378,12 @@ class Resume extends Model
 
     public function getEducationShowAttribute()
     {
-        return !empty($this->education) ? self::educationArr[$this->education]['text'] : $this->education_default;
+        return !empty($this->education) ? trans('db.education')[$this->education] : $this->education_default;
     }
 
     public function getExpWorkNatureShowAttribute()
     {
-        return !empty($this->exp_work_nature) ? self::natureArr[$this->exp_work_nature]['text'] : $this->exp_work_nature_default;
+        return !empty($this->exp_work_nature) ? trans('db.job.nature')[$this->exp_work_nature] : $this->exp_work_nature_default;
     }
 
     public function getWechatShowAttribute()
@@ -471,70 +433,10 @@ class Resume extends Model
 
 
 
-    public function getWorkYearsArrAttribute()
-    {
-        $workYearsArr = self::workYearsArr;
-
-        foreach ($workYearsArr as $key => $value) {
-            if ($key === $this->work_years_flag) {
-                $workYearsArr[$key]['checked'] = 'checked';
-            } else {
-                $workYearsArr[$key]['checked'] = '';
-            }
-        }
-
-        return $workYearsArr;
-    }
-
-    public function getEducationArrAttribute()
-    {
-        $educationArr = self::educationArr;
-
-        foreach ($educationArr as $key => $value) {
-            if ($key === $this->attributes['education']) {
-                $educationArr[$key]['selected'] = 'selected';
-            } else {
-                $educationArr[$key]['selected'] = '';
-            }
-        }
-
-        return $educationArr;
-    }
-
-    public function getExpWorkNatureArrAttribute()
-    {
-        $natureArr = self::natureArr;
-
-        foreach ($natureArr as $key => $value) {
-            if ($key === $this->exp_work_nature) {
-                $natureArr[$key]['selected'] = 'selected';
-            } else {
-                $natureArr[$key]['selected'] = '';
-            }
-        }
-
-        return $natureArr;
-    }
-
-    public function getSourceArrAttribute()
-    {
-        $sourceArr = self::sourceArr;
-
-        foreach ($sourceArr as $key => $value) {
-            if (in_array($key, $this->source)) {
-                $sourceArr[$key]['checked'] = 'checked';
-            } else {
-                $sourceArr[$key]['checked'] = '';
-            }
-        }
-
-        return $sourceArr;
-    }
-
     public function getJobhunterStatusShowAttribute()
     {
-        if (isset(self::jobhunterStatusArr[$this->attributes['jobhunter_status']])) {
-            $jobhunterStatus = self::jobhunterStatusArr[$this->attributes['jobhunter_status']]['text'];
+        if (isset(trans('db.resume.jobhunter_status')[$this->attributes['jobhunter_status']])) {
+            $jobhunterStatus = trans('db.resume.jobhunter_status')[$this->attributes['jobhunter_status']];
         } else {
             $jobhunterStatus = $this->jobhunter_status_default;
         }
@@ -547,8 +449,8 @@ class Resume extends Model
         $workYears = $this->attributes['work_years'];
         $workYearsFlag = $this->attributes['work_years_flag'];
 
-        if (isset(self::workYearsArr[$workYearsFlag])) {
-            $workYears = self::workYearsArr[$workYearsFlag]['text'];
+        if (isset(trans('db.resume.work_years')[$workYearsFlag])) {
+            $workYears = trans('db.resume.work_years')[$workYearsFlag];
         } else {
             $workYears = sprintf('%s年', $workYears);
         }
@@ -561,8 +463,8 @@ class Resume extends Model
         $workYears = $this->attributes['work_years'];
         $workYearsFlag = $this->attributes['work_years_flag'];
 
-        if (isset(self::workYearsArr[$workYearsFlag])) {
-            $workYears = self::workYearsArr[$workYearsFlag]['text'];
+        if (isset(trans('db.resume.work_years')[$workYearsFlag])) {
+            $workYears = trans('db.resume.work_years')[$workYearsFlag];
         } else {
             $workYears = sprintf('%s年工作经验', $workYears);
         }
@@ -575,8 +477,8 @@ class Resume extends Model
         $workYears = $this->attributes['work_years'];
         $workYearsFlag = $this->attributes['work_years_flag'];
 
-        if (isset(self::workYearsArr[$workYearsFlag])) {
-            $workYears = self::workYearsArr[$workYearsFlag]['text'];
+        if (isset(trans('db.resume.work_years')[$workYearsFlag])) {
+            $workYears = trans('db.resume.work_years')[$workYearsFlag];
         } else {
             $workYears = sprintf('工作%s年', $workYears);
         }
@@ -589,8 +491,8 @@ class Resume extends Model
         $source = $this->source;
 
         foreach ($source as $index => $value) {
-            $source[$index] = $this->sourceArr[$value]['text'];
-            if (isset($this->sourceArr[$value]['has_remark']) && $this->sourceArr[$value]['has_remark']) {
+            $source[$index] = trans('db.channel')[$value];
+            if (in_array($value, trans('db.channel_remark')) && !empty($this->attributes['source_remarks'])) {
                 $source[$index] .= sprintf('（%s）', $this->attributes['source_remarks']);
             }
         }

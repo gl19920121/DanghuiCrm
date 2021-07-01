@@ -123,7 +123,6 @@ class JobsController extends Controller
     public function store(StoreJobPost $request)
     {
         // $validated = $request->validated();
-        // $data = $validated->except('draft_id');
         $data = $request->except('draft_id');
 
         $data['release_uid'] = Auth::user()->id;

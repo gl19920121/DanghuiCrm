@@ -95,6 +95,6 @@ class ResumeEdu extends Model
 
     public function getSchoolLevelShowAttribute()
     {
-        return Job::educationArr[$this->school_level]['text'];
+        return trans('db.education')[$this->school_level];
     }
 }

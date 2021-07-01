@@ -65,7 +65,7 @@ class JobsTableSeeder extends Seeder
                 'deadline' => '2021-07-15',
                 'pv' => 0,
                 'release_uid' => 3,
-                'execute_uid' => 4,
+                'execute_uid' => 5,
                 'company_id' => 2,
                 'created_at' => '2021-05-24 14:35:00',
                 'updated_at' => '2021-05-24 14:35:00',

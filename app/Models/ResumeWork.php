@@ -105,17 +105,17 @@ class ResumeWork extends Model
 
     public function getCompanyNatureShowAttribute()
     {
-        return !empty($this->company_nature) ? Company::natureArr[$this->company_nature]['text'] : $this->company_nature_default;
+        return !empty($this->company_nature) ? trans('db.company.nature')[$this->company_nature] : $this->company_nature_default;
     }
 
     public function getCompanyScaleShowAttribute()
     {
-        return !empty($this->company_scale) ? Company::scaleArr[$this->company_scale]['text'] : $this->company_scale_default;
+        return !empty($this->company_scale) ? trans('db.company.scale')[$this->company_scale] : $this->company_scale_default;
     }
 
     public function getCompanyInvestmentShowAttribute()
     {
-        return !empty($this->company_investment) ? Company::investmentArr[$this->company_investment]['text'] : $this->company_investment_default;
+        return !empty($this->company_investment) ? trans('db.company.investment')[$this->company_investment] : $this->company_investment_default;
     }
 
     public function getCompanyIndustryShowAttribute()

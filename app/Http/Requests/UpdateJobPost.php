@@ -64,13 +64,20 @@ class UpdateJobPost extends FormRequest
     {
         return [
             'company_id' => 'required',
-            'quota' => 'nullable|numeric',
+            'quota' => [
+                'nullable',
+                function($attribute, $value, $fail) {
+                    if (!is_numeric($value) && $value !== '若干') {
+                        return $fail('请正确输入 招聘人数');
+                    }
+                },
+            ],
             'name' => 'required|string',
             'type.st' => 'required',
             'type.nd' => 'required',
             'type.rd' => 'required',
             'nature' => [
-                'required', Rule::in(array_keys(Job::natureArr))
+                'required', Rule::in(array_keys(trans('db.job.nature')))
             ],
             'location.province' => 'required',
             'location.city' => 'required',
@@ -78,21 +85,21 @@ class UpdateJobPost extends FormRequest
             'salary_min' => 'required|numeric',
             'salary_max' => 'required|numeric',
             'welfare' => [
-                'required', Rule::in(array_keys(Job::welfareArr))
+                'required', Rule::in(array_keys(trans('db.welfare')))
             ],
             'sparkle' => 'nullable|string',
             'age_min' => 'required|numeric',
             'age_max' => 'required|numeric',
             'education' => [
-                'required', Rule::in(array_keys(Job::educationArr))
+                'required', Rule::in(array_keys(trans('db.education')))
             ],
             'experience' => [
-                'required', Rule::in(array_keys(Job::experienceArr))
+                'required', Rule::in(array_keys(trans('db.experience')))
             ],
             'duty' => 'required|string',
             'requirement' => 'required|string',
             'urgency_level' => [
-                'required', Rule::in(array_keys(Job::urgencyLevelArr))
+                'required', Rule::in(array_keys(trans('db.job.urgency_level')))
             ],
             'channel' => 'required',
             'channel_remark' => 'nullable|string',

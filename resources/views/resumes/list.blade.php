@@ -130,13 +130,12 @@
                       <label for="experience">工作经验：</label>
                       <select name="experience" class="form-control large">
                         <option value="">不限</option>
-                        @foreach (App\Models\Job::experienceArr as $key => $experience)
+                        @foreach (trans('db.experience') as $key => $experience)
                           <option value="{{ $key }}"
                           @if (isset($parms['experience']) && $key === $parms['experience'])
                             selected
-                          @endif
-                          >
-                            {{ $experience['text'] }}
+                          @endif>
+                            {{ $experience }}
                           </option>
                         @endforeach
                       </select>
@@ -147,13 +146,12 @@
                       <label for="education">教育经历：</label>
                       <select name="education" class="form-control large">
                         <option value="">不限</option>
-                        @foreach (App\Models\Resume::educationArr as $key => $education)
+                        @foreach (trans('db.education') as $key => $education)
                           <option value="{{ $key }}"
                           @if (isset($parms['education']) && $key === $parms['education'])
                             selected
-                          @endif
-                          >
-                            {{ $education['text'] }}
+                          @endif>
+                            {{ $education }}
                           </option>
                         @endforeach
                       </select>
@@ -222,13 +220,12 @@
                     <label class="ml-3" for="jobhunter_status">求职状态：</label>
                     <select name="jobhunter_status" class="form-control normal">
                       <option value="">不限</option>
-                      @foreach (App\Models\Resume::jobhunterStatusArr as $key => $jobhunterStatus)
+                      @foreach (trans('db.resume.jobhunter_status') as $key => $jobhunterStatus)
                         <option value="{{ $key }}"
                         @if (isset($parms['jobhunter_status']) && (int)$key === (int)$parms['jobhunter_status'])
                           selected
-                        @endif
-                        >
-                          {{ $jobhunterStatus['text'] }}
+                        @endif>
+                          {{ $jobhunterStatus }}
                         </option>
                       @endforeach
                     </select>
@@ -239,13 +236,12 @@
                     <label for="source">来源渠道：</label>
                     <select name="source" class="form-control large">
                       <option value="">不限</option>
-                      @foreach (App\Models\Resume::sourceArr as $key => $source)
+                      @foreach (trans('db.channel') as $key => $source)
                         <option value="{{ $key }}"
                         @if (isset($parms['source']) && $key === $parms['source'])
                           selected
-                        @endif
-                        >
-                          {{ $source['text'] }}
+                        @endif>
+                          {{ $source }}
                         </option>
                       @endforeach
                     </select>
@@ -256,13 +252,12 @@
                     <label for="updated_at">更新时间：</label>
                     <select name="updated_at" class="form-control large">
                       <option value="">不限</option>
-                      @foreach (App\Models\Resume::updateDateArr as $key => $updateDate)
+                      @foreach (trans('db.resume.update_date') as $key => $updateDate)
                         <option value="{{ $key }}"
                         @if (isset($parms['updated_at']) && (int)$key === (int)$parms['updated_at'])
                           selected
-                        @endif
-                        >
-                          {{ $updateDate['text'] }}
+                        @endif>
+                          {{ $updateDate }}
                         </option>
                       @endforeach
                     </select>

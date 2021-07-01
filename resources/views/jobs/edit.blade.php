@@ -96,34 +96,32 @@
                     <input type="text" name="name" class="form-control normal" value="{{  $job->name }}" placeholder="请输入职位名称"  />
                 </div>
                 <div class="form-group form-inline">
-                    <label for="type"><span>*</span>职位类别：</label>
-                    <div class="input-group" data-toggle="jobtypepicker">
-
-                      <input type="hidden" name="type[st]" value="{{ $job->type->st }}">
-                      <input type="hidden" name="type[nd]" value="{{ $job->type->nd }}">
-                      <input type="hidden" name="type[rd]" value="{{ $job->type->rd }}">
-
-                      <input type="text" class="form-control normal" id="jobType" value="{{ $job->type->rd }}" placeholder="请选择" autocomplete="off">
-                      <div class="input-group-append">
-                        <span class="input-group-text" id="basic-addon2">
-                          <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
-                            <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
-                          </svg>
-                        </span>
-                      </div>
+                  <label for="type"><span>*</span>职位类别：</label>
+                  <div class="input-group" data-toggle="jobtypepicker">
+                    <input type="hidden" name="type[st]" value="{{ $job->type->st }}">
+                    <input type="hidden" name="type[nd]" value="{{ $job->type->nd }}">
+                    <input type="hidden" name="type[rd]" value="{{ $job->type->rd }}">
+                    <input type="text" class="form-control normal append" value="{{ $job->type->rd }}" placeholder="请选择" autocomplete="off">
+                    <div class="input-group-append" data-toggle="modal" data-target="#jobtypeModal">
+                      <span class="input-group-text">
+                        <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
+                          <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                      </span>
                     </div>
-                    <div hidden data-toggle="distpicker" data-source="jobTypes">
-                      <select class="form-control" name="type[st]" data-province="{{ $job->type->st }}"></select>
-                      <select class="form-control" name="type[nd]"  data-city="{{ $job->type->nd }}"></select>
-                      <select class="form-control" name="type[rd]"  data-district="{{ $job->type->rd }}"></select>
-                    </div>
+                  </div>
                 </div>
                 <div class="form-group form-inline">
                     <label for="nature"><span>*</span>工作性质：</label>
                     <select name="nature" class="form-control normal">
-                        @foreach($job->natureArr as $key => $nature)
-                            <option value="{{ $key }}" {{ $nature['selected'] }}>{{ $nature['text'] }}</option>
+                        @foreach (trans('db.job.nature') as $key => $nature)
+                            <option value="{{ $key }}"
+                            @if ($job->nature === $key)
+                              selected
+                            @endif>
+                              {{ $nature }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -154,8 +152,13 @@
                 <div class="form-group form-inline">
                     <label for="welfare"><span>*</span>福利待遇：</label>
                     <select name="welfare" class="form-control normal">
-                        @foreach($job->welfareArr as $key => $welfare)
-                            <option value="{{ $key }}" {{ $welfare['selected'] }}>{{ $welfare['text'] }}</option>
+                        @foreach (trans('db.welfare') as $key => $welfare)
+                            <option value="{{ $key }}"
+                            @if ($job->welfare === $key)
+                              selected
+                            @endif>
+                              {{ $welfare }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -185,8 +188,13 @@
                 <div class="form-group form-inline">
                     <label for="education"><span>*</span>学历要求：</label>
                     <select name="education" class="form-control normal">
-                        @foreach($job->educationArr as $key => $education)
-                            <option value="{{ $key }}" {{ $education['selected'] }}>{{ $education['text'] }}</option>
+                        @foreach (trans('db.education') as $key => $education)
+                            <option value="{{ $key }}"
+                            @if ($job->education === $key)
+                              selected
+                            @endif>
+                              {{ $education }}
+                            </option>
                         @endforeach
                     </select>
                     <label class="ml-2">及以上</label>
@@ -194,8 +202,13 @@
                 <div class="form-group form-inline">
                     <label for="experience"><span>*</span>经验要求：</label>
                     <select name="experience" class="form-control normal">
-                        @foreach($job->experienceArr as $key => $experience)
-                            <option value="{{ $key }}" {{ $experience['selected'] }}>{{ $experience['text'] }}</option>
+                        @foreach (trans('db.experience') as $key => $experience)
+                            <option value="{{ $key }}"
+                            @if ($job->experience === $key)
+                              selected
+                            @endif>
+                              {{ $experience }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -212,23 +225,28 @@
                 </div>
                 <div class="form-group form-inline">
                     <label for="urgency_level"><span>*</span>紧急程度：</label>
-                    @foreach ($job->urgencyLevelArr as $key => $urgencyLevel)
+                    @foreach (trans('db.job.urgency_level') as $key => $urgencyLevel)
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}" {{ $urgencyLevel['checked'] }}>
-                            <label class="custom-control-label" for="urgency_level_{{ $key }}">{{ $urgencyLevel['text'] }}</label>
+                            <input type="radio" id="urgency_level_{{ $key }}" name="urgency_level" class="custom-control-input" value="{{ $key }}"
+                            @if ($job->urgency_level === $key)
+                              checked
+                            @endif>
+                            <label class="custom-control-label" for="urgency_level_{{ $key }}">{{ $urgencyLevel }}</label>
                         </div>
                     @endforeach
                 </div>
                 <div class="form-group form-inline">
                     <label for="channel"><span>*</span>渠道选择：</label>
-                    @foreach ($job->channelArr as $key => $channel)
+                    @foreach (trans('db.channel') as $key => $channel)
                         <div class="custom-control custom-checkbox custom-control-inline">
-                            <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]" {{ $channel['checked'] }}
-                            @if (isset($channel['has_remark']) && $channel['has_remark'])
-                              onclick='setRemark()'
+                            <input type="checkbox" class="custom-control-input" id="channel_{{ $key }}" name="channel[{{ $key }}]"
+                            @if (in_array($key, $job->channel))
+                              checked
                             @endif
-                            >
-                            <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel['text'] }}</label>
+                            @if (in_array($key, trans('db.channel_remark')))
+                              onclick='setRemark()'
+                            @endif>
+                            <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel }}</label>
                         </div>
                     @endforeach
                     <input style="visibility: hidden;" type="text" name="channel_remark" class="form-control" id="channelRemark" value="{{  $job->channel_remark }}" placeholder="请选择招聘平台">
@@ -283,8 +301,7 @@
     }
     $('#companyLocation').addClass('text-truncate').attr('title', locationShow).text(locationShow);
 
-    var natureArr = JSON.parse('{!! json_encode(App\Models\Company::natureArr) !!}');
-    console.log(natureArr.length);
+    var natureArr = JSON.parse('{!! json_encode(trans("db.company.nature")) !!}');
     if (natureArr.hasOwnProperty(company.nature)) {
       var natureShow = natureArr[company.nature].text;
     } else {
@@ -292,7 +309,7 @@
     }
     $('#companyNature').addClass('text-truncate').attr('title', natureShow).text(natureShow);
 
-    var scaleArr = JSON.parse('{!! json_encode(App\Models\Company::scaleArr) !!}');
+    var scaleArr = JSON.parse('{!! json_encode(trans("db.company.scale")) !!}');
     if (scaleArr.hasOwnProperty(company.scale)) {
       var scaleShow = scaleArr[company.scale].text;
     } else {

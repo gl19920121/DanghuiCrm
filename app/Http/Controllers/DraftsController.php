@@ -10,12 +10,6 @@ use Auth;
 
 class DraftsController extends Controller
 {
-    private $channelArr = [
-        'applets' => ['name' => 'channel1', 'show' => '小程序', 'selected' => true, 'default' => false],
-        'website' => ['name' => 'channel2', 'show' => '官网', 'selected' => true, 'default' => false],
-        'other_platform' => ['name' => 'channel3', 'show' => '其他', 'selected' => false, 'default' => false]
-    ];
-
     private $pageSize;
 
     public function __construct()
@@ -68,7 +62,6 @@ class DraftsController extends Controller
         $appends = [
             'tab' => $tab,
             'name' => $request->name,
-            'channelArr' => $this->channelArr
         ];
 
         return view('drafts.list', compact('drafts', 'appends'));
