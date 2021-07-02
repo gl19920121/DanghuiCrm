@@ -1,4 +1,4 @@
-<div id="capture" class="job-detail">
+<div class="job-detail">
     <div class="row row-cols-5">
         <div class="col-12">
             <h5>企业基本信息</h5>
@@ -101,7 +101,7 @@
     </div>
 </div>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center" data-html2canvas-ignore="true">
   <div class="col col-auto">
     <a href="{{ route('jobs.edit', $job) }}" class="btn btn-light">编辑本职位信息</a>
     <!-- <button class="btn btn-light">导出职位</button> -->
@@ -113,10 +113,48 @@
         <a href="{{ route('word.export.job', $job) }}" class="dropdown-item">Word</a>
         <a href="{{ route('pdf.export.job', $job) }}" class="dropdown-item">PDF</a>
         <a href="{{ route('excel.export.job', $job) }}" class="dropdown-item">Excel</a>
-        <a href="javascript:void(0)" class="dropdown-item" onclick="takeScreenshot('capture', 'canvasContainer', 'jpg', '{{ $job->name }}')">JPG</a>
+        <a href="javascript:void(0)" class="dropdown-item" onclick="jobScreenshot('edit', 'canvasContainer', 'jpg', '{{ $job->name }}')">JPG</a>
       </div>
     </div>
   </div>
 </div>
 
 <div hidden id="canvasContainer"></div>
+
+<script type="text/javascript">
+  function jobScreenshot (domId, canvasId, imgType, fileName)
+  {
+    window.pageYoffset = 0;
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    html2canvas(document.getElementById(domId), {
+      // backgroundColor: "#fff",
+      // dpi: window.devicePixelRatio * 2,
+      // scale: 3,
+      // allowTaint: true,
+      // useCORS: true,
+    }).then(canvas => {
+      document.querySelector("#" + canvasId).appendChild(canvas);
+
+      setTimeout(() => {
+        var type = imgType;
+        var oCanvas = document.querySelector("#" + canvasId).getElementsByTagName("canvas")[0];
+
+        var imgWatermark = new Image();
+        imgWatermark.src = "{{ URL::asset('images/watermark.png') }}";
+        imgWatermark.onload = function () {
+          var ctx = oCanvas.getContext('2d');
+          ctx.drawImage(imgWatermark, 0, 0, 1067, 2011);
+          ctx.save();
+
+          let imgData = oCanvas.toDataURL(type);//canvas转换为图片
+          // 加工image data，替换mime type，方便以后唤起浏览器下载
+          imgData = imgData.replace(_fixType(type), 'image/octet-stream');
+          fileDownload(imgData, type, fileName);
+          $('body').remove('canvas');
+        }
+      }, 0);
+    });
+  }
+</script>

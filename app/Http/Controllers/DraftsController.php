@@ -41,7 +41,7 @@ class DraftsController extends Controller
 
         $draft = Draft::create($value);
 
-        session()->flash('result', '保存成功，可在“职位管理”-“职位草稿箱”');
+        session()->flash('result', '保存成功，可在“职位管理”-“职位草稿箱”进行查看');
         return back();
     }
 

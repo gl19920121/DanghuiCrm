@@ -67,7 +67,8 @@ class StoreJobPost extends FormRequest
             'company_id' => ['required'],
             'quota' => [
                 'nullable',
-                'max:11',
+                'string',
+                'max:255',
                 function($attribute, $value, $fail) {
                     if (!is_numeric($value) && $value !== '若干') {
                         return $fail('请正确输入 招聘人数');
@@ -84,14 +85,14 @@ class StoreJobPost extends FormRequest
             'location.province' => ['required'],
             'location.city' => ['required'],
             'location.district' => ['required'],
-            'salary_min' => ['required', 'numeric', 'max:11'],
-            'salary_max' => ['required', 'numeric', 'max:11'],
+            'salary_min' => ['required', 'string', 'max:11'],
+            'salary_max' => ['required', 'string', 'max:11'],
             'welfare' => [
                 'required', Rule::in(array_keys(trans('db.welfare')))
             ],
             'sparkle' => ['nullable', 'string', 'max:255'],
-            'age_min' => ['required', 'numeric', 'max:11'],
-            'age_max' => ['required', 'numeric', 'max:11'],
+            'age_min' => ['required', 'string', 'max:11'],
+            'age_max' => ['required', 'string', 'max:11'],
             'education' => [
                 'required', Rule::in(array_keys(trans('db.education')))
             ],

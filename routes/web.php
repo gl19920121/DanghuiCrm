@@ -18,6 +18,7 @@ Route::get('/word/export/resume/{resume}','WordController@exportResume')->name('
 Route::get('/pdf/export/resume/{resume}','PdfController@exportResume')->name('pdf.export.resume');
 Route::get('/excel/export/user/job/{user}','ExcelController@exportUserJob')->name('excel.export.user.job');
 Route::get('/word/export/user/resume/{user}','WordController@exportUserResume')->name('word.export.user.resume');
+Route::get('/img/export/resume/{resume}','ImgController@exportResume')->name('img.export.resume');
 
 Route::get('/', 'SessionsController@index')->name('index');
 Route::get('login', 'SessionsController@create')->name('login'); //登录页面
