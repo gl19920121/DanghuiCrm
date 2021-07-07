@@ -57,18 +57,18 @@ class User extends Authenticatable
 
     public function uploadResumes()
     {
-        return $this->hasMany(Resume::class, 'upload_uid');
-        // return $this->belongsToMany(Resume::class)->wherePivot('type', 'upload')->withTimestamps();
+        // return $this->hasMany(Resume::class, 'upload_uid');
+        return $this->belongsToMany(Resume::class)->wherePivot('type', 'upload')->withPivot('created_at')->withTimestamps();
     }
 
     public function seenResumes()
     {
-        return $this->belongsToMany(Resume::class)->wherePivot('type', 'seen')->withTimestamps();
+        return $this->belongsToMany(Resume::class)->wherePivot('type', 'seen')->withPivot('created_at')->withTimestamps();
     }
 
     public function downloadResumes()
     {
-        return $this->belongsToMany(Resume::class)->wherePivot('type', 'download')->withTimestamps();
+        return $this->belongsToMany(Resume::class)->wherePivot('type', 'download')->withPivot('created_at')->withTimestamps();
     }
 
     public function getAvatarUrlAttribute()
