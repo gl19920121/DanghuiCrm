@@ -66,9 +66,25 @@ class UsersTableSeeder extends Seeder
                 'email' => '',
                 'phone' => '',
                 'is_admin' => false
+            ],
+            [
+                'account' => 'yeruizhao',
+                'password' => bcrypt('yeruizhao123!@#'),
+                'nickname' => '叶睿钊',
+                'name' => '叶睿钊',
+                'email' => '',
+                'phone' => '',
+                'is_admin' => false
             ]
         ];
 
-        User::insert($users);
+        foreach ($users as $user) {
+            if (User::where('name', $user['name'])->count() > 0) {
+                continue;
+            }
+            User::create($user);
+        }
+
+        // User::insert($users);
     }
 }
