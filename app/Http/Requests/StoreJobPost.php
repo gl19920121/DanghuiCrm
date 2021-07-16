@@ -84,7 +84,7 @@ class StoreJobPost extends FormRequest
             ],
             'location.province' => ['required'],
             'location.city' => ['required'],
-            'location.district' => ['required'],
+            'location.district' => ['nullable'],
             'salary_min' => ['required', 'string', 'max:11'],
             'salary_max' => ['required', 'string', 'max:11'],
             'welfare' => [
@@ -99,8 +99,8 @@ class StoreJobPost extends FormRequest
             'experience' => [
                 'required', Rule::in(array_keys(trans('db.experience')))
             ],
-            'duty' => ['required', 'string', 'max:255'],
-            'requirement' => ['required', 'string', 'max:255'],
+            'duty' => ['required'],
+            'requirement' => ['required'],
             'urgency_level' => [
                 'required', Rule::in(array_keys(trans('db.job.urgency_level')))
             ],

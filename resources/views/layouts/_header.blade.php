@@ -34,7 +34,7 @@
                       <div class="triangle-up"></div>
                     @endif
                 </li>
-                @can ('see-management')
+                @can ('rpo-manager')
                 <li class="nav-item {{ strpos(Route::currentRouteName(), 'management.') !== false ? 'active': '' }}">
                     <a class="nav-link" href="{{ route('management.job.list') }}">
                         员工管理

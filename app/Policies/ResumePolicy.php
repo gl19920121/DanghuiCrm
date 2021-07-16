@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Role;
+use App\Models\Resume;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class ResumePolicy
 {
     use HandlesAuthorization;
 
@@ -27,13 +27,13 @@ class UserPolicy
         }
     }
 
-    public function update(User $currentUser, User $user)
+    public function update(User $currentUser, Resume $resume)
     {
-        return $currentUser->id === $user->id;
+        return $currentUser->is_admin || $currentUser->id === $resume->upload_uid;
     }
 
-    public function destroy(User $currentUser, User $user)
+    public function destroy(User $currentUser, Resume $resume)
     {
-        return $currentUser->is_admin && $currentUser->id !== $user->id;
+        return $currentUser->is_admin || $currentUser->id === $resume->upload_uid;
     }
 }

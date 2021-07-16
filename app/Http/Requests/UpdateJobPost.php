@@ -81,7 +81,7 @@ class UpdateJobPost extends FormRequest
             ],
             'location.province' => 'required',
             'location.city' => 'required',
-            'location.district' => 'required',
+            'location.district' => 'nullable',
             'salary_min' => 'required|numeric',
             'salary_max' => 'required|numeric',
             'welfare' => [
@@ -96,7 +96,7 @@ class UpdateJobPost extends FormRequest
             'experience' => [
                 'required', Rule::in(array_keys(trans('db.experience')))
             ],
-            'duty' => 'required|string',
+            'duty' => 'required',
             'requirement' => 'required|string',
             'urgency_level' => [
                 'required', Rule::in(array_keys(trans('db.job.urgency_level')))

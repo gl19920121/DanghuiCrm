@@ -25,7 +25,11 @@
                 <label class="custom-control-label"></label>
               </div>
             </td>
-            <td>{{ $resume->name }}</td>
+            <td>
+              <a href="{{ route('resumes.show', $resume) }}" target="_blank">
+                {{ $resume->name }}
+              </a>
+            </td>
             <td>{{ sprintf('%s/%s岁', $resume->sex, $resume->age) }}</td>
             <td>{{ $resume->location_show }}</td>
             <td>{{ $resume->education_show }}</td>
@@ -36,12 +40,18 @@
             <td>{{ $resume->updated_at }}</td>
             <td>
               <div class="btn-group" role="group">
-                <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  操作
+                <button id="addToMyJob" type="button" class="btn dropdown-toggle btn-dropdown btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  加入我的职位
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                  <a href="{{ route('resumes.edit', $resume) }}" class="dropdown-item">修改</a>
-                  <a href="{{ route('resumes.show', $resume) }}" class="dropdown-item" target="_blank">预览</a>
+                <div class="dropdown-menu" aria-labelledby="addToMyJob">
+                  <form id="formToJob" method="POST">
+                    {{ csrf_field() }}
+                    @foreach ($jobs as $job)
+                      @if ($resume->job_id !== $job->id)
+                        <button type="submit" form="formToJob" formaction="{{ route('resumes.add.job', [$resume, 'job_id' => $job->id, 'status' => 1]) }}" class="dropdown-item">{{ $job->name }}</button>
+                      @endif
+                    @endforeach
+                  </form>
                 </div>
               </div>
             </td>

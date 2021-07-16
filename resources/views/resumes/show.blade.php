@@ -26,8 +26,9 @@
               <div class="row row-cols-1 text-center">
                 <div class="col align-self-start">
                   <img class="resume-avatar rounded-circle" src="{{ $resume->avatar_url }}">
+                  <button class="btn btn-danger mt-4" data-html2canvas-ignore="true">推荐职位</button>
                 </div>
-                <div class="col align-self-end" data-html2canvas-ignore="true">
+                <div hidden class="col align-self-end" data-html2canvas-ignore="true">
                   <button class="btn btn-danger">推荐职位</button>
                 </div>
               </div>
@@ -81,48 +82,11 @@
                   {{ $resume->qq_show }}
                 </div>
               </div>
-
-              <div class="row" data-html2canvas-ignore="true">
-                <div class="col col-12 align-self-end">
-                  <div class="row">
-                    <div class="col col-auto">
-                      <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          加入我的职位
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                          @foreach ($jobs as $job)
-                            @if ($resume->job_id !== $job->id)
-                              <form method="POST" action="{{ route('resumes.update', [$resume, 'job_id' => $job->id, 'status' => 1]) }}">
-                                {{ csrf_field() }}
-                                {{ method_field('PATCH') }}
-                                <button class="dropdown-item" type="submit" data-toggle="modal" data-target="#confirmModal">{{ $job->name }}</button>
-                              </form>
-                            @endif
-                          @endforeach
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col col-auto">
-                      <div class="btn-group" role="group">
-                        <button style="border-radius: 5px;" id="btnGroupDrop1" type="button" class="btn btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          ...
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                          <a href="{{ route('resumes.show', $resume) }}" class="dropdown-item">刷新</a>
-                          <a href="{{ route('resumes.edit', $resume) }}" class="dropdown-item">编辑</a>
-                          <a href="{{ route('resumes.destroy', $resume) }}" class="dropdown-item">删除</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-            <div class="col col-auto align-self-end" data-html2canvas-ignore="true">
-              <div class="row">
-                <div class="col col-auto">
-                  <form id="collect_form" method="POST" action="{{ route('resumes.operation', [$resume, 'type' => 'collect']) }}">
+            <div class="col col-auto" data-html2canvas-ignore="true">
+              <div class="row row-cols-1 text-right" style="height: 100%; width: 230px;">
+                <div class="col align-self-start">
+                  <form style="display: inline;" id="collect_form" method="POST" action="{{ route('resumes.operation', [$resume, 'type' => 'collect']) }}">
                     {{ csrf_field() }}
                     <a href="javascript:document:collect_form.submit();" class="color-n mr-3">
                       @if ($resume->usersCollect()->count() > 0)
@@ -134,9 +98,7 @@
                       @endif
                     </a>
                   </form>
-                </div>
-                <div class="col col-auto">
-                  <form id="relayForm" method="POST" action="{{ route('resumes.operation', [$resume, 'type' => 'relay']) }}">
+                  <form style="display: inline;" id="relayForm" method="POST" action="{{ route('resumes.operation', [$resume, 'type' => 'relay']) }}">
                     {{ csrf_field() }}
                     <input type="hidden" name="uid">
                     <div class="btn-group" role="group">
@@ -151,14 +113,38 @@
                       </div>
                     </div>
                   </form>
-                  <form hidden method="POST" action="{{ route('resumes.update', [$resume, 'status' => 2]) }}">
-                    {{ csrf_field() }}
-                    {{ method_field('PATCH') }}
-                    <a href="#" class="color-n mr-3">
-                      <img style="margin-bottom: 4px;" src="{{ URL::asset('images/icon_forward.png') }}">
-                      <span>转发</span>
-                    </a>
-                  </form>
+                </div>
+                <div class="col align-self-end">
+                  <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      加入我的职位
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                      @foreach ($jobs as $job)
+                        @if ($resume->job_id !== $job->id)
+                          <form method="POST" action="{{ route('resumes.update', [$resume, 'job_id' => $job->id, 'status' => 1]) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('PATCH') }}
+                            <button class="dropdown-item" type="submit" data-toggle="modal" data-target="#confirmModal">{{ $job->name }}</button>
+                          </form>
+                        @endif
+                      @endforeach
+                    </div>
+                  </div>
+                  <div class="btn-group" role="group">
+                    <button style="border-radius: 5px;" id="btnGroupDrop1" type="button" class="btn btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      编辑
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                      <a href="{{ route('resumes.show', $resume) }}" class="dropdown-item">刷新</a>
+                      @can('update', $resume)
+                        <a href="{{ route('resumes.edit', $resume) }}" class="dropdown-item">修改</a>
+                      @endcan
+                      @can('destroy', $resume)
+                        <a href="{{ route('resumes.destroy', $resume) }}" class="dropdown-item">删除</a>
+                      @endcan
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -235,7 +221,7 @@
           <hr class="divider">
 
           @if ($resume->resumeWorks->count() > 0)
-            <div class="row row-cols-2">
+            <div class="row row-cols-3">
               <div class="col-12">
                 <h5 id="resumeWork">工作经历</h5>
               </div>
@@ -270,13 +256,13 @@
                     {{ $work->job_type_show }}
                   </p>
                 </div>
-                <div class="col-12">
+                <div>
                   <p class="font-size-m">
                     <span class="color-gray">薪资：</span>
                     {{ $work->salary_show }}
                   </p>
                 </div>
-                <div class="col">
+                <div class="col col-12">
                   <p class="font-size-m">
                     <span class="color-gray">工作描述：</span>
                     {{ $work->work_desc }}
@@ -317,7 +303,7 @@
 
           @if ($resume->resumeEdus->count() > 0)
             <hr class="divider">
-            <div class="row row-cols-1">
+            <div class="row row-cols-3">
               <div class="col-12">
                 <h5 id="resumeEduction">教育经历</h5>
               </div>
@@ -328,13 +314,13 @@
                     {{ $eduction->school_name }}（{{ $eduction->duration }}）
                   </p>
                 </div>
-                <div class="col-12">
+                <div class="col">
                   <p class="font-size-m">
                     <span class="color-gray">学历：</span>
                     {{ $eduction->school_level_show }}
                   </p>
                 </div>
-                <div class="col-12">
+                <div class="col">
                   <p class="font-size-m">
                     <span class="color-gray">所学专业：</span>
                     {{ $eduction->major_show }}

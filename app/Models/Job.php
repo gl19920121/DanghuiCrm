@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
+use Auth;
 
 class Job extends Model
 {
@@ -74,7 +76,7 @@ class Job extends Model
             $tab = str_replace('job_', '', $status);
             switch ($tab) {
                 case 'doing':
-                    $scope = $query->where('status', 1);
+                    $scope = $query->whereIn('status', [-1, 1]);
                     break;
                 case 'pause':
                     $scope = $query->where('status', 2);
@@ -103,7 +105,12 @@ class Job extends Model
     public function scopeSearchByName($query, $name)
     {
         if (!empty($name)) {
-            return $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%' . $name . '%');
+            $id = str_replace('PN', '', $name);
+            if (is_numeric($id)) {
+                $query->orWhere('id', $id);
+            }
+            return $query;
         }
     }
 
@@ -137,7 +144,11 @@ class Job extends Model
                 $status = 0;
                 break;
             default:
-                $status = 1;
+                if (Gate::allows('job-not-need-check', Auth::user()->id)) {
+                    $status = 1;
+                } else {
+                    $status = -1;
+                }
                 break;
         }
         $this->attributes['status'] = $status;
@@ -185,7 +196,11 @@ class Job extends Model
 
     public function getLocationAttribute()
     {
-        return json_decode($this->attributes['location']);
+        $location = json_decode($this->attributes['location']);
+        if (!$location->city) {
+            $location->city = $location->province;
+        }
+        return $location;
     }
 
     public function getLocationShowAttribute()

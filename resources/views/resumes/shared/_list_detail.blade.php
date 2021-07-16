@@ -4,12 +4,16 @@
       <div class="resume-list-detail-item">
         <div class="row">
           <div class="col col-2 text-center">
-            <img class="resume-avatar rounded-circle" src="{{ $resume->avatar_url }}">
+            <a href="{{ route('resumes.show', $resume) }}" target="_blank">
+              <img class="resume-avatar rounded-circle" src="{{ $resume->avatar_url }}">
+            </a>
           </div>
           <div class="col">
             <div class="row color-dark apart">
               <div class="col col-auto">
-                {{ $resume->name }}
+                <a href="{{ route('resumes.show', $resume) }}" target="_blank">
+                  {{ $resume->name }}
+                </a>
               </div>
               <div class="col col-auto">
                 {{ $resume->sex }}
@@ -64,12 +68,12 @@
             <p class="color-light-gray">{{ $resume->updated_at }}</p>
           </div>
           <div class="col">
-            <a href="javasrcipt:void(0)" class="btn btn-light">期望城市：{{ $resume->exp_location_show }}</a>
-            <a href="javasrcipt:void(0)" class="btn btn-light">期望职位：{{ $resume->exp_position_show }}</a>
-            <a href="javasrcipt:void(0)" class="btn btn-light">求职者状态：{{ $resume->jobhunter_status_show }}</a>
+            <a style="cursor: default;" class="btn btn-light">期望城市：{{ $resume->exp_location_show }}</a>
+            <a style="cursor: default;" class="btn btn-light">期望职位：{{ $resume->exp_position_show }}</a>
+            <a style="cursor: default;" class="btn btn-light">求职者状态：{{ $resume->jobhunter_status_show }}</a>
           </div>
           <div class="col col-auto">
-            <a class="btn btn-danger mr-2" href="{{ route('resumes.show', $resume) }}">查看简历</a>
+            <a hidden class="btn btn-danger mr-2" href="{{ route('resumes.show', $resume) }}">查看简历</a>
             <div class="btn-group" role="group">
               <button id="addToMyJob" type="button" class="btn dropdown-toggle btn-dropdown btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 加入我的职位

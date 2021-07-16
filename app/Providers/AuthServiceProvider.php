@@ -15,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
         \App\Models\User::class => \App\Policies\UserPolicy::class,
+        \App\Models\Resume::class => \App\Policies\ResumePolicy::class,
     ];
 
     /**
@@ -33,7 +34,10 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // Gate
-        Gate::define('see-management', function ($user) {
+        Gate::define('rpo-manager', function ($user) {
+            return $user->inRole('rpo', 1);
+        });
+        Gate::define('job-not-need-check', function ($user) {
             return $user->inRole('rpo', 1);
         });
     }

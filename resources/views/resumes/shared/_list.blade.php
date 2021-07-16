@@ -39,12 +39,16 @@
         </div>
         <div class="row">
           <div class="col col-auto">
-            <img class="resume-avatar rounded-circle" src="{{ $resume->avatar_url }}">
+            <a href="{{ route('resumes.show', $resume) }}" target="_blank">
+              <img class="resume-avatar rounded-circle" src="{{ $resume->avatar_url }}">
+            </a>
           </div>
           <div class="col">
             <div class="row apart">
               <div class="col col-auto">
-                {{ $resume->name }}
+                <a href="{{ route('resumes.show', $resume) }}" target="_blank">
+                  {{ $resume->name }}
+                </a>
               </div>
               <div class="col col-auto">
                 {{ $resume->sex }}

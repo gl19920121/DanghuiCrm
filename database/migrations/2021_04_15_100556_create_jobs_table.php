@@ -28,8 +28,8 @@ class CreateJobsTable extends Migration
             $table->integer('age_max')->comment('最高年龄');
             $table->enum('education', ['unlimited', 'high_schoo', 'junior', 'undergraduate', 'master', 'doctor'])->comment('学历要求');
             $table->enum('experience', ['unlimited', 'school', 'fresh_graduates', 'primary', 'middle', 'high', 'expert'])->comment('经验要求');
-            $table->string('duty')->comment('工作职责');
-            $table->string('requirement')->comment('任职要求');
+            $table->text('duty')->comment('工作职责');
+            $table->text('requirement')->comment('任职要求');
             $table->integer('urgency_level')->comment('紧急程度');
             $table->json('channel')->comment('渠道选择');
             $table->string('channel_remark')->nullable()->comment('渠道平台备注');

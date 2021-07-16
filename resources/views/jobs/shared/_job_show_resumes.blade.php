@@ -19,7 +19,9 @@
   <tbody>
     @foreach($resumes as $resume)
       <tr>
-        <td class="color-red">{{ $resume->name }}</td>
+        <td>
+          <a href="{{ route('resumes.show', $resume) }}" target="_blank" class="color-red">{{ $resume->name }}</a>
+        </td>
         @if ($tab === 'untreated')
           <td>{{ $resume->status }}</td>
         @endif

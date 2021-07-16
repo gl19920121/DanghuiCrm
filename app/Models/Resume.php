@@ -491,6 +491,9 @@ class Resume extends Model
         $source = $this->source;
 
         foreach ($source as $index => $value) {
+            if (!isset(trans('db.channel')[$value])) {
+                continue;
+            }
             $source[$index] = trans('db.channel')[$value];
             if (in_array($value, trans('db.channel_remark')) && !empty($this->attributes['source_remarks'])) {
                 $source[$index] .= sprintf('（%s）', $this->attributes['source_remarks']);

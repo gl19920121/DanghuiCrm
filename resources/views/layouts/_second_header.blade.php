@@ -6,7 +6,7 @@
           @case ('jobs')
             <li class="nav-item">
               <a class=" nav-link {{ in_array(Route::currentRouteName(), ['jobs.create', 'jobs.edit']) ? 'active': '' }}"" href="{{ route('jobs.create') }}">
-                发职位
+                发布职位
               </a>
             </li>
             <li class="nav-item">

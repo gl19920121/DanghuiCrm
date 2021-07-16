@@ -906,6 +906,10 @@ class ResumesController extends Controller
 
                         $query->orWhere('major', 'like', $like);
                     }
+                    $id = str_replace('RE', '', $request->all);
+                    if (is_numeric($id)) {
+                        $query->orWhere('id', $id);
+                    }
                 }
             })
             ->where(function ($query) use($request) {

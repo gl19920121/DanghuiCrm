@@ -53,9 +53,13 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col align-self-center">
-                    <img src="{{ URL::asset('images/edit.png') }}">
-                    <a href="{{ route('users.edit', [$user, 'part' => 'account']) }}">编辑</a>
+                  <div class="col align-self-start">
+                    <div class="row align-items-center" style="margin-top: 27px; height: 80px;">
+                      <div class="col">
+                        <img style="margin-bottom: 1px;" src="{{ URL::asset('images/edit.png') }}">
+                        <a href="{{ route('users.edit', [$user, 'part' => 'account']) }}">编辑</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <hr class="divider">
@@ -105,9 +109,13 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col align-self-center">
-                    <img style="margin-bottom: 1px;" src="{{ URL::asset('images/edit.png') }}">
-                    <a href="{{ route('users.edit', [$user, 'part' => 'user']) }}">编辑</a>
+                  <div class="col align-self-start">
+                    <div class="row align-items-center" style="margin-top: 27px;">
+                      <div class="col">
+                        <img style="margin-bottom: 1px;" src="{{ URL::asset('images/edit.png') }}">
+                        <a style="line-height: 21px;" href="{{ route('users.edit', [$user, 'part' => 'user']) }}">编辑</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
             </form>
