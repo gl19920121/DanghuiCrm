@@ -65,7 +65,7 @@
         </div>
         <div class="row">
           <div class="col col-2 text-center">
-            <p class="color-light-gray">{{ $resume->updated_at }}</p>
+            <p class="color-light-gray">{{ $resume->created_at }}</p>
           </div>
           <div class="col">
             <a style="cursor: default;" class="btn btn-light">期望城市：{{ $resume->exp_location_show }}</a>
@@ -83,7 +83,7 @@
                   {{ csrf_field() }}
                   @foreach ($jobs as $job)
                     @if ($resume->job_id !== $job->id)
-                      <button type="submit" form="formToJob" formaction="{{ route('resumes.add.job', [$resume, 'job_id' => $job->id, 'status' => 1]) }}" class="dropdown-item">{{ $job->name }}</button>
+                      <button type="submit" form="formToJob" formaction="{{ route('resumes.add.job', [$resume, 'job_id' => $job->id]) }}" class="dropdown-item">{{ $job->name }}</button>
                     @endif
                   @endforeach
                 </form>

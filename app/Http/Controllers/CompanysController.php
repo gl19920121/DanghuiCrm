@@ -28,7 +28,9 @@ class CompanysController extends Controller
                 if (!empty($request->company_name)) {
                     $query->where('name', 'like', '%'.$request->company_name.'%');
                 }
-            });
+            })
+            ->orderBy('created_at', 'desc')
+        ;
         $companys = $companys->paginate($this->pageSize);
 
         $appends = [

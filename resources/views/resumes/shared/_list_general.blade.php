@@ -48,7 +48,7 @@
                     {{ csrf_field() }}
                     @foreach ($jobs as $job)
                       @if ($resume->job_id !== $job->id)
-                        <button type="submit" form="formToJob" formaction="{{ route('resumes.add.job', [$resume, 'job_id' => $job->id, 'status' => 1]) }}" class="dropdown-item">{{ $job->name }}</button>
+                        <button type="submit" form="formToJob" formaction="{{ route('resumes.add.job', [$resume, 'job_id' => $job->id]) }}" class="dropdown-item">{{ $job->name }}</button>
                       @endif
                     @endforeach
                   </form>

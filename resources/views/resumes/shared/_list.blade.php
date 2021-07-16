@@ -16,10 +16,10 @@
                   浏览时间：{{ $resume->usersSeen->first()->pivot->updated_at }}
                   @break
                 @case ('apply')
-                  应聘时间：{{ $resume->updated_at }}
+                  应聘时间：{{ $resume->deliver_at }}
                   @break
                 @case ('commission')
-                  委托时间：{{ $resume->updated_at }}
+                  委托时间：{{ $resume->deliver_at }}
                   @break
                 @case ('collect')
                   收藏时间：{{ $resume->usersCollect->first()->pivot->created_at }}
@@ -27,8 +27,8 @@
                 @case ('seenmy')
                   查看时间：{{ $resume->updated_at }}
                   @break
-                @case ('relay')
-                  转发时间：{{ $resume->created_at }}
+                @case ('accept')
+                  转发时间：{{ $resume->usersAccept->first()->pivot->created_at }}
                   @break
 
                 @default

@@ -131,7 +131,7 @@ class ResumesController extends Controller
 
             $resumes = $resumes->with(['resumeEdus' => function($query) {
                 $query->where('is_not_end', 0)->orderBy('end_at', 'desc');
-            }])->paginate($this->pageSize);
+            }])->orderBy('updated_at', 'desc')->orderBy('deliver_at', 'desc')->paginate($this->pageSize);
 
             $tab = isset($request->tab) ? $request->tab : 'detail';
         }
@@ -207,9 +207,15 @@ class ResumesController extends Controller
             case 'all':
                 $resumes->has('user');
                 $resumes->where('status', '!=', 0);
+                $resumes->orderBy('updated_at', 'desc');
                 break;
             case 'seen':
-                $resumes->whereHas('usersSeen', function ($query) use ($request) {
+                $resumes
+                ->select('*', 'resumes.id as id', 'resumes.created_at as created_at', 'resumes.updated_at as updated_at')
+                ->leftJoin('resume_user', 'resumes.id', 'resume_user.resume_id')
+                ->where('resume_user.user_id', Auth::user()->id)
+                ->where('resume_user.type', 'seen')
+                ->whereHas('usersSeen', function ($query) use ($request) {
                     if (!empty($request->start_at)) {
                         $query->whereRaw('date(resume_user.updated_at) >= "' . $request->start_at . '"');
                     }
@@ -217,9 +223,15 @@ class ResumesController extends Controller
                         $query->whereRaw('date(resume_user.updated_at) <= "' . $request->end_at . '"');
                     }
                 });
+                $resumes->orderBy('resume_user.updated_at', 'desc');
                 break;
             case 'collect':
-                $resumes->whereHas('usersCollect', function ($query) use ($request) {
+                $resumes
+                ->select('*', 'resumes.id as id', 'resumes.created_at as created_at', 'resumes.updated_at as updated_at')
+                ->leftJoin('resume_user', 'resumes.id', 'resume_user.resume_id')
+                ->where('resume_user.user_id', Auth::user()->id)
+                ->where('resume_user.type', 'collect')
+                ->whereHas('usersCollect', function ($query) use ($request) {
                     if (!empty($request->start_at)) {
                         $query->whereRaw('date(resume_user.updated_at) >= "' . $request->start_at . '"');
                     }
@@ -227,6 +239,7 @@ class ResumesController extends Controller
                         $query->whereRaw('date(resume_user.updated_at) <= "' . $request->end_at . '"');
                     }
                 });
+                $resumes->orderBy('resume_user.created_at', 'desc');
                 break;
             case 'apply':
             case 'commission':
@@ -239,9 +252,18 @@ class ResumesController extends Controller
                         $query->whereRaw('date(updated_at) <= "' . $request->end_at . '"');
                     }
                 });
+                $resumes->orderBy('deliver_at', 'desc');
                 break;
             case 'accept':
-                $resumes->whereHas('usersAccept', function ($query) use ($request) {
+                $resumes
+                ->select('*', 'resumes.id as id', 'resumes.created_at as created_at', 'resumes.updated_at as updated_at')
+                ->leftJoin('resume_user', 'resumes.id', 'resume_user.resume_id')
+                ->where('resume_user.user_id', Auth::user()->id)
+                ->where('resume_user.type', 'accept')
+                // ->rightJoin('resume_user', function ($join) {
+                //     $join->on('resumes.id', '=', 'resume_user.resume_id')->on(Auth::user()->id, '=', 'resume_user.user_id');
+                // })
+                ->whereHas('usersAccept', function ($query) use ($request) {
                     if (!empty($request->start_at)) {
                         $query->whereRaw('date(resume_user.updated_at) >= "' . $request->start_at . '"');
                     }
@@ -249,6 +271,7 @@ class ResumesController extends Controller
                         $query->whereRaw('date(resume_user.updated_at) <= "' . $request->end_at . '"');
                     }
                 });
+                $resumes->orderBy('resume_user.created_at', 'desc');
                 break;
 
             default:
@@ -291,6 +314,7 @@ class ResumesController extends Controller
             ->with(['resumeWorks' => function($query) {
                 $query->orderBy('end_at', 'desc');
             }])
+            ->orderBy('created_at', 'desc')
         ;
 
         if ($request->hide_get === 'on') {
@@ -619,9 +643,9 @@ class ResumesController extends Controller
 
     public function addToJob(Resume $resume, Request $request)
     {
-        if ($request->has('job_id') && $request->has('status')) {
+        if ($request->has('job_id')) {
             $resume->job_id = $request->job_id;
-            $resume->status = $request->status;
+            $resume->deliver_at = Carbon::now();
             $resume->save();
         }
 
@@ -884,7 +908,6 @@ class ResumesController extends Controller
             $hasAll = true;
             $allLikes = $this->formatLikeKey($request->all);
         }
-        // dd($allLikes);
 
         return Resume::
             where(function ($query) use($request) {

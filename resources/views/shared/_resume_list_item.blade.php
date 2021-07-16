@@ -4,7 +4,7 @@
       <p class="color-light-gray font-size-s">ID:{{ $resume->no }}</p>
     </div>
     <div class="col col-auto">
-      <p class="color-light-gray font-size-s">投递时间：{{ $resume->updated_at }}</p>
+      <p class="color-light-gray font-size-s">投递时间：{{ $resume->deliver_at }}</p>
     </div>
   </div>
   <div class="row">

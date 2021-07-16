@@ -78,7 +78,7 @@
                                             @case ('seenmy')
                                                 看过我的人
                                                 @break
-                                            @case ('relay')
+                                            @case ('accept')
                                                 转发的简历
                                                 @break
                                         @endswitch

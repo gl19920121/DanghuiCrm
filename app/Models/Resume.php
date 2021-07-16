@@ -48,12 +48,12 @@ class Resume extends Model
 
     public function usersAccept()
     {
-        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'accept');
+        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'accept')->withTimestamps();
     }
 
     public function usersRelay()
     {
-        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'relay');
+        return $this->belongsToMany(User::class)->wherePivot('user_id', Auth::user()->id)->wherePivot('type', 'relay')->withTimestamps();
     }
 
     public function job()
@@ -191,6 +191,15 @@ class Resume extends Model
         }
 
         return $status;
+    }
+
+    public function getDeliverAtAttribute()
+    {
+        $deliverAt = $this->attributes['deliver_at'];
+        if (empty($deliverAt)) {
+            $deliverAt = $this->updated_at;
+        }
+        return $deliverAt;
     }
 
     private $arrFormat = [

@@ -39,7 +39,7 @@
                 <td>{{ $company->scale_show }}</td>
                 <td>{{ $company->nature_show }}</td>
                 <td class="color-red">{{ $company->jobs_count }}</td>
-                <td>{{ $company->updated_at }}</td>
+                <td>{{ $company->created_at }}</td>
                 <td>
                   <div class="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

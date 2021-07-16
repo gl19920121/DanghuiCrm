@@ -28,6 +28,8 @@ class GeneralsController extends Controller
             ->withCount(['resumes' => function ($query) {
                 $query->active();
             }])
+            ->orderBy('resumes_count', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate($this->pageSize, ['*'], 'jpage');
         $newJobs = Job::doing()->executeUser(Auth::user()->id)
             ->whereHas('resumes', function ($query) {
@@ -36,6 +38,8 @@ class GeneralsController extends Controller
             ->withCount(['resumes' => function ($query) {
                 $query->new();
             }])
+            ->orderBy('resumes_count', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate($this->pageSize, ['*'], 'njpage');
         $newResumes = Resume::new()
             ->whereHas('job', function ($query) {
@@ -53,6 +57,7 @@ class GeneralsController extends Controller
                     $query->orderBy('end_at', 'desc');
                 }
             ])
+            ->orderBy('deliver_at', 'desc')
             ->paginate($this->pageSize, ['*'], 'nrpage');
 
         $list = [
