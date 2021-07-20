@@ -46,8 +46,8 @@
                       操作
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                      <a class="dropdown-item" href="#">刷新</a>
-                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#companyEditModal" data-item="{{ ($company) }}" onclick="@php $curCompany = $company @endphp">修改</a>
+                      <a class="dropdown-item" href="{{ route('companys.list') }}">刷新</a>
+                      <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#companyEditModal" data-item="{{ ($company) }}">修改</a>
                       <form method="POST" action="{{ route('companys.destroy', $company) }}">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}

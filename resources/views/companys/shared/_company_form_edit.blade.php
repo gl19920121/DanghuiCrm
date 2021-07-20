@@ -1,27 +1,27 @@
-@if (isset($curCompany))
 <div class="default-form">
   <div class="form-body">
-    <form class="text-center" method="POST" action="{{ route('companys.update', $curCompany) }}" enctype="multipart/form-data">
+    <form id="companyEditForm" class="text-center" method="POST" enctype="multipart/form-data">
       {{ csrf_field() }}
       {{ method_field('PATCH') }}
+      <input type="hidden" name="">
         <div class="form-group form-inline">
             <label for="name"><span>*</span>公司名称：</label>
-            <input type="text" name="name" value="{{ $curCompany->name }}" class="form-control middle" placeholder="请填写企业全称">
+            <input type="text" name="name" class="form-control middle" placeholder="请填写企业全称">
         </div>
         <div class="form-group form-inline">
             <label for="nickname">对外显示名称：</label>
-            <input type="text" name="nickname" class="form-control middle" value="{{ $curCompany->nickname }}" placeholder="展示给求职者" autocomplete="off">
+            <input type="text" name="nickname" class="form-control middle" placeholder="展示给求职者" autocomplete="off">
         </div>
         <div class="form-group form-inline">
             <label for="industry">所属行业：</label>
             <div class="input-group" data-toggle="industrypicker">
 
-              <input type="hidden" name="industry[st]" value="{{ $curCompany->industry['st'] }}">
-              <input type="hidden" name="industry[nd]" value="{{ $curCompany->industry['nd'] }}">
-              <input type="hidden" name="industry[rd]" value="{{ $curCompany->industry['rd'] }}">
-              <input type="hidden" name="industry[th]" value="{{ $curCompany->industry['th'] }}">
+              <input type="hidden" name="industry[st]">
+              <input type="hidden" name="industry[nd]">
+              <input type="hidden" name="industry[rd]">
+              <input type="hidden" name="industry[th]">
 
-              <input id="industry" type="text" class="form-control middle-append append" value="{{ $curCompany->industry['th'] }}" placeholder="请选择" autocomplete="off">
+              <input id="industry" type="text" class="form-control middle-append append" placeholder="请选择" autocomplete="off">
               <div class="input-group-append" data-toggle="modal" data-target="#industryModal">
                 <span class="input-group-text" id="basic-addon2">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -35,24 +35,21 @@
         <div class="form-group form-inline">
             <label for="location"><span>*</span>所在地：</label>
             <div data-toggle="distpicker" class="">
-              <select class="form-control mini" name="location[province]" data-province="{{ $curCompany->location['province'] }}"></select>
-              <select class="form-control mini" name="location[city]" data-city="{{ $curCompany->location['city'] }}"></select>
-              <select class="form-control mini" name="location[district]"  data-district="{{ $curCompany->location['district'] }}"></select>
+              <select class="form-control mini" name="location[province]"></select>
+              <select class="form-control mini" name="location[city]"></select>
+              <select class="form-control mini" name="location[district]"></select>
             </div>
         </div>
         <div class="form-group form-inline">
             <label for="address">公司详细地址：</label>
-            <input type="text" name="address" class="form-control middle" value="{{ $curCompany->address }}" placeholder="请填写" autocomplete="off">
+            <input type="text" name="address" class="form-control middle" placeholder="请填写" autocomplete="off">
         </div>
         <div class="form-group form-inline">
             <label for="nature">企业性质：</label>
             <select name="nature" class="form-control middle">
               <option hidden value="">请选择</option>
                 @foreach (trans('db.company.nature') as $key => $nature)
-                    <option value="{{ $key }}"
-                    @if ($curCompany->nature == $key)
-                      selected
-                    @endif>
+                    <option value="{{ $key }}">
                       {{ $nature }}
                     </option>
                 @endforeach
@@ -63,10 +60,7 @@
             <select name="scale" class="form-control middle">
               <option hidden value="">请选择</option>
                 @foreach (trans('db.company.scale') as $key => $scale)
-                    <option value="{{ $key }}"
-                    @if ($curCompany->scale === $key)
-                      selected
-                    @endif>
+                    <option value="{{ $key }}">
                       {{ $scale }}
                     </option>
                 @endforeach
@@ -77,10 +71,7 @@
             <select name="investment" class="form-control middle">
               <option hidden value="">请选择</option>
                 @foreach (trans('db.company.investment') as $key => $investment)
-                    <option value="{{ $key }}"
-                    @if ($curCompany->investment == $key)
-                      selected
-                    @endif>
+                    <option value="{{ $key }}">
                       {{ $investment }}
                     </option>
                 @endforeach
@@ -96,7 +87,7 @@
         </div>
         <div class="form-group form-inline">
             <label for="introduction">企业介绍：</label>
-            <textarea name="introduction" class="form-control middle" placeholder="突出企业亮点">{{ $curCompany->introduction }}</textarea>
+            <textarea name="introduction" class="form-control middle" placeholder="突出企业亮点"></textarea>
         </div>
         <p class="color-silvery-gray">修改企业信息后，该企业下所有职位会统一更新</p>
         <button type="submit" class="btn btn-danger btn-form-submit">保存企业信息</button>
@@ -104,7 +95,6 @@
     </form>
   </div>
 </div>
-@endif
 
 <script type="text/javascript">
   $('#companyEditModal').on('show.bs.modal', function (e) {
@@ -115,6 +105,7 @@
     }
 
     var company = JSON.parse(data);
+    $('form#companyEditForm').attr('action', '{{ env('APP_URL') }}/companys/' + company.id);
     $('input[name=name]').val(company.name);
     $('input[name=nickname]').val(company.nickname);
     var industry = company.industry;
