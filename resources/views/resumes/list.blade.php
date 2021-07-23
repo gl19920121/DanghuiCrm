@@ -71,7 +71,8 @@
                                 @break;
                               @endif
                               <div class="col col-auto mb-3">
-                                <div class="cur-jobs font-size-m mr-4 p-1" onclick="searchByCurJob('{{ $job }}', '{{ $job->company->name }}')">
+                                <!-- name, location, experience, education, age_min, age_max,  -->
+                                <div class="cur-jobs font-size-m mr-4 p-1" onclick="searchByCurJob('{{ $job->name }}', '{{ json_encode($job->location) }}', '{{ $job->experience }}', '{{ $job->education }}', '{{ $job->age_min }}', '{{ $job->age_max }}', '{{ $job->company->name }}')">
                                   <p class="text-truncate m-1" title="{{ sprintf('%s | %s | %s', $job->company->name, $job->location_show, $job->salary_show) }}">
                                     <span>{{ $job->name }}</span>
                                     <span class="color-silvery-gray text-truncate">（{{ $job->company->name }} | </span>
@@ -392,26 +393,27 @@
     $('#resumeSearchForm').submit();
   }
 
-  function searchByCurJob(jobInfo, companyName)
+  function searchByCurJob(name, location, experience, education, age_min, age_max, companyName)
   {
-    let job = JSON.parse(jobInfo);
+    // let job = JSON.parse(jobInfo);
     isSubmit = false;
 
-    $('input[name="job_name"]').val(job.name);
+    $('input[name="job_name"]').val(name);
     $('input[name="company_name"]').val(companyName);
 
-    $('select[name="location[province]"]').val(job.location.province);
+    location = JSON.parse(location);
+    $('select[name="location[province]"]').val(location.province);
     $('select[name="location[province]"]').trigger("change");
-    $('select[name="location[city]"]').val(job.location.city);
+    $('select[name="location[city]"]').val(location.city);
     $('select[name="location[city]"]').trigger("change");
-    $('select[name="location[district]"]').val(job.location.district);
+    $('select[name="location[district]"]').val(location.district);
     $('select[name="location[district]"]').trigger("change");
 
-    $('select[name="experience"]').val(job.experience);
-    $('select[name="education"]').val(job.education);
+    $('select[name="experience"]').val(experience);
+    $('select[name="education"]').val(education);
 
-    $('input[name="age_min"]').val(job.age_min);
-    $('input[name="age_max"]').val(job.age_max);
+    $('input[name="age_min"]').val(age_min);
+    $('input[name="age_max"]').val(age_max);
 
     submitResumeSearchForm();
   }
