@@ -231,7 +231,13 @@ class Job extends Model
         foreach ($channel as $index => $value) {
             $channel[$index] = trans('db.channel')[$value];
             if (in_array($value, trans('db.channel_remark')) && !empty($this->attributes['channel_remark'])) {
-                $channel[$index] .= sprintf('（%s）', $this->attributes['channel_remark']);
+                $channelRemark = $this->attributes['channel_remark'];
+                if ( isset( trans('db.source_remarks')[$channelRemark] )) {
+                    $remarks = trans('db.source_remarks')[$channelRemark];
+                } else {
+                    $remarks = $channelRemark;
+                }
+                $channel[$index] .= sprintf('（%s）', $remarks);
             }
         }
 

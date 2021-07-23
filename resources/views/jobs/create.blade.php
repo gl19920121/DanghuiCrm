@@ -327,7 +327,22 @@
                             <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel }}</label>
                         </div>
                     @endforeach
-                    <input style="visibility: hidden;" type="text" name="channel_remark" class="form-control" id="channelRemark" placeholder="请选择招聘平台" value="{{ isset($oldData['channel_remark']) ? $oldData['channel_remark'] : old('channel_remark') }}">
+                    <select id="channelRemark" name="channel_remark" class="form-control must @if($errors->has('channel_remark')) border-danger @endif"
+                    @if (!isset(old('source')['other_platform']))
+                      style="visibility: hidden;"
+                    @endif>
+                      <option hidden value="">请选择</option>
+                      @foreach (trans('db.source_remarks') as $key => $sourceRemarks)
+                        <option value="{{ $key }}"
+                        @if (old('channel_remark') === $key)
+                          selected
+                        @elseif (isset($oldData['channel_remark']) && $oldData['channel_remark'] === $key)
+                          selected
+                        @endif>
+                          {{ $sourceRemarks }}
+                        </option>
+                      @endforeach
+                    </select>
                 </div>
                 <div class="form-group form-inline">
                   <label for="deadline"><span class="color-red">*</span>截止日期：</label>
@@ -383,7 +398,7 @@
 
     var natureArr = JSON.parse('{!! json_encode(trans("db.company.nature")) !!}');
     if (natureArr.hasOwnProperty(company.nature)) {
-      var natureShow = natureArr[company.nature].text;
+      var natureShow = natureArr[company.nature];
     } else {
       var natureShow = '无';
     }
@@ -391,7 +406,7 @@
 
     var scaleArr = JSON.parse('{!! json_encode(trans("db.company.scale")) !!}');
     if (scaleArr.hasOwnProperty(company.scale)) {
-      var scaleShow = scaleArr[company.scale].text;
+      var scaleShow = scaleArr[company.scale];
     } else {
       var scaleShow = '无';
     }

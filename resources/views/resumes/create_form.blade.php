@@ -871,9 +871,9 @@
             </div>
           @endforeach
           <select id="channelRemark" name="source_remarks" class="form-control must @if($errors->has('source_remarks')) border-danger @endif"
-            @if (!isset(old('source')['other_platform']))
-              style="visibility: hidden;"
-            @endif>
+          @if (!isset(old('source')['other_platform']))
+            style="visibility: hidden;"
+          @endif>
             <option hidden value="">请选择</option>
             @foreach (trans('db.source_remarks') as $key => $sourceRemarks)
               <option value="{{ $key }}"
