@@ -82,6 +82,7 @@ class JobsController extends Controller
             ->searchByName($request->input('name', ''))
             ->searchByUrgencyLevel($request->input('urgency_level', ''))
             ->searchByChannel($request->input('channel', ''))
+            ->orderBy('status', 'desc')
             ->orderBy('resumes_count', 'desc')
             ->orderBy('updated_at', 'desc')
             ->paginate($this->pageSize);

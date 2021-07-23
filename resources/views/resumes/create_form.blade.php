@@ -238,7 +238,7 @@
             <div class="input-group-append">
               <div class="input-group-text">月</div>
             </div>
-            </div>
+          </div>
         </div>
 
         <div class="form-title text-left">
@@ -870,11 +870,22 @@
                 <label class="custom-control-label" for="channel_{{ $key }}">{{ $channel }}</label>
             </div>
           @endforeach
-          <input type="text" name="source_remarks" value="{{ old('source_remarks') }}" class="form-control" id="channelRemark" placeholder="请选择招聘平台"
-          @if (!isset(old('source')['other_platform']))
-            style="visibility: hidden;"
-          @endif
-          >
+          <select id="channelRemark" name="source_remarks" class="form-control must @if($errors->has('source_remarks')) border-danger @endif"
+            @if (!isset(old('source')['other_platform']))
+              style="visibility: hidden;"
+            @endif>
+            <option hidden value="">请选择</option>
+            @foreach (trans('db.source_remarks') as $key => $sourceRemarks)
+              <option value="{{ $key }}"
+              @if (old('source_remarks') === $key)
+                selected
+              @elseif ($resume['source_remarks'] === $key)
+                selected
+              @endif>
+                {{ $sourceRemarks }}
+              </option>
+            @endforeach
+          </select>
         </div>
         <div class="form-group form-inline">
           <label for="job_id">
@@ -886,8 +897,7 @@
               <option value="{{ $job->id }}"
               @if (old('job_id') == $job->id)
                 selected
-              @endif
-              >
+              @endif>
                 {{ $job->name }}
               </option>
             @endforeach

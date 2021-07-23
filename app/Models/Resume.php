@@ -505,7 +505,13 @@ class Resume extends Model
             }
             $source[$index] = trans('db.channel')[$value];
             if (in_array($value, trans('db.channel_remark')) && !empty($this->attributes['source_remarks'])) {
-                $source[$index] .= sprintf('（%s）', $this->attributes['source_remarks']);
+                $sourceRemarks = $this->attributes['source_remarks'];
+                if ( isset( trans('db.source_remarks')[$sourceRemarks] )) {
+                    $remarks = trans('db.source_remarks')[$sourceRemarks];
+                } else {
+                    $remarks = $sourceRemarks;
+                }
+                $source[$index] .= sprintf('（%s）', $remarks);
             }
         }
 

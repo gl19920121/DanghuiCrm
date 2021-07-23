@@ -1358,6 +1358,10 @@ a.a-red:hover {
   border: 1px solid #ced4da;
 }
 
+.btn-light:hover {
+  background-color: white;
+}
+
 .btn-dropdown {
   height: 32px;
 }

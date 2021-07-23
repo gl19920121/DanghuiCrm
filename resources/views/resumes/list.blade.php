@@ -66,7 +66,10 @@
                         <form id="curJobs" method="GET" action="{{ route('resumes.list') }}">
                           <input type="hidden" name="job_id">
                           <div class="row row-cols-2">
-                            @foreach ($jobs as $job)
+                            @foreach ($jobs as $index => $job)
+                              @if ($index >= 6)
+                                @break;
+                              @endif
                               <div class="col col-auto mb-3">
                                 <div class="cur-jobs font-size-m mr-4 p-1" onclick="searchByCurJob('{{ $job }}', '{{ $job->company->name }}')">
                                   <p class="text-truncate m-1" title="{{ sprintf('%s | %s | %s', $job->company->name, $job->location_show, $job->salary_show) }}">

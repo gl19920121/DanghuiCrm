@@ -357,7 +357,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                   <a href="{{ route('word.export.resume', $resume) }}" class="dropdown-item">Word</a>
-                  <!-- <a href="{{ route('pdf.export.resume', $resume) }}" class="dropdown-item">PDF</a> -->
+                  <a hidden href="{{ route('pdf.export.resume', $resume) }}" class="dropdown-item">PDF</a>
                   <a href="javascript:void(0)" class="dropdown-item" onclick="resumeScreenshot('capture', 'canvasContainer', 'jpg', '{{ $resume->name }}')">JPG</a>
                   <a hidden href="{{ route('img.export.resume', $resume) }}" class="dropdown-item">JPG</a>
                 </div>

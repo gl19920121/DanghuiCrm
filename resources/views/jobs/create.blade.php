@@ -211,6 +211,13 @@
                             <div class="input-group-text">K</div>
                         </div>
                     </div>
+                    <label class="ml-1 mr-1">*</label>
+                    <div class="input-group">
+                      <input type="text" name="salary_count" class="form-control small append" value="{{ isset($oldData['salary_count']) ? $oldData['salary_count'] : old('salary_count') }}" autocomplete="off" data-type="int">
+                      <div class="input-group-append">
+                        <div class="input-group-text">月</div>
+                      </div>
+                    </div>
                 </div>
                 <div class="form-group form-inline">
                     <label for="welfare"><span class="color-red">*</span>福利待遇：</label>

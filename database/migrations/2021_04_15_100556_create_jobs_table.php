@@ -22,6 +22,7 @@ class CreateJobsTable extends Migration
             $table->json('location')->comment('工作地点');
             $table->integer('salary_min')->comment('最低税前月薪');
             $table->integer('salary_max')->comment('最高税前月薪');
+            $table->integer('salary_count')->nullable()->default(12)->comment('月薪数');
             $table->enum('welfare', ['social_insurance', 'five_social_insurance_and_one_housing_fund', 'four_social_insurance_and_one_housing_fund'])->comment('福利待遇');
             $table->string('sparkle')->nullable()->comment('职位亮点');
             $table->integer('age_min')->comment('最低年龄');

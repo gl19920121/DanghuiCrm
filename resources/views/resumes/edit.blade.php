@@ -691,10 +691,20 @@
                 <label class="custom-control-label" for="source_{{ $key }}">{{ $source }}</label>
             </div>
           @endforeach
-          <input type="text" name="source_remarks" class="form-control" id="channelRemark" placeholder="请选择招聘平台" value="{{ $resume->source_remarks }}"
-          @if (!in_array('other_platform', $resume->source))
-            style="visibility: hidden;"
-          @endif>
+          <select id="channelRemark" name="source_remarks" class="form-control must @if($errors->has('source_remarks')) border-danger @endif"
+            @if (!in_array('other_platform', $resume->source))
+              style="visibility: hidden;"
+            @endif>
+            <option hidden value="">请选择</option>
+            @foreach (trans('db.source_remarks') as $key => $sourceRemarks)
+              <option value="{{ $key }}"
+              @if ($resume->source_remarks === $key)
+                selected
+              @endif>
+                {{ $sourceRemarks }}
+              </option>
+            @endforeach
+          </select>
         </div>
         <div class="form-group form-inline">
           <label for="job_id">

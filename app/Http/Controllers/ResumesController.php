@@ -106,7 +106,7 @@ class ResumesController extends Controller
         $isShow = empty($request->all()) ? false : true;
         $jobId = $request->job_id;
 
-        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->limit(6)->get();
+        $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();
 
         if (!$isShow) {
             $resumes = [];

@@ -107,5 +107,16 @@ return [
         'other_platform' => '其他',
     ],
     'channel_remark' => ['other_platform'],
+    'source_remarks' => [
+        'liepin' => '猎聘',
+        '58zhaopin' => '58招聘',
+        'qianchengwuyou' => '前程无忧',
+        'zhilianzhaopin' => '智联招聘',
+        'bosszhipin' => 'BOSS直聘',
+        'maimai' => '脉脉',
+        'offline_meeting' => '线下会议活动',
+        'partner' => '合作方提供',
+        'other' => '其他',
+    ],
 
 ];

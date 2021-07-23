@@ -1500,6 +1500,10 @@ a.a-red {
   background-color: white;
   color: $color-n;
   border: 1px solid #ced4da;
+
+  &:hover {
+    background-color: white;
+  }
 }
 
 .btn-dropdown {

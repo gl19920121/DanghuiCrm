@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\Resume;
 
 class PdfController extends Controller
 {
@@ -80,6 +81,63 @@ class PdfController extends Controller
 
         //输出PDF
         $fileName = sprintf('%s.pdf', $job->name);
+        $pdf->Output($fileName, 'D'); //I输出、D下载
+    }
+
+    public function exportResume(Resume $resume)
+    {
+        $pdf = new \TCPDF();
+        // 设置文档信息
+        $pdf->SetCreator('当会直聘');
+        $pdf->SetAuthor('当会直聘');
+        $pdf->SetTitle($resume->name);
+        $pdf->SetSubject($resume->name);
+        // $pdf->SetKeywords('TCPDF, PDF, PHP');
+
+        // 设置页眉和页脚信息
+        $pdf->SetHeaderData('', 0, 'www.danghui.com', '当会直聘', [0, 64, 255], [0, 64, 128]);
+        $pdf->setFooterData([0, 64, 0], [0, 64, 128]);
+
+        // 设置页眉和页脚字体
+        $pdf->setHeaderFont(['stsongstdlight', '', '10']);
+        $pdf->setFooterFont(['helvetica', '', '8']);
+
+        // 设置默认等宽字体
+        $pdf->SetDefaultMonospacedFont('courier');
+
+        // 设置间距
+        $pdf->SetMargins(15, 15, 15);//页面间隔
+        $pdf->SetHeaderMargin(5);//页眉top间隔
+        $pdf->SetFooterMargin(10);//页脚bottom间隔
+
+        // 设置分页
+        $pdf->SetAutoPageBreak(true, 25);
+
+        // set default font subsetting mode
+        $pdf->setFontSubsetting(true);
+
+        //设置字体 stsongstdlight支持中文
+        $pdf->SetFont('stsongstdlight', '', 14);
+
+        //第一页
+        $pdf->AddPage();
+        $pdf->Ln(5);
+        $pdf->writeHTML('<h3>个人信息</h3>');
+        $pdf->writeHTML(sprintf('<p>姓名：%s</p>', $resume->name));
+        $pdf->writeHTML(sprintf('<p>求职状态：%s</p>', $resume->jobhunter_status_show));
+        $pdf->writeHTML(sprintf('<p>性别：%s</p>', $resume->sex));
+        $pdf->writeHTML(sprintf('<p>所在城市：%s</p>', $resume->location['city']));
+        $pdf->writeHTML(sprintf('<p>教育程度：%s</p>', $resume->education_show));
+        $pdf->writeHTML(sprintf('<p>工作年限：%s</p>', $resume->work_years_show_long));
+        $pdf->writeHTML(sprintf('<p>所在行业：%s</p>', $resume->cur_industry_show));
+        $pdf->writeHTML(sprintf('<p>所在公司：%s</p>', $resume->cur_company));
+        $pdf->Ln(5);
+
+        //第二页
+        // $pdf->AddPage();
+
+        //输出PDF
+        $fileName = sprintf('%s.pdf', $resume->name);
         $pdf->Output($fileName, 'D'); //I输出、D下载
     }
 }
