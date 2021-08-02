@@ -30,6 +30,8 @@ class CreateUsersTable extends Migration
                 $table->string('city')->nullable()->comment('所在城市');
                 $table->string('introduce')->nullable()->comment('优势介绍');
                 $table->string('avatar')->nullable()->comment('头像');
+                $table->timestamp('login_on')->nullable()->comment('登录时间');
+                $table->timestamp('logout_on')->nullable()->comment('退出时间');
                 $table->rememberToken()->comment('登录状态token'); // 'remember_token' VARCHAR(100) NULL
                 $table->timestamps(); // 'create_at' 'update_at'
                 $table->tinyInteger('status')->nullable()->default(1)->comment('状态');

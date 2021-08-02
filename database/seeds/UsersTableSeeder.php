@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
 {
@@ -38,7 +39,9 @@ class UsersTableSeeder extends Seeder
                 'name' => '姜海洋',
                 'email' => '',
                 'phone' => '',
-                'is_admin' => false
+                'is_admin' => false,
+                'created_at' => Carbon::parse('2 days ago')->toDateTimeString(),
+                'updated_at' => Carbon::parse('2 days ago')->toDateTimeString(),
             ],
             [
                 'account' => 'liruishan',
@@ -47,7 +50,9 @@ class UsersTableSeeder extends Seeder
                 'name' => '李瑞珊',
                 'email' => '',
                 'phone' => '',
-                'is_admin' => false
+                'is_admin' => false,
+                'created_at' => Carbon::parse('-1 weeks')->toDateTimeString(),
+                'updated_at' => Carbon::parse('-1 weeks')->toDateTimeString(),
             ],
             [
                 'account' => 'yucunxiang',

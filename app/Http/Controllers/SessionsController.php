@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use DateTime;
 
 class SessionsController extends Controller
 {
@@ -57,6 +58,9 @@ class SessionsController extends Controller
 
         if(Auth::attempt($credentials, $request->has('remember'))) {
             // session()->flash('result', '成功登录');
+            $user = Auth::user();
+            $user->login_on = new DateTime();
+            $user->save();
             $fallback = route('home');
             return redirect()->intended($fallback);
         } else {
@@ -69,6 +73,9 @@ class SessionsController extends Controller
 
     public function destroy()
     {
+        $user = Auth::user();
+        $user->logout_on = new DateTime();
+        $user->save();
         Auth::logout();
         return redirect('login');
     }
