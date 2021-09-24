@@ -48,7 +48,7 @@
             <tr>
               <td>{{ $job->executeUser->name }}</td>
               <td>{{ $job->no }}</td>
-              <td class="color-red">{{ $job->name }}</td>
+              <td><a class="color-red" href="{{ route('jobs.show', $job) }}" target="_blank">{{ $job->name }}</a></td>
               <td>{{ $job->company->name }}</td>
               <td>{{ $job->channelShow }}</td>
               <td>{{ $job->resumes->count() }}</td>

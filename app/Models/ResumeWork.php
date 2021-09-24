@@ -13,7 +13,9 @@ class ResumeWork extends Model
     protected $casts = [
         'company_industry' => 'array',
         'job_type' => 'array',
-        'is_not_end' => 'boolean'
+        'is_not_end' => 'boolean',
+        // 'start_at' => 'date:Y-m',
+        // 'end_at' => 'date:Y-m',
     ];
 
     private $arrFormat = [

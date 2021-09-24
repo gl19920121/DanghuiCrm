@@ -14,7 +14,7 @@ class Job extends Model
 
     protected $casts = [
         'type' => 'array',
-        'location' => 'array',
+        'location' => 'json',
         'channel' => 'array'
     ];
 
@@ -197,16 +197,43 @@ class Job extends Model
     public function getLocationAttribute()
     {
         $location = json_decode($this->attributes['location']);
-        if (!$location->city) {
-            $location->city = $location->province;
+        if (gettype($location) === 'object') {
+            if (!$location->city) {
+                $location->city = $location->province;
+            }
+        } else if (gettype($location) === 'array') {
+            foreach ($location as $index => $item) {
+                if (!$item->city) {
+                    $location[$index]->city = $item->province;
+                }
+            }
         }
+
         return $location;
+    }
+
+    public function getCityAttribute()
+    {
+        $location = $this->location;
+        if (gettype($location) === 'object') {
+            return $location->city;
+        } else if (gettype($location) === 'array') {
+            return implode('/', array_column($location, 'city'));
+        }
     }
 
     public function getLocationShowAttribute()
     {
-        $location = json_decode($this->attributes['location'], true);
-        return sprintf('%s-%s-%s', $location['province'], $location['city'], $location['district']);
+        $location = $this->location;
+        if (gettype($location) === 'object') {
+            return sprintf('%s-%s-%s', $location->province, $location->city, $location->district);
+        } else if (gettype($location) === 'array') {
+            $arr = [];
+            foreach ($location as $item) {
+                $arr[] = sprintf('%s-%s-%s', $item->province, $item->city, $item->district);
+            }
+            return implode('/', $arr);
+        }
     }
 
     public function getSalaryShowAttribute()

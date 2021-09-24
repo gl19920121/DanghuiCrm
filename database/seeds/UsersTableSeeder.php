@@ -80,6 +80,15 @@ class UsersTableSeeder extends Seeder
                 'email' => '',
                 'phone' => '',
                 'is_admin' => false
+            ],
+            [
+                'account' => 'zhangcong',
+                'password' => bcrypt('zhangcong123!@#'),
+                'nickname' => '张聪',
+                'name' => '张聪',
+                'email' => '',
+                'phone' => '',
+                'is_admin' => false
             ]
         ];
 

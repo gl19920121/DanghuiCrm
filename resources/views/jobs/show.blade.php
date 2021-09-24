@@ -6,6 +6,7 @@
     <div class="row justify-content-between">
       <div class="col-auto">
         <small>职位编号：{{ $job->no }}</small>
+        <small class="ml-4">职位运作：{{ $job->executeUser->name }}</small>
       </div>
       <div class="col-auto">
         <small>更新时间：{{ $job->created_at }}</small>

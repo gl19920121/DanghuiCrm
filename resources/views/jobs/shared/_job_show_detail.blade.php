@@ -40,7 +40,7 @@
             <p class="font-size-m"><span class="color-gray">工作性质：</span>{{ $job->natureShow }}</p>
         </div>
         <div class="col">
-            <p class="font-size-m"><span class="color-gray">工作城市：</span>{{ $job->location->city }}</p>
+            <p class="font-size-m"><span class="color-gray">工作城市：</span>{{ $job->city }}</p>
         </div>
         <div class="col">
             <p class="font-size-m"><span class="color-gray">税前月薪：</span>{{ sprintf('%dK-%dK', $job->salary_min, $job->salary_max) }}</p>

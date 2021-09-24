@@ -34,9 +34,9 @@ class StoreJobPost extends FormRequest
             'type.nd.required' => '请选择 职位类别',
             'type.rd.required' => '请选择 职位类别',
             'nature.required' => '请选择 工作性质',
-            'location.province.required' => '请选择 工作城市',
-            'location.city.required' => '请选择 工作城市',
-            'location.district.required' => '请选择 工作城市',
+            'location.*.province.required' => '请选择 工作城市',
+            'location.*.city.required' => '请选择 工作城市',
+            'location.*.district.required' => '请选择 工作城市',
             'salary_min.required' => '请填写 税前月薪',
             'salary_min.numeric' => '请正确填写 税前月薪',
             'salary_max.required' => '请填写 税前月薪',
@@ -82,9 +82,10 @@ class StoreJobPost extends FormRequest
             'nature' => [
                 'required', Rule::in(array_keys(trans('db.job.nature')))
             ],
-            'location.province' => ['required'],
-            'location.city' => ['required'],
-            'location.district' => ['nullable'],
+            'location.*.province' => ['required'],
+            'location.*.city' => ['required'],
+            'location.*.district' => ['nullable'],
+            'location.*.address' => ['nullable'],
             'salary_min' => ['required', 'string', 'max:11'],
             'salary_max' => ['required', 'string', 'max:11'],
             'welfare' => [

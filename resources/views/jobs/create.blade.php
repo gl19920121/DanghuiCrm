@@ -165,36 +165,52 @@
                     </select>
                 </div>
                 <div class="form-group form-inline">
-                    <label for="location"><span class="color-red">*</span>工作城市：</label>
-                    <div data-toggle="distpicker">
-                      <select class="form-control must @if ($errors->has('location.province')) border-danger @endif" name="location[province]"
-                      @if (isset($oldData['location']['province']))
-                        data-province="{{ $oldData['location']['province'] }}"
-                      @elseif (isset(old('location')['province']))
-                        data-province="{{ old('location')['province'] }}"
-                      @else
-                        data-province="---- 选择省 ----"
-                      @endif
-                      ></select>
-                      <select class="form-control must @if ($errors->has('location.city')) border-danger @endif" name="location[city]"
-                      @if (isset($oldData['location']['city']))
-                        data-city="{{ $oldData['location']['city'] }}"
-                      @elseif (isset(old('location')['city']))
-                        data-city="{{ old('location')['city'] }}"
-                      @else
-                        data-city="---- 选择市 ----"
-                      @endif
-                      ></select>
-                      <select class="form-control must @if ($errors->has('location.district')) border-danger @endif" name="location[district]"
-                      @if (isset($oldData['location']['district']))
-                        data-district="{{ $oldData['location']['district'] }}"
-                      @elseif (isset(old('location')['district']))
-                        data-district="{{ old('location')['district'] }}"
-                      @else
-                        data-district="---- 选择区 ----"
-                      @endif
-                      ></select>
+                  <label for="location"><span class="color-red">*</span>工作地址：</label>
+                  <div id="locations">
+                    <div id="location-0">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <div data-toggle="distpicker">
+                            <select class="form-control must @if ($errors->has('location.province')) border-danger @endif" name="location[0][province]"
+                            @if (isset($oldData['location']['province']))
+                              data-province="{{ $oldData['location']['province'] }}"
+                            @elseif (isset(old('location')['province']))
+                              data-province="{{ old('location')['province'] }}"
+                            @else
+                              data-province="---- 选择省 ----"
+                            @endif
+                            ></select>
+                            <select class="form-control must @if ($errors->has('location.city')) border-danger @endif" name="location[0][city]"
+                            @if (isset($oldData['location']['city']))
+                              data-city="{{ $oldData['location']['city'] }}"
+                            @elseif (isset(old('location')['city']))
+                              data-city="{{ old('location')['city'] }}"
+                            @else
+                              data-city="---- 选择市 ----"
+                            @endif
+                            ></select>
+                            <select class="form-control must @if ($errors->has('location.district')) border-danger @endif" name="location[0][district]"
+                            @if (isset($oldData['location']['district']))
+                              data-district="{{ $oldData['location']['district'] }}"
+                            @elseif (isset(old('location')['district']))
+                              data-district="{{ old('location')['district'] }}"
+                            @else
+                              data-district="---- 选择区 ----"
+                            @endif
+                            ></select>
+                          </div>
+                          <input type="text" style="width: 100%;" name="location[0]['address']" class="form-control must @if ($errors->has('location.address')) border-danger @endif" value="{{ isset($oldData['location']['address']) ? $oldData['location']['address'] : (isset(old('location')['address']) ? old('location')['address'] : '') }}" placeholder="详细地址" />
+                        </div>
+                        <div class="col col-auto">
+                          <a href="javascript:void(0);" onclick="deleteLocation(this)">-删除</a>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                </div>
+                <div class="form-group form-inline">
+                  <label for="btnAdd"></label>
+                  <a href="javascript:void(0);" onclick="addLocation()">+添加</a>
                 </div>
                 <div class="form-group form-inline">
                     <label for="salary"><span class="color-red">*</span>税前月薪：</label>
@@ -373,6 +389,8 @@
 
 <script type="text/javascript">
 
+  var locationsCount = $('#locations').children();
+
   function companySelect()
   {
     var data = $('select option:selected').attr('data-item');
@@ -431,6 +449,77 @@
       $('#channelRemark').css('visibility', 'visible');
     } else {
       $('#channelRemark').css('visibility', 'hidden');
+    }
+  }
+
+  function addLocation()
+  {
+    let location =
+      '<div class="row align-items-center">' +
+        '<div class="col">' +
+          '<div>' + //data-toggle="distpicker"
+            '<select name="location[' + locationsCount + '][province]" class="form-control must' +
+              @if ($errors->has('location.province'))
+                'border-danger' +
+              @endif
+              '" ' +
+              @if (isset($oldData['location']['province']))
+                'data-province="{{ $oldData['location']['province'] }}"' +
+              @elseif (isset(old('location')['province']))
+                'data-province="{{ old('location')['province'] }}"' +
+              @else
+                'data-province="---- 选择省 ----"' +
+              @endif
+            '></select>' +
+            '<select name="location[' + locationsCount + '][city]" class="form-control must' +
+              @if ($errors->has('location.city'))
+                'border-danger' +
+              @endif
+              '" ' +
+              @if (isset($oldData['location']['city']))
+                'data-city="{{ $oldData['location']['city'] }}"' +
+              @elseif (isset(old('location')['city']))
+                'data-city="{{ old('location')['city'] }}"' +
+              @else
+                'data-city="---- 选择市 ----"' +
+              @endif
+            '></select>' +
+            '<select name="location[' + locationsCount + '][district]" class="form-control must' +
+              @if ($errors->has('location.district'))
+                'border-danger' +
+              @endif
+              '" ' +
+              @if (isset($oldData['location']['district']))
+                'data-district="{{ $oldData['location']['district'] }}"' +
+              @elseif (isset(old('location')['district']))
+                'data-district="{{ old('location')['district'] }}"' +
+              @else
+                'data-district="---- 选择区 ----"' +
+              @endif
+            '></select>' +
+          '</div>' +
+          '<input type="text" style="width: 100%;" name="location[' + locationsCount + ']["address"]" class="form-control must' +
+            @if ($errors->has('location.address'))
+              'border-danger' +
+            @endif
+          '" value="{{ isset($oldData['location']['address']) ? $oldData['location']['address'] : (isset(old('location')['address']) ? old('location')['address'] : '') }}" placeholder="详细地址" />' +
+        '</div>' +
+        '<div class="col col-auto">' +
+          '<a href="javascript:void(0);" onclick="deleteLocation(this)">-删除</a>' +
+        '</div>' +
+      '</div>'
+    ;
+    $('#locations').children("div:last-child").after($('<div>').attr('id', 'location-' + locationsCount).addClass('mt-3').html(location).distpicker());
+
+    locationsCount = locationsCount + 1;
+  }
+
+  function deleteLocation(element)
+  {
+    let root = $(element).parent('div.row').parent();
+    if (root.children('div.row').length > 0) {
+      let obj = $(element).parent().parent();
+      obj.remove();
     }
   }
 

@@ -18,11 +18,15 @@ class CreateResumesTable extends Migration
                 $table->increments('id');
                 $table->string('avatar')->nullable()->comment('头像');
                 $table->string('name')->comment('姓名');
+                $table->boolean('is_show_real_name')->default(true)->comment('是否展示真实姓名');
                 $table->enum('sex', ['男', '女', '其他'])->comment('性别');
                 $table->integer('age')->comment('年龄');
+                $table->date('birthday')->nullable()->comment('生日');
+                $table->string('self_introduction')->nullable()->comment('自我介绍');
                 $table->json('location')->comment('所在城市');
                 $table->integer('work_years_flag')->comment('工作年限标识');
                 $table->integer('work_years')->nullable()->comment('工作年限');
+                $table->date('work_at')->nullable()->comment('参加工作时间');
                 $table->enum('education', ['unlimited', 'high_schoo', 'junior', 'undergraduate', 'master', 'doctor'])->comment('教育程度');
                 $table->string('major')->nullable()->comment('所学专业');
                 $table->string('phone_num')->comment('手机号');
@@ -49,7 +53,7 @@ class CreateResumesTable extends Migration
                 $table->string('remark')->nullable()->comment('其他备注');
                 $table->json('source')->comment('来源渠道');
                 $table->string('source_remarks')->nullable()->comment('来源渠道备注');
-                $table->integer('upload_uid')->comment('上传人ID');
+                $table->string('upload_uid')->comment('上传人ID');
                 $table->string('attachment_path')->nullable()->comment('简历文件路径');
                 $table->integer('job_id')->nullable()->comment('职位id')->unsigned();
                 $table->dateTime('deliver_at')->nullable()->comment('投递时间');
