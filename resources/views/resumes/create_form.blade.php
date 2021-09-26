@@ -983,7 +983,7 @@
   }
 
   function addWork()
-  {
+  {z
     let work =
       '<div class="color-red float-right cursor-pointer mr-4" onclick="dropWork(' + worksCount + ')">X</div>' +
         '<div class="form-group form-inline">' +

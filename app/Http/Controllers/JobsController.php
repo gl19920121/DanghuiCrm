@@ -123,7 +123,7 @@ class JobsController extends Controller
             ->with('availableResumes', $availableResumes);
     }
 
-    public function store(StoreJobPost $request)
+    public function store(StoreJobPost $request) //StoreJobPost Request
     {
         // $validated = $request->validated();
         $data = $request->except('draft_id');
@@ -136,6 +136,7 @@ class JobsController extends Controller
         }
         $data['channel'] = array_keys($data['channel']);
         $data['status'] = -1;
+        sort($data['location']);
         $job = Job::create($data);
 
         if (isset($request->draft_id)) {

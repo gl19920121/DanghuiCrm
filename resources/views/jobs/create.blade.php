@@ -202,7 +202,7 @@
                           <input type="text" style="width: 100%;" name="location[0]['address']" class="form-control must @if ($errors->has('location.address')) border-danger @endif" value="{{ isset($oldData['location']['address']) ? $oldData['location']['address'] : (isset(old('location')['address']) ? old('location')['address'] : '') }}" placeholder="详细地址" />
                         </div>
                         <div class="col col-auto">
-                          <a href="javascript:void(0);" onclick="deleteLocation(this)">-删除</a>
+                          <a href="javascript:void(0);" onclick="deleteLocation(0)">-删除</a>
                         </div>
                       </div>
                     </div>
@@ -389,7 +389,7 @@
 
 <script type="text/javascript">
 
-  var locationsCount = $('#locations').children();
+  var locationsCount = $('#locations').children().length;
 
   function companySelect()
   {
@@ -454,73 +454,41 @@
 
   function addLocation()
   {
-    let location =
-      '<div class="row align-items-center">' +
-        '<div class="col">' +
-          '<div>' + //data-toggle="distpicker"
-            '<select name="location[' + locationsCount + '][province]" class="form-control must' +
-              @if ($errors->has('location.province'))
-                'border-danger' +
-              @endif
-              '" ' +
-              @if (isset($oldData['location']['province']))
-                'data-province="{{ $oldData['location']['province'] }}"' +
-              @elseif (isset(old('location')['province']))
-                'data-province="{{ old('location')['province'] }}"' +
-              @else
-                'data-province="---- 选择省 ----"' +
-              @endif
-            '></select>' +
-            '<select name="location[' + locationsCount + '][city]" class="form-control must' +
-              @if ($errors->has('location.city'))
-                'border-danger' +
-              @endif
-              '" ' +
-              @if (isset($oldData['location']['city']))
-                'data-city="{{ $oldData['location']['city'] }}"' +
-              @elseif (isset(old('location')['city']))
-                'data-city="{{ old('location')['city'] }}"' +
-              @else
-                'data-city="---- 选择市 ----"' +
-              @endif
-            '></select>' +
-            '<select name="location[' + locationsCount + '][district]" class="form-control must' +
-              @if ($errors->has('location.district'))
-                'border-danger' +
-              @endif
-              '" ' +
-              @if (isset($oldData['location']['district']))
-                'data-district="{{ $oldData['location']['district'] }}"' +
-              @elseif (isset(old('location')['district']))
-                'data-district="{{ old('location')['district'] }}"' +
-              @else
-                'data-district="---- 选择区 ----"' +
-              @endif
-            '></select>' +
-          '</div>' +
-          '<input type="text" style="width: 100%;" name="location[' + locationsCount + ']["address"]" class="form-control must' +
-            @if ($errors->has('location.address'))
-              'border-danger' +
-            @endif
-          '" value="{{ isset($oldData['location']['address']) ? $oldData['location']['address'] : (isset(old('location')['address']) ? old('location')['address'] : '') }}" placeholder="详细地址" />' +
-        '</div>' +
-        '<div class="col col-auto">' +
-          '<a href="javascript:void(0);" onclick="deleteLocation(this)">-删除</a>' +
-        '</div>' +
-      '</div>'
-    ;
-    $('#locations').children("div:last-child").after($('<div>').attr('id', 'location-' + locationsCount).addClass('mt-3').html(location).distpicker());
-
     locationsCount = locationsCount + 1;
+    let location =
+      // '<div id="location-' + locationsCount + '">' +
+        '<div class="row align-items-center">' +
+          '<div class="col">' +
+            '<div>' + //data-toggle="distpicker"
+              '<select name="location[' + locationsCount + '][province]" class="form-control must" data-province="---- 选择省 ----"></select>' +
+              '<select name="location[' + locationsCount + '][city]" class="form-control must" data-city="---- 选择市 ----"></select>' +
+              '<select name="location[' + locationsCount + '][district]" class="form-control must" data-district="---- 选择区 ----"></select>' +
+            '</div>' +
+            '<input type="text" style="width: 100%;" name="location[' + locationsCount + '][address]" class="form-control must" placeholder="详细地址" />' +
+          '</div>' +
+          '<div class="col col-auto">' +
+            '<a href="javascript:void(0);" onclick="deleteLocation(' + locationsCount + ')">-删除</a>' +
+          '</div>' +
+        '</div>'
+      // '</div>'
+    ;
+
+    $('#locations').children("div:last-child").after($('<div>').attr('id', 'location-' + locationsCount).addClass('mt-3').html(location).distpicker());
   }
 
-  function deleteLocation(element)
+  function deleteLocation(id)
   {
-    let root = $(element).parent('div.row').parent();
-    if (root.children('div.row').length > 0) {
-      let obj = $(element).parent().parent();
-      obj.remove();
+    console.log('#location-'+id);
+    if (id > 0) {
+      $('#location-'+id).remove();
+      locationsCount = locationsCount - 1;
     }
+
+    // let root = $(element).parent('div.row').parent();
+    // if (root.children('div.row').length > 0) {
+    //   let obj = $(element).parent().parent();
+    //   obj.remove();
+    // }
   }
 
   $('.form-control').change(function () {
