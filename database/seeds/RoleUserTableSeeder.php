@@ -18,37 +18,41 @@ class RoleUserTableSeeder extends Seeder
         ]);
 
         $users = [
+            // CEO
             [
                 'role_id' => 2,
+                'user_id' => 11
+            ],
+            [
+                'role_id' => 2,
+                'user_id' => 12
+            ],
+            // RPO
+            [
+                'role_id' => 3,
                 'user_id' => 2
             ],
             [
-                'role_id' => 2,
+                'role_id' => 3,
                 'user_id' => 3
             ],
+            // RPO-2
             [
-                'role_id' => 3,
+                'role_id' => 4,
+                'user_id' => 13
+            ],
+            // 招聘专员
+            [
+                'role_id' => 5,
                 'user_id' => 4
             ],
             [
-                'role_id' => 3,
+                'role_id' => 5,
                 'user_id' => 5
             ],
             [
-                'role_id' => 3,
-                'user_id' => 6
-            ],
-            [
-                'role_id' => 4,
-                'user_id' => 9
-            ],
-            [
-                'role_id' => 4,
-                'user_id' => 10
-            ],
-            [
                 'role_id' => 5,
-                'user_id' => 11
+                'user_id' => 6
             ]
         ];
 

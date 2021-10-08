@@ -91,6 +91,24 @@ class UsersTableSeeder extends Seeder
                 'is_admin' => false
             ],
             [
+                'account' => 'lujing',
+                'password' => bcrypt('lujing123!@#'),
+                'nickname' => '卢靓',
+                'name' => '卢靓',
+                'email' => '',
+                'phone' => '',
+                'is_admin' => false
+            ],
+            [
+                'account' => 'zhangxinyi',
+                'password' => bcrypt('zhangxinyi123!@#'),
+                'nickname' => '张馨怡',
+                'name' => '张馨怡',
+                'email' => '',
+                'phone' => '',
+                'is_admin' => false
+            ],
+            [
                 'account' => 'lipingping',
                 'password' => bcrypt('lipingping123!@#'),
                 'nickname' => '李萍萍',

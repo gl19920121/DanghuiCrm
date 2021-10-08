@@ -20,35 +20,39 @@ class RolesTableSeeder extends Seeder
             'is_root' => true
         ]);
 
-        $rpo = Role::firstOrCreate([
-            'id' => 2,
-            'name' => 'RPO总监',
-            'slug' => 'rpo',
-            'level' => 1,
-            'is_root' => true
-        ]);
-        $rpo2 = Role::firstOrCreate([
-            'id' => 5,
-            'name' => 'RPO总监',
-            'slug' => 'rpo2',
-            'level' => 1,
-            'is_root' => true
-        ]);
-
-        $deliver = Role::firstOrCreate([
-            'id' => 3,
-            'name' => '交付专员',
-            'slug' => 'deliver',
-            'level' => 2,
-            'parent_id' => 2
-        ]);
-
         $ceo = Role::firstOrCreate([
-            'id' => 4,
+            'id' => 2,
             'name' => '总裁',
             'slug' => 'ceo',
             'level' => 0,
             'is_root' => true
         ]);
+
+        $rpo = Role::firstOrCreate([
+            'id' => 3,
+            'name' => 'RPO总监',
+            'slug' => 'rpo',
+            'level' => 1,
+            'is_root' => true,
+            'parent_id' => 2
+        ]);
+        $rpo2 = Role::firstOrCreate([
+            'id' => 4,
+            'name' => 'RPO总监',
+            'slug' => 'rpo-2',
+            'level' => 1,
+            'is_root' => true,
+            'parent_id' => 2
+        ]);
+
+        $deliver = Role::firstOrCreate([
+            'id' => 5,
+            'name' => '交付专员',
+            'slug' => 'deliver',
+            'level' => 2,
+            'parent_id' => 3
+        ]);
+
+
     }
 }
