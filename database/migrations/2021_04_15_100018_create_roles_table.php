@@ -21,7 +21,7 @@ class CreateRolesTable extends Migration
                 $table->integer('level')->comment('权限等级');
                 $table->boolean('is_root')->default(false);
                 $table->unsignedInteger('parent_id')->nullable()->comment('父ID');
-                $table->jsonb('permissions')->comment('权限列表');
+                $table->jsonb('permissions')->nullable()->comment('权限列表');
                 $table->timestamps();
                 $table->tinyInteger('status')->nullable()->default(1)->comment('状态');
             });

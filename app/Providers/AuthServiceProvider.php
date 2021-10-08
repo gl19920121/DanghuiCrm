@@ -34,7 +34,13 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // Gate
+        Gate::define('user-status', function ($user) {
+            return $user->status === 1;
+        });
         Gate::define('rpo-manager', function ($user) {
+            return $user->inRole('rpo', 1) || $user->inRole('ceo', 0);
+        });
+        Gate::define('rpo-manager-audit', function ($user) {
             return $user->inRole('rpo', 1);
         });
         Gate::define('job-not-need-check', function ($user) {

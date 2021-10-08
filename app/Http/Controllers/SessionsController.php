@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Auth;
 use DateTime;
 
@@ -47,6 +48,9 @@ class SessionsController extends Controller
      */
     public function store(Request $request)
     {
+        // if (Gate::allows('user-status', Auth::user()->id)) {
+        //     return redirect()->back()->withInput()->withErrors(['password' => '账户名密码不匹配']);
+        // }
         $messages = [
             'account.required' => '请填写用户名',
             'password.required' => '请填写密码'
@@ -56,8 +60,8 @@ class SessionsController extends Controller
             'password' => 'required'
         ], $messages);
 
+        $credentials['status'] = 1;
         if(Auth::attempt($credentials, $request->has('remember'))) {
-            // session()->flash('result', '成功登录');
             $user = Auth::user();
             $user->login_on = new DateTime();
             $user->save();

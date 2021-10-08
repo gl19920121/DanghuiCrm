@@ -26,6 +26,7 @@
         <h4 class="color-red">{{ $statistics['job_doing'] }}</h4>
         <b>在招职位</b>
       </div>
+      @can ('rpo-manager-audit')
       <div class="col col-auto">
         <h4 class="color-red">{{ $statistics['job_need_check'] }}</h4>
         <b>职位审核</b>
@@ -34,6 +35,7 @@
         <h4>{{ $statistics['resume_need_check'] }}</h4>
         <b>简历审核</b>
       </div>
+      @endcan
     </div>
 
     <div class="list">
@@ -49,6 +51,7 @@
               结束职位
             </a>
           </li>
+          @can ('rpo-manager-audit')
           <li class="nav-item">
             <a class="nav-link @if($appends['tab'] === 'job_need_check') active @endif" data-toggle="link" href="{{ route('management.job.list', ['tab' => 'job_need_check']) }}" role="tab">
               职位审核
@@ -59,6 +62,7 @@
               简历审核
             </a>
           </li>
+          @endcan
         </ul>
 
         @if (in_array($appends['tab'], ['job_doing', 'job_end']))

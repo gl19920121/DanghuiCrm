@@ -84,14 +84,15 @@ class User extends Authenticatable
 
     public function getBranchAttribute()
     {
-        $rids = $this->roles->pluck('id');
-        $roles = Role::branch($rids)->get();
-        $udis = [];
-        foreach ($roles as $role) {
-            $udis = array_merge($udis, $role->users->pluck('id')->toArray());
-        }
+        // $rids = $this->roles->pluck('id');
+        // $roles = Role::branch($rids)->get();
+        // $uids = [];
+        // foreach ($roles as $role) {
+        //     $uids = array_merge($uids, $role->users->pluck('id')->toArray());
+        // }
+        $uids = $this->branchs($this->roles);
 
-        return $udis;
+        return $uids;
     }
 
     public function scopeActive($query)
@@ -107,6 +108,26 @@ class User extends Authenticatable
     public function scopeSubordinate($query)
     {
         return $query->$this->roles()->where('parent_id', $this->id);
+    }
+
+    public function branchs($roles)
+    {
+        $uids = [];
+        $rids = $roles->pluck('id');
+        $branchRoles = Role::branch($rids)->get();
+
+        if ($branchRoles->count() > 0) {
+            foreach ($branchRoles as $role) {
+                $uids = array_merge($uids, $role->users->pluck('id')->toArray());
+            }
+            $uids = array_merge($uids, $this->branchs($branchRoles));
+        } else {
+            foreach ($roles as $role) {
+                $uids = array_merge($uids, $role->users->pluck('id')->toArray());
+            }
+        }
+
+        return $uids;
     }
 
     /**

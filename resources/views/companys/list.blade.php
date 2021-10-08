@@ -33,7 +33,9 @@
           <tbody>
             @foreach($companys as $company)
               <tr>
-                <td class="color-red">{{ $company->name }}</td>
+                <td>
+                  <a class="color-red" href="{{ route('companys.show', $company) }}">{{ $company->name }}</a>
+                </td>
                 <td>{{ $company->location_show }}</td>
                 <td>{{ $company->industry_show }}</td>
                 <td>{{ $company->scale_show }}</td>

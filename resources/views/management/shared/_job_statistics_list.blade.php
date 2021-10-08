@@ -64,7 +64,13 @@
         <tbody>
           @foreach($users as $user)
             <tr>
-              <td>{{ $user->name }}</td>
+              <td>
+                @if ($user->status === 0)
+                  <span class="color-gray">{{ $user->name }}</span>
+                @else
+                  <span>{{ $user->name }}</span>
+                @endif
+              </td>
               <td class="color-red">{{ $user->jobs_count }}</td>
               <td>{{ $user->resumes_count }}</td>
               <td>{{ $user->talking_resumes_count }}</td>

@@ -18,11 +18,11 @@
                       <div class="triangle-up"></div>
                     @endif
                 </li>
-                <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobs.') !== false || Route::currentRouteName() === 'drafts.list' || Route::currentRouteName() === 'companys.list' || Route::currentRouteName() === 'companys.edit' ? 'active': '' }}">
+                <li class="nav-item {{ strpos(Route::currentRouteName(), 'jobs.') !== false || Route::currentRouteName() === 'drafts.list' || Route::currentRouteName() === 'companys.list' || Route::currentRouteName() === 'companys.edit' || Route::currentRouteName() === 'companys.show' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('jobs.list') }}">
                         运作职位
                     </a>
-                    @if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list', 'jobs.show', 'companys.list', 'companys.edit']))
+                    @if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.list', 'jobs.show', 'companys.list', 'companys.edit', 'companys.show']))
                       <div class="triangle-up"></div>
                     @endif
                 </li>
@@ -69,7 +69,7 @@
     </div>
 </nav>
 
-@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.edit', 'jobs.list', 'jobs.show', 'drafts.list', 'companys.list', 'companys.edit']))
+@if (in_array(Route::currentRouteName(), ['jobs.create', 'jobs.edit', 'jobs.list', 'jobs.show', 'drafts.list', 'companys.list', 'companys.edit', 'companys.show']))
   @include('layouts._second_header', ['tab' => 'jobs'])
 @elseif (in_array(Route::currentRouteName(), ['resumes.create', 'resumes.create.manual', 'resumes.edit', 'resumes.list', 'resumes.show', 'resumes.mine', 'resumes.current']))
   @include('layouts._second_header', ['tab' => 'resumes'])

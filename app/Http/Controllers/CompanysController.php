@@ -40,6 +40,11 @@ class CompanysController extends Controller
         return view('companys.list', compact('companys', 'appends'));
     }
 
+    public function show(Company $company)
+    {
+        return view('companys.show', compact('company'));
+    }
+
     public function store(Request $request)
     {
         $mssages = [

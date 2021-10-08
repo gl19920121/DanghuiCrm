@@ -89,6 +89,24 @@ class UsersTableSeeder extends Seeder
                 'email' => '',
                 'phone' => '',
                 'is_admin' => false
+            ],
+            [
+                'account' => 'lipingping',
+                'password' => bcrypt('lipingping123!@#'),
+                'nickname' => '李萍萍',
+                'name' => '李萍萍',
+            ],
+            [
+                'account' => 'yanjinjing',
+                'password' => bcrypt('yanjinjing123!@#'),
+                'nickname' => '严瑾婧',
+                'name' => '严瑾婧',
+            ],
+            [
+                'account' => 'wangshuai',
+                'password' => bcrypt('wangshuai123!@#'),
+                'nickname' => '王帅',
+                'name' => '王帅',
             ]
         ];
 
@@ -96,7 +114,7 @@ class UsersTableSeeder extends Seeder
             if (User::where('name', $user['name'])->count() > 0) {
                 continue;
             }
-            User::create($user);
+            User::updateOrCreate($user);
         }
 
         // User::insert($users);

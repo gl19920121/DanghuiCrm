@@ -94,9 +94,9 @@
 /***/ (function(module, exports) {
 
 $(function () {
-  $('body').on('click', ".distpicker", function () {
-    $(this).distpicker();
-  });
+  // $('body').on('click', ".distpicker", function() {
+  //   $(this).distpicker();
+  // });
   $('body').on('mouseenter', ".datetimepicker", function () {
     $(this).datetimepicker({
       locale: 'zh-CN',

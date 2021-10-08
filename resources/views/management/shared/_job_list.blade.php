@@ -46,7 +46,13 @@
         <tbody>
           @foreach($jobs as $job)
             <tr>
-              <td>{{ $job->executeUser->name }}</td>
+              <td>
+                @if ($job->executeUser->status === 0)
+                  <span class="color-gray">{{ $job->executeUser->name }}</span>
+                @else
+                  <span>{{ $job->executeUser->name }}</span>
+                @endif
+              </td>
               <td>{{ $job->no }}</td>
               <td><a class="color-red" href="{{ route('jobs.show', $job) }}" target="_blank">{{ $job->name }}</a></td>
               <td>{{ $job->company->name }}</td>

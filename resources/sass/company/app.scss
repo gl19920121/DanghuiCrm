@@ -1,0 +1,18 @@
+@import '../common.scss';
+
+.company-detail {
+  height: 100%;
+  padding: 55px 39px;
+  margin-top: 24px;
+
+  .row {
+    .col-12 {
+      h5 {
+        &:first-child {
+          border-left: 3px solid #D83856;
+          padding-left: 15px;
+        }
+      }
+    }
+  }
+}
