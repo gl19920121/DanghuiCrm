@@ -65,10 +65,21 @@ class RoleUserTableSeeder extends Seeder
             [
                 'role_id' => 5,
                 'user_id' => 10
+            ],
+            [
+                'role_id' => 5,
+                'user_id' => 10
+            ],
+            [
+                'role_id' => 5,
+                'user_id' => 14
             ]
         ];
 
         foreach ($users as $user) {
+            if (RoleUser::where('role_id', $user['role_id'])->where('user_id', $user['user_id'])->count() > 0) {
+                continue;
+            }
             RoleUser::firstOrCreate($user);
         }
     }

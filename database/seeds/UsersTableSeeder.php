@@ -125,11 +125,17 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('wangshuai123!@#'),
                 'nickname' => '王帅',
                 'name' => '王帅',
+            ],
+            [
+                'account' => 'zhangao',
+                'password' => bcrypt('zhangao123!@#'),
+                'nickname' => '张傲',
+                'name' => '张傲',
             ]
         ];
 
         foreach ($users as $user) {
-            if (User::where('name', $user['name'])->count() > 0) {
+            if (User::where('account', $user['account'])->count() > 0) {
                 continue;
             }
             User::updateOrCreate($user);
