@@ -128,8 +128,9 @@
     $('select[name=investment]').val(company.investment);
     $('textarea[name=introduction]').text(company.introduction);
     if (company.logo != null) {
-      console.log(company.logo);
       $('#companyLogo').attr('src', company.logo).removeAttr('hidden');
+    } else {
+      $('#companyLogo').attr('src', '').attr('hidden', true);
     }
   });
   function setLogo()
