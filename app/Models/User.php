@@ -122,9 +122,10 @@ class User extends Authenticatable
             }
             $uids = array_merge($uids, $this->branchs($branchRoles));
         } else {
-            foreach ($roles as $role) {
-                $uids = array_merge($uids, $role->users->pluck('id')->toArray());
-            }
+            // foreach ($roles as $role) {
+            //     $uids = array_merge($uids, $role->users->pluck('id')->toArray());
+            // }
+            $uids = [$this->id];
         }
 
         return $uids;
