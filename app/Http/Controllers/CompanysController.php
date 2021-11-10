@@ -112,7 +112,7 @@ class CompanysController extends Controller
             'nature' => 'nullable',
             'scale' => 'nullable',
             'investment' => 'nullable',
-            'logo' => 'nullable|mimes:jpeg,png|max:300',
+            'logo' => 'nullable|mimes:jpg,jpeg,png|max:300',
             'introduction' => 'nullable'
         ], $mssages);
 
