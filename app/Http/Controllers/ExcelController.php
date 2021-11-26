@@ -128,6 +128,7 @@ class ExcelController extends Controller
                 $resume->cur_company = $row[9];
                 $resume->upload_uid = Auth::user()->id;
                 $resume->source = ['batch'];
+                $resume->status = 0;
                 $resume->save();
             }
         }

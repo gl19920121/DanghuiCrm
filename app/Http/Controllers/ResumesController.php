@@ -909,7 +909,8 @@ class ResumesController extends Controller
         }
 
         return Resume::
-            where(function ($query) use($request) {
+            where('status', '=', 1)
+            ->where(function ($query) use($request) {
                 if (!empty($request->all)) {
                     $likes = $this->formatLikeKey($request->all);
                     foreach ($likes as $like) {
