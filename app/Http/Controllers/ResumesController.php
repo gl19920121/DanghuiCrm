@@ -147,22 +147,6 @@ class ResumesController extends Controller
         return view('resumes.show', compact('resume', 'jobs', 'users'));
     }
 
-    public function batch(Request $request)
-    {
-        $filePath = NULL;
-        $file = $request->file('attachment');
-        if($request->hasFile('attachment')) {
-            if (!$file->isValid()) {
-                session()->flash('danger', '附件上传失败');
-                return redirect()->back()->withInput();
-            }
-            $filePath = Storage::disk('resume_append')->putFile(date('Y-m-d').'/'.$request->user()->id, $file);
-        }
-        unset($file);
-
-        return redirect()->back();
-    }
-
     public function manual(Request $request)
     {
         $jobs = Job::where('status', '=', 1)->where('execute_uid', '=', Auth::user()->id)->get();

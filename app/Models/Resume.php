@@ -231,6 +231,25 @@ class Resume extends Model
         'remark' => '无',
     ];
 
+    public function setEducationAttribute($data)
+    {
+        if (strpos($data, '高') !== false) {
+            $education = 'high_schoo';
+        } elseif (strpos($data, '专') !== false) {
+            $education = 'junior';
+        } elseif (strpos($data, '本') !== false) {
+            $education = 'undergraduate';
+        } elseif (strpos($data, '硕') !== false) {
+            $education = 'master';
+        } elseif (strpos($data, '博') !== false) {
+            $education = 'doctor';
+        } else {
+            $education = $data;
+        }
+
+        $this->attributes['education'] = $education;
+    }
+
     public function getLocationDefaultAttribute()
     {
         return $this->default['location'];

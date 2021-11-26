@@ -24,11 +24,11 @@
             <a href="{{ route('resumes.create.manual') }}" class="btn btn-light ml-2">手动添加</a>
           </div>
           <div class="col col-auto">
-            <form id="attachmentUpload" method="POST" action="{{ route('resumes.create.batch') }}" enctype="multipart/form-data">
+            <form id="attachmentUpload" method="POST" action="{{ route('excel.import.resume') }}" enctype="multipart/form-data">
               {{ csrf_field() }}
               <input hidden type="file" multiple="true" name="attachment">
             </form>
-            <button class="btn btn-light" onclick="setResume()">批量上传</button>
+            <button class="btn btn-light" onclick="setAttachment()">批量上传</button>
           </div>
         </div>
       </div>

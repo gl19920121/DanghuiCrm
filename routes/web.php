@@ -19,6 +19,7 @@ Route::get('/pdf/export/resume/{resume}','PdfController@exportResume')->name('pd
 Route::get('/excel/export/user/job/{user}','ExcelController@exportUserJob')->name('excel.export.user.job');
 Route::get('/word/export/user/resume/{user}','WordController@exportUserResume')->name('word.export.user.resume');
 Route::get('/img/export/resume/{resume}','ImgController@exportResume')->name('img.export.resume');
+Route::post('/excel/import/resume','ExcelController@importResume')->name('excel.import.resume');
 
 Route::get('/', 'SessionsController@index')->name('index');
 Route::get('login', 'SessionsController@create')->name('login'); //登录页面
@@ -33,7 +34,6 @@ Route::post('/resumes/{resume}/status', 'ResumesController@status')->name('resum
 Route::post('/resumes/{resume}/addToJob', 'ResumesController@addToJob')->name('resumes.add.job');
 Route::get('/resumes/create/manual', 'ResumesController@manual')->name('resumes.create.manual');
 Route::post('/resumes/create/auto', 'ResumesController@auto')->name('resumes.create.auto');
-Route::post('/resumes/create/batch', 'ResumesController@batch')->name('resumes.create.batch');
 
 Route::post('/resumes/{resume}/operation', 'ResumesController@operation')->name('resumes.operation');
 Route::get('/resumes/list', 'ResumesController@list')->name('resumes.list');
