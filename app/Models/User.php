@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -57,8 +58,18 @@ class User extends Authenticatable
 
     public function uploadResumes()
     {
-        // return $this->hasMany(Resume::class, 'upload_uid');
-        return $this->belongsToMany(Resume::class)->wherePivot('type', 'upload')->withPivot('created_at')->withTimestamps();
+        return $this->hasMany(Resume::class, 'upload_uid');
+        // return $this->belongsToMany(Resume::class)->wherePivot('type', 'upload')->withPivot('created_at')->withTimestamps();
+    }
+
+    public function uploadWeekResumes()
+    {
+        return $this->hasMany(Resume::class, 'upload_uid')->where('resumes.created_at', '>=', Carbon::now()->startOfWeek());
+    }
+
+    public function uploadMonthResumes()
+    {
+        return $this->hasMany(Resume::class, 'upload_uid')->where('resumes.created_at', '>=', Carbon::now()->startOfMonth());
     }
 
     public function seenResumes()

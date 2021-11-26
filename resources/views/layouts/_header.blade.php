@@ -44,6 +44,16 @@
                     @endif
                 </li>
                 @endcan
+                @can ('statistics')
+                <li class="nav-item {{ strpos(Route::currentRouteName(), 'statistics.') !== false ? 'active': '' }}">
+                    <a class="nav-link" href="{{ route('statistics.list') }}">
+                        数据统计
+                    </a>
+                    @if (in_array(Route::currentRouteName(), ['statistics.list']))
+                      <div class="triangle-up"></div>
+                    @endif
+                </li>
+                @endcan
             </ul>
             <div class="form-inline ml-auto">
                 <div class="notice">

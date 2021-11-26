@@ -34,6 +34,9 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // Gate
+        Gate::define('statistics', function ($user) {
+            return $user->is_admin;
+        });
         Gate::define('user-status', function ($user) {
             return $user->status === 1;
         });

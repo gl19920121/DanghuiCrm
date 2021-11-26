@@ -33,6 +33,7 @@ Route::post('/resumes/{resume}/status', 'ResumesController@status')->name('resum
 Route::post('/resumes/{resume}/addToJob', 'ResumesController@addToJob')->name('resumes.add.job');
 Route::get('/resumes/create/manual', 'ResumesController@manual')->name('resumes.create.manual');
 Route::post('/resumes/create/auto', 'ResumesController@auto')->name('resumes.create.auto');
+Route::post('/resumes/create/batch', 'ResumesController@batch')->name('resumes.create.batch');
 
 Route::post('/resumes/{resume}/operation', 'ResumesController@operation')->name('resumes.operation');
 Route::get('/resumes/list', 'ResumesController@list')->name('resumes.list');
@@ -53,4 +54,8 @@ Route::resource('companys', 'CompanysController');
 Route::middleware(['can:rpo-manager'])->group(function () {
     Route::get('/management/job/list', 'ManagementController@jobList')->name('management.job.list');
     Route::get('/management/staff/list', 'ManagementController@staffList')->name('management.staff.list');
+});
+
+Route::middleware(['can:statistics'])->group(function () {
+    Route::get('/statistics/list', 'StatisticsController@list')->name('statistics.list');
 });

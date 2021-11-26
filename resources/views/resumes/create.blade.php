@@ -23,6 +23,13 @@
           <div class="col col-auto">
             <a href="{{ route('resumes.create.manual') }}" class="btn btn-light ml-2">手动添加</a>
           </div>
+          <div class="col col-auto">
+            <form id="attachmentUpload" method="POST" action="{{ route('resumes.create.batch') }}" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              <input hidden type="file" multiple="true" name="attachment">
+            </form>
+            <button class="btn btn-light" onclick="setResume()">批量上传</button>
+          </div>
         </div>
       </div>
     </div>
@@ -38,8 +45,17 @@
     $('input[name="resume"]').click();
   }
 
+  function setAttachment()
+  {
+    $('input[name="attachment"]').click();
+  }
+
   $('input[name="resume"]').change(function() {
     $('#resumeUpload').submit();
+  })
+
+  $('input[name="attachment"]').change(function() {
+    $('#attachmentUpload').submit();
   })
 
 </script>

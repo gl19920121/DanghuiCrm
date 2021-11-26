@@ -88,4 +88,9 @@ class ExcelController extends Controller
 
         return Excel::download(new JobsExport($row, $list), "$user->name-职位统计.xlsx");
     }
+
+    public function introductionResume()
+    {
+
+    }
 }

@@ -78,6 +78,10 @@ a.a-red:hover {
   color: #B5B5B6;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .color-text-gray {
   color: #9FA0A0;
 }
@@ -1567,6 +1571,10 @@ a.a-red:hover {
 
 .color-silvery-gray {
   color: #B5B5B6;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .color-text-gray {
@@ -3465,6 +3473,10 @@ a.a-red:hover {
   color: #B5B5B6;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .color-text-gray {
   color: #9FA0A0;
 }
@@ -4959,6 +4971,10 @@ a.a-red:hover {
 
 .color-silvery-gray {
   color: #B5B5B6;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .color-text-gray {
@@ -6554,6 +6570,10 @@ a.a-red:hover {
 
 .color-silvery-gray {
   color: #B5B5B6;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .color-text-gray {
