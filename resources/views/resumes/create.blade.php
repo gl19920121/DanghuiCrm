@@ -26,7 +26,7 @@
           <div class="col col-auto">
             <form id="attachmentUpload" method="POST" action="{{ route('excel.import.resume') }}" enctype="multipart/form-data">
               {{ csrf_field() }}
-              <input hidden type="file" multiple="true" name="attachment">
+              <input hidden type="file" accept=".xlsx,.xls" multiple="true" name="attachment">
             </form>
             <button class="btn btn-light" onclick="setAttachment()">批量上传</button>
           </div>

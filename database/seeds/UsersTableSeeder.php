@@ -131,6 +131,18 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('zhangao123!@#'),
                 'nickname' => '张傲',
                 'name' => '张傲',
+            ],
+            [
+                'account' => 'chenchunze',
+                'password' => bcrypt('chenchunze123!@#'),
+                'nickname' => '陈春泽',
+                'name' => '陈春泽',
+            ],
+            [
+                'account' => 'zhangbaocun',
+                'password' => bcrypt('zhangbaocun123!@#'),
+                'nickname' => '张保存',
+                'name' => '张保存',
             ]
         ];
 

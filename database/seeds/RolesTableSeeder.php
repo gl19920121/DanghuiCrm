@@ -44,6 +44,14 @@ class RolesTableSeeder extends Seeder
             'is_root' => true,
             'parent_id' => 2
         ]);
+        $rpo3 = Role::firstOrCreate([
+            'id' => 6,
+            'name' => 'RPO总监',
+            'slug' => 'rpo-3',
+            'level' => 1,
+            'is_root' => true,
+            'parent_id' => 2
+        ]);
 
         $deliver = Role::firstOrCreate([
             'id' => 5,

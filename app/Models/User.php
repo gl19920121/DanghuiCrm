@@ -161,7 +161,7 @@ class User extends Authenticatable
      */
     public function inRole($roleSlug, $rolesLevel)
     {
-        return $this->roles()->where('slug', $roleSlug)->where('level', $rolesLevel)->count() == 1;
+        return $this->roles()->where('slug', $roleSlug)->orWhere('level', $rolesLevel)->count() == 1;
     }
 
     public function isSuperAdmin()
