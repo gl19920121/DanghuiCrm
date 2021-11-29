@@ -60,6 +60,20 @@ class RolesTableSeeder extends Seeder
             'level' => 2,
             'parent_id' => 3
         ]);
+        $deliver2 = Role::firstOrCreate([
+            'id' => 7,
+            'name' => '交付专员',
+            'slug' => 'deliver-2',
+            'level' => 2,
+            'parent_id' => 4
+        ]);
+        $deliver3 = Role::firstOrCreate([
+            'id' => 8,
+            'name' => '交付专员',
+            'slug' => 'deliver-3',
+            'level' => 2,
+            'parent_id' => 6
+        ]);
 
 
     }
