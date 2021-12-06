@@ -100,7 +100,7 @@ class ExcelController extends Controller
         $file = $request->file('attachment');
         if($request->hasFile('attachment')) {
             if (!$file->isValid()) {
-                session()->flash('danger', '附件上传失败');
+                session()->flash('danger', '简历上传失败');
                 return redirect()->back()->withInput();
             }
             $filePath = Storage::disk('resume_append')->putFile(date('Y-m-d').'/'.$request->user()->id, $file);
@@ -167,7 +167,7 @@ class ExcelController extends Controller
             }
         }
 
-
-        return back();
+        session()->flash('result', '简历已上传');
+        return redirect()->back()->withInput();
     }
 }

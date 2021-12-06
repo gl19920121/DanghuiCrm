@@ -34,9 +34,10 @@
       </div>
     </div>
   </div>
-
-
 </div>
+
+@include('shared._errors')
+@include('shared._messages')
 
 <script type="text/javascript">
 
