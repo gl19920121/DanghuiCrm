@@ -162,7 +162,6 @@ class ExcelController extends Controller
                     $resumeEdu->save();
                 }
 
-                $resume->status = 0;
                 $resume->save();
             }
         }
