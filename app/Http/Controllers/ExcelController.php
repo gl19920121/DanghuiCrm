@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Resume;
+use App\Models\ResumeEdu;
 use Auth;
 
 class ExcelController extends Controller
@@ -110,30 +111,63 @@ class ExcelController extends Controller
         $list = Excel::toArray(new ResumesImport, $filePath, 'resume_append');
         // dd($list);
         for ($i=0; $i < count($list); $i++) {
-            for ($index=1; $index < count($list[$i]); $index++) {
-                $row = $list[$i][$index];
-                if (empty($row[3]) || empty($row[4])) {
-                    continue;
-                }
-                $resume = Resume::where('name', '=', $row[3])->where('phone_num', '=', $row[4])->count();
-                if ($resume > 0) {
-                    continue;
-                }
+            $startIndex = 3;
+            for ($index=$startIndex; $index < count($list[$i]); $index++) {
+                $row = empty($list[$i][$index]) ? NULL : $list[$i][$index];
+                // dd($row);
+                $requiredIndex = [0, 1, 2, 3, 4, 6, 7, 9, 10];
                 $resume = new Resume();
-                $resume->name = $row[3];
-                $resume->phone_num = $row[4];
-                $resume->age = $row[5];
-                $resume->sex = $row[6];
+                $resumeEdu = new ResumeEdu();
+
+                foreach ($requiredIndex as $rindex) {
+                    if (empty($row[$rindex])) {
+                        continue 2;
+                    }
+                }
+                $oldCount = Resume::where('name', '=', $row[0])->where('phone_num', '=', $row[9])->count();
+                if ($oldCount > 0) {
+                    continue;
+                }
+
+
+                $resume->name = $row[0];
+                $resume->sex = $row[1];
+                $resume->age = $row[2];
+                $resume->location = [
+                    'province' => $row[3],
+                    'city' => $row[4],
+                    'district' => $row[5]
+                ];
+                $resume->work_years = $row[6];
+                $resume->work_years_flag = 0;
                 $resume->education = $row[7];
-                $resume->cur_company = $row[9];
+                $resume->major = $row[8];
+                $resume->phone_num = $row[9];
+                $resume->email = $row[10];
+                $resume->wechat = $row[11];
+                $resume->qq = $row[12];
+                $resume->cur_industry = $row[13];
+                $resume->cur_position = $row[14];
+                $resume->cur_company = $row[15];
+                $resume->cur_salary = $row[16];
                 $resume->upload_uid = Auth::user()->id;
                 $resume->source = ['batch'];
+                $resume->save();
+
+                if (!empty($row[17]) && !empty($row[18])) {
+                    $resumeEdu->school_name = $row[17];
+                    $resumeEdu->school_level = $row[18];
+                    $resumeEdu->major = $row[19];
+                    $resumeEdu->resume_id = $resume->id;
+                    $resumeEdu->save();
+                }
+
                 $resume->status = 0;
                 $resume->save();
             }
         }
 
 
-        return redirect()->back();
+        return back();
     }
 }

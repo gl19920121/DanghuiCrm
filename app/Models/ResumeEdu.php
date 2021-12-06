@@ -20,6 +20,25 @@ class ResumeEdu extends Model
 
 
 
+    public function setSchoolLevelAttribute($value)
+    {
+        if (strpos($value, '高') !== false) {
+            $education = 'high_schoo';
+        } elseif (strpos($value, '专') !== false) {
+            $education = 'junior';
+        } elseif (strpos($value, '本') !== false) {
+            $education = 'undergraduate';
+        } elseif (strpos($value, '硕') !== false) {
+            $education = 'master';
+        } elseif (strpos($value, '博') !== false) {
+            $education = 'doctor';
+        } else {
+            $education = $value;
+        }
+
+        $this->attributes['school_level'] = $education;
+    }
+
     public function setStartAtAttribute($value)
     {
         $this->attributes['start_at'] = FormateHelper::date($value, 'year');

@@ -208,6 +208,7 @@ class Resume extends Model
         'cur_position' => ['st' => '', 'nd' => '', 'rd' => ''],
         'cur_industry' => ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''],
         'exp_industry' => ['st' => '', 'nd' => '', 'rd' => '', 'th' => ''],
+        'exp_position' =>  ['st' => '', 'nd' => '', 'rd' => ''],
     ];
 
     private $default = [
@@ -230,6 +231,31 @@ class Resume extends Model
         'personal_advantage' => '无',
         'remark' => '无',
     ];
+
+    public function setCurPositionAttribute($data)
+    {
+        $curIndustry = is_array($data) ? $data : [
+            'st' => $data,
+            'nd' => $data,
+            'rd' => $data,
+            'th' => $data
+        ];
+
+        $this->attributes['cur_position'] = json_encode($curIndustry);
+    }
+
+    public function setCurIndustryAttribute($data)
+    {
+
+        $curIndustry = is_array($data) ? $data : [
+            'st' => $data,
+            'nd' => $data,
+            'rd' => $data,
+            'th' => $data
+        ];
+
+        $this->attributes['cur_industry'] = json_encode($curIndustry);
+    }
 
     public function setEducationAttribute($data)
     {

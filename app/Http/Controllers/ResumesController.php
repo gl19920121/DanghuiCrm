@@ -669,7 +669,7 @@ class ResumesController extends Controller
 
         Resume::destroy($resume->id);
         session()->flash('success', '删除成功');
-        return back();
+        return redirect()->route('resumes.list');
     }
 
 

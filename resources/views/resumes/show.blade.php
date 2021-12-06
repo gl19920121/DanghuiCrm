@@ -140,7 +140,11 @@
                         <a href="{{ route('resumes.edit', $resume) }}" class="dropdown-item">修改</a>
                       @endcan
                       @can('destroy', $resume)
-                        <a href="{{ route('resumes.destroy', $resume) }}" class="dropdown-item">删除</a>
+                        <form method="POST" action="{{ route('resumes.destroy', $resume) }}">
+                          @method('DELETE')
+                          @csrf
+                          <button class="dropdown-item" type="submit">删除</button>
+                        </form>
                       @endcan
                     </div>
                   </div>
