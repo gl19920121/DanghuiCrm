@@ -48,12 +48,12 @@ class ResumeWork extends Model
 
     public function getStartAtMonthAttribute()
     {
-        return FormateHelper::date($this->attributes['start_at']);
+        return isset($this->attributes['start_at']) ? FormateHelper::date($this->attributes['start_at']) : '';
     }
 
     public function getEndAtMonthAttribute()
     {
-        return FormateHelper::date($this->attributes['end_at']);
+        return isset($this->attributes['end_at']) ? FormateHelper::date($this->attributes['end_at']) : '';
     }
 
     public function getCompanyNatureDefaultAttribute()
