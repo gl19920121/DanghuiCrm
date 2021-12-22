@@ -110,25 +110,31 @@ class ExcelController extends Controller
         // $resumesImport = Excel::import(new ResumesImport, $filePath, 'resume_append');
         $list = Excel::toArray(new ResumesImport, $filePath, 'resume_append');
         // dd($list);
-        for ($i=0; $i < count($list); $i++) {
+        // for ($i=0; $i < count($list); $i++) {
+        for ($i=0; $i < 1; $i++) {
             $startIndex = 3;
             for ($index=$startIndex; $index < count($list[$i]); $index++) {
+
                 $row = empty($list[$i][$index]) ? NULL : $list[$i][$index];
-                // dd($row);
                 $requiredIndex = [0, 1, 2, 3, 4, 6, 7, 9, 10];
                 $resume = new Resume();
                 $resumeEdu = new ResumeEdu();
 
-                foreach ($requiredIndex as $rindex) {
-                    if (empty($row[$rindex])) {
-                        continue 2;
+                foreach ($row as $rIndex => $item) {
+                    $item = preg_replace('# #', '', $item);
+                    if (empty($item)) {
+                        if (in_array($rIndex, $requiredIndex)) {
+                            continue 2;
+                        }
+                        $row[$rIndex] = NULL;
                     }
                 }
+                // dd($row);
+
                 $oldCount = Resume::where('name', '=', $row[0])->where('phone_num', '=', $row[9])->count();
                 if ($oldCount > 0) {
                     continue;
                 }
-
 
                 $resume->name = $row[0];
                 $resume->sex = $row[1];
