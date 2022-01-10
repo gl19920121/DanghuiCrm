@@ -169,12 +169,12 @@ class ManagementController extends Controller
                 },
                 'uploadResumes'  => function ($query) use ($request) {
                     if ($request->filled('start_at')) {
-                        $query->where('resume_user.created_at', '>=', $request->start_at);
+                        $query->where('created_at', '>=', $request->start_at);
                     }
                     if ($request->filled('is_not_end') && $request->is_not_end) {
-                        $query->where('resume_user.created_at', '<=', new DateTime());
+                        $query->where('created_at', '<=', new DateTime());
                     } elseif ($request->filled('end_at')) {
-                        $query->where('resume_user.created_at', '<=', $request->end_at);
+                        $query->where('created_at', '<=', $request->end_at);
                     }
                 },
                 'downloadResumes'  => function ($query) use ($request) {
