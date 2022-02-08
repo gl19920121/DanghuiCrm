@@ -178,8 +178,8 @@ class ResumesController extends Controller
         unset($file);
 
         $api = new APIHelper();
-        // $res = $api->resumesdk($filePath);
-        $res = $api->resumesdkTest($filePath);
+        $res = $api->resumesdk($filePath);
+        // $res = $api->resumesdkTest($filePath);
         // dd($res);
 
         if ($res['status']['code'] !== 200) {
