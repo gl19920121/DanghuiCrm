@@ -37,7 +37,7 @@ class ArticleTypesTableSeeder extends Seeder
         ]];
 
         foreach ($articleTypes as $articleType) {
-            ArticleTypes::create($articleType);
+            ArticleType::create($articleType);
         }
     }
 }
