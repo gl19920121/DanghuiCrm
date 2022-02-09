@@ -59,3 +59,7 @@ Route::middleware(['can:rpo-manager'])->group(function () {
 Route::middleware(['can:statistics'])->group(function () {
     Route::get('/statistics/list', 'StatisticsController@list')->name('statistics.list');
 });
+
+Route::middleware(['can:article-publish'])->group(function () {
+    Route::resource('articles', 'ArticlesController');
+});

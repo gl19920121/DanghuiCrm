@@ -75,6 +75,12 @@ class RolesTableSeeder extends Seeder
             'parent_id' => 6
         ]);
 
-
+        $coo = Role::firstOrCreate([
+            'id' => 9,
+            'name' => '运营总监',
+            'slug' => 'coo-1',
+            'level' => 1,
+            'parent_id' => 2
+        ]);
     }
 }

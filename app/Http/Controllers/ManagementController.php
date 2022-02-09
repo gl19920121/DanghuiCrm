@@ -30,12 +30,11 @@ class ManagementController extends Controller
             'job_channel' => $request->query('job_channel', ''),
         ];
 
-        $udis = Auth::user()->branch;
-        $jobs = Job::status($appends['tab'])->branch($udis)->searchByName($appends['job_name'])->searchByChannel($appends['job_channel'])->paginate($this->pageSize);
+        $jobs = Job::status($appends['tab'])->children()->searchByName($appends['job_name'])->searchByChannel($appends['job_channel'])->paginate($this->pageSize);
         $statistics = $statistics = [
-            'staff' => count($udis),
-            'job_doing' => Job::status(1)->branch($udis)->count(),
-            'job_need_check' => Job::status(-1)->branch($udis)->count(),
+            'staff' => Auth::user()->children->count(),
+            'job_doing' => Job::status(1)->children()->count(),
+            'job_need_check' => Job::status(-1)->children()->count(),
             'resume_need_check' => 0
         ];
 
@@ -53,9 +52,128 @@ class ManagementController extends Controller
             'is_not_end' => $request->query('is_not_end', '')
         ];
 
-        $udis = Auth::user()->branch;
+        $isRoot = false;
+        $rootRole = null;
+        $roles = Auth::user()->roles;
+        foreach ($roles as $role) {
+            if ($role->is_root && !Auth::user()->is_admin) {
+                $isRoot = true;
+                $rootRole = $role;
+                break;
+            }
+        }
+
         if ($tab === 'job') {
-            $list = User::branch($udis)->withCount([
+            // if ($isRoot) {
+            //     $groups = Role::branch($roles->pluck('id'))->paginate($this->pageSize);
+            //     foreach ($groups as $role) {
+            //         $users = User::whereIn('id', $role->users->pluck('id'))->withCount([
+            //             'executeJobs as jobs_count' => function ($query) use ($request) {
+            //                 if ($request->filled('start_at')) {
+            //                     $query->where('created_at', '>=', $request->start_at);
+            //                 }
+            //                 if ($request->filled('is_not_end') && $request->is_not_end) {
+            //                     $query->where('created_at', '<=', new DateTime());
+            //                 } elseif ($request->filled('end_at')) {
+            //                     $query->where('created_at', '<=', $request->end_at);
+            //                 }
+            //             },
+            //             'executeJobResumes as resumes_count' => function ($query) use ($request) {
+            //                 if ($request->filled('start_at')) {
+            //                     $query->where('jobs.created_at', '>=', $request->start_at);
+            //                 }
+            //                 if ($request->filled('is_not_end') && $request->is_not_end) {
+            //                     $query->where('jobs.created_at', '<=', new DateTime());
+            //                 } elseif ($request->filled('end_at')) {
+            //                     $query->where('jobs.created_at', '<=', $request->end_at);
+            //                 }
+            //             },
+            //             'executeJobResumes as talking_resumes_count' => function ($query) use ($request) {
+            //                 $query->where('resumes.status', 2);
+            //                 if ($request->filled('start_at')) {
+            //                     $query->where('jobs.created_at', '>=', $request->start_at);
+            //                 }
+            //                 if ($request->filled('is_not_end') && $request->is_not_end) {
+            //                     $query->where('jobs.created_at', '<=', new DateTime());
+            //                 } elseif ($request->filled('end_at')) {
+            //                     $query->where('jobs.created_at', '<=', $request->end_at);
+            //                 }
+            //             },
+            //             'executeJobResumes as push_resume_resumes_count' => function ($query) use ($request) {
+            //                 $query->where('resumes.status', 3);
+            //                 if ($request->filled('start_at')) {
+            //                     $query->where('jobs.created_at', '>=', $request->start_at);
+            //                 }
+            //                 if ($request->filled('is_not_end') && $request->is_not_end) {
+            //                     $query->where('jobs.created_at', '<=', new DateTime());
+            //                 } elseif ($request->filled('end_at')) {
+            //                     $query->where('jobs.created_at', '<=', $request->end_at);
+            //                 }
+            //             },
+            //             'executeJobResumes as interview_resumes_count' => function ($query) use ($request) {
+            //                 $query->where('resumes.status', 4);
+            //                 if ($request->filled('start_at')) {
+            //                     $query->where('jobs.created_at', '>=', $request->start_at);
+            //                 }
+            //                 if ($request->filled('is_not_end') && $request->is_not_end) {
+            //                     $query->where('jobs.created_at', '<=', new DateTime());
+            //                 } elseif ($request->filled('end_at')) {
+            //                     $query->where('jobs.created_at', '<=', $request->end_at);
+            //                 }
+            //             },
+            //             'executeJobResumes as offer_resumes_count' => function ($query) use ($request) {
+            //                 $query->where('resumes.status', 5);
+            //                 if ($request->filled('start_at')) {
+            //                     $query->where('jobs.created_at', '>=', $request->start_at);
+            //                 }
+            //                 if ($request->filled('is_not_end') && $request->is_not_end) {
+            //                     $query->where('jobs.created_at', '<=', new DateTime());
+            //                 } elseif ($request->filled('end_at')) {
+            //                     $query->where('jobs.created_at', '<=', $request->end_at);
+            //                 }
+            //             },
+            //             'executeJobResumes as onboarding_resumes_count' => function ($query) use ($request) {
+            //                 $query->where('resumes.status', 6);
+            //                 if ($request->filled('start_at')) {
+            //                     $query->where('jobs.created_at', '>=', $request->start_at);
+            //                 }
+            //                 if ($request->filled('is_not_end') && $request->is_not_end) {
+            //                     $query->where('jobs.created_at', '<=', new DateTime());
+            //                 } elseif ($request->filled('end_at')) {
+            //                     $query->where('jobs.created_at', '<=', $request->end_at);
+            //                 }
+            //             },
+            //             'executeJobResumes as over_probation_resumes_count' => function ($query) use ($request) {
+            //                 $query->where('resumes.status', 7);
+            //                 if ($request->filled('start_at')) {
+            //                     $query->where('jobs.created_at', '>=', $request->start_at);
+            //                 }
+            //                 if ($request->filled('is_not_end') && $request->is_not_end) {
+            //                     $query->where('jobs.created_at', '<=', new DateTime());
+            //                 } elseif ($request->filled('end_at')) {
+            //                     $query->where('jobs.created_at', '<=', $request->end_at);
+            //                 }
+            //             },
+            //             'executeJobResumes as out_resumes_count' => function ($query) use ($request) {
+            //                 $query->where('resumes.status', 0);
+            //                 if ($request->filled('start_at')) {
+            //                     $query->where('jobs.created_at', '>=', $request->start_at);
+            //                 }
+            //                 if ($request->filled('is_not_end') && $request->is_not_end) {
+            //                     $query->where('jobs.created_at', '<=', new DateTime());
+            //                 } elseif ($request->filled('end_at')) {
+            //                     $query->where('jobs.created_at', '<=', $request->end_at);
+            //                 }
+            //             }
+            //         ])->get();
+
+            //         foreach ($users as $user) {
+            //             $user->executeJobs;
+            //         }
+            //     }
+            //     dd($groups);
+            // }
+            $list = User::children()->withCount([
                 'executeJobs as jobs_count' => function ($query) use ($request) {
                     if ($request->filled('start_at')) {
                         $query->where('created_at', '>=', $request->start_at);
@@ -156,7 +274,7 @@ class ManagementController extends Controller
             ])->paginate($this->pageSize);
 
         } elseif ($tab === 'resume') {
-            $list = User::branch($udis)->withCount([
+            $list = User::children()->withCount([
                 'seenResumes'  => function ($query) use ($request) {
                     if ($request->filled('start_at')) {
                         $query->where('resume_user.created_at', '>=', $request->start_at);

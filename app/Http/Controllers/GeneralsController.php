@@ -24,16 +24,14 @@ class GeneralsController extends Controller
 
     public function show(Request $request)
     {
-        // $uids = array_merge(Auth::user()->branch, [Auth::user()->id]);
-        $uids = Auth::user()->branch;
-        $jobs = Job::doing()->branch($uids)
+        $jobs = Job::doing()->children()
             ->withCount(['resumes' => function ($query) {
                 $query->active();
             }])
             ->orderBy('resumes_count', 'desc')
             ->orderBy('updated_at', 'desc')
             ->paginate($this->pageSize, ['*'], 'jpage');
-        $newJobs = Job::doing()->branch($uids)
+        $newJobs = Job::doing()->children()
             ->whereHas('resumes', function ($query) {
                 $query->new();
             })

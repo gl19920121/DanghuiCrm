@@ -143,7 +143,7 @@ $(function () {
             reader.onload = function (ev) {
                 imgLogo.attr("src", ev.target.result);
                 imgLogo.removeAttr("hidden");
-          }
+            }
         })
 
         inputText.click(function () {
@@ -175,10 +175,40 @@ $(function () {
             reader.onload = function (ev) {
                 imgLogo.attr("src", ev.target.result);
                 imgLogo.removeAttr("hidden");
-          }
+            }
         })
 
         imgLogo.click(function () {
+            inputFile.click();
+        })
+    }
+
+    function coverSelect()
+    {
+        let fileselect = $('[data-toggle="filechoose"][data-type="cover"]');
+        let inputFile = fileselect.children('input[type="file"]');
+        let button = fileselect.children('button');
+        let img = fileselect.children('img');
+
+        img.css('cursor', 'pointer');
+
+        inputFile.change(function () {
+            let file = $(this).get(0).files[0];
+
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (ev) {
+                img.attr("src", ev.target.result);
+                img.removeAttr("hidden");
+            }
+
+            button.hide();
+        })
+
+        button.click(function () {
+            inputFile.click();
+        })
+        img.click(function () {
             inputFile.click();
         })
     }
@@ -187,6 +217,7 @@ $(function () {
     {
         logoSelect();
         avatarSelect();
+        coverSelect();
     }
 
     appInit();

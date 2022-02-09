@@ -49,5 +49,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('job-not-need-check', function ($user) {
             return $user->inRole('rpo', 1) || $user->inRole('rpo-2', 1) || $user->inRole('rpo-3', 1);
         });
+        Gate::define('article-publish', function ($user) {
+            return $user->inRole('coo-1', 1);
+        });
     }
 }

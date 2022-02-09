@@ -46,6 +46,7 @@ class Job extends Model
     {
         return $query->whereIn('status', [1, 2]);
     }
+
     public function scopeDoing($query)
     {
         return $query->where('status', 1);
@@ -97,8 +98,9 @@ class Job extends Model
         return $scope;
     }
 
-    public function scopeBranch($query, $uids)
+    public function scopeChildren($query)
     {
+        $uids = Auth::user()->children->pluck('id')->toArray();
         return $query->whereIn('execute_uid', $uids);
     }
 

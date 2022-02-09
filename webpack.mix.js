@@ -21,6 +21,7 @@ mix
   .sass('resources/sass/user/app.scss', 'public/css/user.css')
   .sass('resources/sass/management/app.scss', 'public/css/management.css')
   .sass('resources/sass/company/app.scss', 'public/css/company.css')
+  .sass('resources/sass/article/app.scss', 'public/css/article.css')
 ;
 
 mix.styles([
@@ -33,5 +34,6 @@ mix.styles([
     'public/css/resume.css',
     'public/css/user.css',
     'public/css/management.css',
-    'public/css/company.css'
+    'public/css/company.css',
+    'public/css/article.css',
 ], 'public/css/my.css');

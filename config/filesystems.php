@@ -92,6 +92,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'article_cover' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/article/cover'),
+            'url' => env('APP_URL').'/storage/article/cover',
+            'visibility' => 'public',
+        ],
+
+        'article_content' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/article/content'),
+            'url' => env('APP_URL').'/storage/article/content',
+            'visibility' => 'public',
+        ],
+
     ],
 
 ];

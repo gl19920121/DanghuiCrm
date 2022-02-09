@@ -54,6 +54,18 @@
               </a>
             </li>
             @break
+          @case ('articles')
+            <li class="nav-item">
+              <a class=" nav-link {{ in_array(Route::currentRouteName(), ['articles.create', 'articles.edit']) ? 'active': '' }}" href="{{ route('articles.create') }}">
+                发布
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ in_array(Route::currentRouteName(), ['articles.index']) ? 'active': '' }}" href="{{ route('articles.index') }}">
+                管理
+              </a>
+            </li>
+            @break
         @endswitch
       </ul>
     </div>

@@ -33,6 +33,18 @@ $img-url-public: "../images/";
 $img-url-login: "../images/login/";
 $img-url-home: "../images/home/";
 
+::selection {
+    color: white;
+    background-color: $color-red;
+    text-shadow: none;
+}
+
+::-moz-selection {
+    color: white;
+    background-color: $color-red;
+    text-shadow: none;
+}
+
 html, body {
   height: 100%;
 }
@@ -579,6 +591,10 @@ a.a-red {
 
   .management {
     margin-left: 645px;
+  }
+
+  .articles {
+    margin-left: 650px;
   }
 
   .container {

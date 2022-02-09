@@ -87,7 +87,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <a class="dropdown-item" href="">刷新</a>
-                    <a class="dropdown-item" href="{{ route('excel.export.user.job', $user) }}">导出</a>
+                    <a class="dropdown-item" href="{{ route('excel.export.user.job', [$user, 'start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}">导出</a>
                   </div>
                 </div>
               </td>

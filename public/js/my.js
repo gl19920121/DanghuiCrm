@@ -263,9 +263,36 @@ $(function () {
     });
   }
 
+  function coverSelect() {
+    var fileselect = $('[data-toggle="filechoose"][data-type="cover"]');
+    var inputFile = fileselect.children('input[type="file"]');
+    var button = fileselect.children('button');
+    var img = fileselect.children('img');
+    img.css('cursor', 'pointer');
+    inputFile.change(function () {
+      var file = $(this).get(0).files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = function (ev) {
+        img.attr("src", ev.target.result);
+        img.removeAttr("hidden");
+      };
+
+      button.hide();
+    });
+    button.click(function () {
+      inputFile.click();
+    });
+    img.click(function () {
+      inputFile.click();
+    });
+  }
+
   function appInit() {
     logoSelect();
     avatarSelect();
+    coverSelect();
   }
 
   appInit();

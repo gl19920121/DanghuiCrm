@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Stevenyangecho\UEditor\UEditorServiceProvider::class,
 
     ],
 

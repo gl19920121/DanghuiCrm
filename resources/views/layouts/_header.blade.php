@@ -54,6 +54,16 @@
                     @endif
                 </li>
                 @endcan
+                @can ('article-publish')
+                <li class="nav-item {{ strpos(Route::currentRouteName(), 'articles.') !== false ? 'active': '' }}">
+                    <a class="nav-link" href="{{ route('articles.create') }}">
+                        文章发布
+                    </a>
+                    @if (strpos(Route::currentRouteName(), 'articles.') !== false)
+                      <div class="triangle-up"></div>
+                    @endif
+                </li>
+                @endcan
             </ul>
             <div class="form-inline ml-auto">
                 <div class="notice">
@@ -85,4 +95,6 @@
   @include('layouts._second_header', ['tab' => 'resumes'])
 @elseif (in_array(Route::currentRouteName(), ['management.job.list', 'management.resume.list', 'management.staff.list']))
   @include('layouts._second_header', ['tab' => 'management'])
+@elseif (strpos(Route::currentRouteName(), 'articles.') !== false)
+  @include('layouts._second_header', ['tab' => 'articles'])
 @endif

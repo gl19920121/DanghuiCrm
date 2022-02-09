@@ -1,0 +1,58 @@
+@import '../common.scss';
+
+.articles-create {
+  margin-top: 25px;
+  padding: 30px;
+  text-align: center;
+
+  input[type="text"],input[type="select"] {
+    width: 429px !important;
+  }
+
+  .btn-submit {
+    width: 150px;
+    height: 50px;
+  }
+
+  .cover {
+    width: auto;
+    height: auto;
+    max-width: 300px;
+  }
+
+  .form-group {
+    margin-top: 20px;
+  }
+
+  .title {
+    width: 64px;
+    margin-right: 32px;
+    position: relative;
+
+    > *:first-child {
+      font-weight: bold;
+      text-align: justify;
+      text-justify: distribute-all-lines; /*ie6-8*/
+      text-align-last: justify; /* ie9*/
+      -moz-text-align-last: justify; /*ff*/
+      -webkit-text-align-last: justify; /*chrome 20+*/
+
+      &:after {
+        content: "：";
+        position: absolute;
+        right: -10px;
+      }
+    }
+  }
+
+  .title.must {
+    > *:first-child {
+      &:before {
+        content: "*";
+        position: absolute;
+        left: -5px;
+        color: $color-red;
+      }
+    }
+  }
+}

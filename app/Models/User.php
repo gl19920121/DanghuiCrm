@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -40,6 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = ['rolesChildren', 'children'];
 
     public function roles()
     {
@@ -93,17 +96,82 @@ class User extends Authenticatable
         return asset($url);
     }
 
-    public function getBranchAttribute()
+    public function getGroupUsers()
     {
-        // $rids = $this->roles->pluck('id');
-        // $roles = Role::branch($rids)->get();
-        // $uids = [];
-        // foreach ($roles as $role) {
-        //     $uids = array_merge($uids, $role->users->pluck('id')->toArray());
-        // }
-        $uids = $this->branchs($this->roles);
+        $users = collect();
 
-        return $uids;
+        foreach (Auth::user()->roles as $role) {
+            $key = $role->slug;
+            if (empty($role->parentRecursive)) {
+                $group = self::getChildrenUser($role->childrenRecursive);
+            } else {
+                $group = self::getChildrenUser([$role]);
+            }
+
+            $users = $users->merge(Array($key => $group));
+        }
+
+        return $users;
+    }
+
+    public function getRolesChildrenAttribute()
+    {
+        return self::getRolesChildren($this->roles);
+    }
+
+    public function getChildrenAttribute()
+    {
+        return self::getChildrenUser($this->roles);
+    }
+
+    private function getRolesChildren($roles)
+    {
+        $users = collect();
+
+        foreach ($roles as $role) {
+            if (in_array($role->level, $this->roles->pluck('level')->toArray())) {
+                $roleUsers = $role->users->filter(function ($user, $index) {
+                    return $user->id === $this->id;
+                });
+            } else {
+                $roleUsers = $role->users;
+            }
+
+            if ($roleUsers->count() > 0) {
+                $users = $users->merge(array($role->slug => $roleUsers));
+            }
+
+            if ($role->childrenRecursive->count() > 0) {
+                $users = $users->merge(array($role->slug, self::getChildrenUser($role->childrenRecursive)));
+            }
+        }
+
+        return $users;
+    }
+
+    private function getChildrenUser($roles)
+    {
+        $users = collect();
+
+        foreach ($roles as $role) {
+            if (in_array($role->level, $this->roles->pluck('level')->toArray())) {
+                $roleUsers = $role->users->filter(function ($user, $index) {
+                    return $user->id === $this->id;
+                });
+            } else {
+                $roleUsers = $role->users;
+            }
+
+            if ($roleUsers->count() > 0) {
+                $users = $users->merge($roleUsers);
+            }
+
+            if ($role->childrenRecursive->count() > 0) {
+                $users = $users->merge(self::getChildrenUser($role->childrenRecursive));
+            }
+        }
+
+        return $users;
     }
 
     public function scopeActive($query)
@@ -111,8 +179,9 @@ class User extends Authenticatable
         return $query->where('status', 1)->where('is_admin', '!=', true);
     }
 
-    public function scopeBranch($query, $uids)
+    public function scopeChildren($query)
     {
+        $uids = Auth::user()->children->pluck('id')->toArray();
         return $query->whereIn('id', $uids);
     }
 
@@ -121,25 +190,9 @@ class User extends Authenticatable
         return $query->$this->roles()->where('parent_id', $this->id);
     }
 
-    public function branchs($roles)
+    public function scopeRole($query, $role)
     {
-        $uids = [];
-        $rids = $roles->pluck('id');
-        $branchRoles = Role::branch($rids)->get();
-
-        if ($branchRoles->count() > 0) {
-            foreach ($branchRoles as $role) {
-                $uids = array_merge($uids, $role->users->pluck('id')->toArray());
-            }
-            $uids = array_merge($uids, $this->branchs($branchRoles));
-        } else {
-            // foreach ($roles as $role) {
-            //     $uids = array_merge($uids, $role->users->pluck('id')->toArray());
-            // }
-            $uids = [$this->id];
-        }
-
-        return $uids;
+        return $query->$this->roles()->where('sulg', 'like', $role . '%');
     }
 
     /**
