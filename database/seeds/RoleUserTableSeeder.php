@@ -98,6 +98,10 @@ class RoleUserTableSeeder extends Seeder
                 'role_id' => 6,
                 'user_id' => 20
             ],
+            [
+                'role_id' => 5,
+                'user_id' => 21
+            ],
         ];
 
         foreach ($users as $user) {

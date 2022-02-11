@@ -150,6 +150,13 @@ class UsersTableSeeder extends Seeder
                 'nickname' => '武振丰',
                 'name' => '武振丰',
             ],
+            [
+                'id' => 21,
+                'account' => 'yaokang',
+                'password' => bcrypt('yaokang123!@#'),
+                'nickname' => '姚康',
+                'name' => '姚康',
+            ],
         ];
 
         foreach ($users as $user) {
