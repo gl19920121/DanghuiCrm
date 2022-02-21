@@ -9684,3 +9684,88 @@ ul.nav-sec-left > li ul.sub > li.active a {
   color: #D83856;
 }
 
+.articles-edit .btn-submit {
+  width: 100px;
+  height: 50px;
+}
+
+.articles-edit .btn-cancel {
+  width: 100px;
+  height: 50px;
+}
+
+.articles-edit a.btn-cancel {
+  padding: 0;
+  line-height: 50px;
+}
+
+.articles-index {
+  margin-top: 25px;
+  padding: 30px;
+}
+
+.articles-index .cover {
+  width: 100px;
+  height: 100px;
+}
+
+.articles-show {
+  background-color: white;
+}
+
+.articles-show .header-nav {
+  background-color: #F7F8F8;
+  margin-top: 15px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+.articles-show .header-nav .item {
+  font-size: 14px;
+  margin-left: 36px;
+}
+
+.articles-show .header-nav .item:before {
+  content: ">";
+  padding-right: 22px;
+}
+
+.articles-show .header-nav .item:first-child {
+  margin-left: 0;
+}
+
+.articles-show .header-nav .item:first-child:before {
+  content: "";
+}
+
+.articles-show .content > div {
+  padding: 50px 116px 103px 116px;
+}
+
+.articles-show .content .title {
+  font-size: 32px;
+  color: #231815;
+}
+
+.articles-show .content .sub {
+  font-size: 14px;
+  color: #727171;
+  margin-top: 51px;
+}
+
+.articles-show .content .divider {
+  margin: 22px 0;
+  background-color: #EFEFEF;
+}
+
+.articles-show .footer {
+  background-color: #F7F8F8;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 60px;
+}
+
+.articles-show .footer .btn {
+  width: 80px;
+}
+

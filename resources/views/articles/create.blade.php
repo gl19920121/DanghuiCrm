@@ -32,10 +32,22 @@
       <span class="title must"><label for="cover">分类</label></span>
       @foreach ($types as $level => $litem)
         @foreach ($litem as $pno => $pitem)
-          <select @if($level !== 0) style="display: none;" @endif data-level="{{ $level }}" data-pno="{{ $pno }}" name="type_no[{{ $level }}]" class="form-control must normal @if($errors->has('type')) border-danger @endif">
+          <select data-level="{{ $level }}" data-pno="{{ $pno }}" name="type_no[{{ $level }}]" class="form-control must normal @if($errors->has('type_no')) border-danger @endif"
+          @if( ! ( $level === 0 ||
+            ( !empty(old('type_no')) && (isset(old('type_no')[$level]) || (isset(old('type_no')[$level - 1]) && old('type_no')[$level - 1] === $pno)) )
+          ))
+            style="display: none;"
+          @endif
+          >
             <option hidden value="">请选择</option>
             @foreach ($pitem as $type)
-              <option value="{{ $type->no }}">{{ $type->name }}</option>
+              <option value="{{ $type->no }}"
+              @if (!empty(old('type_no')) && old('type_no')[$level] == $type->no)
+                selected
+              @endif
+              >
+                {{ $type->name }}
+              </option>
             @endforeach
           </select>
         @endforeach
@@ -44,16 +56,28 @@
 
     <div class="form-group form-inline">
       <span class="title must"><label for="cover">发布人</label></span>
-      <select name="publisher_id" class="form-control must normal @if($errors->has('user')) border-danger @endif">
+      <select name="publisher_id" class="form-control must normal @if($errors->has('publisher_id')) border-danger @endif">
         <option hidden value="">请选择</option>
         @foreach ($users as $user)
-          <option @if(Auth::user()->id === $user->id) selected @endif value="{{ $user->id }}">{{ $user->name }}（{{ $user->nickname }}）</option>
+          <option value="{{ $user->id }}"
+          @if (empty(old('publisher_id')))
+            @if (Auth::user()->id == $user->id)
+              selected
+            @endif
+          @else
+            @if (old('publisher_id') == $user->id)
+              selected
+            @endif
+          @endif
+          >
+            {{ $user->name }}（{{ $user->nickname }}）
+          </option>
         @endforeach
       </select>
     </div>
 
     <div class="form-group">
-      <textarea id="ueditor" name="content" placeholder="编辑文章正文内容"></textarea>
+      <textarea id="ueditor" name="content" placeholder="编辑文章正文内容">{{ old('content') }}</textarea>
     </div>
 
     <input class="btn btn-danger btn-submit" type="submit" value="提交">
@@ -72,6 +96,7 @@
 
   $("select[name^='type_no']").change(function() {
     let index = $(this).index() - 1;
+    $("select[name^='type_no']:gt(" + index + ")").val("");
     $("select[name^='type_no']:gt(" + index + ")").hide();
     $("select[data-pno='" + $(this).val() + "']").show();
   });

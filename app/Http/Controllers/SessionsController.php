@@ -48,9 +48,6 @@ class SessionsController extends Controller
      */
     public function store(Request $request)
     {
-        // if (Gate::allows('user-status', Auth::user()->id)) {
-        //     return redirect()->back()->withInput()->withErrors(['password' => '账户名密码不匹配']);
-        // }
         $messages = [
             'account.required' => '请填写用户名',
             'password.required' => '请填写密码'
@@ -61,6 +58,7 @@ class SessionsController extends Controller
         ], $messages);
 
         $credentials['status'] = 1;
+
         if(Auth::attempt($credentials, $request->has('remember'))) {
             $user = Auth::user();
             $user->login_on = new DateTime();
@@ -68,11 +66,8 @@ class SessionsController extends Controller
             $fallback = route('home');
             return redirect()->intended($fallback);
         } else {
-            // session()->flash('result', false);
             return redirect()->back()->withInput()->withErrors(['password' => '账户名密码不匹配']);
         }
-
-        return;
     }
 
     public function destroy()

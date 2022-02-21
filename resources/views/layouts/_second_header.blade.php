@@ -56,12 +56,12 @@
             @break
           @case ('articles')
             <li class="nav-item">
-              <a class=" nav-link {{ in_array(Route::currentRouteName(), ['articles.create', 'articles.edit']) ? 'active': '' }}" href="{{ route('articles.create') }}">
+              <a class=" nav-link {{ in_array(Route::currentRouteName(), ['articles.create']) ? 'active': '' }}" href="{{ route('articles.create') }}">
                 发布
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ in_array(Route::currentRouteName(), ['articles.index']) ? 'active': '' }}" href="{{ route('articles.index') }}">
+              <a class="nav-link {{ in_array(Route::currentRouteName(), ['articles.index', 'articles.edit', 'articles.show']) ? 'active': '' }}" href="{{ route('articles.index') }}">
                 管理
               </a>
             </li>

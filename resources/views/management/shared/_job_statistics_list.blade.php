@@ -60,9 +60,20 @@
             <th scope="col">淘汰</th>
             <th scope="col">操作</th>
           </tr>
+          <tr hidden>
+            <th scope="col">发布顾问</th>
+            <th scope="col">运作职位</th>
+            <th scope="col">待审核职位</th>
+          </tr>
         </thead>
         <tbody>
           @foreach($users as $user)
+            <tr hidden class="cursor-pointer">
+              <td><span>{{ $user->name }}</span></td>
+              <td class="color-red">{{ $user->jobs_count }}</td>
+              <td>{{ $user->checkpending_jobs_count }}</td>
+            </tr>
+
             <tr>
               <td>
                 @if ($user->status === 0)

@@ -44,6 +44,16 @@ class User extends Authenticatable
 
     protected $appends = ['rolesChildren', 'children'];
 
+    public function department()
+    {
+        return $this->belongsToMany(Department::class, 'department_user', 'user_id', 'department_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsToMany(Position::class, 'position_user', 'user_id', 'position_id');
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
@@ -209,17 +219,57 @@ class User extends Authenticatable
         return false;
     }
 
-    /**
-     * Checks if the user belongs to role.
-     */
-    public function inRole($roleSlug, $rolesLevel)
+    public function isDepartment($no)
     {
-        return $this->roles()->where('slug', $roleSlug)->where('level', $rolesLevel)->count() == 1;
-        // return $this->roles()->where('slug', $roleSlug)->orWhere('level', $rolesLevel)->count() > 0;
+        return $this->department->contains(Department::where('no', $no)->first());
+    }
+
+    public function isBelongToDepartment($dno)
+    {
+        $isBelongTo = false;
+        $departments = $this->department;
+
+        foreach ($departments as $department) {
+            $item = Department::with('parentRecursive')->find($department->id);
+
+            while (!empty($item)) {
+                if ($item->no === $dno) {
+                    $isBelongTo = true;
+                    break 2;
+                }
+
+                $item = $item->parentRecursive;
+            }
+        }
+
+        return $isBelongTo;
+    }
+
+    public function isDepartmentAdmin($department = null)
+    {
+        // 特殊处理
+        if (in_array($this->id, [11, 12])) { // 李萍萍,严瑾婧
+            return true;
+        }
+        if ($this->id === 6 && $this->department->contains(Department::where('no', 'N000003')->first())) { // 支宪璐
+            return true;
+        }
+
+        $isAdmin = false;
+        $departments = empty($department) ? $this->department : array($department);
+
+        foreach ($departments as $item) {
+            if (in_array($item->admin_position->id, Auth::user()->position->pluck('id')->toArray())) {
+                $isAdmin = true;
+                break;
+            }
+        }
+
+        return $isAdmin;
     }
 
     public function isSuperAdmin()
     {
-        return $this->is_admin && $this->inRole('admin', 0);
+        return $this->is_admin;
     }
 }

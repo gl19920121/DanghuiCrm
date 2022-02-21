@@ -38,6 +38,8 @@
         switch(type) {
             case 'job':
                 typeShow = '职位';
+            case 'article':
+                typeShow = '文章';
         }
         let message = '您是否确认' + btnThis.text() + typeShow;
 

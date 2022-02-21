@@ -34,23 +34,17 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // Gate
-        Gate::define('statistics', function ($user) {
-            return $user->is_admin;
-        });
-        Gate::define('user-status', function ($user) {
-            return $user->status === 1;
-        });
         Gate::define('rpo-manager', function ($user) {
-            return $user->inRole('rpo', 1) || $user->inRole('rpo-2', 1) || $user->inRole('rpo-3', 1) || $user->inRole('ceo', 0);
+            return ($user->isBelongToDepartment('N0001') && $user->isDepartmentAdmin()) || $user->isDepartment('N01');
         });
         Gate::define('rpo-manager-audit', function ($user) {
-            return $user->inRole('rpo', 1) || $user->inRole('rpo-2', 1) || $user->inRole('rpo-3', 1);
+            return $user->isBelongToDepartment('N0001') && $user->isDepartmentAdmin();
         });
         Gate::define('job-not-need-check', function ($user) {
-            return $user->inRole('rpo', 1) || $user->inRole('rpo-2', 1) || $user->inRole('rpo-3', 1);
+            $user->isDepartmentAdmin();
         });
         Gate::define('article-publish', function ($user) {
-            return $user->inRole('coo-1', 1);
+            return $user->isBelongToDepartment('N000006');
         });
     }
 }

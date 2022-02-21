@@ -23,11 +23,13 @@ class StoreArticlePost extends FormRequest
      */
     public function rules()
     {
+        // return [];
         return [
             'title' => ['required'],
             'cover' => ['required', 'mimes:jpeg,jpg,png'],
             'brief' => ['nullable'],
             'type_no' => ['required'],
+            // 'type_no.*.0' => ['required'],
             'publisher_id' => ['required'],
             'content' => ['required'],
         ];
@@ -45,6 +47,7 @@ class StoreArticlePost extends FormRequest
             'cover.required' => '请上传封面',
             'cover.mimes' => '请上传JPGE/PNG格式的图片',
             'type_no.required' => '请选择分类',
+            'type_no.*.0.required' => '请选择分类',
             'publisher_id.required' => '请选择发布人',
             'content.required' => '请填写正文',
         ];
