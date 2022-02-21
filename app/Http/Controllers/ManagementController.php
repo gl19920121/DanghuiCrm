@@ -272,7 +272,7 @@ class ManagementController extends Controller
         }
 
         $perPage = $this->pageSize;
-        $curPage = $request->page;
+        $curPage = $request->input('page', 1);
         $item = $items->slice(($curPage - 1) * $perPage, $perPage);
         $total = $items->count();
         $list = new LengthAwarePaginator($item, $total, $perPage, $curPage, [
