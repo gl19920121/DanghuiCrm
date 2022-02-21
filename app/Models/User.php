@@ -248,10 +248,10 @@ class User extends Authenticatable
     public function isDepartmentAdmin($dno = null)
     {
         // 特殊处理
-        if (in_array($this->id, [11, 12])) { // 李萍萍,严瑾婧
+        if (in_array($this->id, [11, 12]) && empty($dno)) { // 李萍萍,严瑾婧
             return true;
         }
-        if ($this->id === 6 && $this->department->contains(Department::where('no', 'N000003')->first())) { // 支宪璐
+        if ($this->id === 6 && $this->department->contains(Department::where('no', 'N000003')->first()) && (empty($dno) || $dno === 'N000003')) { // 支宪璐
             return true;
         }
 
