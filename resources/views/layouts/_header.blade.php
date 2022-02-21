@@ -35,34 +35,34 @@
                     @endif
                 </li>
                 @can ('rpo-manager')
-                <li class="nav-item {{ strpos(Route::currentRouteName(), 'management.') !== false ? 'active': '' }}">
-                    <a class="nav-link" href="{{ route('management.job.list') }}">
-                        员工管理
-                    </a>
-                    @if (in_array(Route::currentRouteName(), ['management.job.list', 'management.staff.list']))
-                      <div class="triangle-up"></div>
-                    @endif
-                </li>
+                  <li class="nav-item {{ strpos(Route::currentRouteName(), 'management.') !== false ? 'active': '' }}">
+                      <a class="nav-link" href="{{ route('management.job.list') }}">
+                          员工管理
+                      </a>
+                      @if (in_array(Route::currentRouteName(), ['management.job.list', 'management.staff.list']))
+                        <div class="triangle-up"></div>
+                      @endif
+                  </li>
                 @endcan
                 @can ('statistics')
-                <li class="nav-item {{ strpos(Route::currentRouteName(), 'statistics.') !== false ? 'active': '' }}">
-                    <a class="nav-link" href="{{ route('statistics.list') }}">
-                        数据统计
-                    </a>
-                    @if (in_array(Route::currentRouteName(), ['statistics.list']))
-                      <div class="triangle-up"></div>
-                    @endif
-                </li>
+                  <li class="nav-item {{ strpos(Route::currentRouteName(), 'statistics.') !== false ? 'active': '' }}">
+                      <a class="nav-link" href="{{ route('statistics.list') }}">
+                          数据统计
+                      </a>
+                      @if (in_array(Route::currentRouteName(), ['statistics.list']))
+                        <div class="triangle-up"></div>
+                      @endif
+                  </li>
                 @endcan
-                @can ('article-publish')
-                <li class="nav-item {{ strpos(Route::currentRouteName(), 'articles.') !== false ? 'active': '' }}">
-                    <a class="nav-link" href="{{ route('articles.create') }}">
-                        文章发布
-                    </a>
-                    @if (strpos(Route::currentRouteName(), 'articles.') !== false)
-                      <div class="triangle-up"></div>
-                    @endif
-                </li>
+                @can('view', App\Models\Article::class)
+                  <li class="nav-item {{ strpos(Route::currentRouteName(), 'articles.') !== false ? 'active': '' }}">
+                      <a class="nav-link" href="{{ route('articles.create') }}">
+                          文章发布
+                      </a>
+                      @if (strpos(Route::currentRouteName(), 'articles.') !== false)
+                        <div class="triangle-up"></div>
+                      @endif
+                  </li>
                 @endcan
             </ul>
             <div class="form-inline ml-auto">

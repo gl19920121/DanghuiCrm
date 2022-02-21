@@ -23,7 +23,7 @@
             <td>{{ $article->title }}</td>
             <td><img class="cover" src="{{ $article->cover_url }}"></td>
             <td>{{ $article->brief }}</td>
-            <td>{{ $article->title }}</td>
+            <td>{{ $article->articleType->name }}</td>
             <td>{{ $article->publisher->name }}（{{ $article->publisher->nickname }}）</td>
             <td>{{ $article->created_at }}</td>
             <td>{{ $article->updated_at }}</td>
@@ -34,12 +34,16 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                   <a target="_blank" class="dropdown-item" href="{{ route('articles.show', $article) }}">查看</a>
-                  <a class="dropdown-item" href="{{ route('articles.edit', $article) }}">修改</a>
-                  <form method="POST" action="{{ route('articles.destroy', $article) }}">
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
-                    <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="article">删除</button>
-                  </form>
+                  @can('update', $article)
+                    <a class="dropdown-item" href="{{ route('articles.edit', $article) }}">修改</a>
+                  @endcan
+                  @can('delete', $article)
+                    <form method="POST" action="{{ route('articles.destroy', $article) }}">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button class="dropdown-item" type="button" data-toggle="modal" data-target="#confirmModal" data-type="article">删除</button>
+                    </form>
+                  @endcan
                 </div>
               </div>
             </td>

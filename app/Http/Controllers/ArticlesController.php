@@ -8,12 +8,15 @@ use Auth;
 use App\Models\Article;
 use App\Models\ArticleType;
 use App\Models\User;
+use App\Models\Department;
 use App\Http\Requests\StoreArticlePost;
+use App\Http\Requests\UpdateArticlePost;
 
 class ArticlesController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('view', Article::class);
         $pageSize = 10;
         $articles = Article::query()->active()->orderBy('created_at', 'desc')->paginate($pageSize);
 
@@ -22,21 +25,24 @@ class ArticlesController extends Controller
 
     public function show(Article $article)
     {
+        $this->authorize('view', Article::class);
         return view('articles.show', compact('article'));
     }
 
     public function create(Request $request)
     {
+        $this->authorize('view', Article::class);
         $types = ArticleType::get()->groupBy(['level', 'pno']);
-        $users = User::children()->get();
+        $users = Auth::user()->isDepartmentAdmin() ? Department::where('no', 'N000006')->first()->users : collect([Auth::user()]);
 
         return view('articles.create', compact('types', 'users'));
     }
 
     public function edit(Article $article)
     {
+        $this->authorize('update', $article);
         $types = ArticleType::get()->groupBy(['level', 'pno']);
-        $users = User::children()->get();
+        $users = Auth::user()->isDepartmentAdmin() ? Department::where('no', 'N000006')->first()->users : collect([Auth::user()]);
 
         return view('articles.edit', compact('article', 'types', 'users'));
     }
@@ -46,6 +52,8 @@ class ArticlesController extends Controller
     public function store(StoreArticlePost $request)
     {
         // dd($request->all());
+        $this->authorize('create', Article::class);
+
         $coverPath = NULL;
         $cover = $request->file('cover');
         if($request->hasFile('cover')) {
@@ -86,13 +94,16 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
         $article->delete();
         return back();
     }
 
-    public function update(Article $article, Request $request)
+    public function update(Article $article, UpdateArticlePost $request)
     {
         // dd($request->all());
+        $this->authorize('update', $article);
+
         $coverPath = NULL;
         if ($request->has('cover')) {
             $cover = $request->file('cover');

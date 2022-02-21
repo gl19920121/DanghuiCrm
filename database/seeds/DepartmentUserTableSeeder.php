@@ -71,13 +71,19 @@ class DepartmentUserTableSeeder extends Seeder
         // 产品
         array_push($list, [
             'department_id' => 8,
-            'user_id' => 2          // 蔡博
+            'user_id' => 2          // 田德雨
         ]);
 
         // 市场
         array_push($list, [
             'department_id' => 10,
-            'user_id' => 9          // 蔡博
+            'user_id' => 9          // 卢靓
+        ], [
+            'department_id' => 10,
+            'user_id' => 16         // 陈春泽
+        ], [
+            'department_id' => 10,
+            'user_id' => 17         // 张保存
         ]);
 
         foreach ($list as $item) {

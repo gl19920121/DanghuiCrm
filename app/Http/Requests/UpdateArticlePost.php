@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreArticlePost extends FormRequest
+class UpdateArticlePost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,9 @@ class StoreArticlePost extends FormRequest
     {
         return [
             'title' => ['required'],
-            'cover' => ['required', 'mimes:jpeg,jpg,png'],
+            'cover' => ['filled'],
             'brief' => ['nullable'],
             'type_no' => ['required'],
-            // 'type_no.*.0' => ['required'],
             'publisher_id' => ['required'],
             'content' => ['required'],
         ];
@@ -44,9 +43,7 @@ class StoreArticlePost extends FormRequest
         return [
             'title.required' => '请填写标题',
             'cover.required' => '请上传封面',
-            'cover.mimes' => '请上传JPGE/PNG格式的图片',
             'type_no.required' => '请选择分类',
-            'type_no.*.0.required' => '请选择分类',
             'publisher_id.required' => '请选择发布人',
             'content.required' => '请填写正文',
         ];

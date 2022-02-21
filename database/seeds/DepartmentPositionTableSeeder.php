@@ -44,7 +44,10 @@ class DepartmentPositionTableSeeder extends Seeder
             'position_id' => 4         // 销售总监
         ], [
             'department_id' => 7,
-            'position_id' => 6          // 商务拓展经理
+            'position_id' => 6         // 商务拓展经理
+        ], [
+            'department_id' => 7,
+            'position_id' => 10        // 实习顾问
         ]);
 
         // 产品
@@ -57,6 +60,9 @@ class DepartmentPositionTableSeeder extends Seeder
         array_push($list, [
             'department_id' => 10,
             'position_id' => 8          // 新媒体运营
+        ], [
+            'department_id' => 10,
+            'position_id' => 10         // 实习顾问
         ]);
 
         foreach ($list as $item) {

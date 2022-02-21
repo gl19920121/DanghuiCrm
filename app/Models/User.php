@@ -245,7 +245,7 @@ class User extends Authenticatable
         return $isBelongTo;
     }
 
-    public function isDepartmentAdmin($department = null)
+    public function isDepartmentAdmin($dno = null)
     {
         // 特殊处理
         if (in_array($this->id, [11, 12])) { // 李萍萍,严瑾婧
@@ -256,7 +256,7 @@ class User extends Authenticatable
         }
 
         $isAdmin = false;
-        $departments = empty($department) ? $this->department : array($department);
+        $departments = empty($dno) ? $this->department : array(Department::where('no', $dno)->first());
 
         foreach ($departments as $item) {
             if (in_array($item->admin_position->id, Auth::user()->position->pluck('id')->toArray())) {
