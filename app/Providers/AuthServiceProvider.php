@@ -41,7 +41,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isBelongToDepartment('N0001') && $user->isDepartmentAdmin();
         });
         Gate::define('job-not-need-check', function ($user) {
-            $user->isDepartmentAdmin();
+            return $user->isDepartmentAdmin();
+        });
+        Gate::define('statistics', function ($user) {
+            return $user->id === 2;
         });
         Gate::define('article-publish', function ($user) {
             return $user->isBelongToDepartment('N000006');
