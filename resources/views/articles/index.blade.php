@@ -51,6 +51,12 @@
         @endforeach
       </tbody>
     </table>
+
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        {{ $articles->links('vendor.pagination.bootstrap-4') }}
+      </div>
+    </div>
   @else
     <div class="empty row">
       <div class="col text-center m-auto">
