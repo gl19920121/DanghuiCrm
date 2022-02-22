@@ -66,7 +66,7 @@ class ManagementController extends Controller
         }
 
         foreach ($departments as $department) {
-            if (Auth::user()->isDepartmentAdmin($department)) {
+            if (Auth::user()->isDepartmentAdmin($department->no)) {
 
                 $usersid = $department->users->where('status', 1)->pluck('id')->toArray();
 

@@ -257,7 +257,6 @@ class User extends Authenticatable
 
         $isAdmin = false;
         $departments = empty($dno) ? $this->department : array(Department::where('no', $dno)->first());
-
         foreach ($departments as $item) {
             if (in_array($item->admin_position->id, Auth::user()->position->pluck('id')->toArray())) {
                 $isAdmin = true;
