@@ -175,6 +175,11 @@ $(function () {
       this.value = this.value.replace(/\D/g, '');
     });
   });
+  $('body').on('focus', 'input[data-type="double"]', function () {
+    $(this).on('input', function () {
+      this.value = this.value.replace(/[^0-9\.]/g, '');
+    });
+  });
 
   _fixType = function _fixType(type) {
     type = type.toLowerCase().replace(/jpg/i, 'jpeg');

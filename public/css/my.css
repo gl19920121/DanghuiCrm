@@ -614,6 +614,19 @@ a.a-red:hover {
   padding-bottom: 113px;
 }
 
+.job-create .default-form .location .choose {
+  font-size: 0px;
+}
+
+.job-create .default-form .location .choose select {
+  width: 150px !important;
+}
+
+.job-create .default-form .location .address {
+  width: 100%;
+  margin-top: 5px;
+}
+
 .default-form .btn-form-submit {
   margin-top: 100px;
 }
@@ -2129,6 +2142,19 @@ a.a-red:hover {
   padding-left: 39px;
   padding-right: 39px;
   padding-bottom: 113px;
+}
+
+.job-create .default-form .location .choose {
+  font-size: 0px;
+}
+
+.job-create .default-form .location .choose select {
+  width: 150px !important;
+}
+
+.job-create .default-form .location .address {
+  width: 100%;
+  margin-top: 5px;
 }
 
 .default-form .btn-form-submit {
@@ -4053,6 +4079,19 @@ a.a-red:hover {
   padding-bottom: 113px;
 }
 
+.job-create .default-form .location .choose {
+  font-size: 0px;
+}
+
+.job-create .default-form .location .choose select {
+  width: 150px !important;
+}
+
+.job-create .default-form .location .address {
+  width: 100%;
+  margin-top: 5px;
+}
+
 .default-form .btn-form-submit {
   margin-top: 100px;
 }
@@ -5573,6 +5612,19 @@ a.a-red:hover {
   padding-left: 39px;
   padding-right: 39px;
   padding-bottom: 113px;
+}
+
+.job-create .default-form .location .choose {
+  font-size: 0px;
+}
+
+.job-create .default-form .location .choose select {
+  width: 150px !important;
+}
+
+.job-create .default-form .location .address {
+  width: 100%;
+  margin-top: 5px;
 }
 
 .default-form .btn-form-submit {
@@ -7196,6 +7248,19 @@ a.a-red:hover {
   padding-bottom: 113px;
 }
 
+.job-create .default-form .location .choose {
+  font-size: 0px;
+}
+
+.job-create .default-form .location .choose select {
+  width: 150px !important;
+}
+
+.job-create .default-form .location .address {
+  width: 100%;
+  margin-top: 5px;
+}
+
 .default-form .btn-form-submit {
   margin-top: 100px;
 }
@@ -8724,6 +8789,19 @@ a.a-red:hover {
   padding-left: 39px;
   padding-right: 39px;
   padding-bottom: 113px;
+}
+
+.job-create .default-form .location .choose {
+  font-size: 0px;
+}
+
+.job-create .default-form .location .choose select {
+  width: 150px !important;
+}
+
+.job-create .default-form .location .address {
+  width: 100%;
+  margin-top: 5px;
 }
 
 .default-form .btn-form-submit {

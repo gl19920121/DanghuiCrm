@@ -14,7 +14,7 @@ class Job extends Model
 
     protected $casts = [
         'type' => 'array',
-        'location' => 'json',
+        'location' => 'array',
         'channel' => 'array'
     ];
 
@@ -199,15 +199,18 @@ class Job extends Model
     public function getLocationAttribute()
     {
         $location = json_decode($this->attributes['location']);
+
         if (gettype($location) === 'object') {
-            if (!$location->city) {
-                $location->city = $location->province;
+            $location = array($location);
+        }
+
+        foreach ($location as $index => $item) {
+            if (!isset($item->city) || empty($item->city)) {
+                $location[$index]->city = $item->province;
             }
-        } else if (gettype($location) === 'array') {
-            foreach ($location as $index => $item) {
-                if (!$item->city) {
-                    $location[$index]->city = $item->province;
-                }
+
+            if (!isset($item->address)) {
+                $location[$index]->address = '';
             }
         }
 

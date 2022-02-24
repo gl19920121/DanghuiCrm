@@ -639,6 +639,23 @@ a.a-red {
   padding-left: 39px;
   padding-right: 39px;
   padding-bottom: 113px;
+
+  .default-form {
+    .location {
+      .choose {
+        font-size: 0px;
+
+        select {
+          width: 150px !important;
+        }
+      }
+
+      .address {
+        width: 100%;
+        margin-top: 5px;
+      }
+    }
+  }
 }
 
 .default-form {

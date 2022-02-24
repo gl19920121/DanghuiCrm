@@ -166,11 +166,11 @@
                 </div>
                 <div class="form-group form-inline">
                   <label for="location"><span class="color-red">*</span>工作地址：</label>
-                  <div id="locations">
+                  <div id="locations" class="location">
                     <div id="location-0">
                       <div class="row align-items-center">
                         <div class="col">
-                          <div data-toggle="distpicker">
+                          <div class="choose" data-toggle="distpicker">
                             <select class="form-control must @if ($errors->has('location.province')) border-danger @endif" name="location[0][province]"
                             @if (isset($oldData['location']['province']))
                               data-province="{{ $oldData['location']['province'] }}"
@@ -189,7 +189,7 @@
                               data-city="---- 选择市 ----"
                             @endif
                             ></select>
-                            <select class="form-control must @if ($errors->has('location.district')) border-danger @endif" name="location[0][district]"
+                            <select class="form-control @if ($errors->has('location.district')) border-danger @endif" name="location[0][district]"
                             @if (isset($oldData['location']['district']))
                               data-district="{{ $oldData['location']['district'] }}"
                             @elseif (isset(old('location')['district']))
@@ -199,7 +199,7 @@
                             @endif
                             ></select>
                           </div>
-                          <input type="text" style="width: 100%;" name="location[0]['address']" class="form-control must @if ($errors->has('location.address')) border-danger @endif" value="{{ isset($oldData['location']['address']) ? $oldData['location']['address'] : (isset(old('location')['address']) ? old('location')['address'] : '') }}" placeholder="详细地址" />
+                          <input type="text" name="location[0][address]" class="form-control address" value="{{ isset($oldData['location']['address']) ? $oldData['location']['address'] : (isset(old('location')['address']) ? old('location')['address'] : '') }}" placeholder="详细地址" autocomplete="off" />
                         </div>
                         <div class="col col-auto">
                           <a href="javascript:void(0);" onclick="deleteLocation(0)">-删除</a>
@@ -459,12 +459,12 @@
       // '<div id="location-' + locationsCount + '">' +
         '<div class="row align-items-center">' +
           '<div class="col">' +
-            '<div>' + //data-toggle="distpicker"
+            '<div class="choose">' +
               '<select name="location[' + locationsCount + '][province]" class="form-control must" data-province="---- 选择省 ----"></select>' +
               '<select name="location[' + locationsCount + '][city]" class="form-control must" data-city="---- 选择市 ----"></select>' +
               '<select name="location[' + locationsCount + '][district]" class="form-control must" data-district="---- 选择区 ----"></select>' +
             '</div>' +
-            '<input type="text" style="width: 100%;" name="location[' + locationsCount + '][address]" class="form-control must" placeholder="详细地址" />' +
+            '<input type="text" name="location[' + locationsCount + '][address]" class="form-control must address" placeholder="详细地址" autocomplete="off" />' +
           '</div>' +
           '<div class="col col-auto">' +
             '<a href="javascript:void(0);" onclick="deleteLocation(' + locationsCount + ')">-删除</a>' +
@@ -478,7 +478,6 @@
 
   function deleteLocation(id)
   {
-    console.log('#location-'+id);
     if (id > 0) {
       $('#location-'+id).remove();
       locationsCount = locationsCount - 1;

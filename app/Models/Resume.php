@@ -22,6 +22,10 @@ class Resume extends Model
         'source' => 'array',
         'is_not_end' => 'boolean',
         // 'exp_salary_min' => 'float',
+        'cur_salary' => 'double',
+        'exp_salary_min' => 'double',
+        'exp_salary_max' => 'double',
+        'upload_uid' => 'integer',
     ];
 
 

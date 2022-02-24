@@ -16,6 +16,7 @@ class ResumeWork extends Model
         'is_not_end' => 'boolean',
         // 'start_at' => 'date:Y-m',
         // 'end_at' => 'date:Y-m',
+        'salary' => 'double',
     ];
 
     private $arrFormat = [

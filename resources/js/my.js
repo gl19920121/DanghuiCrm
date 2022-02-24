@@ -85,6 +85,12 @@ $(function () {
         })
     })
 
+    $('body').on('focus', 'input[data-type="double"]', function() {
+        $(this).on('input', function() {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        })
+    })
+
     _fixType = function (type)
     {
       type = type.toLowerCase().replace(/jpg/i, 'jpeg');

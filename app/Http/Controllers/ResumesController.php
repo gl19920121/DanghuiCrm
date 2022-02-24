@@ -205,7 +205,7 @@ class ResumesController extends Controller
         switch ($tab) {
             case 'all':
                 $resumes->has('user');
-                $resumes->where('status', '!=', 0);
+                // $resumes->where('status', '!=', 0);
                 $resumes->orderBy('updated_at', 'desc');
                 break;
             case 'seen':
@@ -288,7 +288,7 @@ class ResumesController extends Controller
         $resumes = $resumes->paginate($this->pageSize);
 
         $countInfo = [
-            'all' => Resume::active()->has('user')->count(),
+            'all' => Resume::has('user')->count(),
             'seen' => Resume::has('usersSeen')->count(),
             'apply' => Resume::where('status', '!=', 0)->has('job')->count(),
             'commission' => Resume::where('status', '!=', 0)->has('job')->count(),
@@ -347,6 +347,7 @@ class ResumesController extends Controller
      */
     public function store(StoreResumePost $request)
     {
+        // dd($request);
         $avatarPath = NULL;
         $avatar = $request->file('avatar');
         if($request->hasFile('avatar')) {
@@ -445,6 +446,7 @@ class ResumesController extends Controller
 
     public function update(Resume $resume, UpdateResumePost $request)
     {
+        // dd($request->all());
         $data = $request->except('_token', '_method', 'attachment', 'work_experience', 'project_experience', 'education_experience');
 
         if ($request->has('avatar')) {

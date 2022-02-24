@@ -227,7 +227,7 @@
         <div class="form-group form-inline">
           <label for="cur_salary">目前月薪：</label>
           <div class="input-group">
-            <input type="text" name="cur_salary" class="form-control small append" value="{{ empty(old('cur_salary')) ? $resume['cur_salary'] : old('cur_salary') }}" autocomplete="off" data-type="int">
+            <input type="text" name="cur_salary" class="form-control small append" value="{{ empty(old('cur_salary')) ? $resume['cur_salary'] : old('cur_salary') }}" autocomplete="off" data-type="double">
             <div class="input-group-append">
               <div class="input-group-text">K</div>
             </div>
@@ -340,7 +340,7 @@
           <label for="exp_salary"><span class="color-red">*</span>期望薪资：</label>
           <input type="hidden" name="exp_salary_flag" value="0">
           <div class="input-group">
-            <input type="text" name="exp_salary_min" class="form-control must small append @if($errors->has('exp_salary_min')) border-danger @endif" value="{{ empty(old('exp_salary_min')) ? $resume['exp_salary_min'] : old('exp_salary_min') }}" autocomplete="off" data-type="int"
+            <input type="text" name="exp_salary_min" class="form-control must small append @if($errors->has('exp_salary_min')) border-danger @endif" value="{{ empty(old('exp_salary_min')) ? $resume['exp_salary_min'] : old('exp_salary_min') }}" autocomplete="off" data-type="double"
             @if (old('exp_salary_flag') != 0)
               disabled
             @endif
@@ -351,7 +351,7 @@
           </div>
           <label class="ml-1 mr-1">-</label>
           <div class="input-group">
-            <input type="text" name="exp_salary_max" class="form-control must small append @if($errors->has('exp_salary_max')) border-danger @endif" value="{{ empty(old('exp_salary_max')) ? $resume['exp_salary_max'] : old('exp_salary_max') }}" autocomplete="off" data-type="int"
+            <input type="text" name="exp_salary_max" class="form-control must small append @if($errors->has('exp_salary_max')) border-danger @endif" value="{{ empty(old('exp_salary_max')) ? $resume['exp_salary_max'] : old('exp_salary_max') }}" autocomplete="off" data-type="double"
             @if (old('exp_salary_flag') != 0)
               disabled
             @endif
@@ -517,7 +517,7 @@
               <div class="form-group form-inline">
                 <label for="work_experience[{{ $index }}][salary]"><span class="color-red">*</span>月薪：</label>
                 <div class="input-group">
-                  <input type="text" name="work_experience[{{ $index }}][salary]" value="{{ $work_experience['salary'] }}" class="form-control must small append @if($errors->has("work_experience.$index.salary")) border-danger @endif" autocomplete="off" data-type="int">
+                  <input type="text" name="work_experience[{{ $index }}][salary]" value="{{ $work_experience['salary'] }}" class="form-control must small append @if($errors->has("work_experience.$index.salary")) border-danger @endif" autocomplete="off" data-type="double">
                   <div class="input-group-append">
                     <div class="input-group-text">K</div>
                   </div>
@@ -1067,7 +1067,7 @@
         '<div class="form-group form-inline">' +
           '<label for="work_experience[' + worksCount + '][salary]"><span class="color-red">*</span>月薪：</label>' +
           '<div class="input-group">' +
-            '<input type="text" name="work_experience[' + worksCount + '][salary]" class="form-control small append" autocomplete="off" data-type="int">' +
+            '<input type="text" name="work_experience[' + worksCount + '][salary]" class="form-control small append" autocomplete="off" data-type="double">' +
             '<div class="input-group-append">' +
               '<div class="input-group-text">K</div>' +
             '</div>' +

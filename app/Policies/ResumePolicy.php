@@ -10,30 +10,20 @@ class ResumePolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     public function before($user, $ability)
     {
-        if ($user->is_admin) {
+        if ($user->isSuperAdmin()) {
             return true;
         }
     }
 
-    public function update(User $currentUser, Resume $resume)
+    public function update(User $user, Resume $resume)
     {
-        return $currentUser->is_admin || $currentUser->id === $resume->upload_uid;
+        return $user->id === $resume->upload_uid;
     }
 
-    public function destroy(User $currentUser, Resume $resume)
+    public function destroy(User $user, Resume $resume)
     {
-        return $currentUser->is_admin || $currentUser->id === $resume->upload_uid;
+        return $user->id === $resume->upload_uid;
     }
 }

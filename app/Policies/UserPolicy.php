@@ -22,7 +22,7 @@ class UserPolicy
 
     public function before($user, $ability)
     {
-        if ($user->is_admin) {
+        if ($user->isSuperAdmin()) {
             return true;
         }
     }
@@ -34,6 +34,6 @@ class UserPolicy
 
     public function destroy(User $currentUser, User $user)
     {
-        return $currentUser->is_admin && $currentUser->id !== $user->id;
+        return $currentUser->id !== $user->id;
     }
 }

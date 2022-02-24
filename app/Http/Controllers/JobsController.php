@@ -123,9 +123,8 @@ class JobsController extends Controller
             ->with('availableResumes', $availableResumes);
     }
 
-    public function store(StoreJobPost $request) //StoreJobPost Request
+    public function store(StoreJobPost $request)
     {
-        // $validated = $request->validated();
         $data = $request->except('draft_id');
 
         $data['release_uid'] = Auth::user()->id;

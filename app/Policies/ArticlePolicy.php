@@ -12,7 +12,7 @@ class ArticlePolicy
 
     public function before($user, $ability)
     {
-        if ($user->is_admin || $user->isDepartmentAdmin('N000006')) {
+        if ($user->isSuperAdmin() || $user->isDepartmentAdmin('N000006')) {
             return true;
         }
     }

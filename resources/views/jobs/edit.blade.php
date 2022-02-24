@@ -126,12 +126,31 @@
                     </select>
                 </div>
                 <div class="form-group form-inline">
-                    <label for="city"><span>*</span>工作城市：</label>
-                    <div data-toggle="distpicker">
-                      <select class="form-control" name="location[province]" data-province="{{ $job->location->province }}"></select>
-                      <select class="form-control" name="location[city]"  data-city="{{ $job->location->city }}"></select>
-                      <select class="form-control" name="location[district]"  data-district="{{ $job->location->district }}"></select>
+                    <label for="location"><span>*</span>工作城市：</label>
+                    <div id="locations" class="location">
+                      @foreach ($job->location as $index => $location)
+                        <div id="location-{{ $index }}" class="@if($index > 0) mt-3 @endif">
+                          <div class="row align-items-center">
+                            <div class="col">
+                              <div class="choose" data-toggle="distpicker">
+                                <select class="form-control must" name="location[{{ $index }}][province]" data-province="{{ $location->province }}"></select>
+                                <select class="form-control must" name="location[{{ $index }}][city]" data-city="{{ $location->city }}"></select>
+                                <select class="form-control" name="location[{{ $index }}][district]" data-district="{{ $location->district }}"></select>
+                              </div>
+                              <input type="text" name="location[{{ $index }}][address]" class="form-control address" value="{{ $location->address }}" placeholder="详细地址" autocomplete="off" />
+                            </div>
+
+                            <div class="col col-auto">
+                              <a href="javascript:void(0);" onclick="deleteLocation({{ $index }})">-删除</a>
+                            </div>
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
+                </div>
+                <div class="form-group form-inline">
+                  <label for="btnAdd"></label>
+                  <a href="javascript:void(0);" onclick="addLocation()">+添加</a>
                 </div>
                 <div class="form-group form-inline">
                     <label for="salary"><span>*</span>税前月薪：</label>
@@ -298,6 +317,8 @@
 
 <script type="text/javascript">
 
+  var locationsCount = $('#locations').children().length;
+
   function companySelect()
   {
     var data = $('select option:selected').attr('data-item');
@@ -356,6 +377,38 @@
       $('#channelRemark').css('visibility', 'visible');
     } else {
       $('#channelRemark').css('visibility', 'hidden');
+    }
+  }
+
+  function addLocation()
+  {
+    locationsCount = locationsCount + 1;
+    let location =
+      // '<div id="location-' + locationsCount + '">' +
+        '<div class="row align-items-center">' +
+          '<div class="col">' +
+            '<div class="choose">' + //data-toggle="distpicker"
+              '<select name="location[' + locationsCount + '][province]" class="form-control must" data-province="---- 选择省 ----"></select>' +
+              '<select name="location[' + locationsCount + '][city]" class="form-control must" data-city="---- 选择市 ----"></select>' +
+              '<select name="location[' + locationsCount + '][district]" class="form-control" data-district="---- 选择区 ----"></select>' +
+            '</div>' +
+            '<input type="text" name="location[' + locationsCount + '][address]" class="form-control address" placeholder="详细地址" autocomplete="off" />' +
+          '</div>' +
+          '<div class="col col-auto">' +
+            '<a href="javascript:void(0);" onclick="deleteLocation(' + locationsCount + ')">-删除</a>' +
+          '</div>' +
+        '</div>'
+      // '</div>'
+    ;
+
+    $('#locations').children("div:last-child").after($('<div>').attr('id', 'location-' + locationsCount).addClass('mt-3').html(location).distpicker());
+  }
+
+  function deleteLocation(id)
+  {
+    if (locationsCount > 1) {
+      $('#location-'+id).remove();
+      locationsCount = locationsCount - 1;
     }
   }
 

@@ -78,6 +78,7 @@ class StoreResumePost extends FormRequest
             'work_experience.*.salary_count.required' => '请填写 月薪',
             'work_experience.*.subordinates.numeric' => '请正确填写 下属人数',
             'work_experience.*.start_at.required' => '请填写 入职时间',
+            'work_experience.*.start_at.date_format' => '请正确填写 入职时间，格式：年-月',
             'work_experience.*.end_at.required_without' => '请填写 离职时间',
             'work_experience.*.work_desc.required' => '请填写 工作描述',
             'project_experience.*.name.required' => '请填写 项目名称',
