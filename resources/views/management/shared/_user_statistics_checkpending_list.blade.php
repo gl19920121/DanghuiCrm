@@ -48,16 +48,11 @@
       <table class="table default-table">
         <thead>
           <tr>
-            <th scope="col">职位名称</th>
+            <th scope="col">待审核职位</th>
             <th scope="col">发布顾问</th>
-            <th scope="col">应聘简历</th>
-            <th scope="col">电话沟通</th>
-            <th scope="col">推荐简历</th>
-            <th scope="col">面试</th>
-            <th scope="col">OFFER</th>
-            <th scope="col">入职</th>
-            <th scope="col">过保</th>
-            <th scope="col">淘汰</th>
+            <th scope="col">招聘企业</th>
+            <th scope="col">发布渠道</th>
+            <th scope="col">申请时间</th>
             <th scope="col">操作</th>
           </tr>
         </thead>
@@ -66,22 +61,24 @@
             <tr>
               <td class="color-red">{{ $job->name }}</td>
               <td>{{ $job->executeUser->name }}</td>
-              <td>{{ $job->resumes_count }}</td>
-              <td>{{ $job->talking_resumes_count }}</td>
-              <td>{{ $job->push_resume_resumes_count }}</td>
-              <td>{{ $job->interview_resumes_count }}</td>
-              <td>{{ $job->offer_resumes_count }}</td>
-              <td>{{ $job->onboarding_resumes_count }}</td>
-              <td>{{ $job->over_probation_resumes_count }}</td>
-              <td>{{ $job->out_resumes_count }}</td>
+              <td>{{ $job->company->name }}</td>
+              <td>{{ $job->channel_show }}</td>
+              <td>{{ $job->created_at }}</td>
               <td>
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     操作
                   </button>
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="">刷新</a>
-                    <a class="dropdown-item" href="{{ route('excel.export.user.job', ['id' => [$job->id], 'type' => 'job', 'start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}">导出</a>
+                    <form method="POST" action="{{ route('jobs.status', [$job, 'status' => 1]) }}">
+                      {{ csrf_field() }}
+                      <button class="dropdown-item" type="submit" data-toggle="modal" data-type="job">通过</button>
+                    </form>
+                    <form method="POST" action="{{ route('jobs.destroy', $job) }}">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button class="dropdown-item" type="submit" data-toggle="modal" data-type="job">驳回</button>
+                    </form>
                   </div>
                 </div>
               </td>

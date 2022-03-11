@@ -6623,6 +6623,14 @@ ul.nav-sec-left > li ul.sub > li.active a {
   color: #3E3A39;
 }
 
+.management-staff .default-table .clickable {
+  cursor: pointer;
+}
+
+.management-staff .default-table .clickable:hover {
+  background-color: rgba(216, 56, 86, 0.03);
+}
+
 .management-staff .list .job-list .nav-tabs-border {
   border-top: 1px solid #C9CACA;
 }

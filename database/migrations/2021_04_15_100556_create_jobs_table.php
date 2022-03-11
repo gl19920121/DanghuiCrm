@@ -40,7 +40,7 @@ class CreateJobsTable extends Migration
             $table->integer('execute_uid')->nullable()->comment('职位执行人')->unsigned();
             $table->integer('company_id')->comment('公司id')->unsigned();
             $table->timestamps();
-            $table->tinyInteger('status')->nullable()->default(-1)->comment('状态：-1->审核中，0->淘汰（删除），1->待处理，2->电话沟通，3->推荐简历，4->面试，5->OFFER，6->入职，7->过保，8->结束');
+            $table->tinyInteger('status')->nullable()->default(-1)->comment('状态：-1->审核中，0->结束（删除），1->进行中，2->暂停');
             $table->foreign('release_uid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
             $table->foreign('execute_uid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // 外键约束
             $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade'); // 外键约束

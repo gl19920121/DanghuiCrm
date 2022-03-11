@@ -44,6 +44,11 @@ class User extends Authenticatable
 
     protected $appends = ['rolesChildren', 'children'];
 
+    public function operation()
+    {
+        return $this->hasManyThrough(OperationJobWork::class, Job::class, 'execute_uid', 'job_id');
+    }
+
     public function department()
     {
         return $this->belongsToMany(Department::class, 'department_user', 'user_id', 'department_id');

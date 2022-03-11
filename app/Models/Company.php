@@ -23,6 +23,11 @@ class Company extends Model
         return $this->hasMany(Job::class);
     }
 
+    public function operation()
+    {
+        return $this->hasManyThrough(OperationJobWork::class, Job::class, 'company_id', 'job_id');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('status', 1);

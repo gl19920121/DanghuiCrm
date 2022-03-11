@@ -61,47 +61,29 @@ class ExcelController extends Controller
         return Excel::download(new JobsExport($row, $list), "$job->name.xlsx");
     }
 
-    public function exportUserJob(User $user, Request $request)
+    public function exportJobStatistics(Request $request)
     {
-        $data = array();
-        $startAt = $request->filled('start_at') ? Carbon::createFromFormat('Y-m-d', $request->start_at) : Carbon::now();
-        $endAt = $request->filled('end_at') ? Carbon::createFromFormat('Y-m-d', $request->end_at) : Carbon::now();
+        $ids = $request->id;
+        $type = $request->type;
+        $startAt = $request->filled('start_at') ? Carbon::parse($request->start_at) : null;
+        $endAt = $request->filled('end_at') ? Carbon::parse($request->end_at) : Carbon::today();
 
-        foreach ($user->executeJobs as $index => $job) {
-            $item = array(
-                'user_name' => $user->name,
-                'company_name' => $job->company->name,
-                'job_name' => $job->name,
-                'resume_count' => (string)$job->resumes()->count(),
-                'resume_talking_count' => (string)$job->resumes()->talking()->count(),
-                'resume_push_resume_count' => (string)$job->resumes()->pushResume()->count(),
-                'resume_interview_count' => (string)$job->resumes()->interview()->count(),
-                'resume_offer_count' => (string)$job->resumes()->offer()->count(),
-                'resume_out_count' => (string)$job->resumes()->out()->count(),
-                'resume_over_probation_count' => (string)$job->resumes()->overProbation()->count(),
-                'resume_onboarding_count' => (string)$job->resumes()->onboarding()->count(),
-            );
-            array_push($data, $item);
-            $startAt = !$request->filled('start_at') && $job->created_at->lt($startAt) ? $job->created_at : $startAt;
+        $jobsExport = new JobsExport($ids, $type, $startAt, $endAt);
+        if ($request->filled('start_at')) {
+            $fileName = sprintf('交付系统职位统计表 %s 至 %s.xlsx', $startAt->toDateString(), $endAt->toDateString());
+        } else {
+            $fileName = sprintf('交付系统职位统计表 至 %s.xlsx', $request->filled('end_at') ? $endAt->toDateString() : Carbon::today());
         }
 
-        $colTitle = array(
-            'user_name' => '员工名称',
-            'company_name' => '企业名称',
-            'job_name' => '职位名称',
-            'resume_count' => '筛选简历',
-            'resume_talking_count' => '电话沟通',
-            'resume_push_resume_count' => '推荐简历',
-            'resume_interview_count' => '面试',
-            'resume_offer_count' => 'OFFER',
-            'resume_out_count' => '淘汰',
-            'resume_over_probation_count' => '过保',
-            'resume_onboarding_count' => '入职',
-        );
+        if (empty($startAt)) {
+            $fileName = sprintf('交付系统职位统计表 截止至 %s.xlsx', $endAt->toDateString());
+        } else if ($endAt->diffInDays($startAt) === 0) {
+            $fileName = sprintf('交付系统职位统计表 %s.xlsx', $startAt->toDateString());
+        } else {
+            $fileName = sprintf('交付系统职位统计表 %s 至 %s.xlsx', $startAt->toDateString(), $endAt->toDateString());
+        }
 
-        $fileName = sprintf('交付系统职位统计表 %s 至 %s.xlsx', $startAt->toDateString(), $endAt->toDateString());
-
-        return Excel::download(new JobsExport($user, $data, $colTitle, $startAt, $endAt), $fileName);
+        return Excel::download($jobsExport, $fileName);
     }
 
     public function importResume(Request $request)

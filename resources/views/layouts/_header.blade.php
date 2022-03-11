@@ -35,14 +35,20 @@
                     @endif
                 </li>
                 @can ('rpo-manager')
-                  <li class="nav-item {{ strpos(Route::currentRouteName(), 'management.') !== false ? 'active': '' }}">
-                      <a class="nav-link" href="{{ route('management.job.list') }}">
-                          员工管理
-                      </a>
-                      @if (in_array(Route::currentRouteName(), ['management.job.list', 'management.staff.list']))
+                  @if (strpos(Route::currentRouteName(), 'management.') !== false)
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('management.job.list') }}">
+                            员工管理
+                        </a>
                         <div class="triangle-up"></div>
-                      @endif
-                  </li>
+                    </li>
+                  @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('management.job.list') }}">
+                            员工管理
+                        </a>
+                    </li>
+                  @endif
                 @endcan
                 @can ('statistics')
                   <li class="nav-item {{ strpos(Route::currentRouteName(), 'statistics.') !== false ? 'active': '' }}">
@@ -93,7 +99,7 @@
   @include('layouts._second_header', ['tab' => 'jobs'])
 @elseif (in_array(Route::currentRouteName(), ['resumes.create', 'resumes.create.manual', 'resumes.edit', 'resumes.list', 'resumes.show', 'resumes.mine', 'resumes.current']))
   @include('layouts._second_header', ['tab' => 'resumes'])
-@elseif (in_array(Route::currentRouteName(), ['management.job.list', 'management.resume.list', 'management.staff.list']))
+@elseif (in_array(Route::currentRouteName(), ['management.job.list', 'management.resume.list', 'management.staff.list', 'management.staff.user.list', 'management.staff.department.list']))
   @include('layouts._second_header', ['tab' => 'management'])
 @elseif (strpos(Route::currentRouteName(), 'articles.') !== false)
   @include('layouts._second_header', ['tab' => 'articles'])

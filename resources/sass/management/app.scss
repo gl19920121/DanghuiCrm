@@ -105,6 +105,14 @@
         }
       }
     }
+
+    .clickable {
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-light-red-2;
+      }
+    }
   }
 
   .list {

@@ -280,6 +280,37 @@ class Resume extends Model
         $this->attributes['education'] = $education;
     }
 
+    public function setStatusAttribute($value)
+    {
+        // if ($this->attributes['status'] !== $value) {
+        if (true) {
+            $operationJobWork = new OperationJobWork;
+            $operationJobWork->user_id = Auth::user()->id;
+            $operationJobWork->resume_id = $this->id;
+            $operationJobWork->job_id = $this->job->id;
+            $operationJobWork->old_status = $this->attributes['status'];
+            $operationJobWork->status = $value;
+            $operationJobWork->save();
+        }
+
+        $this->attributes['status'] = $value;
+    }
+
+    // public function setJobIdAttribute($value)
+    // {
+    //     if ($this->attributes['job_id'] !== $value) {
+    //         $operationJobWork = new OperationJobWork;
+    //         $operationJobWork->user_id = Auth::user()->id;
+    //         $operationJobWork->resume_id = $this->id;
+    //         $operationJobWork->job_id = $value;
+    //         $operationJobWork->old_status = $this->status;
+    //         $operationJobWork->status = 1;
+    //         $operationJobWork->save();
+    //     }
+
+    //     $this->attributes['job_id'] = $value;
+    // }
+
     public function getLocationDefaultAttribute()
     {
         return $this->default['location'];

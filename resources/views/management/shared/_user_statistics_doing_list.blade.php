@@ -49,7 +49,6 @@
         <thead>
           <tr>
             <th scope="col">职位名称</th>
-            <th scope="col">发布顾问</th>
             <th scope="col">应聘简历</th>
             <th scope="col">电话沟通</th>
             <th scope="col">推荐简历</th>
@@ -65,7 +64,6 @@
           @foreach($jobs as $job)
             <tr>
               <td class="color-red">{{ $job->name }}</td>
-              <td>{{ $job->executeUser->name }}</td>
               <td>{{ $job->resumes_count }}</td>
               <td>{{ $job->talking_resumes_count }}</td>
               <td>{{ $job->push_resume_resumes_count }}</td>
@@ -81,7 +79,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <a class="dropdown-item" href="">刷新</a>
-                    <a class="dropdown-item" href="{{ route('excel.export.user.job', ['id' => [$job->id], 'type' => 'job', 'start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}">导出</a>
+                    <a class="dropdown-item" href="{{ route('excel.export.user.job', [$job, 'start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}">导出</a>
                   </div>
                 </div>
               </td>

@@ -44,12 +44,11 @@
         <button type="submit" class="btn btn-danger">查找</button>
       </div>
     </form>
-    @if (count($jobs) > 0)
+    @if (count($companys) > 0)
       <table class="table default-table">
         <thead>
           <tr>
-            <th scope="col">职位名称</th>
-            <th scope="col">发布顾问</th>
+            <th scope="col">公司名称</th>
             <th scope="col">应聘简历</th>
             <th scope="col">电话沟通</th>
             <th scope="col">推荐简历</th>
@@ -62,18 +61,17 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($jobs as $job)
+          @foreach($companys as $company)
             <tr>
-              <td class="color-red">{{ $job->name }}</td>
-              <td>{{ $job->executeUser->name }}</td>
-              <td>{{ $job->resumes_count }}</td>
-              <td>{{ $job->talking_resumes_count }}</td>
-              <td>{{ $job->push_resume_resumes_count }}</td>
-              <td>{{ $job->interview_resumes_count }}</td>
-              <td>{{ $job->offer_resumes_count }}</td>
-              <td>{{ $job->onboarding_resumes_count }}</td>
-              <td>{{ $job->over_probation_resumes_count }}</td>
-              <td>{{ $job->out_resumes_count }}</td>
+              <td class="color-red">{{ $company->name }}</td>
+              <td>{{ $company->resumes_count }}</td>
+              <td>{{ $company->talking_resumes_count }}</td>
+              <td>{{ $company->push_resume_resumes_count }}</td>
+              <td>{{ $company->interview_resumes_count }}</td>
+              <td>{{ $company->offer_resumes_count }}</td>
+              <td>{{ $company->onboarding_resumes_count }}</td>
+              <td>{{ $company->over_probation_resumes_count }}</td>
+              <td>{{ $company->out_resumes_count }}</td>
               <td>
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,7 +79,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <a class="dropdown-item" href="">刷新</a>
-                    <a class="dropdown-item" href="{{ route('excel.export.user.job', ['id' => [$job->id], 'type' => 'job', 'start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}">导出</a>
+                    <a class="dropdown-item" href="{{ route('excel.export.user.job', ['id' => [$company->id], 'type' => 'company', 'start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}">导出</a>
                   </div>
                 </div>
               </td>
@@ -92,7 +90,7 @@
 
       <div class="row justify-content-end">
         <div class="col-auto">
-          {{ $jobs->appends($appends)->links('vendor.pagination.bootstrap-4') }}
+          {{ $companys->appends($appends)->links('vendor.pagination.bootstrap-4') }}
         </div>
       </div>
     @else

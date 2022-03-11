@@ -647,6 +647,7 @@ class ResumesController extends Controller
         if ($request->has('job_id')) {
             $resume->job_id = $request->job_id;
             $resume->deliver_at = Carbon::now();
+            $resume->status = 1;
             $resume->save();
         }
 

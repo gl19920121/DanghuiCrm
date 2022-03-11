@@ -16,7 +16,7 @@ Route::get('/word/export/job/{job}','WordController@exportJob')->name('word.expo
 Route::get('/pdf/export/job/{job}','PdfController@exportJob')->name('pdf.export.job');
 Route::get('/word/export/resume/{resume}','WordController@exportResume')->name('word.export.resume');
 Route::get('/pdf/export/resume/{resume}','PdfController@exportResume')->name('pdf.export.resume');
-Route::get('/excel/export/user/job/{user}','ExcelController@exportUserJob')->name('excel.export.user.job');
+Route::get('/excel/export/user/job/statistics','ExcelController@exportJobStatistics')->name('excel.export.user.job');
 Route::get('/word/export/user/resume/{user}','WordController@exportUserResume')->name('word.export.user.resume');
 Route::get('/img/export/resume/{resume}','ImgController@exportResume')->name('img.export.resume');
 Route::post('/excel/import/resume','ExcelController@importResume')->name('excel.import.resume');
@@ -54,6 +54,8 @@ Route::resource('companys', 'CompanysController');
 Route::middleware(['can:rpo-manager'])->group(function () {
     Route::get('/management/job/list', 'ManagementController@jobList')->name('management.job.list');
     Route::get('/management/staff/list', 'ManagementController@staffList')->name('management.staff.list');
+    Route::get('/management/staff/user/{user}/list', 'ManagementController@userStaffList')->name('management.staff.user.list');
+    Route::get('/management/staff/department/{department}/list', 'ManagementController@departmentStaffList')->name('management.staff.department.list');
 });
 
 Route::middleware(['can:statistics'])->group(function () {
