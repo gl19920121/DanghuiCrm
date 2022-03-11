@@ -56,13 +56,14 @@
         </thead>
         <tbody>
           @foreach($users as $user)
-            @if ($user instanceof App\Models\Department)
-              <tr onclick="location='{{ route('management.staff.department.list', ['department' => $user]) }}'" class="clickable">
-            @else
-              <tr hidden onclick="location='{{ route('management.staff.user.list', ['user' => $user]) }}'" class="clickable">
-              <tr>
-            @endif
-              <td><span>{{ $user->name }}</span></td>
+            <tr>
+              <td>
+                @if ($user instanceof App\Models\Department)
+                  <a href="{{ route('management.staff.department.list', ['department' => $user]) }}">{{ $user->name }}</a>
+                @else
+                  <a href="{{ route('management.staff.user.list', ['user' => $user]) }}">{{ $user->name }}</a>
+                @endif
+              </td>
               <td class="color-red">{{ $user->jobs_count }}</td>
               <td>{{ $user->checkpending_jobs_count }}</td>
               <td>
