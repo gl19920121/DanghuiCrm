@@ -70,6 +70,14 @@ a.a-red:hover {
   color: #D83856;
 }
 
+.scheckbox {
+  margin-right: 20px;
+}
+
+.scheckbox.all {
+  margin-left: 13px;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -780,7 +788,12 @@ a.a-red:hover {
 }
 
 .job-list .job-list-body .default-list .btn {
-  width: 93px;
+  min-width: 93px;
+}
+
+.job-list .job-list-body .default-list .btn .icon-download {
+  margin-top: -5px;
+  margin-right: 8px;
 }
 
 .job-list .job-list-body .empty {

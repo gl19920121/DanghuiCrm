@@ -134,6 +134,7 @@ class JobsController extends Controller
             $data['execute_uid'] = Auth::user()->id;
         }
         $data['channel'] = array_keys($data['channel']);
+        $data['tag'] = array_keys($data['tag']);
         $data['status'] = -1;
         sort($data['location']);
         $job = Job::create($data);
@@ -152,6 +153,9 @@ class JobsController extends Controller
 
         if ($request->has('channel')) {
             $data['channel'] = array_keys($data['channel']);
+        }
+        if ($request->has('tag')) {
+            $data['tag'] = array_keys($data['tag']);
         }
 
         $job->update($data);

@@ -177,6 +177,7 @@ return [
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Stevenyangecho\UEditor\UEditorServiceProvider::class,
+        Chenhua\MarkdownEditor\MarkdownEditorServiceProvider::class,
 
     ],
 
@@ -228,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'MarkdownEditor' => Chenhua\MarkdownEditor\Facades\MarkdownEditor::class,
 
     ],
 

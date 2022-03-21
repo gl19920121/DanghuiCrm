@@ -63,6 +63,7 @@ class ExcelController extends Controller
 
     public function exportJobStatistics(Request $request)
     {
+        // dd($request->all());
         $ids = $request->id;
         $type = $request->type;
         $startAt = $request->filled('start_at') ? Carbon::parse($request->start_at) : null;

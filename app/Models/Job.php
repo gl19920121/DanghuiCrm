@@ -15,7 +15,9 @@ class Job extends Model
     protected $casts = [
         'type' => 'array',
         'location' => 'array',
-        'channel' => 'array'
+        'channel' => 'array',
+        'tag' => 'array',
+        'heat' => 'boolean',
     ];
 
 

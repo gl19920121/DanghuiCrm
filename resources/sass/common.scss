@@ -99,6 +99,14 @@ a.a-red {
   }
 }
 
+.scheckbox {
+  margin-right: 20px;
+}
+
+.scheckbox.all {
+  margin-left: 13px;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -837,8 +845,13 @@ a.a-red {
       padding-top: 48px;
 
       .btn {
-        width: 93px;
+        min-width: 93px;
         //height: 29px;
+
+        .icon-download {
+          margin-top: -5px;
+          margin-right: 8px;
+        }
       }
     }
 

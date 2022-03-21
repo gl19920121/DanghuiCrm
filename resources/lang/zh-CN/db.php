@@ -24,6 +24,11 @@ return [
             '1' => '急聘',
         ],
         'channel_default' => [''],
+        'tag' => [
+            'job_hunter' => '猎头',
+            'bule_collar' => '蓝领',
+            'milk_round' => '校招',
+        ],
     ],
     'resume' => [
         'work_years' => [

@@ -326,6 +326,27 @@
                     @endforeach
                 </div>
                 <div class="form-group form-inline">
+                    <label for="heat"><span class="color-red">*</span>热门：</label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="heat_1" name="heat" class="custom-control-input" value="1"
+                          @if (isset($oldData['heat']) && $oldData['heat'] == 1)
+                            checked
+                          @elseif (old('heat') == 1)
+                            checked
+                          @endif>
+                        <label class="custom-control-label" for="heat_1">是</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="heat_0" name="heat" class="custom-control-input" value="0"
+                          @if (isset($oldData['heat']) && $oldData['heat'] == 0)
+                            checked
+                          @elseif (old('heat') == 0)
+                            checked
+                          @endif>
+                        <label class="custom-control-label" for="heat_0">否</label>
+                    </div>
+                </div>
+                <div class="form-group form-inline">
                     <label for="channel"><span class="color-red">*</span>渠道选择：</label>
                     @foreach (trans('db.channel') as $key => $channel)
                         <div class="custom-control custom-checkbox custom-control-inline">
@@ -359,6 +380,20 @@
                         </option>
                       @endforeach
                     </select>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="tag"><span class="color-red">*</span>职位类型：</label>
+                    @foreach (trans('db.job.tag') as $key => $tag)
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" class="custom-control-input" id="tag_{{ $key }}" name="tag[{{ $key }}]"
+                              @if (isset($oldData['tag']) && in_array($key, $oldData['tag']))
+                                checked
+                              @elseif (isset(old('tag')[$key]))
+                                checked
+                              @endif>
+                            <label class="custom-control-label" for="tag_{{ $key }}">{{ $tag }}</label>
+                        </div>
+                    @endforeach
                 </div>
                 <div class="form-group form-inline">
                   <label for="deadline"><span class="color-red">*</span>截止日期：</label>

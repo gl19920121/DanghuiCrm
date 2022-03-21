@@ -38,7 +38,7 @@ class JobSheet implements FromCollection, WithTitle, WithEvents
         $rows = collect();
         foreach ($this->data as $job) {
             $item = [
-                'user_name' => $this->sheetName,
+                'user_name' => $job->executeUser->name,
                 'company_name' => $job->company->name,
                 'job_name' => $job->name,
                 'resumes_count' => (string)$job->resumes_count,

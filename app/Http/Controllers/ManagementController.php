@@ -80,7 +80,7 @@ class ManagementController extends Controller
                 continue;
             }
 
-            $usersid = $department->users->where('status', 1)->pluck('id')->toArray();
+            $usersid = $department->users->pluck('id')->toArray();
 
             if ($tab === 'job') {
                 $query = Job::whereIn('execute_uid', $usersid);
@@ -90,10 +90,12 @@ class ManagementController extends Controller
 
                 $items = $statistics;
             } else if ($tab === 'company') {
-                $companysid = Job::whereIn('execute_uid', $usersid)->get()->pluck('company_id')->toArray();
+                $jobs = Job::whereIn('execute_uid', $usersid)->get();
+                $companysid = $jobs->pluck('company_id')->toArray();
+                $jobsid = $jobs->pluck('id')->toArray();
                 $query = Company::whereIn('id', $companysid);
                 $tool = new Statistic('company', $request->start_at, $request->end_at);
-                $tool->queryJobStatistic($query);
+                $tool->queryJobStatistic($query, $jobsid);
                 $statistics = $query->get();
 
                 $items = $statistics;
@@ -108,6 +110,7 @@ class ManagementController extends Controller
                         continue;
                     }
 
+                    $statistic->type = 'user';
                     if ($statistic->id === Auth::user()->id) {
                         $self = $statistic;
                     } else {
@@ -116,6 +119,7 @@ class ManagementController extends Controller
                 }
 
                 $item = $department;
+                $item->type = 'department';
                 $item->jobs_count = $statistics->sum('jobs_count');
                 $item->checkpending_jobs_count = $statistics->sum('checkpending_jobs_count');
                 $item->resumes_count = $statistics->sum('resumes_count');

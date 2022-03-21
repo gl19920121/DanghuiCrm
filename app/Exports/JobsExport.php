@@ -17,10 +17,12 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use DateTime;
 use App\Exports\Sheets\JobSheet;
 use App\Models\User;
+use App\Models\Department;
 use App\Models\Job;
 use App\Models\Company;
 use App\Tools\Statistic;
 use Carbon\Carbon;
+use Auth;
 
 //WithMultipleSheets ShouldAutoSize FromCollection WithEvents
 class JobsExport implements WithMultipleSheets
@@ -44,18 +46,33 @@ class JobsExport implements WithMultipleSheets
     {
         $sheets = []; $data; $query;
 
-        foreach ($this->ids as $index => $id) {
-            switch ($this->type) {
+        foreach ($this->ids as $item) {
+            if (is_array($item)) {
+                $id = $item['id'];
+                $type = $item['type'];
+            } else {
+                $id = $item;
+                $type = $this->type;
+            }
+
+            switch ($type) {
                 case 'user':
                     $query = Job::where('execute_uid', $id);
                     $sheetName = User::find($id)->name;
+                    break;
+                case 'department':
+                    $department = Department::find($id);
+                    $ids = $department->users->pluck('id')->toArray();
+                    $query = Job::whereIn('execute_uid', $ids);
+                    $sheetName = $department->name;
                     break;
                 case 'job':
                     $query = Job::where('id', $id);
                     $sheetName = Job::find($id)->name;
                     break;
                 case 'company':
-                    $query = Job::where('company_id', $id);
+                    $jobsid = Job::whereIn('execute_uid', Auth::user()->departmentUser)->get()->pluck('id')->toArray();
+                    $query = Job::whereIn('id', $jobsid)->where('company_id', $id);
                     $sheetName = Company::find($id)->name;
                     break;
 
@@ -63,7 +80,7 @@ class JobsExport implements WithMultipleSheets
                     break;
             }
 
-            $Statistic = new Statistic($this->type, $this->startAt, $this->endAt);
+            $Statistic = new Statistic(null, $this->startAt, $this->endAt);
             $Statistic->queryJobStatistic($query);
 
             $data = $query->orderBy('created_at', 'desc')->get();

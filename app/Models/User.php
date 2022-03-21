@@ -54,6 +54,17 @@ class User extends Authenticatable
         return $this->belongsToMany(Department::class, 'department_user', 'user_id', 'department_id');
     }
 
+    public function getDepartmentUserAttribute()
+    {
+        $uids = [];
+        $departments = $this->department;
+        foreach ($departments as $department) {
+            $uids = array_merge($uids, $department->users->pluck('id')->toArray());
+        }
+
+        return $uids;
+    }
+
     public function position()
     {
         return $this->belongsToMany(Position::class, 'position_user', 'user_id', 'position_id');

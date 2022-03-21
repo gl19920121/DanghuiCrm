@@ -97,6 +97,69 @@ $(function () {
   // $('body').on('click', ".distpicker", function() {
   //   $(this).distpicker();
   // });
+  //**********  多选导出  **********//
+  checkedList = {};
+
+  parseParam = function (_parseParam) {
+    function parseParam(_x, _x2) {
+      return _parseParam.apply(this, arguments);
+    }
+
+    parseParam.toString = function () {
+      return _parseParam.toString();
+    };
+
+    return parseParam;
+  }(function (param, key) {
+    var paramStr = "";
+
+    if (param instanceof String || param instanceof Number || param instanceof Boolean) {
+      paramStr += "&" + key + "=" + encodeURIComponent(param);
+    } else {
+      $.each(param, function (i) {
+        var k = key == null ? i : key + "%5B" + i + "%5D";
+        paramStr += '&' + parseParam(this, k);
+      });
+    }
+
+    return paramStr.substr(1);
+  });
+
+  excelDownload = function excelDownload(url) {
+    url += "&" + parseParam(checkedList, "id");
+    url = url.replaceAll("&amp;", "&");
+    checkedList = {};
+    $('.scheckbox').prop("checked", false);
+    window.location.href = url;
+  };
+
+  $('.scheckbox').change(function () {
+    var checked = $(this).is(':checked');
+    var id = $(this).data('id');
+    var type = $(this).data('type');
+
+    if (typeof id == "undefined") {
+      return;
+    }
+
+    var key = type + "-" + id;
+    var item = {
+      'id': id,
+      'type': type
+    };
+
+    if (checked) {
+      checkedList[key] = item;
+    } else {
+      delete checkedList[key];
+    }
+  });
+  $('.all').click(function () {
+    var checked = $(this).is(':checked');
+    $('.scheckbox').prop("checked", checked);
+    $('.scheckbox').change();
+  }); //**********  多选导出  **********//
+
   $('body').on('mouseenter', ".datetimepicker", function () {
     $(this).datetimepicker({
       locale: 'zh-CN',

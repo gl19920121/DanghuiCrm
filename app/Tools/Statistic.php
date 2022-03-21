@@ -10,7 +10,7 @@ class Statistic
     public $startAt;
     public $endAt;
 
-    public function __construct($type, $startAt = null, $endAt = null)
+    public function __construct($type = null, $startAt = null, $endAt = null)
     {
         if (!empty($startAt) && !($startAt instanceof Carbon)) {
             $startAt = Carbon::parse($startAt);
@@ -28,39 +28,63 @@ class Statistic
         $this->endAt = $endAt;
     }
 
-    public function queryJobStatistic(&$query)
+    public function queryJobStatistic(&$query, $jobsid = null)
     {
         $opTable = 'operation_job_work';
         $withArr = [
             'operation as resumes_count' => function ($query) use ($opTable) {
+                if (!empty($jobsid)) {dd($jobsid);
+                    $query->whereIn($opTable . '.job_id', $jobsid);
+                }
                 $query->where($opTable . '.status', 1);
                 $this->queryDate($query, $opTable);
             },
             'operation as talking_resumes_count' => function ($query) use ($opTable) {
+                if (!empty($jobsid)) {
+                    $query->whereIn($opTable . '.job_id', $jobsid);
+                }
                 $query->where($opTable . '.status', 2);
                 $this->queryDate($query, $opTable);
             },
             'operation as push_resume_resumes_count' => function ($query) use ($opTable) {
+                if (!empty($jobsid)) {
+                    $query->whereIn($opTable . '.job_id', $jobsid);
+                }
                 $query->where($opTable . '.status', 3);
                 $this->queryDate($query, $opTable);
             },
             'operation as interview_resumes_count' => function ($query) use ($opTable) {
+                if (!empty($jobsid)) {
+                    $query->whereIn($opTable . '.job_id', $jobsid);
+                }
                 $query->where($opTable . '.status', 4);
                 $this->queryDate($query, $opTable);
             },
             'operation as offer_resumes_count' => function ($query) use ($opTable) {
+                if (!empty($jobsid)) {
+                    $query->whereIn($opTable . '.job_id', $jobsid);
+                }
                 $query->where($opTable . '.status', 5);
                 $this->queryDate($query, $opTable);
             },
             'operation as onboarding_resumes_count' => function ($query) use ($opTable) {
+                if (!empty($jobsid)) {
+                    $query->whereIn($opTable . '.job_id', $jobsid);
+                }
                 $query->where($opTable . '.status', 6);
                 $this->queryDate($query, $opTable);
             },
             'operation as over_probation_resumes_count' => function ($query) use ($opTable) {
+                if (!empty($jobsid)) {
+                    $query->whereIn($opTable . '.job_id', $jobsid);
+                }
                 $query->where($opTable . '.status', 7);
                 $this->queryDate($query, $opTable);
             },
             'operation as out_resumes_count' => function ($query) use ($opTable) {
+                if (!empty($jobsid)) {
+                    $query->whereIn($opTable . '.job_id', $jobsid);
+                }
                 $query->where($opTable . '.status', 0);
                 $this->queryDate($query, $opTable);
             }

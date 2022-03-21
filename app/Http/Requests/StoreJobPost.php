@@ -53,6 +53,8 @@ class StoreJobPost extends FormRequest
             'urgency_level.required' => '请选择 紧急程度',
             'channel.required' => '请选择 渠道',
             'deadline.required' => '请填写 截止日期',
+            'heat.required' => '请选择 热度',
+            'tag.required' => '请选择 职位类型',
         ];
     }
 
@@ -107,7 +109,9 @@ class StoreJobPost extends FormRequest
             ],
             'channel' => ['required'],
             'channel_remark' => ['nullable', 'string', 'max:255'],
-            'deadline' => ['required', 'date']
+            'deadline' => ['required', 'date'],
+            'tag' => ['required', 'array'],
+            'heat' => ['required', 'boolean'],
         ];
     }
 }

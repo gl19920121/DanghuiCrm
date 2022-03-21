@@ -63,7 +63,10 @@
         <tbody>
           @foreach($jobs as $job)
             <tr>
-              <td class="color-red">{{ $job->name }}</td>
+              <td class="color-red">
+                <input type="checkbox" class="scheckbox" data-id="{{ $job->id }}" data-type="job" autocomplete="off">
+                {{ $job->name }}
+              </td>
               <td>{{ $job->resumes_count }}</td>
               <td>{{ $job->talking_resumes_count }}</td>
               <td>{{ $job->push_resume_resumes_count }}</td>
@@ -88,7 +91,20 @@
         </tbody>
       </table>
 
-      <div class="row justify-content-end">
+      <div class="row justify-content-between">
+        <div class="col col-auto">
+          <input type="checkbox" class="scheckbox all" autocomplete="off">
+          <button type="submit" class="btn btn-danger btn-download">
+            <div class="row no-gutters align-items-center">
+              <div class="col text-center m-auto">
+                <img class="icon-download" src="{{ URL::asset('images/download.png') }}">
+              </div>
+              <div class="col col-auto">
+                一键导出
+              </div>
+            </div>
+          </button>
+        </div>
         <div class="col-auto">
           {{ $jobs->appends($appends)->links('vendor.pagination.bootstrap-4') }}
         </div>
@@ -106,3 +122,13 @@
 </div>
 
 @include('shared._confirm')
+
+<script type="text/javascript">
+
+  checkedList = {};
+  $('.btn-download').click(function () {
+    let url = "{{ route('excel.export.user.job', ['start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}";
+    excelDownload(url);
+  })
+
+</script>

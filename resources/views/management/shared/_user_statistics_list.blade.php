@@ -58,6 +58,7 @@
           @foreach($users as $user)
             <tr>
               <td>
+                <input type="checkbox" class="scheckbox" data-id="{{ $user->id }}" data-type="{{ $user->type }}" autocomplete="off">
                 @if ($user instanceof App\Models\Department)
                   <a href="{{ route('management.staff.department.list', ['department' => $user]) }}">{{ $user->name }}</a>
                 @else
@@ -73,7 +74,11 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <a class="dropdown-item" href="">刷新</a>
-                    <a class="dropdown-item" href="{{ route('excel.export.user.job', ['id' => [$user->id], 'type' => 'user', 'start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}">导出</a>
+                    @if ($user instanceof App\Models\Department)
+                      <a class="dropdown-item" href="{{ route('excel.export.user.job', ['id' => [$user->id], 'type' => 'department', 'start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}">导出</a>
+                    @else
+                      <a class="dropdown-item" href="{{ route('excel.export.user.job', ['id' => [$user->id], 'type' => 'user', 'start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}">导出</a>
+                    @endif
                   </div>
                 </div>
               </td>
@@ -82,7 +87,20 @@
         </tbody>
       </table>
 
-      <div class="row justify-content-end">
+      <div class="row justify-content-between">
+        <div class="col col-auto">
+          <input type="checkbox" class="scheckbox all" autocomplete="off">
+          <button type="submit" class="btn btn-danger btn-download">
+            <div class="row no-gutters align-items-center">
+              <div class="col text-center m-auto">
+                <img class="icon-download" src="{{ URL::asset('images/download.png') }}">
+              </div>
+              <div class="col col-auto">
+                一键导出
+              </div>
+            </div>
+          </button>
+        </div>
         <div class="col-auto">
           {{ $users->appends($appends)->links('vendor.pagination.bootstrap-4') }}
         </div>
@@ -100,3 +118,13 @@
 </div>
 
 @include('shared._confirm')
+
+<script type="text/javascript">
+
+  checkedList = {};
+  $('.btn-download').click(function () {
+    let url = "{{ route('excel.export.user.job', ['start_at' => $appends['start_at'], 'end_at' => $appends['end_at']]) }}";
+    excelDownload(url);
+  })
+
+</script>

@@ -23,9 +23,13 @@ class Company extends Model
         return $this->hasMany(Job::class);
     }
 
-    public function operation()
+    public function operation($jobids = null)
     {
-        return $this->hasManyThrough(OperationJobWork::class, Job::class, 'company_id', 'job_id');
+        if (empty($jobids)) {
+            return $this->hasManyThrough(OperationJobWork::class, Job::class, 'company_id', 'job_id');
+        } else {
+            return $this->hasManyThrough(OperationJobWork::class, Job::class, 'company_id', 'job_id')->whereIn('job_id', $jobids);
+        }
     }
 
     public function scopeActive($query)
